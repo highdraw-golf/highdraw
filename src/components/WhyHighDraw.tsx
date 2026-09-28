@@ -76,8 +76,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md text-white text-[11px] font-mono px-3 py-1.5 rounded-xs flex items-center gap-2">
-              <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-3 w-auto object-contain" />
-              <span>SIGNATURE TRACER NAPE DETAIL</span>
+              <ShieldCheck size={14} className="text-[#38BDF8]" />
+              <span>FUSED STAY-FLAT COLLAR STAND</span>
             </div>
           </div>
 
@@ -141,7 +141,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               Why We Charge $48 Instead of $125
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Golfers paying $115 to $135 for boutique brands aren't buying 3x the fabric quality — they're subsidizing tour player sponsorships and pro shop consignment fees.
+              Golfers paying $115 to $135 for legacy boutique brands aren't paying for 3x the fabric quality — they're paying for corporate tour sponsorships, multi-tier distributor markups, and luxury retail overhead.
             </p>
           </div>
 
@@ -150,14 +150,14 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             {/* The Traditional Boutique Brand */}
             <div className="bg-white/5 border border-white/10 p-6 rounded-xs space-y-4">
               <div className="flex justify-between items-baseline border-b border-white/10 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-300">Boutique Country Club Polo</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-300">Legacy Boutique Brand</span>
                 <span className="font-mono text-2xl font-bold text-red-400">$125+</span>
               </div>
               <ul className="text-xs space-y-2.5 text-slate-300">
-                <li className="flex justify-between"><span>Micro-pique fabric &amp; buttons</span> <span className="font-mono">$18.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Tour player endorsement fees</span> <span className="font-mono">$32.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Pro shop wholesale markup</span> <span className="font-mono">$45.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Boutique luxury marketing tax</span> <span className="font-mono">$30.00</span></li>
+                <li className="flex justify-between"><span>Micro-pique technical fabric &amp; buttons</span> <span className="font-mono">$18.00</span></li>
+                <li className="flex justify-between text-slate-400"><span>Tour player endorsement contracts</span> <span className="font-mono">$32.00</span></li>
+                <li className="flex justify-between text-slate-400"><span>Multi-tier wholesale distribution layers</span> <span className="font-mono">$45.00</span></li>
+                <li className="flex justify-between text-slate-400"><span>Boutique designer markup</span> <span className="font-mono">$30.00</span></li>
               </ul>
             </div>
 
@@ -167,14 +167,14 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                 HIGH DRAW STANDARD
               </div>
               <div className="flex justify-between items-baseline border-b border-white/20 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-white">The High Draw Performance Polo</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-white">The High Draw Tour Performance Polo</span>
                 <span className="font-mono text-2xl font-bold text-[#38BDF8]">$48</span>
               </div>
               <ul className="text-xs space-y-2.5 text-slate-200">
                 <li className="flex justify-between font-semibold"><span>Identical 180 GSM micro-pique &amp; stay-flat collar</span> <span className="font-mono">$18.00</span></li>
                 <li className="flex justify-between text-slate-400"><span>PGA Tour player endorsement bloat</span> <span className="font-mono">$0.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Country club middleman markups</span> <span className="font-mono">$0.00</span></li>
-                <li className="flex justify-between font-semibold text-[#38BDF8]"><span>Direct-to-golfer fair price</span> <span className="font-mono">$30.00 margin</span></li>
+                <li className="flex justify-between text-slate-400"><span>Multi-tier distribution markups</span> <span className="font-mono">$0.00</span></li>
+                <li className="flex justify-between font-semibold text-[#38BDF8]"><span>Direct-to-golfer pricing</span> <span className="font-mono">$48.00 complete</span></li>
               </ul>
             </div>
 

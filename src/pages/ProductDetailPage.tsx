@@ -65,7 +65,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         regularPrice: 48,
         color: 'True Navy',
         size: 'L',
-        image: '/assets/products/catalog/men_polo_truenavy.jpg',
+        image: '/assets/products/bespoke/men_polo_hero_wood.jpg',
       }
     : {
         id: 'tour-performance-poly-mesh-cap-Pure White-S/M',
@@ -74,7 +74,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         regularPrice: 35,
         color: 'Pure White',
         size: 'S/M',
-        image: '/assets/products/catalog/hat_white.jpg',
+        image: '/assets/products/bespoke/hat_hero_wood.jpg',
       };
 
   const handleAddBundle = () => {
