@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail } from 'lucide-react';
+import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail, Key, ExternalLink, AlertCircle, CheckCircle2, ChevronRight } from 'lucide-react';
 import type { OrderNotification } from '../lib/emailService';
+import { getPrintifyShops, getPrintifyProducts } from '../lib/printify';
 
 interface AdminConsoleProps {
   isOpen: boolean;
@@ -29,7 +30,22 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
   const [isDeploying, setIsDeploying] = useState(false);
   const [deploySuccess, setDeploySuccess] = useState(false);
   const [orders, setOrders] = useState<OrderNotification[]>([]);
-  const [activeTab, setActiveTab] = useState<'settings' | 'orders'>('settings');
+  const [activeTab, setActiveTab] = useState<'settings' | 'orders' | 'printify'>('settings');
+
+  // Printify State
+  const [printifyToken, setPrintifyToken] = useState(() => localStorage.getItem('printify_api_token') || '');
+  const [printifyShopId, setPrintifyShopId] = useState(() => localStorage.getItem('printify_shop_id') || '');
+  const [shopsList, setShopsList] = useState<any[]>([]);
+  const [syncedProducts, setSyncedProducts] = useState<any[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('printify_synced_products') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [isFetchingShops, setIsFetchingShops] = useState(false);
+  const [isFetchingProducts, setIsFetchingProducts] = useState(false);
+  const [printifyStatusMsg, setPrintifyStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     try {
@@ -103,6 +119,50 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
     setTimeout(() => setCopiedPrompt(false), 3000);
   };
 
+  const handleFetchShops = async () => {
+    if (!printifyToken.trim()) {
+      setPrintifyStatusMsg({ type: 'error', text: 'Please enter a valid Printify Personal Access Token.' });
+      return;
+    }
+    setIsFetchingShops(true);
+    setPrintifyStatusMsg(null);
+    try {
+      localStorage.setItem('printify_api_token', printifyToken.trim());
+      const shops = await getPrintifyShops(printifyToken.trim());
+      setShopsList(shops);
+      if (shops && shops.length > 0) {
+        setPrintifyShopId(shops[0].id.toString());
+        localStorage.setItem('printify_shop_id', shops[0].id.toString());
+        setPrintifyStatusMsg({ type: 'success', text: `Connected! Found ${shops.length} store(s). Auto-selected "${shops[0].title}" (ID: ${shops[0].id}).` });
+      } else {
+        setPrintifyStatusMsg({ type: 'error', text: 'Connected to API, but no Printify shops found on this account.' });
+      }
+    } catch (err: any) {
+      setPrintifyStatusMsg({ type: 'error', text: err.message || 'Failed to connect to Printify API. Check your token.' });
+    } finally {
+      setIsFetchingShops(false);
+    }
+  };
+
+  const handleFetchProducts = async () => {
+    if (!printifyToken.trim() || !printifyShopId.trim()) {
+      setPrintifyStatusMsg({ type: 'error', text: 'Both Printify API Token and Shop ID are required.' });
+      return;
+    }
+    setIsFetchingProducts(true);
+    setPrintifyStatusMsg(null);
+    try {
+      const prods = await getPrintifyProducts(printifyShopId.trim(), printifyToken.trim());
+      setSyncedProducts(prods);
+      localStorage.setItem('printify_synced_products', JSON.stringify(prods));
+      setPrintifyStatusMsg({ type: 'success', text: `Success! Pulled ${prods.length} products from Printify!` });
+    } catch (err: any) {
+      setPrintifyStatusMsg({ type: 'error', text: err.message || 'Failed to fetch products from Printify.' });
+    } finally {
+      setIsFetchingProducts(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
       <div className="bg-white w-full max-w-3xl rounded-lg shadow-2xl overflow-hidden border border-slate-200 max-h-[90vh] flex flex-col">
@@ -144,7 +204,16 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
             }`}
           >
             <PackageCheck size={14} />
-            <span>Live Orders & Printify Auto-Fulfillment ({orders.length})</span>
+            <span>Orders ({orders.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('printify')}
+            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 ${
+              activeTab === 'printify' ? 'bg-white text-[#2A4236] border-b-2 border-[#2A4236]' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Key size={14} />
+            <span>Printify API & Products ({syncedProducts.length})</span>
           </button>
         </div>
 
@@ -335,6 +404,149 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === 'printify' && (
+            <div className="space-y-6">
+              
+              {/* Header Box */}
+              <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-start gap-3">
+                <div className="p-2 bg-emerald-600 text-white rounded-md mt-0.5">
+                  <Key size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Printify Direct API Integration</h3>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Connect your Printify account to pull in your actual embroidered polos and hats, view mockups, and automatically synchronize product inventory and automated fulfillment.
+                  </p>
+                </div>
+              </div>
+
+              {/* Status Alert Banner */}
+              {printifyStatusMsg && (
+                <div className={`p-3 rounded-md text-xs font-medium flex items-center gap-2 ${
+                  printifyStatusMsg.type === 'success' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-red-100 text-red-800 border border-red-300'
+                }`}>
+                  {printifyStatusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+                  <span>{printifyStatusMsg.text}</span>
+                </div>
+              )}
+
+              {/* Step 1: Token Configuration */}
+              <div className="p-5 border border-slate-200 rounded-lg bg-slate-50 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-[#2A4236] text-white flex items-center justify-center text-[10px]">1</span>
+                    Printify Personal Access Token (API Key)
+                  </span>
+                  <a 
+                    href="https://printify.com/app/account/api" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-xs text-[#2A4236] hover:underline font-semibold flex items-center gap-1"
+                  >
+                    <span>Generate API Token in Printify</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="password"
+                    value={printifyToken}
+                    onChange={(e) => setPrintifyToken(e.target.value)}
+                    placeholder="eyJhbGciOi..."
+                    className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-sm text-xs font-mono focus:outline-none focus:border-[#2A4236]"
+                  />
+                  <button
+                    onClick={handleFetchShops}
+                    disabled={isFetchingShops}
+                    className="px-4 py-2 bg-[#2A4236] hover:bg-[#1e3027] text-white text-xs font-bold uppercase tracking-wider rounded-sm transition-all flex items-center justify-center gap-1.5 shrink-0"
+                  >
+                    {isFetchingShops ? <RefreshCw size={14} className="animate-spin" /> : <RefreshCw size={14} />}
+                    <span>Connect & Detect Stores</span>
+                  </button>
+                </div>
+
+                {/* Shop Selector Dropdown */}
+                {shopsList.length > 0 && (
+                  <div className="pt-2 border-t border-slate-200 flex items-center gap-3">
+                    <span className="text-xs font-bold text-slate-700">Select Store:</span>
+                    <select
+                      value={printifyShopId}
+                      onChange={(e) => {
+                        setPrintifyShopId(e.target.value);
+                        localStorage.setItem('printify_shop_id', e.target.value);
+                      }}
+                      className="px-3 py-1.5 bg-white border border-slate-300 rounded-sm text-xs font-medium text-slate-800 focus:outline-none"
+                    >
+                      {shopsList.map(s => (
+                        <option key={s.id} value={s.id}>{s.title} (ID: {s.id})</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
+              {/* Step 2: Fetch Products Action */}
+              <div className="p-5 border border-slate-200 rounded-lg bg-slate-50 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-[#2A4236] text-white flex items-center justify-center text-[10px]">2</span>
+                    Synchronize Products & Visuals
+                  </span>
+                  <button
+                    onClick={handleFetchProducts}
+                    disabled={isFetchingProducts}
+                    className="px-4 py-2 bg-[#B12535] hover:bg-[#8e1d29] text-white text-xs font-bold uppercase tracking-wider rounded-sm transition-all flex items-center gap-1.5"
+                  >
+                    {isFetchingProducts ? <RefreshCw size={14} className="animate-spin" /> : <Sparkles size={14} />}
+                    <span>Pull Live Printify Products</span>
+                  </button>
+                </div>
+
+                {syncedProducts.length === 0 ? (
+                  <div className="p-6 text-center border border-dashed border-slate-300 rounded-sm bg-white">
+                    <p className="text-xs text-slate-600 font-medium">No products synchronized yet.</p>
+                    <p className="text-[11px] text-slate-400 mt-1">Connect your API key above and click "Pull Live Printify Products" to import your catalog.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto pt-2">
+                    {syncedProducts.map((p, idx) => (
+                      <div key={idx} className="p-3 bg-white border border-slate-200 rounded-sm flex items-center gap-3">
+                        {p.images && p.images[0] && (
+                          <img src={p.images[0].src} alt={p.title} className="w-14 h-14 object-cover rounded-xs border border-slate-100" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-slate-900 truncate">{p.title}</p>
+                          <p className="text-[11px] text-slate-500">{p.variants?.length || 0} variants &bull; ID: {p.id}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Step 3: Dad's Playbook for Creating Golf Polos in Printify */}
+              <div className="p-5 border border-slate-200 rounded-lg bg-white space-y-3">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Dad's Quick Playbook for Printify Golf Apparel</h4>
+                <div className="space-y-2 text-xs text-slate-600">
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#2A4236]">1. Best Polo Blanks:</span>
+                    <span>Search Printify Catalog for <strong>"Sport-Tek PosiCharge Micro-Mesh"</strong> or <strong>"Adidas Golf Polo"</strong>. Pick Embroidery technique.</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#2A4236]">2. Best Cap Blank:</span>
+                    <span>Search for <strong>"Yupoong 6089"</strong> or <strong>"Richardson 112 / 256"</strong> structured rope cap with front crown embroidery.</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#2A4236]">3. Logo Placement:</span>
+                    <span>Upload High Draw tracer mark (`/assets/logo_tracer_black.png` or `cyan.png`) to the <strong>Left Chest</strong> (approx 2.5" wide).</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           )}
 

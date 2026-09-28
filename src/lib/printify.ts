@@ -95,3 +95,53 @@ export const getPrintifyOrderStatus = async (orderId: string) => {
     return null;
   }
 };
+
+/**
+ * Fetch all Shops associated with the Printify API Token
+ */
+export const getPrintifyShops = async (token?: string) => {
+  const authToken = token || PRINTIFY_API_TOKEN;
+  if (!authToken) {
+    throw new Error("Printify API Token is required to fetch shops.");
+  }
+
+  const response = await fetch("https://api.printify.com/v1/shops.json", {
+    headers: {
+      "Authorization": `Bearer ${authToken}`
+    }
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || `Failed to fetch shops: HTTP ${response.status}`);
+  }
+
+  return await response.json();
+};
+
+/**
+ * Fetch all Products from a Printify Shop
+ */
+export const getPrintifyProducts = async (shopId?: string, token?: string) => {
+  const authToken = token || PRINTIFY_API_TOKEN;
+  const targetShopId = shopId || PRINTIFY_SHOP_ID;
+
+  if (!authToken || !targetShopId) {
+    throw new Error("Both Printify API Token and Shop ID are required to fetch products.");
+  }
+
+  const response = await fetch(`https://api.printify.com/v1/shops/${targetShopId}/products.json`, {
+    headers: {
+      "Authorization": `Bearer ${authToken}`
+    }
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || `Failed to fetch products: HTTP ${response.status}`);
+  }
+
+  const result = await response.json();
+  return result.data || result;
+};
+
