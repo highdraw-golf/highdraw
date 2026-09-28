@@ -2,17 +2,34 @@ import React, { useState } from 'react';
 import { X, ShieldCheck, Truck, Lock, FileText } from 'lucide-react';
 
 interface FooterProps {
-  onSelectCategoryAndScroll: (category: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
-  onScrollToSection: (id: string) => void;
+  onSelectCategoryAndScroll?: (category: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
+  onScrollToSection?: (id: string) => void;
+  onNavigate?: (view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about', category?: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
   onOpenAdmin?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onSelectCategoryAndScroll,
   onScrollToSection,
+  onNavigate,
   onOpenAdmin,
 }) => {
   const [modalType, setModalType] = useState<'guarantee' | 'shipping' | 'privacy' | 'terms' | null>(null);
+
+  const handleNav = (
+    view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about',
+    category?: 'polos' | 'outerwear' | 'headwear' | 'bundles',
+    sectionId?: string
+  ) => {
+    if (onNavigate) {
+      onNavigate(view, category);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (category && onSelectCategoryAndScroll) {
+      onSelectCategoryAndScroll(category);
+    } else if (sectionId && onScrollToSection) {
+      onScrollToSection(sectionId);
+    }
+  };
 
   return (
     <footer className="w-full bg-[#181C21] text-white pt-20 pb-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-t border-slate-800">
@@ -25,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="md:col-span-5 space-y-4">
             <div 
               className="flex items-center gap-3 cursor-pointer select-none"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => handleNav('home')}
             >
               <img 
                 src="/assets/logo_tracer_cyan.png" 
@@ -59,26 +76,26 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="space-y-3">
               <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Collections</span>
               <button 
-                onClick={() => onSelectCategoryAndScroll('polos')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('collection', 'polos')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Men's Polos ($48)
               </button>
               <button 
-                onClick={() => onSelectCategoryAndScroll('outerwear')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('collection', 'outerwear')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Outerwear ($68)
               </button>
               <button 
-                onClick={() => onSelectCategoryAndScroll('headwear')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('collection', 'headwear')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Visor Rope Caps ($32)
               </button>
               <button 
-                onClick={() => onSelectCategoryAndScroll('bundles')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('collection', 'bundles')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Saturday Scramble Kits ($160)
               </button>
@@ -87,42 +104,48 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="space-y-3">
               <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Craft &amp; Proof</span>
               <button 
-                onClick={() => onScrollToSection('why')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('craftsmanship', undefined, 'why')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Stay-Flat Collar Engineering
               </button>
               <button 
-                onClick={() => onScrollToSection('why')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('guarantee', undefined, 'why')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 100+ Washes Guarantee
               </button>
               <button 
-                onClick={() => onScrollToSection('reviews')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('reviews', undefined, 'reviews')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Verified Course Reviews
+              </button>
+              <button 
+                onClick={() => handleNav('about')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
+              >
+                The High Draw Story
               </button>
             </div>
 
             <div className="space-y-3 col-span-2 sm:col-span-1">
               <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Guarantees &amp; Policy</span>
               <button 
-                onClick={() => setModalType('guarantee')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                onClick={() => handleNav('guarantee')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 30-Day Fairway Guarantee
               </button>
               <button 
                 onClick={() => setModalType('shipping')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Free Domestic Shipping ($75+)
               </button>
               <button 
                 onClick={() => setModalType('privacy')} 
-                className="block text-left hover:text-[#38BDF8] transition-colors"
+                className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
                 Privacy &amp; Data Security
               </button>

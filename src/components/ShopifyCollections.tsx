@@ -1,31 +1,22 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Check, X, ShieldCheck, ShoppingBag, RefreshCw } from 'lucide-react';
+import { ArrowUpRight, Check, X, ShieldCheck, ShoppingBag, RefreshCw, ExternalLink } from 'lucide-react';
+import { PRODUCTS } from '../data/products';
+import type { Product } from '../data/products';
 
-export interface Product {
-  id: string;
-  name: string;
-  category: 'polos' | 'outerwear' | 'headwear' | 'bundles';
-  collectionLabel: string;
-  price: number;
-  originalPrice: number;
-  image: string;
-  secondaryImage: string;
-  colors: Array<{ name: string; hex: string; image?: string }>;
-  sizes: string[];
-  description: string;
-  washGuarantee: string;
-}
+export type { Product };
 
 interface ShopifyCollectionsProps {
   activeCategory: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
   onSelectCategory: (category: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
   onAddToCart: (item: { id: string; name: string; price: number; color: string; size: string; image: string }) => void;
+  onSelectProduct?: (product: Product) => void;
 }
 
 export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({ 
   activeCategory, 
   onSelectCategory, 
-  onAddToCart 
+  onAddToCart,
+  onSelectProduct,
 }) => {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('L');
@@ -33,113 +24,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
   const [activeCardImages, setActiveCardImages] = useState<Record<string, string>>({});
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  const products: Product[] = [
-    {
-      id: 'polo-cypress-01',
-      name: 'The Heritage Cypress Micro-Pique Polo',
-      category: 'polos',
-      collectionLabel: "MEN'S CORE POLOS",
-      price: 48,
-      originalPrice: 115,
-      image: '/assets/polo_cypress_green.jpg',
-      secondaryImage: '/assets/review_marcus.jpg',
-      colors: [
-        { name: 'Cypress Green', hex: '#2A4236', image: '/assets/polo_cypress_green.jpg' },
-        { name: 'Coastal Carolina', hex: '#6BA4B8', image: '/assets/polo_carolina_blue.jpg' },
-        { name: 'Deep Navy', hex: '#1E293B', image: '/assets/lifestyle_golf.jpg' },
-        { name: 'Crisp White', hex: '#FFFFFF', image: '/assets/polo_flatlay.jpg' },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
-      description: 'Ultra-refined 4-way stretch drape engineered for 40+ golfers. Fused stay-flat collar, moisture-wicking micro-pique, and zero gym-shirt cling. Subtle High Draw ball tracer embroidered on nape. Guaranteed 100+ machine washes.',
-      washGuarantee: '100+ Washes Guarantee • Won’t Shrink or Fade',
-    },
-    {
-      id: 'polo-carolina-01',
-      name: 'The Coastal Carolina Performance Stripe Polo',
-      category: 'polos',
-      collectionLabel: "MEN'S STRIPE CAPSULE",
-      price: 48,
-      originalPrice: 115,
-      image: '/assets/polo_carolina_blue.jpg',
-      secondaryImage: '/assets/review_david.jpg',
-      colors: [
-        { name: 'Coastal Carolina', hex: '#6BA4B8', image: '/assets/polo_carolina_blue.jpg' },
-        { name: 'Deep Navy', hex: '#1E293B', image: '/assets/lifestyle_golf.jpg' },
-        { name: 'Cypress Green', hex: '#2A4236', image: '/assets/polo_cypress_green.jpg' },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
-      description: 'Subtle yarn-dyed maritime micro-stripe with breathable UPF 50+ solar shield. Engineered weight that drapes cleanly over midsection without cling. Tested through 100+ wash cycles.',
-      washGuarantee: '100+ Washes Guarantee • Anti-Pilling Knit',
-    },
-    {
-      id: 'polo-navy-01',
-      name: 'The Classic Performance Polo — Deep Navy',
-      category: 'polos',
-      collectionLabel: "MEN'S CORE POLOS",
-      price: 48,
-      originalPrice: 110,
-      image: '/assets/lifestyle_golf.jpg',
-      secondaryImage: '/assets/review_ken.jpg',
-      colors: [
-        { name: 'Deep Navy', hex: '#1E293B', image: '/assets/lifestyle_golf.jpg' },
-        { name: 'Cypress Green', hex: '#2A4236', image: '/assets/polo_cypress_green.jpg' },
-        { name: 'Coastal Carolina', hex: '#6BA4B8', image: '/assets/polo_carolina_blue.jpg' },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
-      description: 'Tour-tested navy drape. Structured athletic tailoring, stay-flat fused placket, and luxury drape at an honest $48 mid-market price point.',
-      washGuarantee: '100+ Washes Guarantee • Wrinkle-Free Dry',
-    },
-    {
-      id: 'outerwear-zip-01',
-      name: 'The 19th Hole Performance Quarter-Zip',
-      category: 'outerwear',
-      collectionLabel: 'OUTERWEAR & LAYERING',
-      price: 68,
-      originalPrice: 145,
-      image: '/assets/lifestyle_pullover.jpg',
-      secondaryImage: '/assets/lifestyle_coastal_18th.jpg',
-      colors: [
-        { name: 'Charcoal Heather', hex: '#475569', image: '/assets/lifestyle_pullover.jpg' },
-        { name: 'Deep Navy', hex: '#1E293B', image: '/assets/lifestyle_golf.jpg' },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
-      description: 'Brushed thermal micro-fleece interior with technical stretch shell. Finished with lockdown zipper garage and storm placket for brisk morning rounds.',
-      washGuarantee: 'Cold Wash Tested • Retains Shape & Loft',
-    },
-    {
-      id: 'headwear-rope-01',
-      name: 'The High Draw Structured Visor Rope Cap',
-      category: 'headwear',
-      collectionLabel: 'HEADWEAR & ACCESSORIES',
-      price: 32,
-      originalPrice: 55,
-      image: '/assets/hat_rope_white.png',
-      secondaryImage: '/assets/lookbook_accessories.jpg',
-      colors: [
-        { name: 'Vintage White / Navy Rope', hex: '#F8FAFC', image: '/assets/hat_rope_white.png' },
-        { name: 'Cypress Slate', hex: '#2A4236', image: '/assets/hat_rope_white.png' },
-      ],
-      sizes: ['ONE SIZE (SNAPBACK)'],
-      description: 'Classic 5-panel retro structured crown featuring the official High Draw tracer flag embroidery with moisture-wicking headband and braided visor rope accent.',
-      washGuarantee: 'Sweat-Stain Resistant • Hand Wash Rinse',
-    },
-    {
-      id: 'bundle-foursome-01',
-      name: 'The Saturday Foursome Scramble Kit (4 Polos)',
-      category: 'bundles',
-      collectionLabel: 'CURATED BUNDLES',
-      price: 160,
-      originalPrice: 192,
-      image: '/assets/foursome_after.png',
-      secondaryImage: '/assets/lifestyle_coastal_18th.jpg',
-      colors: [
-        { name: 'Mixed Foursome Selection', hex: '#2A4236' },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
-      description: 'Outfit your regular weekend group in tour-grade performance polos. $40/shirt bulk bundle rate saves $32 immediately.',
-      washGuarantee: 'Complete Foursome Guarantee',
-    },
-  ];
+  const products: Product[] = PRODUCTS;
 
   const filteredProducts = activeCategory === 'all' 
     ? products 
@@ -234,9 +119,13 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
             <div 
               key={p.id} 
               onClick={() => {
-                setQuickViewProduct(p);
-                setSelectedColor(p.colors[0].name);
-                setSelectedSize(p.sizes[0]);
+                if (onSelectProduct) {
+                  onSelectProduct(p);
+                } else {
+                  setQuickViewProduct(p);
+                  setSelectedColor(p.colors[0]?.name || 'Cypress Green');
+                  setSelectedSize(p.sizes[0] || 'L');
+                }
               }}
               className="group cursor-pointer flex flex-col justify-between"
             >
@@ -252,7 +141,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                   {/* Secondary Image Hover Effect */}
                   <img 
                     src={p.secondaryImage} 
-                    alt={`${p.name} Detail`}
+                    alt={`${p.name} Detail`} 
                     className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   />
 
@@ -264,7 +153,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
                   {/* Subtle Floating View Button */}
                   <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-xs font-bold px-4 py-2.5 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                    <span>QUICK VIEW &amp; SIZING</span>
+                    <span>{onSelectProduct ? 'VIEW DETAILS & SIZING' : 'QUICK VIEW & SIZING'}</span>
                     <ArrowUpRight size={14} />
                   </div>
                 </div>
@@ -448,6 +337,21 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     <ShieldCheck size={14} className="text-emerald-700" />
                     <span>Free Shipping Over $75 &bull; 30-Day Fairway Guarantee</span>
                   </div>
+
+                  {onSelectProduct && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const prod = quickViewProduct;
+                        setQuickViewProduct(null);
+                        onSelectProduct(prod);
+                      }}
+                      className="w-full py-2.5 text-center text-xs font-bold text-slate-700 hover:text-black uppercase tracking-wider flex items-center justify-center gap-1.5 border border-slate-300 rounded-sm hover:border-slate-500 transition-colors cursor-pointer"
+                    >
+                      <span>VIEW FULL DETAILS &amp; SIZING SPECS</span>
+                      <ExternalLink size={13} />
+                    </button>
+                  )}
                 </div>
 
               </div>

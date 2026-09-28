@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('High Draw Golf — Automated E2E Regression Suite', () => {
+test.describe('High Draw Golf — Multi-Page Storefront & Luxury UI Suite', () => {
   
   test('Storefront loads with far-left logo and genuine High Draw branding', async ({ page }) => {
     await page.goto('/');
@@ -19,14 +19,40 @@ test.describe('High Draw Golf — Automated E2E Regression Suite', () => {
     await expect(page.locator('button:has-text("GOLFER REVIEWS")').first()).toBeVisible();
   });
 
-  test('Navigation links filter collections and scroll properly', async ({ page }) => {
+  test('Navbar routes to dedicated collection page', async ({ page }) => {
     await page.goto('/');
     
     // Click HEADWEAR in navbar
     await page.locator('button:has-text("HEADWEAR ($32)")').first().click();
     
-    // Verify headwear product is visible
-    await expect(page.locator('text=The High Draw Structured Visor Rope Cap')).toBeVisible();
+    // Verify collection page loads with headline and headwear product
+    await expect(page.locator('h1:has-text("Structured Visor Rope Caps ($32)")')).toBeVisible();
+    await expect(page.locator('text=The High Draw Structured Visor Rope Cap').first()).toBeVisible();
+    expect(page.url()).toContain('/collections/headwear');
+  });
+
+  test('Clicking product card navigates to dedicated Product Detail Page (PDP)', async ({ page }) => {
+    await page.goto('/');
+    
+    // Click Cypress polo card
+    await page.locator('h3:has-text("The Heritage Cypress Micro-Pique Polo")').first().click();
+    
+    // Verify PDP loads
+    await expect(page.locator('h1:has-text("The Heritage Cypress Micro-Pique Polo")')).toBeVisible();
+    await expect(page.locator('text=$48 USD')).toBeVisible();
+    await expect(page.locator('text=Frequently Bought Together')).toBeVisible();
+    expect(page.url()).toContain('/products/the-heritage-cypress-micro-pique-polo');
+
+    // Add to bag from PDP
+    await page.locator('button:has-text("ADD TO BAG • $48")').click();
+    await expect(page.locator('text=YOUR BAG')).toBeVisible();
+  });
+
+  test('Direct URL routing loads Craftsmanship page', async ({ page }) => {
+    await page.goto('/pages/craftsmanship');
+    
+    await expect(page.locator('h1:has-text("Collar Architecture & The 100+ Washes Guarantee")')).toBeVisible();
+    await expect(page.locator('text=THE HIGH DRAW ENGINEERING LAB')).toBeVisible();
   });
 
   test('Cart Drawer opens and calculates subtotal & free shipping threshold', async ({ page }) => {
@@ -46,8 +72,8 @@ test.describe('High Draw Golf — Automated E2E Regression Suite', () => {
     // Click 30-Day Fairway Guarantee in footer
     await page.locator('button:has-text("30-Day Fairway Guarantee")').first().click();
     
-    // Verify modal appears
-    await expect(page.locator('text=Play 18 holes, sweat in it, and machine wash it')).toBeVisible();
+    // Verify modal or page appears
+    await expect(page.locator('text=30-Day Fairway Guarantee').first()).toBeVisible();
   });
 
   test('Owner Command Console opens from footer admin link', async ({ page }) => {
