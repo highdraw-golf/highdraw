@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // Products & Collections (Public Read, Admin Write)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    
+    match /collections/{collectionId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Customer Reviews (Public Read, Authenticated Create)
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isOwner(resource.data.userId);
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update: if isAuthenticated() && (resource.data.userId == request.auth.uid || request.auth.token.email == 'kensiri@gmail.com');
+    }
+  }
+}
