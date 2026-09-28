@@ -37,7 +37,7 @@ service cloud.firestore {
     // Orders
     match /orders/{orderId} {
       allow create: if true;
-      allow read, update: if isAuthenticated() && (resource.data.userId == request.auth.uid || request.auth.token.email == 'kencyree@gmail.com');
+      allow read, update: if isAuthenticated() && (resource.data.userId == request.auth.uid || request.auth.token.email == 'highdrawgear@gmail.com');
     }
   }
 }

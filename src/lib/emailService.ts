@@ -1,5 +1,5 @@
 // High Draw Golf — Automated Gmail Order Notification Service
-// Owner Email: kencyree@gmail.com
+// Owner Email: highdrawgear@gmail.com
 
 export interface OrderNotification {
   orderId: string;
@@ -12,11 +12,11 @@ export interface OrderNotification {
 }
 
 /**
- * Automate Email Notifications to kencyree@gmail.com
+ * Automate Email Notifications to highdrawgear@gmail.com
  * Notifies Ken's dad instantly whenever an order is placed and sent to Printify.
  */
 export const sendOrderNotificationEmail = async (notification: OrderNotification) => {
-  console.log(`✉️ [Gmail Automation] Dispatching order alert for #${notification.orderId} to kencyree@gmail.com`);
+  console.log(`✉️ [Gmail Automation] Dispatching order alert for #${notification.orderId} to highdrawgear@gmail.com`);
 
   const emailBody = `
 ==================================================

@@ -67,7 +67,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         }
       });
 
-      // Automate Gmail Alert to kencyree@gmail.com
+      // Automate Gmail Alert to highdrawgear@gmail.com
       await sendOrderNotificationEmail({
         orderId: orderNum,
         customerName: "Valued Golfer",
@@ -118,7 +118,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
               <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
               <p className="font-sans text-xs text-slate-500 font-light leading-relaxed">
-                Your order has been automatically routed to **Printify** for production & shipping. An email notification has been sent to kencyree@gmail.com.
+                Your order has been automatically routed to **Printify** for production & shipping. An email notification has been sent to highdrawgear@gmail.com.
               </p>
             </div>
             <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 hairline-all text-left space-y-1">

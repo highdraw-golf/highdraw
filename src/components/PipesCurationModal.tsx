@@ -78,7 +78,7 @@ export const PipesCurationModal: React.FC<PipesCurationModalProps> = ({
           <div className="bg-emerald-50 border border-emerald-200 p-4 rounded text-xs text-emerald-900 leading-relaxed flex items-start gap-3">
             <ShieldCheck size={18} className="text-emerald-700 shrink-0 mt-0.5" />
             <div>
-              <strong className="font-bold">Free Business Pipe License Active:</strong> This private pipe allows Ken Cyree (`kencyree@gmail.com`) in Clark to curate photography boards and drive how the High Draw Golf storefront looks in real-time.
+              <strong className="font-bold">Free Business Pipe License Active:</strong> This private pipe allows Ken Cyree (`highdrawgear@gmail.com`) in Clark to curate photography boards and drive how the High Draw Golf storefront looks in real-time.
             </div>
           </div>
 
