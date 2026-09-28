@@ -4,7 +4,7 @@ import { Star, Quote } from 'lucide-react';
 export const SocialProofPress: React.FC = () => {
   const reviews = [
     {
-      quote: "The drape and collar memory rival my $135 Peter Millar polos, but at $48 I don't feel like I have to baby it in the rough. High Draw solved golf apparel.",
+      quote: "The drape and collar memory rival my $135 luxury polos, but at $48 I don't feel like I have to baby it in the rough. High Draw solved golf apparel.",
       author: "Marcus T.",
       title: "14 Handicap &bull; Pinehurst No. 2 Member",
       rating: 5,

@@ -32,7 +32,17 @@ function parseRouteFromLocation(): ActiveRoute {
 
   if (path.startsWith('/products/')) {
     const slug = path.replace('/products/', '').replace(/\/$/, '').trim();
-    const prod = PRODUCTS.find(p => p.slug === slug || p.id === slug);
+    const prod = PRODUCTS.find(p => 
+      p.slug === slug || 
+      p.id === slug ||
+      (slug.includes('navy') && p.id.includes('navy')) ||
+      (slug.includes('white') && p.id.includes('white')) ||
+      (slug.includes('carolina') && p.id.includes('carolina')) ||
+      (slug.includes('cypress') && p.id.includes('cypress')) ||
+      (slug.includes('quarter-zip') && p.id.includes('zip')) ||
+      (slug.includes('cap') && p.id.includes('cap')) ||
+      (slug.includes('scramble') && p.id.includes('foursome'))
+    );
     if (prod) return { view: 'product', product: prod };
   }
 
@@ -188,7 +198,7 @@ export function App() {
       <main className="pt-20">
         {route.view === 'home' && (
           <>
-            {/* Straight Down / Peter Millar Style Hero */}
+            {/* Flagship Editorial Hero */}
             <FullscreenHero 
               heroImage={heroImage}
               onScrollToShop={() => navigateTo('collection', { category: 'polos' })}

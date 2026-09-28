@@ -60,8 +60,8 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
     },
     {
       name: 'Coastal Veranda',
-      subtitle: 'Peter Millar Triptych Lookbook',
-      image: '/assets/peter_millar_lookbook_triptych_1790563847097.jpg',
+      subtitle: 'High Draw Editorial Lookbook',
+      image: '/assets/lifestyle_coastal_18th.jpg',
     },
   ];
 

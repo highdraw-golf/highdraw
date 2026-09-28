@@ -27,7 +27,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-[#15191E] via-black/40 to-transparent sm:bg-gradient-to-r sm:from-[#15191E]/90 sm:via-[#15191E]/40 sm:to-transparent"></div>
         </div>
 
-        {/* Hero Content (Clean Peter Millar / Straight Down Editorial Architecture) */}
+        {/* Hero Editorial Content */}
         <div className="relative z-10 max-w-3xl mx-auto sm:mx-0 sm:ml-12 md:ml-20 lg:ml-28 p-6 sm:p-0 pb-16 sm:pb-0 space-y-7 text-left">
           
           {/* Official Brand Badge with Cyan Tracer Mark */}
@@ -91,7 +91,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
 
       </section>
 
-      {/* Sub-Hero 4-Column Luxury Architecture Ribbon (Straight Down / Peter Millar Standard) */}
+      {/* Sub-Hero 4-Column Luxury Architecture Ribbon */}
       <div className="bg-[#1C2C24] text-white border-b border-slate-800 py-6 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-xs">
           

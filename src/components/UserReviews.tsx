@@ -45,7 +45,7 @@ const INITIAL_REVIEWS: Review[] = [
     club: 'Country Club Weekender',
     handicap: '11.8 Index',
     rating: 5,
-    title: 'Peter Millar drape without the $125 country club tax',
+    title: 'Luxury country club drape without the $125 tax',
     comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the chest and nape is pure understated class.',
     image: '/assets/review_ken.jpg',
     productWorn: 'The Classic Deep Navy Polo (XL)',

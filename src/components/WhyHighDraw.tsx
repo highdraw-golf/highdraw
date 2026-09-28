@@ -30,7 +30,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         </p>
       </div>
 
-      {/* Editorial Split Feature Showcase (Peter Millar / Straight Down Aesthetic) */}
+      {/* Editorial Split Feature Showcase */}
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Feature 1: The Stay-Flat Collar Construction */}

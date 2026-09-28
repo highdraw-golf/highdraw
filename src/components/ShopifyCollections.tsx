@@ -65,7 +65,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       <div id="headwear" className="-mt-24 pt-24"></div>
       <div id="bundles" className="-mt-24 pt-24"></div>
 
-      {/* Category Navigation Header (Straight Down & Peter Millar Layout) */}
+      {/* Category Navigation Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-slate-200 gap-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
