@@ -65,12 +65,12 @@ export function App() {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
-      id: 'polo-cypress-01',
-      name: 'The Heritage Cypress Micro-Pique Polo',
+      id: 'polo-white-01',
+      name: 'The Classic Tour Performance Polo — Crisp White',
       price: 48,
-      color: 'Cypress Green',
+      color: 'Crisp White',
       size: 'L',
-      image: '/assets/polo_cypress_green.jpg',
+      image: '/assets/polo_white_flatlay.jpg',
     },
   ]);
 
