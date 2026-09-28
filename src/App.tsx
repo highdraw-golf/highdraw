@@ -35,13 +35,11 @@ function parseRouteFromLocation(): ActiveRoute {
     const prod = PRODUCTS.find(p => 
       p.slug === slug || 
       p.id === slug ||
-      (slug.includes('navy') && p.id.includes('navy')) ||
-      (slug.includes('white') && p.id.includes('white')) ||
-      (slug.includes('carolina') && p.id.includes('carolina')) ||
-      (slug.includes('cypress') && p.id.includes('cypress')) ||
-      (slug.includes('quarter-zip') && p.id.includes('zip')) ||
-      (slug.includes('cap') && p.id.includes('cap')) ||
-      (slug.includes('scramble') && p.id.includes('foursome'))
+      (slug.includes('women') && p.id.includes('women')) ||
+      (slug.includes('zip') && (p.category === 'outerwear' || p.slug.includes('zip'))) ||
+      ((slug.includes('cap') || slug.includes('hat')) && (p.category === 'headwear' || p.slug.includes('cap'))) ||
+      ((slug.includes('scramble') || slug.includes('foursome') || slug.includes('bundle')) && p.category === 'bundles') ||
+      (!slug.includes('women') && (slug.includes('men') || slug.includes('polo') || slug.includes('cypress') || slug.includes('navy')) && p.id.includes('mens'))
     );
     if (prod) return { view: 'product', product: prod };
   }
