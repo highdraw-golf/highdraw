@@ -29,7 +29,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
   };
 
   const categorySubtitles = {
-    all: 'Engineered for dedicated weekenders with 4-way stretch drape and zero country club tax.',
+    all: 'Engineered for dedicated weekenders with 4-way stretch drape and zero overpriced retail markup.',
     polos: 'Tour-grade micro-pique drape, fused stay-flat collar engineering, and 100+ wash guarantee.',
     outerwear: 'Brushed thermal fleece with lockdown storm plackets for brisk 7:00 AM tee times.',
     headwear: 'Retro 5-panel structured chino twill with heavy embroidered tracer flag and nautical rope.',

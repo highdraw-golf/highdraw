@@ -16,7 +16,7 @@ export const SocialProofPress: React.FC = () => {
       rating: 5,
     },
     {
-      quote: "A rare brand that respects the game's heritage without charging a country club tax. The nape tracer detail is pure insider subtlety.",
+      quote: "A rare brand that respects the game's heritage without charging an overpriced retail tax. The nape tracer detail is pure insider subtlety.",
       author: "Julian K.",
       title: "Editorial Director &bull; Modern Fairways Review",
       rating: 5,

@@ -60,7 +60,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
             
             <p className="text-xs text-slate-400 font-normal leading-relaxed max-w-sm">
-              Designed for Sport. Crafted for Life. Tour-grade 180 GSM micro-pique performance drape, stay-flat fused collar engineering, zero $125 country club markup.
+              Designed for Sport. Crafted for Life. Tour-grade 180 GSM micro-pique performance drape, stay-flat fused collar engineering, zero $125 legacy retail markup.
             </p>
 
             <div className="pt-2 text-xs text-slate-400">

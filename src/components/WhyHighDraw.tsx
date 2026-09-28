@@ -26,7 +26,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         </h2>
 
         <p className="text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
-          We eliminated the $125 country club markup to build the ultimate mid-market golf shirt: tour-grade 4-way stretch drape, fused stay-flat collar engineering, and zero synthetic gym sheen.
+          We eliminated the $125 legacy retail markup to build the ultimate mid-market golf shirt: tour-grade 4-way stretch drape, fused stay-flat collar engineering, and zero synthetic gym sheen.
         </p>
       </div>
 

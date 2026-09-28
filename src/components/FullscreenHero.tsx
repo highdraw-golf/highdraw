@@ -49,7 +49,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               <span className="font-normal italic text-slate-200">Crafted for Life.</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-200 max-w-xl font-normal leading-relaxed pt-2">
-              Tour-grade micro-pique drape, fused stay-flat collar architecture, and zero $125 country club markup. Built for 18 holes and the clubhouse.
+              Tour-grade micro-pique drape, fused stay-flat collar architecture, and zero $125 legacy retail markup. Built for 18 holes and the clubhouse.
             </p>
           </div>
 
@@ -123,7 +123,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
             <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] font-mono font-bold text-xs">04</span>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block text-[11px]">Honest $48 Pricing</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">Boutique country club quality without the $125 markup.</span>
+              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">Boutique championship quality without the $125 retail markup.</span>
             </div>
           </div>
 

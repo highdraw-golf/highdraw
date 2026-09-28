@@ -82,7 +82,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
             Crafted for Life on the Fairway
           </h2>
           <p className="text-sm text-slate-500 mt-2 max-w-xl">
-            Zero $120 country club markups. Engineered with 4-way stretch drape and wash-tested 100+ times to stay crisp, comfortable, and wrinkle-free.
+            Zero $120 boutique retail markups. Engineered with 4-way stretch drape and wash-tested 100+ times to stay crisp, comfortable, and wrinkle-free.
           </p>
         </div>
 

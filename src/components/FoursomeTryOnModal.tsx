@@ -35,7 +35,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
 
   const handleShareWhatsApp = () => {
     confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-    const text = encodeURIComponent("Check out our foursome suited up in High Draw Golf polos for Saturday! Tour quality, no $110 country club markup: https://highdrawgolf.com");
+    const text = encodeURIComponent("Check out our foursome suited up in High Draw Golf polos for Saturday! Tour quality, no $110 overpriced retail markup: https://highdrawgolf.com");
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 

@@ -76,7 +76,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
           Select Your Fairway Gear
         </h2>
         <p className="font-sans text-sm sm:text-base text-slate-600 font-light">
-          Direct-to-player pricing. Tour-grade quality without the $110 country club markup.
+          Direct-to-player pricing. Tour-grade quality without the $110 overpriced retail markup.
         </p>
       </div>
 

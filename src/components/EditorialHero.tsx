@@ -81,7 +81,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
               <span className="italic font-light text-slate-300">It is struck.</span>"
             </h1>
             <p className="font-sans text-sm md:text-base text-slate-300 max-w-md font-light leading-relaxed">
-              Dignified performance apparel for the 10–20 round weekender. Tour-grade matte micro-pique without the $110 country club tax.
+              Dignified performance apparel for the 10–20 round weekender. Tour-grade matte micro-pique without the $110 overpriced retail markup.
             </p>
           </div>
         </div>
