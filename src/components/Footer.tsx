@@ -1,66 +1,214 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { X, ShieldCheck, Truck, Lock, FileText } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onSelectCategoryAndScroll: (category: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
+  onScrollToSection: (id: string) => void;
+  onOpenAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onSelectCategoryAndScroll,
+  onScrollToSection,
+  onOpenAdmin,
+}) => {
+  const [modalType, setModalType] = useState<'guarantee' | 'shipping' | 'privacy' | 'terms' | null>(null);
+
   return (
-    <footer className="w-full bg-[#2E3033] text-white pt-20 pb-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-t border-slate-800">
-      <div className="w-full space-y-16">
+    <footer className="w-full bg-[#181C21] text-white pt-20 pb-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-t border-slate-800">
+      <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Brand & Category Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-slate-700">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-slate-800">
           
+          {/* Far Left Brand Identity */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-2xl font-bold tracking-widest text-white uppercase">
-                HIGH DRAW
-              </span>
-              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 26C10 26 18 20 24 10C26 6.5 27.5 4.5 28 4" stroke="#B12535" strokeWidth="2.5" strokeLinecap="round"/>
-              </svg>
+            <div 
+              className="flex items-center gap-3 cursor-pointer select-none"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              <img 
+                src="/assets/logo_tracer_cyan.png" 
+                alt="High Draw Ball Flight Tracer" 
+                className="h-10 w-auto object-contain"
+              />
+              <div className="flex flex-col">
+                <span className="font-serif text-2xl font-black tracking-[0.2em] text-white uppercase leading-none">
+                  HIGH DRAW
+                </span>
+                <span className="text-[9px] font-mono tracking-[0.3em] text-slate-400 uppercase mt-0.5">
+                  GOLF APPAREL CO.
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-slate-300 font-normal leading-relaxed max-w-md">
-              Designed for Sport. Crafted for Life. Tour-grade micro-pique performance drape, stay-flat collar engineering, zero $110 country club markup.
+            
+            <p className="text-xs text-slate-400 font-normal leading-relaxed max-w-sm">
+              Designed for Sport. Crafted for Life. Tour-grade 180 GSM micro-pique performance drape, stay-flat fused collar engineering, zero $125 country club markup.
             </p>
+
+            <div className="pt-2 text-xs text-slate-400">
+              <span className="block font-bold text-slate-200 uppercase tracking-wider text-[11px] mb-1">Direct Brand Contact</span>
+              <a href="mailto:highdrawgear@gmail.com" className="text-[#38BDF8] hover:underline font-mono">
+                highdrawgear@gmail.com
+              </a>
+            </div>
           </div>
 
+          {/* Navigation Links (All 100% Functional) */}
           <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs text-slate-300">
             <div className="space-y-3">
               <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Collections</span>
-              <a href="#polos" className="block hover:text-white transition-colors">Men's Polos ($48)</a>
-              <a href="#polos" className="block hover:text-white transition-colors">Outerwear & Layering</a>
-              <a href="#polos" className="block hover:text-white transition-colors">Visors & Rope Caps</a>
-              <a href="#polos" className="block hover:text-white transition-colors">Saturday Scramble Kits</a>
+              <button 
+                onClick={() => onSelectCategoryAndScroll('polos')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Men's Polos ($48)
+              </button>
+              <button 
+                onClick={() => onSelectCategoryAndScroll('outerwear')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Outerwear ($68)
+              </button>
+              <button 
+                onClick={() => onSelectCategoryAndScroll('headwear')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Visor Rope Caps ($32)
+              </button>
+              <button 
+                onClick={() => onSelectCategoryAndScroll('bundles')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Saturday Scramble Kits ($160)
+              </button>
             </div>
 
             <div className="space-y-3">
-              <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Customer Support</span>
-              <a href="#reviews" className="block hover:text-white transition-colors">Verified Golfer Reviews</a>
-              <span className="block text-slate-400">30-Day Fairway Guarantee</span>
-              <span className="block text-slate-400">Complimentary Domestic Shipping</span>
+              <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Craft &amp; Proof</span>
+              <button 
+                onClick={() => onScrollToSection('why')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Stay-Flat Collar Engineering
+              </button>
+              <button 
+                onClick={() => onScrollToSection('why')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                100+ Washes Guarantee
+              </button>
+              <button 
+                onClick={() => onScrollToSection('reviews')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Verified Course Reviews
+              </button>
             </div>
 
             <div className="space-y-3 col-span-2 sm:col-span-1">
-              <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Contact & Pipe</span>
-              <span className="block text-slate-200">highdrawgear@gmail.com</span>
-              <span className="block text-slate-400">High Draw Golf Pipe (Clark)</span>
-              <span className="block text-slate-400">Est. 2001 &bull; Edition 001</span>
+              <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Guarantees &amp; Policy</span>
+              <button 
+                onClick={() => setModalType('guarantee')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                30-Day Fairway Guarantee
+              </button>
+              <button 
+                onClick={() => setModalType('shipping')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Free Domestic Shipping ($75+)
+              </button>
+              <button 
+                onClick={() => setModalType('privacy')} 
+                className="block text-left hover:text-[#38BDF8] transition-colors"
+              >
+                Privacy &amp; Data Security
+              </button>
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Legal */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        {/* Bottom Legal & Owner Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div>
-            &copy; 2026 High Draw Golf Co. All rights reserved.
+            &copy; 2026 High Draw Golf Co. All rights reserved. &bull; highdrawgear.com
           </div>
+          
           <div className="flex items-center gap-6">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Vite + React Storefront</span>
+            <button onClick={() => setModalType('privacy')} className="hover:text-slate-300 transition-colors">Privacy</button>
+            <button onClick={() => setModalType('terms')} className="hover:text-slate-300 transition-colors">Terms of Service</button>
+            {onOpenAdmin && (
+              <button 
+                onClick={onOpenAdmin} 
+                className="text-slate-400 hover:text-white transition-colors border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono"
+              >
+                Owner Admin
+              </button>
+            )}
           </div>
         </div>
 
       </div>
+
+      {/* Informational Policy Modals */}
+      {modalType && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs">
+          <div className="relative w-full max-w-lg bg-white text-[#1A1F26] rounded-sm p-6 sm:p-8 shadow-2xl space-y-4 animate-in fade-in duration-150">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <div className="flex items-center gap-2">
+                {modalType === 'guarantee' && <ShieldCheck className="text-emerald-700" size={20} />}
+                {modalType === 'shipping' && <Truck className="text-[#38BDF8]" size={20} />}
+                {modalType === 'privacy' && <Lock className="text-[#B12535]" size={20} />}
+                {modalType === 'terms' && <FileText className="text-slate-700" size={20} />}
+                <h3 className="font-serif text-xl font-bold">
+                  {modalType === 'guarantee' && '30-Day Fairway Guarantee'}
+                  {modalType === 'shipping' && 'Complimentary Shipping Over $75'}
+                  {modalType === 'privacy' && 'Customer Privacy Policy'}
+                  {modalType === 'terms' && 'Terms of Service'}
+                </h3>
+              </div>
+              <button onClick={() => setModalType(null)} className="p-1 hover:bg-slate-100 rounded text-slate-500">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="text-xs text-slate-600 leading-relaxed space-y-2">
+              {modalType === 'guarantee' && (
+                <>
+                  <p>Play 18 holes, sweat in it, and machine wash it. If the stay-flat collar curls or the drape does not exceed your expectations, return it within 30 days for a full refund or exchange — no questions asked.</p>
+                  <p className="font-bold text-[#1C2C24]">We back our 100+ Washes Guarantee with 100% domestic coverage.</p>
+                </>
+              )}
+              {modalType === 'shipping' && (
+                <>
+                  <p>All orders over $75 qualify for complimentary standard domestic shipping across the continental United States. Orders are routed directly via our automated Print-On-Demand production facility with 2–4 business day dispatch and USPS/FedEx tracking.</p>
+                </>
+              )}
+              {modalType === 'privacy' && (
+                <>
+                  <p>High Draw Gear values customer privacy. We never sell, rent, or trade your personal information, address, or email to third-party data brokers. Payment information is securely encrypted via SSL checkout.</p>
+                </>
+              )}
+              {modalType === 'terms' && (
+                <>
+                  <p>High Draw Gear products are engineered for recreational and competitive golf play. All direct purchases are covered by our 30-Day Fairway Guarantee and manufacturer defect warranty.</p>
+                </>
+              )}
+            </div>
+
+            <button 
+              onClick={() => setModalType(null)}
+              className="w-full py-2.5 bg-[#1C2C24] text-white font-bold text-xs uppercase tracking-wider rounded-xs mt-2"
+            >
+              CLOSE
+            </button>
+          </div>
+        </div>
+      )}
+
     </footer>
   );
 };

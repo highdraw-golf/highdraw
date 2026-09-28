@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
-import { PipesCurationModal } from './components/PipesCurationModal';
 import { ShopifyCollections } from './components/ShopifyCollections';
 import { WhyHighDraw } from './components/WhyHighDraw';
 import { UserReviews } from './components/UserReviews';
@@ -13,31 +12,49 @@ import { AdminConsole } from './components/AdminConsole';
 export function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
-      id: 'polo-navy-01',
-      name: 'The Classic Performance Polo — Deep Navy',
+      id: 'polo-cypress-01',
+      name: 'The Heritage Cypress Micro-Pique Polo',
       price: 48,
-      color: 'Deep Navy',
+      color: 'Cypress Green',
       size: 'L',
-      image: '/assets/lifestyle_golf.jpg',
+      image: '/assets/polo_cypress_green.jpg',
     },
   ]);
 
+  const [activeCategory, setActiveCategory] = useState<'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles'>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isPipesOpen, setIsPipesOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Store Brand State (Configurable by Brand Owner)
+  // Store Brand State (Configurable by Brand Owner via AdminConsole)
   const [tickerText, setTickerText] = useState('FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48');
   const [poloPrice, setPoloPrice] = useState(48);
-
-  // Pipes Curation State (Ken Siri / High Draw Golf Pipe)
   const [activeBoard, setActiveBoard] = useState('Autumn Fairways');
   const [heroImage, setHeroImage] = useState('/assets/lifestyle_golf.jpg');
+
+  // Keyboard shortcut for Brand Owner console (Ctrl+Shift+O / Cmd+Shift+O)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'o') {
+        e.preventDefault();
+        setIsAdminOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleScrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSelectCategoryAndScroll = (category: 'polos' | 'outerwear' | 'headwear' | 'bundles') => {
+    setActiveCategory(category);
+    const collectionsEl = document.getElementById('collections');
+    if (collectionsEl) {
+      collectionsEl.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -56,7 +73,7 @@ export function App() {
       {
         id: 'hat-upsell-01',
         name: 'The High Draw Structured Visor Rope Cap',
-        price: 26,
+        price: 32,
         color: 'Vintage White / Navy Rope',
         size: 'ONE SIZE',
         image: '/assets/hat_rope_white.png',
@@ -70,42 +87,46 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#32363F] selection:bg-[#B12535] selection:text-white">
-      {/* Header with Pipes Curation & Owner Console Trigger */}
+    <div className="min-h-screen bg-white font-sans text-[#1A1F26] selection:bg-[#B12535] selection:text-white">
+      {/* Header with Far-Left Logo, Working Nav Links (Pipes & Owner Console Removed) */}
       <Header 
         cartCount={cartItems.length}
         onOpenCart={() => setIsCartOpen(true)}
+        onSelectCategoryAndScroll={handleSelectCategoryAndScroll}
         onScrollToSection={handleScrollToSection}
-        onOpenPipes={() => setIsPipesOpen(true)}
-        activeBoard={activeBoard}
         tickerText={tickerText}
-        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
-      <main>
+      <main className="pt-20">
         {/* Straight Down / Peter Millar Style Hero */}
         <FullscreenHero 
           heroImage={heroImage}
-          onScrollToShop={() => handleScrollToSection('polos')}
-          onOpenPipes={() => setIsPipesOpen(true)}
-          activeBoard={activeBoard}
+          onScrollToShop={() => handleSelectCategoryAndScroll('polos')}
+          onScrollToWhy={() => handleScrollToSection('why')}
         />
 
-        {/* Picture-Heavy Shopify Collections */}
-        <div id="polos">
-          <ShopifyCollections 
-            onAddToCart={handleAddToCart}
-          />
-        </div>
+        {/* Picture-Heavy Shopify Collections with Working Filters & Swatches */}
+        <ShopifyCollections 
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
+          onAddToCart={handleAddToCart}
+        />
 
-        {/* Direct Value Pillars */}
-        <WhyHighDraw />
+        {/* Redesigned Craftsmanship Showcase (Macro Collar Detail & $48 Math) */}
+        <WhyHighDraw 
+          onScrollToShop={() => handleSelectCategoryAndScroll('polos')}
+        />
 
-        {/* Real User Reviews */}
+        {/* Real Golfer Course Reviews with Authentic Photography */}
         <UserReviews />
       </main>
 
-      <Footer />
+      {/* Fully Functional Footer with Policy Modals & Discreet Admin Link */}
+      <Footer 
+        onSelectCategoryAndScroll={handleSelectCategoryAndScroll}
+        onScrollToSection={handleScrollToSection}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+      />
 
       {/* Owner Command Center Modal (Zero-Code Management for Dad) */}
       <AdminConsole
@@ -119,15 +140,7 @@ export function App() {
         onUpdatePrice={setPoloPrice}
       />
 
-      {/* Pipes Curation Modal (Ken Siri / High Draw Golf) */}
-      <PipesCurationModal 
-        isOpen={isPipesOpen}
-        onClose={() => setIsPipesOpen(false)}
-        activeBoard={activeBoard}
-        onSelectBoard={handleSelectPipesBoard}
-      />
-
-      {/* Cart Drawer */}
+      {/* Interactive Cart Drawer */}
       <CartDrawer 
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
