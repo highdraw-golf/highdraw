@@ -45,7 +45,7 @@ test.describe('High Draw Golf — Multi-Page Storefront & Luxury UI Suite', () =
 
     // Add to bag from PDP
     await page.locator('button:has-text("ADD TO BAG • $48")').click();
-    await expect(page.locator('text=YOUR BAG')).toBeVisible();
+    await expect(page.getByText('YOUR BAG', { exact: true })).toBeVisible();
   });
 
   test('Direct URL routing loads Craftsmanship page', async ({ page }) => {
