@@ -90,9 +90,9 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         <div className="flex flex-wrap gap-2 sm:gap-3 font-mono text-xs uppercase tracking-wider">
           {[
             { id: 'all', label: 'All Gear' },
-            { id: 'polos', label: "Men's Polos ($48)" },
-            { id: 'outerwear', label: 'Outerwear ($68)' },
-            { id: 'headwear', label: 'Caps ($32)' },
+            { id: 'polos', label: "Polos ($48)" },
+            { id: 'outerwear', label: 'Outerwear ($56)' },
+            { id: 'headwear', label: 'Caps ($35)' },
             { id: 'bundles', label: 'Foursome Kits ($160)' },
           ].map((cat) => (
             <button

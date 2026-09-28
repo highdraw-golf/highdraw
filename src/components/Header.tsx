@@ -58,19 +58,19 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('collection', 'polos')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            MEN'S POLOS ($48)
+            POLOS ($48)
           </button>
           <button 
             onClick={() => onNavigate('collection', 'outerwear')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            OUTERWEAR ($68)
+            OUTERWEAR ($56)
           </button>
           <button 
             onClick={() => onNavigate('collection', 'headwear')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            HEADWEAR ($32)
+            HEADWEAR ($35)
           </button>
           <button 
             onClick={() => onNavigate('collection', 'bundles')} 
@@ -132,19 +132,19 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            MEN'S POLOS ($48)
+            POLOS ($48)
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'outerwear'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            OUTERWEAR &amp; LAYERING ($68)
+            OUTERWEAR &amp; LAYERING ($56)
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'headwear'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            STRUCTURED ROPE CAPS ($32)
+            TOUR PERFORMANCE CAPS ($35)
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'bundles'); }} 

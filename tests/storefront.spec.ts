@@ -13,8 +13,8 @@ test.describe('High Draw Golf — Multi-Page Storefront & Luxury UI Suite', () =
     await expect(page.locator('text=SHOP MEN\'S POLOS').first()).toBeVisible();
 
     // Check nav links exist and are functional
-    await expect(page.locator('button:has-text("MEN\'S POLOS ($48)")').first()).toBeVisible();
-    await expect(page.locator('button:has-text("HEADWEAR ($32)")').first()).toBeVisible();
+    await expect(page.locator('button:has-text("POLOS ($48)")').first()).toBeVisible();
+    await expect(page.locator('button:has-text("HEADWEAR ($35)")').first()).toBeVisible();
     await expect(page.locator('button:has-text("THE CRAFTSMANSHIP")').first()).toBeVisible();
     await expect(page.locator('button:has-text("GOLFER REVIEWS")').first()).toBeVisible();
   });
@@ -23,25 +23,25 @@ test.describe('High Draw Golf — Multi-Page Storefront & Luxury UI Suite', () =
     await page.goto('/');
     
     // Click HEADWEAR in navbar
-    await page.locator('button:has-text("HEADWEAR ($32)")').first().click();
+    await page.locator('button:has-text("HEADWEAR ($35)")').first().click();
     
     // Verify collection page loads with headline and headwear product
-    await expect(page.locator('h1:has-text("Structured Visor Rope Caps ($32)")')).toBeVisible();
-    await expect(page.locator('text=The High Draw Structured Visor Rope Cap').first()).toBeVisible();
+    await expect(page.locator('h1:has-text("Tour Performance Poly-Mesh Caps ($35)")')).toBeVisible();
+    await expect(page.locator('text=Tour Performance Poly-Mesh Cap').first()).toBeVisible();
     expect(page.url()).toContain('/collections/headwear');
   });
 
   test('Clicking product card navigates to dedicated Product Detail Page (PDP)', async ({ page }) => {
     await page.goto('/');
     
-    // Click Cypress polo card
-    await page.locator('h3:has-text("The Heritage Cypress Micro-Pique Polo")').first().click();
+    // Click Men's Tour Performance Polo card
+    await page.locator('h3:has-text("Men\'s Tour Performance Polo")').first().click();
     
     // Verify PDP loads
-    await expect(page.locator('h1:has-text("The Heritage Cypress Micro-Pique Polo")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Men\'s Tour Performance Polo")')).toBeVisible();
     await expect(page.locator('text=$48 USD')).toBeVisible();
     await expect(page.locator('text=Frequently Bought Together')).toBeVisible();
-    expect(page.url()).toContain('/products/the-heritage-cypress-micro-pique-polo');
+    expect(page.url()).toContain('/products/mens-tour-performance-polo');
 
     // Add to bag from PDP
     await page.locator('button:has-text("ADD TO BAG • $48")').click();

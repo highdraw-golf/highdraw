@@ -22,17 +22,17 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
   const categoryTitles = {
     all: 'Complete Fairway Collection',
-    polos: "Men's Performance Polos ($48)",
-    outerwear: 'Outerwear & Layering ($68)',
-    headwear: 'Structured Visor Rope Caps ($32)',
+    polos: "Tour Performance Polos ($48)",
+    outerwear: '1/4-Zip Performance Layering ($56)',
+    headwear: 'Tour Performance Poly-Mesh Caps ($35)',
     bundles: 'Saturday Foursome Scramble Kits ($160)',
   };
 
   const categorySubtitles = {
     all: 'Engineered for dedicated weekenders with 4-way stretch drape and zero overpriced retail markup.',
-    polos: 'Tour-grade micro-pique drape, fused stay-flat collar engineering, and 100+ wash guarantee.',
-    outerwear: 'Brushed thermal fleece with lockdown storm plackets for brisk 7:00 AM tee times.',
-    headwear: 'Retro 5-panel structured chino twill with heavy embroidered tracer flag and nautical rope.',
+    polos: 'Tour-grade micro-pique drape, fused stay-flat collar engineering, and 100+ wash guarantee for men & women.',
+    outerwear: 'Water-resistant cadet collar pullover with 4-way stretch for brisk early morning tee times.',
+    headwear: 'Flexfit breathable poly-block mesh with silver anti-glare underbill and crisp High Draw tracer mark.',
     bundles: 'Outfit your regular four-ball group in tour-grade gear at $40/shirt bulk savings.',
   };
 
@@ -90,8 +90,8 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
             {[
               { id: 'all', label: 'All Gear' },
               { id: 'polos', label: "Polos ($48)" },
-              { id: 'outerwear', label: 'Outerwear ($68)' },
-              { id: 'headwear', label: 'Caps ($32)' },
+              { id: 'outerwear', label: 'Outerwear ($56)' },
+              { id: 'headwear', label: 'Caps ($35)' },
               { id: 'bundles', label: 'Bundles ($160)' },
             ].map(cat => (
               <button

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Product } from '../data/products';
 import { SizeSelector } from '../components/ui/SizeSelector';
 import { ColorSwatch } from '../components/ui/ColorSwatch';
@@ -22,12 +22,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   onSelectProduct,
   allProducts,
 }) => {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || 'Cypress Green');
-  const [selectedSize, setSelectedSize] = useState('L');
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || 'True Navy');
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0] || 'L');
   const [activeImage, setActiveImage] = useState(product.image);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [added, setAdded] = useState(false);
   const [bundleAdded, setBundleAdded] = useState(false);
+
+  useEffect(() => {
+    setSelectedColor(product.colors[0]?.name || '');
+    setActiveImage(product.image);
+    setSelectedSize(product.sizes[0] || 'L');
+  }, [product.id]);
 
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName);
@@ -50,8 +56,29 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     setTimeout(() => setAdded(false), 1500);
   };
 
+  const isCap = product.id === 'tour-performance-poly-mesh-cap';
+  const bundleItem = isCap
+    ? {
+        id: 'mens-tour-performance-polo-True Navy-L',
+        name: "Men's Tour Performance Polo — True Navy",
+        price: 40,
+        regularPrice: 48,
+        color: 'True Navy',
+        size: 'L',
+        image: '/assets/products/catalog/men_polo_truenavy.jpg',
+      }
+    : {
+        id: 'tour-performance-poly-mesh-cap-Pure White-S/M',
+        name: 'Tour Performance Poly-Mesh Cap — Pure White',
+        price: 28,
+        regularPrice: 35,
+        color: 'Pure White',
+        size: 'S/M',
+        image: '/assets/products/catalog/hat_white.jpg',
+      };
+
   const handleAddBundle = () => {
-    // Add polo
+    // Add current item
     onAddToCart({
       id: `${product.id}-${selectedColor}-${selectedSize}`,
       name: `${product.name} — ${selectedColor}`,
@@ -60,14 +87,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       size: selectedSize,
       image: activeImage,
     });
-    // Add rope cap
+    // Add companion bundle item
     onAddToCart({
-      id: 'hat-upsell-bundle',
-      name: 'The High Draw Structured Visor Rope Cap',
-      price: 26,
-      color: 'Vintage White / Navy Rope',
-      size: 'ONE SIZE',
-      image: '/assets/hat_rope_white.png',
+      id: bundleItem.id,
+      name: bundleItem.name,
+      price: bundleItem.price,
+      color: bundleItem.color,
+      size: bundleItem.size,
+      image: bundleItem.image,
     });
     setBundleAdded(true);
     setTimeout(() => setBundleAdded(false), 1500);
@@ -285,12 +312,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 </span>
               </div>
               <div className="flex items-center gap-4">
-                <img src="/assets/hat_rope_white.png" alt="Rope Cap" className="w-14 h-14 object-cover rounded-xs border border-slate-200" />
+                <img src={bundleItem.image} alt={bundleItem.name} className="w-14 h-14 object-cover rounded-xs border border-slate-200" />
                 <div className="flex-1 text-xs">
-                  <span className="font-bold text-[#1A1F26] block">High Draw Structured Visor Rope Cap</span>
+                  <span className="font-bold text-[#1A1F26] block">{bundleItem.name}</span>
                   <div className="flex items-center gap-2 font-mono">
-                    <span className="text-emerald-700 font-bold">+$26 Bundle Price</span>
-                    <span className="text-slate-400 line-through text-[11px]">$32 Reg</span>
+                    <span className="text-emerald-700 font-bold">+${bundleItem.price} Bundle Price</span>
+                    <span className="text-slate-400 line-through text-[11px]">${bundleItem.regularPrice} Reg</span>
                   </div>
                 </div>
                 <button
@@ -298,7 +325,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   onClick={handleAddBundle}
                   className="px-3 py-2 bg-[#1C2C24] hover:bg-black text-white text-[11px] font-bold uppercase tracking-wider rounded-xs cursor-pointer"
                 >
-                  {bundleAdded ? 'ADDED' : '+ ADD BOTH ($74)'}
+                  {bundleAdded ? 'ADDED' : `+ ADD BOTH ($${product.price + bundleItem.price})`}
                 </button>
               </div>
             </div>

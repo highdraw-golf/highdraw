@@ -79,19 +79,19 @@ export const Footer: React.FC<FooterProps> = ({
                 onClick={() => handleNav('collection', 'polos')} 
                 className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
-                Men's Polos ($48)
+                Men's &amp; Women's Polos ($48)
               </button>
               <button 
                 onClick={() => handleNav('collection', 'outerwear')} 
                 className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
-                Outerwear ($68)
+                1/4-Zip Outerwear ($56)
               </button>
               <button 
                 onClick={() => handleNav('collection', 'headwear')} 
                 className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
-                Visor Rope Caps ($32)
+                Performance Caps ($35)
               </button>
               <button 
                 onClick={() => handleNav('collection', 'bundles')} 
