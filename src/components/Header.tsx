@@ -7,6 +7,8 @@ interface HeaderProps {
   onScrollToSection: (id: string) => void;
   onOpenPipes: () => void;
   activeBoard: string;
+  tickerText?: string;
+  onOpenAdmin?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,6 +17,8 @@ export const Header: React.FC<HeaderProps> = ({
   onScrollToSection,
   onOpenPipes,
   activeBoard,
+  tickerText = 'FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48',
+  onOpenAdmin,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -24,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Top Announcement Ticker */}
       <div className="bg-[#2A4236] text-white py-2 px-4 text-center text-[11px] font-semibold tracking-wider flex items-center justify-center gap-3">
         <span className="w-1.5 h-1.5 rounded-full bg-[#FDE022]"></span>
-        <span>FREE SHIPPING ON ORDERS OVER $75 &bull; TOUR-GRADE drape AT $48</span>
+        <span className="uppercase">{tickerText}</span>
         <span className="hidden md:inline opacity-50">|</span>
         <span className="hidden md:inline text-slate-200">CURATED VIA HIGH DRAW GOLF PIPE</span>
       </div>
@@ -41,6 +45,11 @@ export const Header: React.FC<HeaderProps> = ({
             <Sparkles size={13} className="text-[#B12535]" />
             <span>PIPE: {activeBoard.toUpperCase()}</span>
           </button>
+          {onOpenAdmin && (
+            <button onClick={onOpenAdmin} className="text-[#B12535] font-bold tracking-wider hover:underline flex items-center gap-1">
+              <span>[OWNER CONSOLE]</span>
+            </button>
+          )}
         </div>
 
         {/* Mobile Toggle */}

@@ -8,6 +8,7 @@ import { UserReviews } from './components/UserReviews';
 import { CartDrawer } from './components/CartDrawer';
 import type { CartItem } from './components/CartDrawer';
 import { Footer } from './components/Footer';
+import { AdminConsole } from './components/AdminConsole';
 
 export function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -23,6 +24,11 @@ export function App() {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPipesOpen, setIsPipesOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // Store Brand State (Configurable by Brand Owner)
+  const [tickerText, setTickerText] = useState('FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48');
+  const [poloPrice, setPoloPrice] = useState(48);
 
   // Pipes Curation State (Ken Siri / High Draw Golf Pipe)
   const [activeBoard, setActiveBoard] = useState('Autumn Fairways');
@@ -65,13 +71,15 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#32363F] selection:bg-[#B12535] selection:text-white">
-      {/* Header with Pipes Curation Trigger */}
+      {/* Header with Pipes Curation & Owner Console Trigger */}
       <Header 
         cartCount={cartItems.length}
         onOpenCart={() => setIsCartOpen(true)}
         onScrollToSection={handleScrollToSection}
         onOpenPipes={() => setIsPipesOpen(true)}
         activeBoard={activeBoard}
+        tickerText={tickerText}
+        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       <main>
@@ -98,6 +106,18 @@ export function App() {
       </main>
 
       <Footer />
+
+      {/* Owner Command Center Modal (Zero-Code Management for Dad) */}
+      <AdminConsole
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        tickerText={tickerText}
+        onUpdateTicker={setTickerText}
+        activeBoard={activeBoard}
+        onSelectBoard={handleSelectPipesBoard}
+        poloPrice={poloPrice}
+        onUpdatePrice={setPoloPrice}
+      />
 
       {/* Pipes Curation Modal (Ken Siri / High Draw Golf) */}
       <PipesCurationModal 
