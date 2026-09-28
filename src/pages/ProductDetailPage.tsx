@@ -56,7 +56,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const isCap = product.id === 'tour-performance-poly-mesh-cap';
+  const isCap = product.category === 'headwear' || product.id === 'headwear-flexfit-mesh';
   const bundleItem = isCap
     ? {
         id: 'mens-tour-performance-polo-True Navy-L',
