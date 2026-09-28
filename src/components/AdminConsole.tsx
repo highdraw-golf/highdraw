@@ -297,7 +297,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                 <div className="text-xs">
                   <p className="font-bold text-[#2A4236] uppercase">Zero-Labor Fulfillment Active</p>
                   <p className="text-slate-600">
-                    All incoming orders automatically transmit to **Printify** for printing & shipping. Alerts are automatically sent to **kensiri@gmail.com**.
+                    All incoming orders automatically transmit to **Printify** for printing & shipping. Alerts are automatically sent to **kencyree@gmail.com**.
                   </p>
                 </div>
               </div>
@@ -342,7 +342,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
 
         {/* Modal Footer */}
         <div className="p-4 bg-slate-100 border-t border-slate-200 text-center text-xs text-slate-500 font-medium">
-          High Draw Golf Automated Owner Command Suite &bull; Pipe: kensiri@gmail.com
+          High Draw Golf Automated Owner Command Suite &bull; Pipe: kencyree@gmail.com
         </div>
 
       </div>

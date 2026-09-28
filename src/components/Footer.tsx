@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
 
             <div className="space-y-3 col-span-2 sm:col-span-1">
               <span className="text-white font-bold block uppercase tracking-wider text-[11px]">Contact & Pipe</span>
-              <span className="block text-slate-200">kensiri@gmail.com</span>
+              <span className="block text-slate-200">kencyree@gmail.com</span>
               <span className="block text-slate-400">High Draw Golf Pipe (Clark)</span>
               <span className="block text-slate-400">Est. 2001 &bull; Edition 001</span>
             </div>

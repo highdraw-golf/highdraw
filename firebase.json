@@ -5,7 +5,7 @@
       "phone": true,
       "googleSignIn": {
         "oAuthBrandDisplayName": "High Draw Golf",
-        "supportEmail": "kensiri@gmail.com",
+        "supportEmail": "kencyree@gmail.com",
         "authorizedRedirectUris": [
           "https://high-draw-c00b9.firebaseapp.com/__/auth/handler",
           "http://localhost:3013"
