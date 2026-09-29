@@ -36,6 +36,8 @@ export const PRODUCTS: Product[] = [
     secondaryImage: '/assets/products/bespoke/men_polo_black_wood.jpg',
     gallery: [
       '/assets/products/bespoke/men_polo_hero_wood.jpg',
+      '/assets/products/editorial/men_polo_navy_course.jpg',
+      '/assets/products/editorial/men_polo_carolina_course.jpg',
       '/assets/products/bespoke/men_polo_black_wood.jpg',
       '/assets/products/catalog/men_polo_truenavy.jpg',
       '/assets/products/catalog/men_polo_carolinablue.jpg',
@@ -84,6 +86,7 @@ export const PRODUCTS: Product[] = [
     secondaryImage: '/assets/products/catalog/women_polo_carolinablue.jpg',
     gallery: [
       '/assets/products/bespoke/women_polo_hero_wood.jpg',
+      '/assets/products/editorial/women_polo_carolina_course.jpg',
       '/assets/products/catalog/women_polo_carolinablue.jpg',
       '/assets/products/catalog/women_polo_black.jpg',
       '/assets/products/catalog/women_polo_white.jpg',
@@ -130,6 +133,7 @@ export const PRODUCTS: Product[] = [
     secondaryImage: '/assets/products/catalog/quarter_zip_truenavywhite.jpg',
     gallery: [
       '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
+      '/assets/products/editorial/quarter_zip_pullover_action.jpg',
       '/assets/products/catalog/quarter_zip_truenavywhite.jpg',
       '/assets/products/catalog/quarter_zip_blackwhite.jpg',
       '/assets/products/catalog/quarter_zip_irongreywhite.jpg',
@@ -170,9 +174,10 @@ export const PRODUCTS: Product[] = [
     price: 35,
     originalPrice: 55,
     image: '/assets/products/bespoke/hat_hero_wood.jpg',
-    secondaryImage: '/assets/products/catalog/hat_white.jpg',
+    secondaryImage: '/assets/products/editorial/cap_model_sunset_closeup.jpg',
     gallery: [
       '/assets/products/bespoke/hat_hero_wood.jpg',
+      '/assets/products/editorial/cap_model_sunset_closeup.jpg',
       '/assets/products/catalog/hat_white.jpg',
       '/assets/products/catalog/hat_truenavy.jpg',
       '/assets/products/catalog/hat_black.jpg',
@@ -214,11 +219,13 @@ export const PRODUCTS: Product[] = [
     collectionLabel: 'CURATED BUNDLES',
     price: 160,
     originalPrice: 192,
-    image: '/assets/products/bespoke/men_polo_hero_wood.jpg',
-    secondaryImage: '/assets/products/bespoke/women_polo_hero_wood.jpg',
+    image: '/assets/products/editorial/foursome_scramble_18th.jpg',
+    secondaryImage: '/assets/products/bespoke/men_polo_hero_wood.jpg',
     gallery: [
+      '/assets/products/editorial/foursome_scramble_18th.jpg',
       '/assets/products/bespoke/men_polo_hero_wood.jpg',
-      '/assets/products/bespoke/women_polo_hero_wood.jpg',
+      '/assets/products/editorial/men_polo_navy_course.jpg',
+      '/assets/products/editorial/women_polo_carolina_course.jpg',
       '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
       '/assets/products/bespoke/hat_hero_wood.jpg',
     ],

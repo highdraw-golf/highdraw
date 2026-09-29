@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, MapPin, User, Truck } from 'lucide-react';
+import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, MapPin, User, Truck, CreditCard } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
+import { createStripeCheckoutSession } from '../lib/stripe';
 
 export interface CartItem {
   id: string;
@@ -72,6 +73,42 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const handleProceedToShipping = () => {
     if (cartItems.length === 0) return;
     setStep('shipping');
+  };
+
+  const handleStripePayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!shippingForm.firstName || !shippingForm.lastName || !shippingForm.email || !shippingForm.address1 || !shippingForm.city || !shippingForm.state || !shippingForm.zip) {
+      setErrorMessage('Please fill in all shipping fields for Stripe Checkout.');
+      return;
+    }
+
+    setIsCheckingOut(true);
+    const orderNum = `HD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    try {
+      const res = await createStripeCheckoutSession({
+        items: cartItems.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          color: item.color,
+          size: item.size,
+          quantity: 1,
+        })),
+        customerEmail: shippingForm.email,
+        orderId: orderNum,
+      });
+
+      if (res.configured && res.checkoutUrl) {
+        return; // Redirected by browser
+      }
+
+      // If Stripe keys are not yet configured in Vercel environment, fallback to direct transmission
+      await handleSubmitOrder(e);
+    } catch (err) {
+      console.warn('Stripe checkout error, falling back:', err);
+      await handleSubmitOrder(e);
+    }
   };
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
@@ -405,21 +442,33 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </p>
             </div>
 
-            {/* Place Order CTA */}
-            <button
-              type="submit"
-              disabled={isCheckingOut}
-              className="w-full btn-obsidian py-4 text-xs tracking-[0.2em] flex items-center justify-center gap-2 cursor-pointer mt-4"
-            >
-              {isCheckingOut ? (
-                <span>ROUTING TO PRINTIFY PRODUCTION...</span>
-              ) : (
-                <>
-                  <span>CONFIRM ORDER &bull; ${total} USD</span>
-                  <ArrowRight size={14} />
-                </>
-              )}
-            </button>
+            {/* Stripe & Direct Order Actions */}
+            <div className="space-y-3 mt-4">
+              <button
+                type="button"
+                onClick={handleStripePayment}
+                disabled={isCheckingOut}
+                className="w-full py-4 bg-[#635BFF] hover:bg-[#4E44E6] text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98"
+              >
+                {isCheckingOut ? (
+                  <span>CONNECTING TO SECURE STRIPE CHECKOUT...</span>
+                ) : (
+                  <>
+                    <CreditCard size={16} />
+                    <span>PAY WITH STRIPE (CARD / APPLE PAY) &bull; ${total} USD</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="submit"
+                disabled={isCheckingOut}
+                className="w-full btn-obsidian py-3 text-xs tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>CONFIRM DIRECT ORDER (PAY ON INVOICE)</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
           </form>
         )}
 
