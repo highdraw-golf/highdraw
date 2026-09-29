@@ -168,12 +168,12 @@ export function App() {
     setCartItems((prev) => [
       ...prev,
       {
-        id: 'hat-upsell-01',
-        name: 'The High Draw Structured Visor Rope Cap',
-        price: 32,
-        color: 'Vintage White / Navy Rope',
-        size: 'ONE SIZE',
-        image: '/assets/hat_rope_white.png',
+        id: 'headwear-flexfit-mesh-Pure White-S/M',
+        name: 'The Tour Performance Poly-Mesh Cap',
+        price: 28,
+        color: 'Pure White',
+        size: 'S/M',
+        image: '/assets/products/bespoke/hat_hero_wood.jpg',
       },
     ]);
   };

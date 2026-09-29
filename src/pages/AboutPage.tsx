@@ -25,7 +25,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
+              <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
               <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
                 THE HIGH DRAW STORY
               </span>
@@ -47,7 +47,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             The Most Coveted Shot in Golf
           </h2>
           <p>
-            In golf, the "high draw" is the signature shot of players who understand control. It starts out right, catches the apex, and curves gracefully back toward the flag with distance and soft landing. That same pursuit of precision and restraint inspired our apparel brand.
+            In golf, the "high draw" is the signature shot of players who understand control. It starts out right, catches the apex, and curves gracefully back toward the flag with distance and a soft landing. That same pursuit of precision and restraint inspired our apparel brand.
           </p>
         </div>
 
@@ -57,13 +57,21 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
         <div className="space-y-4">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1F26]">
-            Ending the $125 Country Club Tax
+            Ending the $125 Legacy Brand Retail Tax
           </h2>
           <p>
-            Walk into any pro shop or boutique golf retailer, and you will see synthetic performance polos priced between $115 and $140. We audited the manufacturing: the micro-pique yarn, fused collar stand, and pearl buttons cost identical amounts. The extra $80 goes to PGA Tour player endorsement retainers and boutique distributor margins.
+            Walk into any luxury golf boutique or designer department store, and you will see synthetic performance polos priced between $115 and $140. We audited the manufacturing: the micro-pique yarn, fused collar stand, and pearl buttons cost identical amounts. The extra $80 goes to PGA Tour player endorsement contracts, multi-tier distributor markups, and boutique luxury overhead.
           </p>
+          <div className="p-6 bg-[#1C2C24] text-white rounded-xs space-y-2 border-l-4 border-[#38BDF8]">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#38BDF8]">
+              The High Draw Answer
+            </span>
+            <p className="text-sm text-slate-200 leading-relaxed italic">
+              "Feel the fabric. It is the exact same 180 GSM micro-pique stretch blend, but we engineered the collar so it never curls up or flops open after three washes. And because we sell directly to golfers online without paying millions in tour endorsements, it is $48 instead of $125."
+            </p>
+          </div>
           <p>
-            High Draw delivers directly to you: the player who plays on Saturday mornings, loves the game, and wants a collar that doesn't roll after three washes.
+            High Draw delivers directly to you: the player who plays on Saturday mornings, loves the game, and wants a collar that doesn't roll into bacon. Whether outfitting your regular weekend foursome, club member-guest events, or tournament scrambles, High Draw delivers tour-grade craftsmanship at a fair price.
           </p>
         </div>
 

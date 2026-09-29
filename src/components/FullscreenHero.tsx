@@ -33,12 +33,12 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           {/* Official Brand Badge with Cyan Tracer Mark */}
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wider text-slate-100 shadow-xl">
             <img 
-              src="/assets/logo_tracer_cyan.png" 
+              src="/assets/brand/logo_tracer_cyan.png" 
               alt="High Draw Tracer" 
               className="h-4 w-auto object-contain" 
             />
             <span className="font-mono text-[11px] tracking-widest text-[#38BDF8] uppercase font-bold">
-              180 GSM TOUR MICRO-PIQUE &bull; $48
+              180 GSM TOUR MICRO-PIQUE &bull; STAY-FLAT COLLAR &bull; $48
             </span>
           </div>
 
@@ -49,7 +49,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               <span className="font-normal italic text-slate-200">Crafted for Life.</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-200 max-w-xl font-normal leading-relaxed pt-2">
-              Tour-grade micro-pique drape, fused stay-flat collar architecture, and zero $125 legacy retail markup. Built for 18 holes and the clubhouse.
+              Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered with a fused collar stand that never curls or flops. Direct to golfers for $48.
             </p>
           </div>
 
@@ -75,15 +75,15 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           <div className="flex flex-wrap items-center gap-6 pt-3 text-[12px] text-slate-300 font-medium">
             <div className="flex items-center gap-2">
               <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-              <span>Matte Micro-Pique Drape</span>
+              <span>180 GSM Matte Micro-Pique</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-              <span>Stay-Flat Fused Collar Stand</span>
+              <span>Fused Stay-Flat Collar Stand</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck size={15} className="text-emerald-400 shrink-0" />
-              <span>100+ Washes Guarantee</span>
+              <span>100+ Washes No-Bacon Warranty</span>
             </div>
           </div>
 

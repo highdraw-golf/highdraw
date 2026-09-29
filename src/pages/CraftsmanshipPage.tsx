@@ -26,14 +26,14 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
 
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#38BDF8] text-[11px] font-mono tracking-widest uppercase">
-              <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-3.5 w-auto object-contain" />
+              <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-3.5 w-auto object-contain" />
               <span>THE HIGH DRAW ENGINEERING LAB</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold leading-tight">
-              Collar Architecture &amp; The 100+ Washes Guarantee
+              Collar Architecture &amp; The 10-Wash No-Bacon Guarantee
             </h1>
             <p className="text-base text-slate-300 max-w-2xl leading-relaxed">
-              Why traditional boutique golf polos curl into bacon after three washes — and how we re-engineered the stay-flat stand for weekenders.
+              Why traditional boutique golf polos curl into bacon after three washes — and how our fused interlining collar stand stays crisp through 100+ fairways.
             </p>
           </div>
         </div>

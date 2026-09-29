@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({
   cartCount,
   onOpenCart,
   onNavigate,
-  tickerText = 'FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48',
+  tickerText = 'FREE SHIPPING ON ORDERS OVER $75 • 10-WASH STAY-FLAT COLLAR GUARANTEE • DIRECT $48 PRICING',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
         >
           {/* Official High Draw Cyan Tracer Mark */}
           <img 
-            src="/assets/logo_tracer_cyan.png" 
+            src="/assets/brand/logo_tracer_cyan.png" 
             alt="High Draw Ball Flight Tracer" 
             className="h-10 w-auto object-contain hover:scale-105 transition-transform"
           />

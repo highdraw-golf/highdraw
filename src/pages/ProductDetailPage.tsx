@@ -217,7 +217,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Collection & Brand Badge */}
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-3.5 w-auto object-contain" />
+                <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-3.5 w-auto object-contain" />
                 <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535]">
                   {product.collectionLabel} &bull; TOUR PERFORMANCE
                 </span>

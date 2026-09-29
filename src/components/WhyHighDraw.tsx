@@ -13,7 +13,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
       <div className="max-w-4xl mx-auto text-center space-y-4 mb-20">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1C2C24]/10 text-[#1C2C24] text-[11px] font-bold tracking-widest uppercase">
           <img 
-            src="/assets/logo_tracer_cyan.png" 
+            src="/assets/brand/logo_tracer_cyan.png" 
             alt="Tracer" 
             className="h-3.5 w-auto object-contain"
           />
@@ -47,8 +47,18 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              The single biggest frustration in golf apparel is a collar that curls up or rolls flat after three washes. High Draw features a proprietary fused interlining collar stand engineered to maintain its tailored structure whether worn open under the sun or tucked under an autumn quarter-zip.
+              The single biggest frustration in golf apparel is a collar that curls up or rolls flat after three washes into the dreaded "bacon collar." High Draw features a proprietary fused interlining collar stand engineered to maintain its tailored structure whether worn open under the sun or tucked under an autumn quarter-zip.
             </p>
+
+            {/* The 10-Wash Challenge Callout */}
+            <div className="p-4 bg-amber-50/70 border-l-4 border-amber-600 rounded-r-xs space-y-1">
+              <span className="font-bold text-[#1C2C24] text-xs uppercase tracking-wider block">
+                The 10-Wash Collar Challenge
+              </span>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Take any $120 polo in your closet and wash it next to High Draw 10 times. If our fused collar stand rolls or curls into bacon, we will ship a replacement or refund you 100%.
+              </p>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs space-y-1">

@@ -45,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({
               onClick={() => handleNav('home')}
             >
               <img 
-                src="/assets/logo_tracer_cyan.png" 
+                src="/assets/brand/logo_tracer_cyan.png" 
                 alt="High Draw Ball Flight Tracer" 
                 className="h-10 w-auto object-contain"
               />

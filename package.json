@@ -10,6 +10,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "playwright test",
+    "harness": "node scripts/image_harness.js --all",
+    "harness:verify": "node scripts/image_harness.js --verify",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
