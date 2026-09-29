@@ -32,35 +32,36 @@ const LOGOS = {
   black: path.resolve(ROOT_DIR, 'public/assets/brand/logo_tracer_black.png'),
 };
 
-// Placement Profiles
+// Placement Profiles — Scaled to Exact Printify Production Specs
+// (2.0" Men's = 50px at ~30px/in; 1.75" Women's = 44px at ~34px/in; Hat Crown = 40px)
 const PROFILES = {
   men_polo: {
     targetWidth: 1200,
     targetHeight: 1800,
-    logoHeight: 56,
-    left: 665,
-    top: 660,
+    logoHeight: 50, // 2.0" on ST740
+    left: 715,
+    top: 655,
   },
   women_polo: {
     targetWidth: 1800,
     targetHeight: 1800,
-    logoHeight: 60,
-    left: 1010,
-    top: 710,
+    logoHeight: 44, // 1.75" on LST740
+    left: 1035,
+    top: 735,
   },
   quarter_zip: {
     targetWidth: 1800,
     targetHeight: 1800,
-    logoHeight: 58,
-    left: 1015,
-    top: 520,
+    logoHeight: 50, // 2.0" on ST443
+    left: 990,
+    top: 545,
   },
   hat: {
     targetWidth: 1800,
     targetHeight: 1800,
-    logoHeight: 75,
-    left: 710,
-    top: 430,
+    logoHeight: 40, // Elegant tour-grade crown embroidery
+    left: 725,
+    top: 435,
   },
 };
 
@@ -146,8 +147,16 @@ export async function applyEmbroidery(options) {
     },
   ];
 
-  await sharp(inputPath)
-    .composite(compositeLayers)
+  let pipeline = sharp(inputPath).composite(compositeLayers);
+
+  // If processing hats, center crop to eliminate 55% dead white margin
+  if (profileName === 'hat') {
+    pipeline = pipeline
+      .extract({ left: 250, top: 80, width: 1300, height: 1300 })
+      .resize(1200, 1200);
+  }
+
+  await pipeline
     .jpeg({ quality: 95 })
     .toFile(outputPath);
 

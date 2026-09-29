@@ -35,6 +35,8 @@ export const PRODUCTS: Product[] = [
     image: '/assets/products/bespoke/men_polo_hero_wood.jpg',
     secondaryImage: '/assets/products/bespoke/men_polo_black_wood.jpg',
     gallery: [
+      '/assets/products/real/men_polo_black_folded.png',
+      '/assets/products/real/men_polo_black_front.png',
       '/assets/products/bespoke/men_polo_hero_wood.jpg',
       '/assets/products/editorial/men_polo_navy_course.jpg',
       '/assets/products/editorial/men_polo_carolina_course.jpg',
@@ -85,6 +87,8 @@ export const PRODUCTS: Product[] = [
     image: '/assets/products/bespoke/women_polo_hero_wood.jpg',
     secondaryImage: '/assets/products/catalog/women_polo_carolinablue.jpg',
     gallery: [
+      '/assets/products/real/women_polo_carolinablue_folded.png',
+      '/assets/products/real/women_polo_carolinablue_front.png',
       '/assets/products/bespoke/women_polo_hero_wood.jpg',
       '/assets/products/editorial/women_polo_carolina_course.jpg',
       '/assets/products/catalog/women_polo_carolinablue.jpg',
