@@ -2,7 +2,7 @@
 
 ## 🚀 The 1-Click Direct Deploy Link
 
-Click this link while logged into Vercel (`kensiri@gmail.com`):
+Click this link while logged into Vercel (`highdrawgear@gmail.com`):
 
 👉 **[Deploy High Draw Golf on Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhighdraw-golf%2Fhighdraw)**
 

@@ -10,7 +10,7 @@ Vercel marks a deployment as **Blocked** for two common reasons:
 
 ### Cause A: Vercel GitHub App Authorization Needed
 If Vercel cannot access the GitHub repository `highdraw-golf/highdraw`:
-1. Open an incognito browser window logged into `kensiri@gmail.com` and GitHub `highdraw-golf`.
+1. Open an incognito browser window logged into `highdrawgear@gmail.com` and GitHub `highdraw-golf`.
 2. Open this link: [github.com/apps/vercel/installations/new](https://github.com/apps/vercel/installations/new).
 3. Select the `highdraw-golf` account and choose **All Repositories**.
 4. Click **Install & Authorize**.

@@ -6,7 +6,7 @@ When Vercel shows *"No Deployments Registered"* or an empty repository list, it 
 
 ## ⚡ Step 1: Connect Vercel to GitHub Account `highdraw-golf` (15 Seconds)
 
-1. Make sure you are logged into Vercel (`kensiri@gmail.com`).
+1. Make sure you are logged into Vercel (`highdrawgear@gmail.com`).
 2. Open this direct authorization link:
    👉 **[github.com/apps/vercel/installations/new](https://github.com/apps/vercel/installations/new)**
 3. Under *"Where do you want to install Vercel?"*, select **`highdraw-golf`**.

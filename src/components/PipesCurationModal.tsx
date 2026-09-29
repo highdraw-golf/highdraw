@@ -60,7 +60,7 @@ export const PipesCurationModal: React.FC<PipesCurationModalProps> = ({
             <div>
               <div className="text-[10px] uppercase font-bold tracking-widest text-emerald-200 flex items-center gap-1.5">
                 <User size={12} />
-                <span>PIPE OWNER: KEN SIRI (KENSIRI@GMAIL.COM)</span>
+                <span>PIPE OWNER: KEN CYREE (HIGHDRAWGEAR@GMAIL.COM)</span>
               </div>
               <h2 className="font-serif text-xl font-bold text-white">
                 High Draw Golf &bull; Private Business Pipe

@@ -1,13 +1,13 @@
-# High Draw Golf — Dad's Isolated Account Launch Guide
+# High Draw Golf — Ken Cyree's Dedicated Launch Guide
 
-This guide ensures **High Draw Golf** is deployed 100% on your dad's dedicated GitHub, Vercel, and Gmail accounts (`kensiri@gmail.com`), completely isolated from your personal developer accounts to avoid quota or billing overlap.
+This guide ensures **High Draw Golf** is deployed 100% on your dad's dedicated GitHub, Vercel, and Gmail accounts (`highdrawgear@gmail.com`), completely isolated from your personal developer accounts to avoid quota or billing overlap.
 
 ---
 
 ## Step 1: Set Up Dad's GitHub Account & Repository
 
 1. Open an incognito browser window and go to [github.com/signup](https://github.com/signup).
-2. Create a GitHub account using your dad's Gmail (`kensiri@gmail.com`).
+2. Create a GitHub account using your dad's Gmail (`highdrawgear@gmail.com`).
 3. Once logged into your dad's GitHub account:
    - Go to [github.com/new](https://github.com/new).
    - Enter **Repository name**: `high-draw-golf`.
@@ -36,8 +36,8 @@ git push -u origin master
 
 ## Step 3: Set Up Dad's Dedicated Vercel Account
 
-1. In your browser (logged into your dad's Gmail `kensiri@gmail.com`), go to [vercel.com/signup](https://vercel.com/signup).
-2. Click **Continue with Google** and choose `kensiri@gmail.com` (or click **Continue with GitHub** using your dad's new GitHub account).
+1. In your browser (logged into your dad's Gmail `highdrawgear@gmail.com`), go to [vercel.com/signup](https://vercel.com/signup).
+2. Click **Continue with Google** and choose `highdrawgear@gmail.com` (or click **Continue with GitHub** using your dad's new GitHub account).
 3. Once logged into your dad's new Vercel dashboard:
    - Click **Add New...** > **Project**.
    - Select your dad's `high-draw-golf` GitHub repository.
