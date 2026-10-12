@@ -32,15 +32,24 @@ function parseRouteFromLocation(): ActiveRoute {
 
   if (path.startsWith('/products/')) {
     const slug = path.replace('/products/', '').replace(/\/$/, '').trim();
-    const prod = PRODUCTS.find(p => 
-      p.slug === slug || 
-      p.id === slug ||
-      (slug.includes('women') && p.id.includes('women')) ||
-      (slug.includes('zip') && (p.category === 'outerwear' || p.slug.includes('zip'))) ||
-      ((slug.includes('cap') || slug.includes('hat')) && (p.category === 'headwear' || p.slug.includes('cap'))) ||
-      ((slug.includes('scramble') || slug.includes('foursome') || slug.includes('bundle')) && p.category === 'bundles') ||
-      (!slug.includes('women') && (slug.includes('men') || slug.includes('polo') || slug.includes('cypress') || slug.includes('navy')) && (p.id.includes('men') || p.category === 'polos'))
-    );
+    // 1. Exact match by slug or id
+    let prod = PRODUCTS.find(p => p.slug === slug || p.id === slug);
+
+    // 2. Intent-based fuzzy fallbacks for friendly/legacy URLs
+    if (!prod) {
+      if (slug.includes('women')) {
+        prod = PRODUCTS.find(p => p.id.includes('women') || p.slug.includes('women'));
+      } else if (slug.includes('zip') || slug.includes('pullover') || slug.includes('outerwear')) {
+        prod = PRODUCTS.find(p => p.category === 'outerwear' || p.slug.includes('zip'));
+      } else if (slug.includes('cap') || slug.includes('hat') || slug.includes('headwear')) {
+        prod = PRODUCTS.find(p => p.category === 'headwear');
+      } else if (slug.includes('scramble') || slug.includes('foursome') || slug.includes('bundle')) {
+        prod = PRODUCTS.find(p => p.category === 'bundles');
+      } else if (slug.includes('polo') || slug.includes('men')) {
+        prod = PRODUCTS.find(p => p.id === 'men-polo-st740');
+      }
+    }
+
     if (prod) return { view: 'product', product: prod };
   }
 
