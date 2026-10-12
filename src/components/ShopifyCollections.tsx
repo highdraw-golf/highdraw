@@ -124,7 +124,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 } else {
                   setQuickViewProduct(p);
                   setSelectedColor(p.colors[0]?.name || 'Cypress Green');
-                  setSelectedSize(p.sizes[0] || 'L');
+                  setSelectedSize(p.sizes?.[0] || 'L');
                 }
               }}
               className="group cursor-pointer flex flex-col justify-between"
@@ -293,7 +293,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       Select Size: <span className="text-[#1A1F26]">{selectedSize}</span>
                     </span>
                     <div className="grid grid-cols-6 gap-2">
-                      {quickViewProduct.sizes.map((sz) => (
+                      {(quickViewProduct.sizes || []).map((sz) => (
                         <button
                           key={sz}
                           onClick={() => setSelectedSize(sz)}

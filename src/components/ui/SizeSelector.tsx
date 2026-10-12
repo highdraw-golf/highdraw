@@ -9,7 +9,7 @@ export interface SizeSelectorProps {
 }
 
 export const SizeSelector: React.FC<SizeSelectorProps> = ({
-  sizes,
+  sizes = [],
   selectedSize,
   onSelectSize,
   onOpenSizeGuide,
@@ -33,7 +33,7 @@ export const SizeSelector: React.FC<SizeSelectorProps> = ({
       </div>
 
       <div className="grid grid-cols-6 gap-2">
-        {sizes.map((sz) => {
+        {(sizes || []).map((sz) => {
           const isSelected = selectedSize === sz;
           const isLowStock = lowStockSizes.includes(sz);
 

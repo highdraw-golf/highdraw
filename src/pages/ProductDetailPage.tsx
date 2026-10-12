@@ -23,7 +23,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   allProducts,
 }) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || 'True Navy');
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0] || 'L');
+  const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || 'L');
   const [activeImage, setActiveImage] = useState(product.image);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [added, setAdded] = useState(false);
@@ -32,7 +32,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   useEffect(() => {
     setSelectedColor(product.colors[0]?.name || '');
     setActiveImage(product.image);
-    setSelectedSize(product.sizes[0] || 'L');
+    setSelectedSize(product.sizes?.[0] || 'L');
   }, [product.id]);
 
   const handleColorChange = (colorName: string) => {

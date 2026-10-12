@@ -39,7 +39,7 @@ function parseRouteFromLocation(): ActiveRoute {
       (slug.includes('zip') && (p.category === 'outerwear' || p.slug.includes('zip'))) ||
       ((slug.includes('cap') || slug.includes('hat')) && (p.category === 'headwear' || p.slug.includes('cap'))) ||
       ((slug.includes('scramble') || slug.includes('foursome') || slug.includes('bundle')) && p.category === 'bundles') ||
-      (!slug.includes('women') && (slug.includes('men') || slug.includes('polo') || slug.includes('cypress') || slug.includes('navy')) && p.id.includes('mens'))
+      (!slug.includes('women') && (slug.includes('men') || slug.includes('polo') || slug.includes('cypress') || slug.includes('navy')) && (p.id.includes('men') || p.category === 'polos'))
     );
     if (prod) return { view: 'product', product: prod };
   }

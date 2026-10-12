@@ -58,6 +58,7 @@ export const PRODUCTS: Product[] = [
       { name: 'Grey Concrete', hex: '#9CA3AF', image: '/assets/products/catalog/men_polo_greyconcrete.jpg', logoColor: 'White Tracer' },
       { name: 'True Royal', hex: '#1D4ED8', image: '/assets/products/catalog/men_polo_trueroyal.jpg', logoColor: 'White Tracer' },
     ],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
     description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered with a fused stay-flat collar stand that never curls into bacon. Features moisture-wicking capillary weave, UPF 50+ UV solar protection, and a single embroidered High Draw ball flight tracer on the left chest.',
     features: [
       'Single high-contrast High Draw ball flight tracer embroidered on left chest',
@@ -107,6 +108,7 @@ export const PRODUCTS: Product[] = [
       { name: 'Grey Concrete', hex: '#9CA3AF', image: '/assets/products/catalog/women_polo_greyconcrete.jpg', logoColor: 'White Tracer' },
       { name: 'Graphite', hex: '#4B5563', image: '/assets/products/catalog/women_polo_graphite.jpg', logoColor: 'Cyan Tracer' },
     ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
     description: 'Feel the fabric. Tour-grade micro-pique stretch blend with a contoured feminine silhouette and open self-fabric Y-neck collar. Engineered for 100+ fairway washes without losing its drape. Finished with a single embroidered High Draw ball flight tracer on the left chest.',
     features: [
       'Single high-contrast High Draw ball flight tracer embroidered on left chest',
