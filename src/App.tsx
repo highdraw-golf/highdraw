@@ -14,6 +14,7 @@ import { CraftsmanshipPage } from './pages/CraftsmanshipPage';
 import { ReviewsPage } from './pages/ReviewsPage';
 import { GuaranteePage } from './pages/GuaranteePage';
 import { AboutPage } from './pages/AboutPage';
+import { LogoStudioPage } from './pages/LogoStudioPage';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
 
@@ -24,7 +25,8 @@ type ActiveRoute =
   | { view: 'craftsmanship' }
   | { view: 'reviews' }
   | { view: 'guarantee' }
-  | { view: 'about' };
+  | { view: 'about' }
+  | { view: 'logo-studio' };
 
 function parseRouteFromLocation(): ActiveRoute {
   if (typeof window === 'undefined') return { view: 'home' };
@@ -73,6 +75,9 @@ function parseRouteFromLocation(): ActiveRoute {
   if (path === '/pages/about' || path === '/about') {
     return { view: 'about' };
   }
+  if (path === '/pages/logo-studio' || path === '/logo-studio') {
+    return { view: 'logo-studio' };
+  }
 
   return { view: 'home' };
 }
@@ -114,7 +119,7 @@ export function App() {
   }, []);
 
   const navigateTo = (
-    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about',
+    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio',
     opts?: {
       category?: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
       product?: Product;
@@ -143,6 +148,9 @@ export function App() {
     } else if (view === 'about') {
       newPath = '/pages/about';
       nextRoute = { view: 'about' };
+    } else if (view === 'logo-studio') {
+      newPath = '/pages/logo-studio';
+      nextRoute = { view: 'logo-studio' };
     } else {
       newPath = '/';
       nextRoute = { view: 'home' };
@@ -268,6 +276,12 @@ export function App() {
           <AboutPage
             onBackToHome={() => navigateTo('home')}
             onGoToShop={() => navigateTo('collection', { category: 'polos' })}
+          />
+        )}
+
+        {route.view === 'logo-studio' && (
+          <LogoStudioPage
+            onBackToHome={() => navigateTo('home')}
           />
         )}
       </main>

@@ -4,7 +4,7 @@ import { X, ShieldCheck, Truck, Lock, FileText } from 'lucide-react';
 interface FooterProps {
   onSelectCategoryAndScroll?: (category: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
   onScrollToSection?: (id: string) => void;
-  onNavigate?: (view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about', category?: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
+  onNavigate?: (view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio', category?: 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
   onOpenAdmin?: () => void;
 }
 
@@ -17,7 +17,7 @@ export const Footer: React.FC<FooterProps> = ({
   const [modalType, setModalType] = useState<'guarantee' | 'shipping' | 'privacy' | 'terms' | null>(null);
 
   const handleNav = (
-    view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about',
+    view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio',
     category?: 'polos' | 'outerwear' | 'headwear' | 'bundles',
     sectionId?: string
   ) => {
@@ -163,6 +163,12 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex items-center gap-6">
             <button onClick={() => setModalType('privacy')} className="hover:text-slate-300 transition-colors">Privacy</button>
             <button onClick={() => setModalType('terms')} className="hover:text-slate-300 transition-colors">Terms of Service</button>
+            <button
+              onClick={() => handleNav('logo-studio')}
+              className="text-slate-400 hover:text-[#38BDF8] transition-colors border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono cursor-pointer"
+            >
+              Logo Studio (SVG/PNG)
+            </button>
             {onOpenAdmin && (
               <button 
                 onClick={onOpenAdmin} 
