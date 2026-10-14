@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ShieldCheck, RefreshCw, Truck, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, RefreshCw, ArrowRight } from 'lucide-react';
 
 interface GuaranteePageProps {
   onBackToHome: () => void;

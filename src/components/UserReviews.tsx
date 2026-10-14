@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Plus, Check, Quote, ShieldCheck } from 'lucide-react';
+import { Star, Plus, Check, ShieldCheck } from 'lucide-react';
 
 interface Review {
   id: string;

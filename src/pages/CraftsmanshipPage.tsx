@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, CheckCircle2, ShieldCheck, RefreshCw, Shirt, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Shirt, ArrowRight } from 'lucide-react';
 
 interface CraftsmanshipPageProps {
   onBackToHome: () => void;

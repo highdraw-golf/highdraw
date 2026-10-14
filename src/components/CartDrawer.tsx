@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, MapPin, User, Truck, CreditCard } from 'lucide-react';
+import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, CreditCard } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
@@ -32,6 +32,11 @@ interface ShippingForm {
   city: string;
   state: string;
   zip: string;
+}
+
+function generateOrderId(): string {
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `HD-2026-${rand}`;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
@@ -83,7 +88,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setIsCheckingOut(true);
-    const orderNum = `HD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const orderNum = generateOrderId();
 
     try {
       const res = await createStripeCheckoutSession({
@@ -121,7 +126,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setIsCheckingOut(true);
-    const orderNum = `HD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const orderNum = generateOrderId();
     setLastOrderId(orderNum);
 
     const formattedAddress = `${shippingForm.address1}${shippingForm.address2 ? ` ${shippingForm.address2}` : ''}, ${shippingForm.city}, ${shippingForm.state} ${shippingForm.zip}`;

@@ -1,5 +1,4 @@
 import sharp from 'sharp';
-import fs from 'fs';
 import path from 'path';
 
 const BRAIN_DIR = '/Users/kyle/.gemini/antigravity/brain/b6b677d3-5fc5-4227-8755-1b0a3091bbb4';
@@ -13,8 +12,6 @@ function harmonicInpaint(data, width, height, channels, box, maskPred, opts = {}
   const { x0, y0, x1, y1 } = box;
   const dilate = opts.dilate ?? 4;
   const iterations = opts.iterations ?? 400;
-  const texDx = opts.texDx ?? 0;
-  const texDy = opts.texDy ?? 28;
   const texStrength = opts.texStrength ?? 0.85;
   const useRect = opts.rect ?? false;
   const useEllipse = !useRect && (opts.ellipse ?? (!maskPred));

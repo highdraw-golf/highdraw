@@ -243,6 +243,7 @@ export function App() {
 
         {route.view === 'product' && (
           <ProductDetailPage
+            key={route.product.id}
             product={route.product}
             onBackToShop={() => navigateTo('collection', { category: route.product.category })}
             onAddToCart={handleAddToCart}

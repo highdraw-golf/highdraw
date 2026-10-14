@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Star, Plus, ShieldCheck, Check } from 'lucide-react';
+import { ArrowLeft, Star, Plus, ArrowRight } from 'lucide-react';
 
 interface ReviewsPageProps {
   onBackToHome: () => void;
@@ -149,6 +149,25 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
         {formOpen && (
           <form onSubmit={handleSubmit} className="bg-slate-50 border border-slate-300 p-6 sm:p-10 rounded-xs shadow-lg mb-16 space-y-4 max-w-3xl">
             <h3 className="font-serif text-2xl font-bold text-[#1A1F26]">Post Your Review</h3>
+            <div className="flex items-center gap-2 pb-2">
+              <span className="text-xs font-semibold text-slate-700">Rating:</span>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((starVal) => (
+                  <button
+                    key={starVal}
+                    type="button"
+                    onClick={() => setRating(starVal)}
+                    className="p-1 text-amber-500 hover:scale-110 transition-transform cursor-pointer"
+                  >
+                    <Star
+                      size={18}
+                      fill={starVal <= rating ? 'currentColor' : 'none'}
+                      className={starVal <= rating ? 'text-amber-500' : 'text-slate-300'}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <input 
                 type="text" 
@@ -181,7 +200,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
               onChange={e => setComment(e.target.value)} 
               className="w-full bg-white border border-slate-300 p-2.5 text-xs rounded"
             />
-            <button type="submit" className="px-6 py-3 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-xs">
+            <button type="submit" className="px-6 py-3 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer">
               {submitted ? 'REVIEW POSTED!' : 'SUBMIT REVIEW'}
             </button>
           </form>
@@ -212,6 +231,23 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Shop CTA */}
+        <div className="mt-16 text-center bg-[#1C2C24] text-white p-8 sm:p-12 rounded-xs space-y-4">
+          <h3 className="font-serif text-2xl sm:text-3xl font-bold">
+            Ready to Play Without Compromise?
+          </h3>
+          <p className="text-slate-300 text-sm max-w-xl mx-auto">
+            Experience the stay-flat structured collar and tour drape for $48. Backed by our 30-day course guarantee.
+          </p>
+          <button
+            onClick={onGoToShop}
+            className="px-8 py-3.5 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2"
+          >
+            <span>SHOP THE TOUR COLLECTION</span>
+            <ArrowRight size={16} />
+          </button>
         </div>
 
       </div>

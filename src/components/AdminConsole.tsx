@@ -28,17 +28,28 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [isDeploying, setIsDeploying] = useState(false);
   const [deploySuccess, setDeploySuccess] = useState(false);
-  const [orders, setOrders] = useState<OrderNotification[]>([]);
+  const [orders, setOrders] = useState<OrderNotification[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      return JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
+    } catch {
+      return [];
+    }
+  });
   const [activeTab, setActiveTab] = useState<'settings' | 'orders'>('settings');
 
   useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
-      setOrders(stored);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [isOpen]);
+    const handleStorage = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
+        setOrders(stored);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   if (!isOpen) return null;
 

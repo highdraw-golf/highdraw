@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { Product } from '../data/products';
 import { SizeSelector } from '../components/ui/SizeSelector';
 import { ColorSwatch } from '../components/ui/ColorSwatch';
 import { Accordion } from '../components/ui/Accordion';
 import { Button } from '../components/ui/Button';
 import { SizeGuideModal } from '../components/SizeGuideModal';
-import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Plus, Check, ShoppingBag, Sparkles } from 'lucide-react';
+import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Check, ShoppingBag, Sparkles } from 'lucide-react';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -22,18 +22,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   onSelectProduct,
   allProducts,
 }) => {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || 'True Navy');
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || 'L');
   const [activeImage, setActiveImage] = useState(product.image);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [added, setAdded] = useState(false);
   const [bundleAdded, setBundleAdded] = useState(false);
-
-  useEffect(() => {
-    setSelectedColor(product.colors[0]?.name || '');
-    setActiveImage(product.image);
-    setSelectedSize(product.sizes?.[0] || 'L');
-  }, [product.id]);
 
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName);

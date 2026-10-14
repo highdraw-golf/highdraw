@@ -18,7 +18,6 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
   onBackToHome,
 }) => {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
-  const [selectedColorFilter, setSelectedColorFilter] = useState<string>('all');
 
   const categoryTitles = {
     all: 'Complete Fairway Collection',
