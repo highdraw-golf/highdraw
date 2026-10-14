@@ -67,7 +67,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
     {
       name: 'Brutalist Twilight',
       subtitle: 'Luxury Editorial Styling',
-      image: '/assets/hero_golf_editorial.png',
+      image: '/assets/hero_editorial.png',
     },
     {
       name: 'Coastal Veranda',
