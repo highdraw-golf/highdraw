@@ -13,7 +13,7 @@ export const SizeSelector: React.FC<SizeSelectorProps> = ({
   selectedSize,
   onSelectSize,
   onOpenSizeGuide,
-  lowStockSizes = ['XL', '2XL'],
+  lowStockSizes = [],
 }) => {
   return (
     <div className="space-y-2.5">

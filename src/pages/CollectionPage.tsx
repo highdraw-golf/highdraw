@@ -22,10 +22,10 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
   const categoryTitles = {
     all: 'Complete Fairway Collection',
-    polos: "Tour Performance Polos ($48)",
-    outerwear: '1/4-Zip Performance Layering ($56)',
-    headwear: 'Tour Performance Poly-Mesh Caps ($35)',
-    bundles: 'Saturday Foursome Scramble Kits ($160)',
+    polos: 'Tour Performance Polos',
+    outerwear: '1/4-Zip Performance Layering',
+    headwear: 'Tour Performance Poly-Mesh Caps',
+    bundles: 'Saturday Foursome Scramble Kits',
   };
 
   const categorySubtitles = {
@@ -66,7 +66,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
+              <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
               <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
                 HIGH DRAW GOLF CO. &bull; FLAGSHIP STORE
               </span>
@@ -89,10 +89,10 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
           <div className="flex items-center gap-2 overflow-x-auto py-1">
             {[
               { id: 'all', label: 'All Gear' },
-              { id: 'polos', label: "Polos ($48)" },
-              { id: 'outerwear', label: 'Outerwear ($56)' },
-              { id: 'headwear', label: 'Caps ($35)' },
-              { id: 'bundles', label: 'Bundles ($160)' },
+              { id: 'polos', label: 'Polos' },
+              { id: 'outerwear', label: 'Outerwear' },
+              { id: 'headwear', label: 'Headwear' },
+              { id: 'bundles', label: 'Foursome Kits' },
             ].map(cat => (
               <button
                 key={cat.id}
@@ -133,55 +133,66 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
       {/* Product Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {sorted.map(p => (
-            <div
-              key={p.id}
-              onClick={() => onSelectProduct(p)}
-              className="group cursor-pointer flex flex-col justify-between"
-            >
-              <div>
-                <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative mb-4 rounded-xs border border-slate-200/80 shadow-xs">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <img
-                    src={p.secondaryImage}
-                    alt={`${p.name} secondary`}
-                    className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  />
-                  <div className="absolute top-3 left-3 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-xs shadow-xs flex items-center gap-1.5">
-                    <RefreshCw size={11} className="text-[#38BDF8]" />
-                    <span>100+ Washes Tested</span>
+          {sorted.map(p => {
+            const cardSpecBadge =
+              p.category === 'polos'
+                ? '180 GSM Micro-Pique'
+                : p.category === 'outerwear'
+                ? '4-Way Stretch Layer'
+                : p.category === 'headwear'
+                ? 'Flexfit® Poly-Mesh'
+                : '4-Polo Kit • $40/Shirt';
+
+            return (
+              <div
+                key={p.id}
+                onClick={() => onSelectProduct(p)}
+                className="group cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative mb-4 rounded-xs border border-slate-200/80 shadow-xs">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <img
+                      src={p.secondaryImage}
+                      alt={`${p.name} secondary`}
+                      className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    />
+                    <div className="absolute top-3 left-3 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-xs shadow-xs flex items-center gap-1.5">
+                      <RefreshCw size={11} className="text-[#38BDF8]" />
+                      <span>100+ Washes Tested</span>
+                    </div>
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-xs font-bold px-4 py-2.5 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                      <span>VIEW DETAILS &amp; SIZING</span>
+                      <ArrowUpRight size={14} />
+                    </div>
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-xs font-bold px-4 py-2.5 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                    <span>VIEW DETAILS &amp; SIZING</span>
-                    <ArrowUpRight size={14} />
+
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#B12535] block">
+                      {p.collectionLabel}
+                    </span>
+                    <h3 className="font-serif text-xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
+                      {p.name}
+                    </h3>
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#B12535] block">
-                    {p.collectionLabel}
+                <div className="pt-3 border-t border-slate-100 mt-3 flex items-baseline justify-between font-sans">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-lg font-bold text-[#1A1F26]">${p.price}</span>
+                    <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
+                  </div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24] bg-[#1C2C24]/10 px-2 py-0.5 rounded-xs">
+                    {cardSpecBadge}
                   </span>
-                  <h3 className="font-serif text-xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
-                    {p.name}
-                  </h3>
                 </div>
               </div>
-
-              <div className="pt-3 border-t border-slate-100 mt-3 flex items-baseline justify-between font-sans">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-lg font-bold text-[#1A1F26]">${p.price}</span>
-                  <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
-                </div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24] bg-[#1C2C24]/10 px-2 py-0.5 rounded-xs">
-                  Tour Drape &bull; $48
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

@@ -35,8 +35,6 @@ export const PRODUCTS: Product[] = [
     image: '/assets/products/bespoke/men_polo_hero_wood.jpg',
     secondaryImage: '/assets/products/bespoke/men_polo_black_wood.jpg',
     gallery: [
-      '/assets/products/real/men_polo_black_folded.png',
-      '/assets/products/real/men_polo_black_front.png',
       '/assets/products/bespoke/men_polo_hero_wood.jpg',
       '/assets/products/editorial/men_polo_navy_course.jpg',
       '/assets/products/editorial/men_polo_carolina_course.jpg',
@@ -45,7 +43,6 @@ export const PRODUCTS: Product[] = [
       '/assets/products/catalog/men_polo_carolinablue.jpg',
       '/assets/products/catalog/men_polo_white.jpg',
       '/assets/products/catalog/men_polo_black.jpg',
-      '/assets/products/catalog/men_polo_forestgreen.jpg',
     ],
     colors: [
       { name: 'Deep Midnight Navy', hex: '#1E293B', image: '/assets/products/catalog/men_polo_truenavy.jpg', logoColor: 'Gold Tracer' },
@@ -86,10 +83,8 @@ export const PRODUCTS: Product[] = [
     price: 48,
     originalPrice: 115,
     image: '/assets/products/bespoke/women_polo_hero_wood.jpg',
-    secondaryImage: '/assets/products/catalog/women_polo_carolinablue.jpg',
+    secondaryImage: '/assets/products/editorial/women_polo_carolina_course.jpg',
     gallery: [
-      '/assets/products/real/women_polo_carolinablue_folded.png',
-      '/assets/products/real/women_polo_carolinablue_front.png',
       '/assets/products/bespoke/women_polo_hero_wood.jpg',
       '/assets/products/editorial/women_polo_carolina_course.jpg',
       '/assets/products/catalog/women_polo_carolinablue.jpg',
@@ -97,6 +92,7 @@ export const PRODUCTS: Product[] = [
       '/assets/products/catalog/women_polo_white.jpg',
       '/assets/products/catalog/women_polo_truenavy.jpg',
       '/assets/products/catalog/women_polo_deepred.jpg',
+      '/assets/products/real/women_polo_carolinablue_folded.png',
     ],
     colors: [
       { name: 'Carolina Blue', hex: '#6BA4B8', image: '/assets/products/catalog/women_polo_carolinablue.jpg', logoColor: 'Black Tracer' },

@@ -70,7 +70,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <img 
-              src="/assets/logo_tracer_cyan.png" 
+              src="/assets/brand/logo_tracer_cyan.png" 
               alt="High Draw Mark" 
               className="h-4 w-auto object-contain"
             />
@@ -90,15 +90,15 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         <div className="flex flex-wrap gap-2 sm:gap-3 font-mono text-xs uppercase tracking-wider">
           {[
             { id: 'all', label: 'All Gear' },
-            { id: 'polos', label: "Polos ($48)" },
-            { id: 'outerwear', label: 'Outerwear ($56)' },
-            { id: 'headwear', label: 'Caps ($35)' },
-            { id: 'bundles', label: 'Foursome Kits ($160)' },
+            { id: 'polos', label: 'Polos' },
+            { id: 'outerwear', label: 'Outerwear' },
+            { id: 'headwear', label: 'Headwear' },
+            { id: 'bundles', label: 'Foursome Kits' },
           ].map((cat) => (
             <button
               key={cat.id}
               onClick={() => onSelectCategory(cat.id as any)}
-              className={`pb-2 px-2 transition-all font-bold ${
+              className={`pb-2 px-2 transition-all font-bold cursor-pointer ${
                 activeCategory === cat.id
                   ? 'text-[#1A1F26] border-b-2 border-[#B12535]'
                   : 'text-slate-400 hover:text-slate-700'
@@ -114,6 +114,14 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {filteredProducts.map((p) => {
           const currentImage = activeCardImages[p.id] || p.image;
+          const cardSpecBadge =
+            p.category === 'polos'
+              ? '180 GSM Micro-Pique'
+              : p.category === 'outerwear'
+              ? '4-Way Stretch Layer'
+              : p.category === 'headwear'
+              ? 'Flexfit® Poly-Mesh'
+              : '4-Polo Kit • $40/Shirt';
 
           return (
             <div 
@@ -193,7 +201,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                   <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
                 </div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24] bg-[#1C2C24]/10 px-2 py-0.5 rounded-xs">
-                  Tour Drape &bull; $48
+                  {cardSpecBadge}
                 </span>
               </div>
 

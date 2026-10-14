@@ -98,9 +98,9 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
           
           <div className="lg:col-span-6 relative aspect-[4/3] order-2 lg:order-1 rounded-sm overflow-hidden border border-slate-200 shadow-md">
             <img 
-              src="/assets/lifestyle_coastal_18th.jpg" 
+              src="/assets/products/editorial/men_polo_navy_course.jpg" 
               alt="High Draw Fairway Drape in Action" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
             <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md text-white text-[11px] font-mono px-3 py-1.5 rounded-xs flex items-center gap-2">
               <ShieldCheck size={14} className="text-[#38BDF8]" />
@@ -151,7 +151,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               Why We Charge $48 Instead of $125
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Golfers paying $115 to $135 for legacy boutique brands aren't paying for 3x the fabric quality — they're paying for corporate tour sponsorships, multi-tier distributor markups, and luxury retail overhead.
+              Golfers paying $115 to $135 for legacy boutique brands aren't paying for 3x the fabric quality — they're paying for corporate tour sponsorships, multi-tier distributor markups, and country-club retail overhead.
             </p>
           </div>
 
@@ -164,10 +164,10 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                 <span className="font-mono text-2xl font-bold text-red-400">$125+</span>
               </div>
               <ul className="text-xs space-y-2.5 text-slate-300">
-                <li className="flex justify-between"><span>Micro-pique technical fabric &amp; buttons</span> <span className="font-mono">$18.00</span></li>
+                <li className="flex justify-between"><span>Micro-pique technical garment &amp; embroidery</span> <span className="font-mono">$22.00</span></li>
                 <li className="flex justify-between text-slate-400"><span>Tour player endorsement contracts</span> <span className="font-mono">$32.00</span></li>
                 <li className="flex justify-between text-slate-400"><span>Multi-tier wholesale distribution layers</span> <span className="font-mono">$45.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Boutique designer markup</span> <span className="font-mono">$30.00</span></li>
+                <li className="flex justify-between text-slate-400"><span>Boutique retail overhead &amp; markup</span> <span className="font-mono">$26.00</span></li>
               </ul>
             </div>
 
@@ -181,10 +181,10 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                 <span className="font-mono text-2xl font-bold text-[#38BDF8]">$48</span>
               </div>
               <ul className="text-xs space-y-2.5 text-slate-200">
-                <li className="flex justify-between font-semibold"><span>Identical 180 GSM micro-pique &amp; stay-flat collar</span> <span className="font-mono">$18.00</span></li>
+                <li className="flex justify-between font-semibold"><span>180 GSM micro-pique, stay-flat collar &amp; USA embroidery</span> <span className="font-mono">$22.00</span></li>
                 <li className="flex justify-between text-slate-400"><span>PGA Tour player endorsement bloat</span> <span className="font-mono">$0.00</span></li>
-                <li className="flex justify-between text-slate-400"><span>Multi-tier distribution markups</span> <span className="font-mono">$0.00</span></li>
-                <li className="flex justify-between font-semibold text-[#38BDF8]"><span>Direct-to-golfer pricing</span> <span className="font-mono">$48.00 complete</span></li>
+                <li className="flex justify-between text-slate-400"><span>Wholesale middlemen &amp; boutique retail rent</span> <span className="font-mono">$0.00</span></li>
+                <li className="flex justify-between font-semibold text-[#38BDF8]"><span>Direct operations, platform &amp; honest margin</span> <span className="font-mono">$26.00</span></li>
               </ul>
             </div>
 

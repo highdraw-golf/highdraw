@@ -250,7 +250,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <span className="font-mono text-sm text-slate-400 line-through">${product.originalPrice}</span>
               </div>
               <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[11px] font-bold uppercase tracking-wider rounded-xs">
-                SAVE ${product.originalPrice - product.price} (58% OFF)
+                SAVE ${product.originalPrice - product.price} ({Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF)
               </span>
             </div>
 
@@ -270,10 +270,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               onOpenSizeGuide={() => setIsSizeGuideOpen(true)}
             />
 
-            {/* Urgency Stock Ticker */}
-            <div className="flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xs">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>Low Stock: Only 14 remaining in <strong>Size {selectedSize}</strong></span>
+            {/* Bespoke Embroidery & Fulfillment Assurance */}
+            <div className="flex items-center gap-2.5 text-xs text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/15 px-3.5 py-2.5 rounded-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" />
+              <span>
+                <strong>In Stock ({selectedColor}, Size {selectedSize}):</strong> Custom embroidered to order in the USA &bull; Covered by our 30-Day Fairway Guarantee
+              </span>
             </div>
 
             {/* Primary Add to Bag CTA */}

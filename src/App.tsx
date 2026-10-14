@@ -80,16 +80,7 @@ function parseRouteFromLocation(): ActiveRoute {
 export function App() {
   const [route, setRoute] = useState<ActiveRoute>(parseRouteFromLocation);
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 'polo-white-01',
-      name: 'The Classic Tour Performance Polo — Crisp White',
-      price: 48,
-      color: 'Crisp White',
-      size: 'L',
-      image: '/assets/polo_white_flatlay.jpg',
-    },
-  ]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const [activeCategory, setActiveCategory] = useState<'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles'>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);

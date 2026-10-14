@@ -58,19 +58,19 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('collection', 'polos')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            POLOS ($48)
+            POLOS
           </button>
           <button 
             onClick={() => onNavigate('collection', 'outerwear')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            OUTERWEAR ($56)
+            OUTERWEAR
           </button>
           <button 
             onClick={() => onNavigate('collection', 'headwear')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            HEADWEAR ($35)
+            HEADWEAR
           </button>
           <button 
             onClick={() => onNavigate('collection', 'bundles')} 
@@ -132,25 +132,25 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            POLOS ($48)
+            TOUR PERFORMANCE POLOS
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'outerwear'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            OUTERWEAR &amp; LAYERING ($56)
+            OUTERWEAR &amp; LAYERING
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'headwear'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            TOUR PERFORMANCE CAPS ($35)
+            TOUR PERFORMANCE CAPS
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'bundles'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            FOURSOME SCRAMBLE KITS ($160)
+            FOURSOME SCRAMBLE KITS
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('craftsmanship'); }} 

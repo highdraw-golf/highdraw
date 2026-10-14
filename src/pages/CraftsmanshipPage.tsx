@@ -89,7 +89,7 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
           </p>
 
           <div className="aspect-[16/9] rounded-sm overflow-hidden border border-slate-200 shadow-md">
-            <img src="/assets/lifestyle_coastal_18th.jpg" alt="Fairway Drape" className="w-full h-full object-cover" />
+            <img src="/assets/products/editorial/men_polo_navy_course.jpg" alt="Fairway Drape" className="w-full h-full object-cover object-top" />
           </div>
         </div>
 
