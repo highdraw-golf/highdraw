@@ -42,7 +42,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
       handicap: '11.8 Index',
       rating: 5,
       title: 'Luxury pro shop drape without the $125 retail markup',
-      comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the chest and nape is pure understated class.',
+      comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the left chest is pure understated class.',
       image: '/assets/review_ken.jpg',
       productWorn: 'The Classic Deep Navy Polo (XL)',
       date: '2 weeks ago',
@@ -70,8 +70,8 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
       rating,
       title: title || 'Verified Course Review',
       comment,
-      image: '/assets/review_marcus.jpg',
-      productWorn: 'The Heritage Cypress Micro-Pique Polo (L)',
+      image: '/assets/products/editorial/men_polo_navy_course.jpg',
+      productWorn: 'The Tour Performance Polo — Men\'s (L)',
       date: 'Just now',
     };
 
@@ -103,7 +103,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <img src="/assets/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
+              <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
               <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
                 COMMUNITY &bull; VERIFIED COURSE REVIEWS
               </span>
