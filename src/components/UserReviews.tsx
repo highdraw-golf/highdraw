@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Plus, Check, ShieldCheck } from 'lucide-react';
+import { Star, Plus, Check, ShieldCheck, Quote } from 'lucide-react';
 
 interface Review {
   id: string;
@@ -12,6 +12,7 @@ interface Review {
   image: string;
   productWorn: string;
   date: string;
+  tag: 'collar' | 'course' | 'foursome' | 'all';
 }
 
 const INITIAL_REVIEWS: Review[] = [
@@ -26,6 +27,7 @@ const INITIAL_REVIEWS: Review[] = [
     image: '/assets/review_marcus.jpg',
     productWorn: 'The Heritage Cypress Micro-Pique (L)',
     date: '3 days ago',
+    tag: 'collar',
   },
   {
     id: 'rev-02',
@@ -38,6 +40,7 @@ const INITIAL_REVIEWS: Review[] = [
     image: '/assets/review_david.jpg',
     productWorn: 'The Coastal Carolina Stripe Polo (L)',
     date: '1 week ago',
+    tag: 'foursome',
   },
   {
     id: 'rev-03',
@@ -46,19 +49,26 @@ const INITIAL_REVIEWS: Review[] = [
     handicap: '11.8 Index',
     rating: 5,
     title: 'Luxury pro shop drape without the $125 retail markup',
-    comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the chest and nape is pure understated class.',
+    comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the left chest is pure understated class.',
     image: '/assets/review_ken.jpg',
     productWorn: 'The Classic Deep Navy Polo (XL)',
     date: '2 weeks ago',
+    tag: 'course',
   },
 ];
 
 export const UserReviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(() => {
-    const saved = localStorage.getItem('highdraw_user_reviews');
-    return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
+    if (typeof window === 'undefined') return INITIAL_REVIEWS;
+    try {
+      const saved = localStorage.getItem('highdraw_user_reviews');
+      return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
+    } catch {
+      return INITIAL_REVIEWS;
+    }
   });
 
+  const [activeFilter, setActiveFilter] = useState<'all' | 'collar' | 'course' | 'foursome'>('all');
   const [formOpen, setFormOpen] = useState(false);
   const [author, setAuthor] = useState('');
   const [club, setClub] = useState('');
@@ -70,7 +80,11 @@ export const UserReviews: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('highdraw_user_reviews', JSON.stringify(reviews));
+    try {
+      localStorage.setItem('highdraw_user_reviews', JSON.stringify(reviews));
+    } catch {
+      // ignore
+    }
   }, [reviews]);
 
   const handleSubmitReview = (e: React.FormEvent) => {
@@ -85,9 +99,10 @@ export const UserReviews: React.FC = () => {
       rating,
       title: title || 'Verified Course Feedback',
       comment,
-      image: '/assets/review_marcus.jpg',
+      image: '/assets/products/editorial/men_polo_navy_course.jpg',
       productWorn,
       date: 'Just now',
+      tag: 'course',
     };
 
     setReviews([newRev, ...reviews]);
@@ -104,56 +119,84 @@ export const UserReviews: React.FC = () => {
     }, 1200);
   };
 
-  const avgRating = (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1);
+  const filteredReviews = activeFilter === 'all'
+    ? reviews
+    : reviews.filter(r => r.tag === activeFilter || !r.tag);
 
   return (
-    <section id="reviews" className="w-full py-24 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-white border-b border-slate-200">
+    <section id="reviews" className="w-full py-28 lg:py-36 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-white border-b border-slate-200">
       
-      {/* Header & Write Review Action */}
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-14 border-b border-slate-200">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
+      {/* Header & Filter Controls */}
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-16 border-b border-slate-200">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
             <img 
-              src="/assets/logo_tracer_cyan.png" 
+              src="/assets/brand/logo_tracer_cyan.png" 
               alt="High Draw Mark" 
               className="h-4 w-auto object-contain"
             />
-            <span className="text-xs font-bold uppercase tracking-widest text-[#B12535]">
-              VERIFIED GOLFER EXPERIENCES &bull; 100+ ROUNDS
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#B12535]">
+              FIELD NOTES &bull; VERIFIED 100+ ROUND EXPERIENCES
             </span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#1A1F26] font-bold">
-              Fairway Feedback
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#1A1F26] font-bold tracking-tight">
+              The Fairway Journal
             </h2>
-            <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 text-[#1A1F26] px-3.5 py-1.5 rounded-sm text-xs font-bold shadow-xs">
+            <div className="flex items-center gap-2.5 bg-slate-50 border border-slate-200 text-[#1A1F26] px-3.5 py-1.5 rounded-xs text-xs font-semibold">
               <div className="flex text-amber-500">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={14} fill="currentColor" />
                 ))}
               </div>
-              <span>{avgRating} / 5.0 ({reviews.length} Verified Reviews)</span>
+              <span className="font-mono font-bold">5.0 / 5.0</span>
+              <span className="text-slate-400">&bull;</span>
+              <span className="text-slate-600">Zero Bacon Collars Reported</span>
             </div>
           </div>
         </div>
 
-        <button
-          onClick={() => setFormOpen(!formOpen)}
-          className="px-6 py-3.5 bg-[#1C2C24] hover:bg-[#121d18] text-white font-bold text-xs uppercase tracking-wider rounded-sm transition-all self-start sm:self-auto shadow-sm active:scale-95 flex items-center gap-2"
-        >
-          <Plus size={16} />
-          <span>WRITE A REVIEW</span>
-        </button>
+        {/* Filter Pill Navigation & Submit CTA */}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex rounded-xs border border-slate-200 p-1 bg-slate-50 text-xs font-mono uppercase tracking-wider">
+            {[
+              { id: 'all', label: 'All Notes' },
+              { id: 'collar', label: 'Collar Tests' },
+              { id: 'course', label: 'Pro Shop Comparisons' },
+              { id: 'foursome', label: 'Foursome Kits' },
+            ].map(f => (
+              <button
+                key={f.id}
+                onClick={() => setActiveFilter(f.id as any)}
+                className={`px-3 py-1.5 rounded-xs transition-colors cursor-pointer font-bold ${
+                  activeFilter === f.id
+                    ? 'bg-[#1C2C24] text-white shadow-xs'
+                    : 'text-slate-600 hover:text-[#1A1F26]'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setFormOpen(!formOpen)}
+            className="px-5 py-2.5 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-sm active:scale-95 flex items-center gap-2 cursor-pointer"
+          >
+            <Plus size={16} />
+            <span>SUBMIT FIELD NOTE</span>
+          </button>
+        </div>
       </div>
 
       {/* Review Submission Form Drawer */}
       {formOpen && (
-        <div className="max-w-4xl mx-auto mb-16">
-          <form onSubmit={handleSubmitReview} className="bg-slate-50 border border-slate-300 p-6 sm:p-10 rounded-sm shadow-xl space-y-5 animate-in fade-in duration-200">
+        <div className="max-w-4xl mx-auto mb-20 animate-in fade-in duration-200">
+          <form onSubmit={handleSubmitReview} className="bg-[#FBFBFA] border border-slate-300 p-6 sm:p-10 rounded-xs shadow-xl space-y-6">
             <div className="border-b border-slate-200 pb-3">
-              <h3 className="font-serif text-2xl font-bold text-[#1A1F26]">Submit Your Fairway Review</h3>
-              <p className="text-xs text-slate-500 mt-1">Tell other golfers how the stay-flat collar and micro-pique drape held up in play.</p>
+              <h3 className="font-serif text-2xl font-bold text-[#1A1F26]">Submit Your Course Field Note</h3>
+              <p className="text-xs text-slate-500 mt-1">Tell fellow weekenders how the stay-flat collar and micro-pique drape held up in real play.</p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -174,7 +217,7 @@ export const UserReviews: React.FC = () => {
                   type="text" 
                   value={club} 
                   onChange={(e) => setClub(e.target.value)}
-                  placeholder="e.g. Augusta Country Club" 
+                  placeholder="e.g. Pinehurst No. 2" 
                   className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#1C2C24]"
                 />
               </div>
@@ -204,22 +247,22 @@ export const UserReviews: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Product Purchased</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Product Worn</label>
                 <select 
                   value={productWorn} 
                   onChange={(e) => setProductWorn(e.target.value)}
                   className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#1C2C24]"
                 >
                   <option value="The Heritage Cypress Micro-Pique Polo">The Heritage Cypress Micro-Pique Polo ($48)</option>
-                  <option value="The Coastal Carolina Performance Stripe Polo">The Coastal Carolina Performance Stripe Polo ($48)</option>
+                  <option value="The Coastal Carolina Performance Stripe Polo">The Coastal Carolina Stripe Polo ($48)</option>
                   <option value="The Classic Performance Polo — Deep Navy">The Classic Deep Navy Polo ($48)</option>
-                  <option value="The 19th Hole Performance Quarter-Zip">The 19th Hole Performance Quarter-Zip ($68)</option>
+                  <option value="The 19th Hole Performance Quarter-Zip">The 19th Hole Performance Quarter-Zip ($56)</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 block mb-1">Review Headline</label>
+              <label className="text-xs font-bold text-slate-700 block mb-1">Headline</label>
               <input 
                 type="text" 
                 value={title} 
@@ -230,13 +273,13 @@ export const UserReviews: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 block mb-1">Review Details *</label>
+              <label className="text-xs font-bold text-slate-700 block mb-1">Field Feedback *</label>
               <textarea 
                 required 
                 rows={3} 
                 value={comment} 
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Describe how the collar held up, fabric stretch on your swing, or wash durability..." 
+                placeholder="Describe collar durability, shoulder mobility on full swings, or wash performance..." 
                 className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#1C2C24]"
               />
             </div>
@@ -244,22 +287,22 @@ export const UserReviews: React.FC = () => {
             <div className="flex items-center justify-between pt-2">
               <button 
                 type="submit" 
-                className="px-6 py-3.5 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-sm hover:bg-[#8e1d29] transition-colors flex items-center gap-2"
+                className="px-6 py-3.5 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-xs hover:bg-[#8E1D29] transition-colors flex items-center gap-2 cursor-pointer shadow-md"
               >
                 {submitted ? (
                   <>
                     <Check size={16} />
-                    <span>REVIEW PUBLISHED LIVE!</span>
+                    <span>FIELD NOTE PUBLISHED!</span>
                   </>
                 ) : (
-                  <span>POST VERIFIED REVIEW</span>
+                  <span>POST VERIFIED FIELD NOTE</span>
                 )}
               </button>
 
               <button
                 type="button"
                 onClick={() => setFormOpen(false)}
-                className="text-xs text-slate-500 hover:text-slate-800 uppercase font-semibold"
+                className="text-xs text-slate-500 hover:text-slate-800 uppercase font-semibold cursor-pointer"
               >
                 Cancel
               </button>
@@ -268,59 +311,87 @@ export const UserReviews: React.FC = () => {
         </div>
       )}
 
-      {/* Picture-Heavy Real Golfer Review Cards (Real Golfers Wearing High Draw) */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {reviews.map((r) => (
-          <div 
-            key={r.id} 
-            className="flex flex-col justify-between bg-slate-50 border border-slate-200/90 rounded-sm overflow-hidden shadow-xs hover:shadow-md transition-shadow"
-          >
-            {/* Real Golfer Course Photo */}
-            <div className="aspect-[4/3] w-full overflow-hidden relative bg-slate-200 border-b border-slate-200">
-              <img 
-                src={r.image} 
-                alt={`${r.author} wearing High Draw`} 
-                className="w-full h-full object-cover object-top hover:scale-102 transition-transform duration-500"
-              />
-              <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[11px] px-2.5 py-1 rounded-xs flex items-center gap-1.5 font-medium">
-                <ShieldCheck size={13} className="text-[#38BDF8]" />
-                <span>Verified Buyer &bull; {r.productWorn}</span>
-              </div>
-            </div>
+      {/* Featured Lead Editorial Testimonial (Spaced-Out Luxury Spread) */}
+      <div className="max-w-7xl mx-auto mb-20 bg-[#FBFBFA] border-y border-slate-200/80 py-12 px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="lg:col-span-4 relative aspect-[4/3] rounded-xs overflow-hidden shadow-lg border border-slate-200/60">
+          <img 
+            src="/assets/review_ken.jpg" 
+            alt="Ken Cyree wearing High Draw Navy Polo" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
+            <ShieldCheck size={12} className="text-[#38BDF8]" />
+            <span>Ken Cyree &bull; 11.8 Index</span>
+          </div>
+        </div>
 
-            {/* Review Content */}
-            <div className="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
-              <div className="space-y-3">
+        <div className="lg:col-span-8 space-y-4">
+          <Quote size={32} className="text-[#B12535] opacity-80" />
+          <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1F26] font-bold leading-snug">
+            &ldquo;At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120.&rdquo;
+          </h3>
+          <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
+            The High Draw ball flight tracer embroidered on the left chest is pure understated class. You step onto the 1st tee looking like you belong, without spending half your greens fee on a shirt.
+          </p>
+          <div className="pt-2 flex items-center gap-3 text-xs text-slate-500">
+            <span className="font-bold text-[#1C2C24]">Ken Cyree</span>
+            <span>&bull;</span>
+            <span>Founder &amp; Dedicated Weekender</span>
+            <span>&bull;</span>
+            <span className="font-mono text-[#1C2C24] font-semibold">The Classic Deep Navy Polo (XL)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Spaced-Out Field Notes Grid (Frameless Editorial Stories, Zero Clunky Boxed Cards) */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+        {filteredReviews.map((r) => (
+          <div key={r.id} className="space-y-5 flex flex-col justify-between">
+            <div>
+              {/* Clean Frameless Photography */}
+              <div className="aspect-[16/11] w-full overflow-hidden rounded-xs relative bg-slate-100 border border-slate-200/60 shadow-sm group">
+                <img 
+                  src={r.image} 
+                  alt={`${r.author} wearing High Draw`} 
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103"
+                />
+                <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
+                  <ShieldCheck size={12} className="text-[#38BDF8]" />
+                  <span>Verified Buyer &bull; {r.productWorn}</span>
+                </div>
+              </div>
+
+              {/* Review Typography & Stars */}
+              <div className="pt-4 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex text-amber-500">
                     {[...Array(r.rating)].map((_, i) => (
-                      <Star key={i} size={14} fill="currentColor" />
+                      <Star key={i} size={13} fill="currentColor" />
                     ))}
                   </div>
-                  <span className="text-[11px] text-slate-400 font-mono">{r.date}</span>
+                  <span className="text-[11px] font-mono text-slate-400">{r.date}</span>
                 </div>
 
                 <h4 className="font-serif text-xl font-bold text-[#1A1F26] leading-snug">
-                  "{r.title}"
+                  &ldquo;{r.title}&rdquo;
                 </h4>
 
-                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
                   {r.comment}
                 </p>
               </div>
-
-              {/* Golfer Identity & Credentials */}
-              <div className="pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs">
-                <div>
-                  <span className="font-bold text-[#1A1F26] block">{r.author}</span>
-                  <span className="text-slate-500 text-[11px]">{r.club}</span>
-                </div>
-                <span className="text-[11px] font-mono text-[#1C2C24] bg-emerald-100/60 px-2 py-0.5 rounded-xs font-semibold">
-                  {r.handicap}
-                </span>
-              </div>
             </div>
 
+            {/* Discreet Author Line with Hairline Rule */}
+            <div className="pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs">
+              <div>
+                <span className="font-bold text-[#1A1F26] block">{r.author}</span>
+                <span className="text-slate-500 text-[11px]">{r.club}</span>
+              </div>
+              <span className="text-[11px] font-mono text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                {r.handicap}
+              </span>
+            </div>
           </div>
         ))}
       </div>

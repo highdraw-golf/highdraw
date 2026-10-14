@@ -3,6 +3,7 @@ import { ArrowLeft, Copy, Check, Download, Layers, Sparkles, Sliders } from 'luc
 
 interface LogoStudioPageProps {
   onBackToHome: () => void;
+  onLock?: () => void;
 }
 
 interface Pt {
@@ -297,7 +298,7 @@ const BRAND_SWATCHES = [
   { name: 'Pure White', hex: '#FFFFFF' },
 ];
 
-export const LogoStudioPage: React.FC<LogoStudioPageProps> = ({ onBackToHome }) => {
+export const LogoStudioPage: React.FC<LogoStudioPageProps> = ({ onBackToHome, onLock }) => {
   const [variant, setVariant] = useState<'crossbar' | 'classic' | 'flagstick'>('crossbar');
   const [monogramColor, setMonogramColor] = useState('#1C2C24');
   const [tracerColor, setTracerColor] = useState('#38BDF8');
@@ -432,13 +433,23 @@ ${cupMarkup}
       <div className="bg-[#1C2C24] text-white py-12 px-4 sm:px-8 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3">
-            <button
-              onClick={onBackToHome}
-              className="inline-flex items-center gap-2 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider cursor-pointer"
-            >
-              <ArrowLeft size={16} />
-              <span>BACK TO STOREFRONT</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onBackToHome}
+                className="inline-flex items-center gap-2 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider cursor-pointer"
+              >
+                <ArrowLeft size={16} />
+                <span>BACK TO STOREFRONT</span>
+              </button>
+              {onLock && (
+                <button
+                  onClick={onLock}
+                  className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-slate-400 hover:text-white border border-slate-600 hover:border-slate-300 rounded cursor-pointer transition-colors"
+                >
+                  Lock Studio
+                </button>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               <Sparkles size={14} className="text-[#38BDF8]" />
               <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">

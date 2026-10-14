@@ -15,6 +15,8 @@ import { ReviewsPage } from './pages/ReviewsPage';
 import { GuaranteePage } from './pages/GuaranteePage';
 import { AboutPage } from './pages/AboutPage';
 import { LogoStudioPage } from './pages/LogoStudioPage';
+import { OwnerAuthModal } from './components/OwnerAuthModal';
+import { isOwnerAuthorized, lockOwnerSession } from './lib/auth';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
 
@@ -90,6 +92,7 @@ export function App() {
   const [activeCategory, setActiveCategory] = useState<'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles'>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isOwnerAuthenticated, setIsOwnerAuthenticated] = useState<boolean>(isOwnerAuthorized);
 
   // Store Brand State (Configurable by Brand Owner via AdminConsole)
   const [tickerText, setTickerText] = useState('FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48');
@@ -281,9 +284,26 @@ export function App() {
         )}
 
         {route.view === 'logo-studio' && (
-          <LogoStudioPage
-            onBackToHome={() => navigateTo('home')}
-          />
+          isOwnerAuthenticated ? (
+            <LogoStudioPage
+              onBackToHome={() => navigateTo('home')}
+              onLock={() => {
+                lockOwnerSession();
+                setIsOwnerAuthenticated(false);
+                navigateTo('home');
+              }}
+            />
+          ) : (
+            <div className="min-h-[70vh] flex items-center justify-center bg-[#1C2C24] px-4 py-20">
+              <OwnerAuthModal
+                isOpen={true}
+                title="Logo Studio — Brand Asset Protection"
+                description="High Draw vector SVG and master PNG files are proprietary assets. Please enter the Owner PIN to access the Logo Studio."
+                onClose={() => navigateTo('home')}
+                onSuccess={() => setIsOwnerAuthenticated(true)}
+              />
+            </div>
+          )
         )}
       </main>
 
@@ -294,16 +314,31 @@ export function App() {
       />
 
       {/* Owner Command Center Modal (Zero-Code Management for Dad) */}
-      <AdminConsole
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        tickerText={tickerText}
-        onUpdateTicker={setTickerText}
-        activeBoard={activeBoard}
-        onSelectBoard={handleSelectPipesBoard}
-        poloPrice={poloPrice}
-        onUpdatePrice={setPoloPrice}
-      />
+      {isAdminOpen && (
+        isOwnerAuthenticated ? (
+          <AdminConsole
+            isOpen={isAdminOpen}
+            onClose={() => setIsAdminOpen(false)}
+            onLock={() => {
+              lockOwnerSession();
+              setIsOwnerAuthenticated(false);
+              setIsAdminOpen(false);
+            }}
+            tickerText={tickerText}
+            onUpdateTicker={setTickerText}
+            activeBoard={activeBoard}
+            onSelectBoard={handleSelectPipesBoard}
+            poloPrice={poloPrice}
+            onUpdatePrice={setPoloPrice}
+          />
+        ) : (
+          <OwnerAuthModal
+            isOpen={isAdminOpen}
+            onClose={() => setIsAdminOpen(false)}
+            onSuccess={() => setIsOwnerAuthenticated(true)}
+          />
+        )
+      )}
 
       {/* Interactive Cart Drawer */}
       <CartDrawer 

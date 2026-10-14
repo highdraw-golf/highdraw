@@ -110,9 +110,9 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         </div>
       </div>
 
-      {/* Picture-Heavy Collection Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-        {filteredProducts.map((p) => {
+      {/* Spaced-Out Editorial Collection Showcase (Borderless Luxury Presentation) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 lg:gap-x-14 lg:gap-y-24">
+        {filteredProducts.map((p, index) => {
           const currentImage = activeCardImages[p.id] || p.image;
           const cardSpecBadge =
             p.category === 'polos'
@@ -124,88 +124,126 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               : '4-Polo Kit • $40/Shirt';
 
           return (
-            <div 
-              key={p.id} 
-              onClick={() => {
-                if (onSelectProduct) {
-                  onSelectProduct(p);
-                } else {
-                  setQuickViewProduct(p);
-                  setSelectedColor(p.colors[0]?.name || 'Cypress Green');
-                  setSelectedSize(p.sizes?.[0] || 'L');
-                }
-              }}
-              className="group cursor-pointer flex flex-col justify-between"
-            >
-              <div>
-                {/* Full-Bleed Imagery with Hover Transition */}
-                <div className="aspect-[4/5] bg-slate-100 overflow-hidden relative mb-4 rounded-xs border border-slate-200/80 shadow-sm">
-                  <img 
-                    src={currentImage} 
-                    alt={p.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  
-                  {/* Secondary Image Hover Effect */}
-                  <img 
-                    src={p.secondaryImage} 
-                    alt={`${p.name} Detail`} 
-                    className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  />
-
-                  {/* 100+ Washes Guarantee Badge with Official Mark */}
-                  <div className="absolute top-3 left-3 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm shadow-sm flex items-center gap-1.5">
-                    <RefreshCw size={11} className="text-[#38BDF8]" />
-                    <span>100+ Washes Tested</span>
-                  </div>
-
-                  {/* Subtle Floating View Button */}
-                  <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-xs font-bold px-4 py-2.5 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                    <span>{onSelectProduct ? 'VIEW DETAILS & SIZING' : 'QUICK VIEW & SIZING'}</span>
-                    <ArrowUpRight size={14} />
-                  </div>
-                </div>
-
-                {/* Color Swatch Selector Directly on Card */}
-                <div className="flex items-center gap-2 mb-2" onClick={(e) => e.stopPropagation()}>
-                  {p.colors.map((c) => (
-                    <button
-                      key={c.name}
-                      title={c.name}
-                      onClick={(e) => handleColorSwatchClick(p.id, c, e)}
-                      style={{ backgroundColor: c.hex }}
-                      className="w-4 h-4 rounded-full border border-slate-300 shadow-xs hover:scale-125 transition-transform"
-                      aria-label={c.name}
+            <React.Fragment key={p.id}>
+              {/* Optional Editorial Lookbook Intermission after 3 Polos */}
+              {index === 3 && (activeCategory === 'all' || activeCategory === 'polos') && (
+                <div className="col-span-1 md:col-span-2 lg:col-span-3 my-6 py-12 px-6 sm:px-12 bg-[#1C2C24] text-white rounded-xs grid grid-cols-1 lg:grid-cols-12 gap-10 items-center shadow-xl">
+                  <div className="lg:col-span-5 relative aspect-[16/10] rounded-xs overflow-hidden shadow-lg border border-white/10">
+                    <img 
+                      src="/assets/foursome_after.jpg" 
+                      alt="The High Draw Saturday Scramble Foursome" 
+                      className="w-full h-full object-cover"
                     />
-                  ))}
-                  <span className="text-[11px] text-slate-400 font-medium ml-1">
-                    {p.colors.length} Colorway{p.colors.length > 1 ? 's' : ''}
+                    <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs">
+                      18TH HOLE AT PEBBLE &bull; VERIFIED FOURSOME
+                    </div>
+                  </div>
+                  <div className="lg:col-span-7 space-y-4">
+                    <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+                      THE SATURDAY SCRAMBLE FOURSOME INITIATIVE
+                    </span>
+                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
+                      Equip Your Entire Foursome for $160 ($40/Shirt)
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans max-w-xl">
+                      Why show up to your club scramble in mismatching gym polos? Every High Draw polo features identical 180 GSM matte drape, stay-flat fused collar engineering, and the subtle left-chest ball flight tracer.
+                    </p>
+                    <div className="pt-2">
+                      <button
+                        onClick={() => onSelectCategory('bundles')}
+                        className="px-6 py-3 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-md inline-flex items-center gap-2"
+                      >
+                        <span>EXPLORE FOURSOME KITS &bull; $160</span>
+                        <ArrowUpRight size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Frameless Editorial Product Item */}
+              <div 
+                onClick={() => {
+                  if (onSelectProduct) {
+                    onSelectProduct(p);
+                  } else {
+                    setQuickViewProduct(p);
+                    setSelectedColor(p.colors[0]?.name || 'Cypress Green');
+                    setSelectedSize(p.sizes?.[0] || 'L');
+                  }
+                }}
+                className="group cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  {/* Clean Frameless Imagery with Smooth Cross-Fade */}
+                  <div className="aspect-[3/4] bg-[#F7F7F6] overflow-hidden relative mb-5 rounded-xs transition-all duration-500">
+                    <img 
+                      src={currentImage} 
+                      alt={p.name} 
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-104"
+                    />
+                    
+                    {/* Secondary Detail Image Cross-Fade */}
+                    <img 
+                      src={p.secondaryImage} 
+                      alt={`${p.name} Detail`} 
+                      className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    />
+
+                    {/* Discreet Craftsmanship Tag */}
+                    <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/85 backdrop-blur-md text-white text-[10px] font-mono tracking-widest px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
+                      <RefreshCw size={11} className="text-[#38BDF8]" />
+                      <span>100+ Washes</span>
+                    </div>
+
+                    {/* Subtle Hover Action Button */}
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-[11px] font-bold tracking-wider px-4 py-2.5 rounded-xs shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                      <span>{onSelectProduct ? 'VIEW DETAILS' : 'QUICK VIEW'}</span>
+                      <ArrowUpRight size={13} />
+                    </div>
+                  </div>
+
+                  {/* Tailor's Colorway Swatches */}
+                  <div className="flex items-center gap-2 mb-2.5" onClick={(e) => e.stopPropagation()}>
+                    {p.colors.map((c) => (
+                      <button
+                        key={c.name}
+                        title={c.name}
+                        onClick={(e) => handleColorSwatchClick(p.id, c, e)}
+                        style={{ backgroundColor: c.hex }}
+                        className="w-4 h-4 rounded-full border border-slate-300 hover:scale-125 transition-transform cursor-pointer"
+                        aria-label={c.name}
+                      />
+                    ))}
+                    <span className="text-[11px] text-slate-400 font-medium ml-1">
+                      {p.colors.length} Colorway{p.colors.length > 1 ? 's' : ''}
+                    </span>
+                  </div>
+
+                  {/* Clean Editorial Typography */}
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535] block">
+                      {p.collectionLabel}
+                    </span>
+                    <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
+                      {p.name}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Price & Value Line */}
+                <div className="pt-3 border-t border-slate-100 mt-4 flex items-baseline justify-between font-sans">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-xl font-bold text-[#1A1F26]">${p.price}</span>
+                    <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
+                  </div>
+                  <span className="text-[11px] font-mono tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                    {cardSpecBadge}
                   </span>
                 </div>
 
-                {/* Clean Editorial Title */}
-                <div className="space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535] block">
-                    {p.collectionLabel}
-                  </span>
-                  <h3 className="font-serif text-xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
-                    {p.name}
-                  </h3>
-                </div>
               </div>
-
-              {/* Price & Value Proposition Bar */}
-              <div className="pt-3 border-t border-slate-100 mt-3 flex items-baseline justify-between font-sans">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-lg font-bold text-[#1A1F26]">${p.price}</span>
-                  <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
-                </div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24] bg-[#1C2C24]/10 px-2 py-0.5 rounded-xs">
-                  {cardSpecBadge}
-                </span>
-              </div>
-
-            </div>
+            </React.Fragment>
           );
         })}
       </div>

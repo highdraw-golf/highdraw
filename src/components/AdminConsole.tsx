@@ -5,6 +5,7 @@ import type { OrderNotification } from '../lib/emailService';
 interface AdminConsoleProps {
   isOpen: boolean;
   onClose: () => void;
+  onLock?: () => void;
   tickerText: string;
   onUpdateTicker: (newText: string) => void;
   activeBoard: string;
@@ -16,6 +17,7 @@ interface AdminConsoleProps {
 export const AdminConsole: React.FC<AdminConsoleProps> = ({
   isOpen,
   onClose,
+  onLock,
   tickerText,
   onUpdateTicker,
   activeBoard,
@@ -129,12 +131,23 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
               <p className="text-xs text-slate-300 font-sans">Zero-Code Store & Automated Printify Fulfillment Management</p>
             </div>
           </div>
-          <button 
-            onClick={onClose}
-            className="p-2 text-slate-300 hover:text-white rounded-full hover:bg-white/10 transition-colors"
-          >
-            <X size={24} />
-          </button>
+          <div className="flex items-center gap-2">
+            {onLock && (
+              <button
+                onClick={onLock}
+                className="px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white border border-slate-500 hover:border-white rounded-xs transition-colors cursor-pointer"
+                title="Lock console session"
+              >
+                Lock Session
+              </button>
+            )}
+            <button 
+              onClick={onClose}
+              className="p-2 text-slate-300 hover:text-white rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
         {/* Tab Switcher */}

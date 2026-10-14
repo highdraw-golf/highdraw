@@ -154,29 +154,25 @@ export const Footer: React.FC<FooterProps> = ({
 
         </div>
 
-        {/* Bottom Legal & Owner Bar */}
+        {/* Bottom Legal Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <div>
-            &copy; 2026 High Draw Golf Co. All rights reserved. &bull; highdrawgear.com
+          <div className="flex items-center gap-2">
+            <span>&copy; 2026 High Draw Golf Co. All rights reserved. &bull; highdrawgear.com</span>
+            {onOpenAdmin && (
+              <button
+                onClick={onOpenAdmin}
+                className="opacity-20 hover:opacity-100 transition-opacity text-slate-400 p-1 cursor-pointer"
+                title="Owner Portal"
+                aria-label="Owner Portal"
+              >
+                <Lock size={12} />
+              </button>
+            )}
           </div>
           
           <div className="flex items-center gap-6">
-            <button onClick={() => setModalType('privacy')} className="hover:text-slate-300 transition-colors">Privacy</button>
-            <button onClick={() => setModalType('terms')} className="hover:text-slate-300 transition-colors">Terms of Service</button>
-            <button
-              onClick={() => handleNav('logo-studio')}
-              className="text-slate-400 hover:text-[#38BDF8] transition-colors border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono cursor-pointer"
-            >
-              Logo Studio (SVG/PNG)
-            </button>
-            {onOpenAdmin && (
-              <button 
-                onClick={onOpenAdmin} 
-                className="text-slate-400 hover:text-white transition-colors border border-slate-700 px-2 py-0.5 rounded text-[10px] font-mono"
-              >
-                Owner Admin
-              </button>
-            )}
+            <button onClick={() => setModalType('privacy')} className="hover:text-slate-300 transition-colors cursor-pointer">Privacy</button>
+            <button onClick={() => setModalType('terms')} className="hover:text-slate-300 transition-colors cursor-pointer">Terms of Service</button>
           </div>
         </div>
 

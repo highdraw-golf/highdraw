@@ -18,6 +18,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
   onBackToHome,
 }) => {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
+  const [selectedColorFilter, setSelectedColorFilter] = useState<string>('all');
 
   const categoryTitles = {
     all: 'Complete Fairway Collection',
@@ -107,17 +108,32 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
             ))}
           </div>
 
-          {/* Sort Dropdown & Product Count */}
+          {/* Sort & Color Controls */}
           <div className="flex items-center gap-4">
-            <span className="text-slate-400 font-mono text-[11px]">
+            <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
               Showing {sorted.length} Products
             </span>
+            <div className="flex items-center gap-2">
+              <select
+                value={selectedColorFilter}
+                onChange={(e) => setSelectedColorFilter(e.target.value)}
+                className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-700 cursor-pointer focus:outline-none"
+                aria-label="Filter by color"
+              >
+                <option value="all">All Colors</option>
+                <option value="navy">Navy</option>
+                <option value="cypress">Cypress</option>
+                <option value="white">White</option>
+                <option value="blue">Carolina Blue</option>
+              </select>
+            </div>
             <div className="flex items-center gap-2">
               <SlidersHorizontal size={14} className="text-slate-500" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-700 cursor-pointer focus:outline-none"
+                aria-label="Sort products"
               >
                 <option value="featured">Featured First</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -129,9 +145,9 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
         </div>
       </div>
 
-      {/* Product Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+      {/* Spaced-Out Product Grid (Frameless Luxury Presentation) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 lg:py-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 lg:gap-x-14 lg:gap-y-24">
           {sorted.map(p => {
             const cardSpecBadge =
               p.category === 'polos'
@@ -149,43 +165,58 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 className="group cursor-pointer flex flex-col justify-between"
               >
                 <div>
-                  <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative mb-4 rounded-xs border border-slate-200/80 shadow-xs">
+                  <div className="aspect-[3/4] bg-[#F7F7F6] overflow-hidden relative mb-5 rounded-xs transition-all duration-500">
                     <img
                       src={p.image}
                       alt={p.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                     />
                     <img
                       src={p.secondaryImage}
                       alt={`${p.name} secondary`}
                       className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     />
-                    <div className="absolute top-3 left-3 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-xs shadow-xs flex items-center gap-1.5">
+                    <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/85 backdrop-blur-md text-white text-[10px] font-mono tracking-widest px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
                       <RefreshCw size={11} className="text-[#38BDF8]" />
-                      <span>100+ Washes Tested</span>
+                      <span>100+ Washes</span>
                     </div>
-                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-xs font-bold px-4 py-2.5 rounded-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                      <span>VIEW DETAILS &amp; SIZING</span>
-                      <ArrowUpRight size={14} />
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-[11px] font-bold tracking-wider px-4 py-2.5 rounded-xs shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                      <span>VIEW DETAILS</span>
+                      <ArrowUpRight size={13} />
                     </div>
                   </div>
 
+                  {/* Swatches */}
+                  <div className="flex items-center gap-2 mb-2.5">
+                    {p.colors.map((c) => (
+                      <span
+                        key={c.name}
+                        title={c.name}
+                        style={{ backgroundColor: c.hex }}
+                        className="w-3.5 h-3.5 rounded-full border border-slate-300"
+                      />
+                    ))}
+                    <span className="text-[11px] text-slate-400 font-medium ml-1">
+                      {p.colors.length} Colorway{p.colors.length > 1 ? 's' : ''}
+                    </span>
+                  </div>
+
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#B12535] block">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535] block">
                       {p.collectionLabel}
                     </span>
-                    <h3 className="font-serif text-xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
+                    <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
                       {p.name}
                     </h3>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 mt-3 flex items-baseline justify-between font-sans">
+                <div className="pt-3 border-t border-slate-100 mt-4 flex items-baseline justify-between font-sans">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-mono text-lg font-bold text-[#1A1F26]">${p.price}</span>
+                    <span className="font-mono text-xl font-bold text-[#1A1F26]">${p.price}</span>
                     <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
                   </div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24] bg-[#1C2C24]/10 px-2 py-0.5 rounded-xs">
+                  <span className="text-[11px] font-mono tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
                     {cardSpecBadge}
                   </span>
                 </div>

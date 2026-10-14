@@ -59,18 +59,21 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
             <img src="/assets/craft_collar_macro.jpg" alt="Macro Collar Detail" className="w-full h-full object-cover" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs space-y-1">
-              <span className="font-bold text-[#1C2C24] text-xs block">1. Fused Interlining Stand</span>
-              <p className="text-xs text-slate-500">A heat-bonded micro-canvas spine embedded inside the collar prevents rolling.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-4 border-t border-slate-200/80">
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs font-bold text-[#B12535] block">01</span>
+              <span className="font-serif font-bold text-[#1C2C24] text-base block">Fused Interlining Stand</span>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">A heat-bonded micro-canvas spine embedded inside the collar prevents rolling and curled tips.</p>
             </div>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs space-y-1">
-              <span className="font-bold text-[#1C2C24] text-xs block">2. Stay-Flat Placket</span>
-              <p className="text-xs text-slate-500">Structured 3-button placket holds crisp vertical lines under sweaters.</p>
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs font-bold text-[#B12535] block">02</span>
+              <span className="font-serif font-bold text-[#1C2C24] text-base block">Stay-Flat Placket</span>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">Structured 3-button placket holds crisp vertical lines under sweaters and wind jackets.</p>
             </div>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs space-y-1">
-              <span className="font-bold text-[#1C2C24] text-xs block">3. 100+ Washes Memory</span>
-              <p className="text-xs text-slate-500">Wash-tested across 100 industrial laundry cycles with zero collar deformation.</p>
+            <div className="space-y-1.5">
+              <span className="font-mono text-xs font-bold text-[#B12535] block">03</span>
+              <span className="font-serif font-bold text-[#1C2C24] text-base block">100+ Washes Memory</span>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">Wash-tested across 100 laundry cycles with zero collar baconing or seam deformation.</p>
             </div>
           </div>
         </div>
