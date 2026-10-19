@@ -26,7 +26,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         </h2>
 
         <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-sans">
-          We eliminated the $125 legacy boutique retail tax to build the ultimate mid-market golf shirt: tour-grade 4-way stretch drape, fused stay-flat collar engineering, and zero synthetic gym sheen.
+          We eliminated the $125 legacy boutique retail tax to build the ultimate mid-market golf shirt: tour-grade 4-way stretch drape, breathable 4-way stretch drape, and honest  pricing.
         </p>
       </div>
 
@@ -43,18 +43,18 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             </div>
 
             <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1A1F26] font-bold leading-tight">
-              The Permanent Stay-Flat Collar Stand
+              Senior Athletic Fit & Freedom of Motion
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
-              The single biggest frustration in golf apparel is a collar that curls up or rolls flat after three washes into the dreaded &ldquo;bacon collar.&rdquo; High Draw features a proprietary fused interlining collar stand engineered to maintain its tailored structure whether worn open under the sun or tucked under an autumn quarter-zip.
+              Most golf shirts are either suffocatingly tight modern slim cuts or baggy gym shirts that cling awkwardly. High Draw is engineered around real golfer feedback: structured cleanly across the shoulders and chest with comfortable ease through the torso, giving you total freedom of movement through the driver apex.
             </p>
 
             {/* Master Tailor's Challenge (Editorial Hairline Callout) */}
             <div className="pt-6 pb-2 border-y border-slate-200/80 space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1C2C24]">
                 <Award size={16} className="text-[#B12535]" />
-                <span>The 10-Wash Collar Challenge</span>
+                <span>40+ Years of Golfer Feedback</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed font-sans">
                 Take any $120 polo in your closet and wash it next to High Draw 10 times. If our fused collar stand rolls or curls into bacon, we will ship a replacement or refund you 100%.
@@ -76,7 +76,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               <div className="space-y-1.5">
                 <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1C2C24]">
                   <ShieldCheck size={14} className="text-emerald-700" />
-                  <span>Fused Placket Memory</span>
+                  <span>Clean 3-Button Placket</span>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed">
                   Mother-of-pearl engraved buttons set on a reinforced structured 3-button placket.
@@ -87,13 +87,13 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
 
           <div className="lg:col-span-6 relative aspect-[4/3] rounded-xs overflow-hidden shadow-xl border border-slate-200/60 group">
             <img 
-              src="/assets/craft_collar_macro.jpg" 
+              src="/assets/founder/ken_tee_shot_backswing.jpg" 
               alt="High Draw Stay-Flat Collar Craftsmanship" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
             />
             <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] font-mono px-3.5 py-1.5 rounded-xs flex items-center gap-2">
               <ShieldCheck size={14} className="text-[#38BDF8]" />
-              <span>FUSED STAY-FLAT COLLAR STAND</span>
+              <span>SENIOR ATHLETIC FAIRWAY CUT</span>
             </div>
           </div>
 

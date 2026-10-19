@@ -79,11 +79,11 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-              <span>Fused Stay-Flat Collar Stand</span>
+              <span>Senior Athletic Comfort Fit</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck size={15} className="text-emerald-400 shrink-0" />
-              <span>100+ Washes No-Bacon Warranty</span>
+              <span>4-Way Stretch Performance</span>
             </div>
           </div>
 

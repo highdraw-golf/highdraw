@@ -39,7 +39,7 @@ export const PRODUCTS: Product[] = [
       '/assets/products/editorial/men_polo_navy_course.jpg',
       '/assets/products/editorial/men_polo_carolina_course.jpg',
       '/assets/products/bespoke/men_polo_black_wood.jpg',
-      '/assets/collar_detail.png',
+      '/assets/products/real/men_polo_black_folded.png',
     ],
     colors: [
       { name: 'Deep Midnight Navy', hex: '#1E293B', image: '/assets/products/bespoke/men_polo_hero_wood.jpg', logoColor: 'Gold Tracer' },
@@ -53,11 +53,11 @@ export const PRODUCTS: Product[] = [
       { name: 'True Royal', hex: '#1D4ED8', image: '/assets/products/catalog/men_polo_trueroyal.jpg', logoColor: 'White Tracer' },
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
-    description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered with a fused stay-flat collar stand that never curls into bacon. Features moisture-wicking capillary weave, UPF 50+ UV solar protection, and a single embroidered High Draw ball flight tracer on the left chest.',
+    description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered for pure fairway comfort, athletic drape, and moisture-wicking capillary airflow with UPF 50+ UV solar protection, and a single embroidered High Draw ball flight tracer on the left chest.',
     features: [
       'Single high-contrast High Draw ball flight tracer embroidered on left chest',
       'UPF 50+ UV solar shield woven directly into technical micropique yarns',
-      'Flat-knit stay-flat collar with permanent fused interlining',
+      'Tailored flat-knit collar engineered for breathability and comfort under the sun',
       '3-button placket with tone-on-tone pearlized buttons',
       'Engineered angled shoulder seams for zero swing resistance',
       'Guaranteed for 100+ machine wash and dry cycles without pilling or fading',
@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
     specs: {
       fabric: '100% Technical Polyester Micropique (4.3 oz/yd²)',
       weight: '146 GSM Breathable Featherweight Drape',
-      collar: 'Proprietary Fused Interlining Stay-Flat Stand',
+      collar: 'Tailored Flat-Knit Self-Fabric Collar',
       fit: 'Structured shoulders with comfortable fairway drape (S–4XL)',
       protection: 'UPF 50+ Solar Block UV Protection',
     },
@@ -85,7 +85,7 @@ export const PRODUCTS: Product[] = [
       '/assets/products/bespoke/women_polo_hero_wood.jpg',
       '/assets/products/editorial/women_polo_carolina_course.jpg',
       '/assets/products/real/women_polo_carolinablue_folded.png',
-      '/assets/collar_detail.png',
+      '/assets/products/real/men_polo_black_folded.png',
     ],
     colors: [
       { name: 'Carolina Blue', hex: '#6BA4B8', image: '/assets/products/bespoke/women_polo_hero_wood.jpg', logoColor: 'Black Tracer' },

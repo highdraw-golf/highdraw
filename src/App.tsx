@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
 import { ShopifyCollections } from './components/ShopifyCollections';
 import { WhyHighDraw } from './components/WhyHighDraw';
+import { FounderSpotlight } from './components/FounderSpotlight';
 import { UserReviews } from './components/UserReviews';
 import { CartDrawer } from './components/CartDrawer';
 import type { CartItem } from './components/CartDrawer';
@@ -227,6 +228,12 @@ export function App() {
             {/* Redesigned Craftsmanship Showcase (Macro Collar Detail & $48 Math) */}
             <WhyHighDraw 
               onScrollToShop={() => navigateTo('collection', { category: 'polos' })}
+            />
+
+            {/* Authentic Co-Founder Spotlight (Dr. Ken Cyree & 47-State Fairways) */}
+            <FounderSpotlight 
+              onLearnMore={() => navigateTo('about')}
+              onShopNow={() => navigateTo('collection', { category: 'polos' })}
             />
 
             {/* Real Golfer Course Reviews with Authentic Photography */}

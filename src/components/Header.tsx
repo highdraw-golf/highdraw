@@ -53,12 +53,12 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* CENTER / NAVIGATION LINKS: Real Multi-Page Navigation */}
-        <nav className="hidden lg:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-slate-700">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-bold uppercase tracking-wider text-slate-700">
           <button 
             onClick={() => onNavigate('collection', 'polos')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            POLOS
+            SHOP POLOS
           </button>
           <button 
             onClick={() => onNavigate('collection', 'outerwear')} 
@@ -70,25 +70,20 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('collection', 'headwear')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            HEADWEAR
+            HATS
           </button>
           <button 
-            onClick={() => onNavigate('collection', 'bundles')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
+            onClick={() => onNavigate('about')} 
+            className="text-[#1C2C24] hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
           >
-            FOURSOME KITS
-          </button>
-          <button 
-            onClick={() => onNavigate('craftsmanship')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
-          >
-            THE CRAFTSMANSHIP
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]"></span>
+            OUR STORY
           </button>
           <button 
             onClick={() => onNavigate('reviews')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
           >
-            GOLFER REVIEWS
+            REVIEWS
           </button>
         </nav>
 
@@ -128,6 +123,13 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 text-xs font-bold uppercase tracking-wider text-slate-800 shadow-xl">
+          <button 
+            onClick={() => { setMobileMenuOpen(false); onNavigate('about'); }} 
+            className="block w-full text-left py-2 border-b border-slate-100 text-[#1C2C24] font-black hover:text-[#B12535] flex items-center justify-between"
+          >
+            <span>OUR STORY &bull; DR. KEN CYREE</span>
+            <span className="text-[10px] font-mono text-[#38BDF8] bg-[#1C2C24] px-2 py-0.5 rounded-xs">47 STATES</span>
+          </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
