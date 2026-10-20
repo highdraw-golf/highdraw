@@ -211,11 +211,11 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
 
               <div className="grid grid-cols-12 py-3 px-4 sm:px-6 items-center">
                 <div className="col-span-6 sm:col-span-7 text-slate-200">
-                  <span className="font-semibold block">Direct Platform &amp; Fair Maker Margin</span>
-                  <span className="text-[11px] text-slate-400">Honest craft pricing delivered direct to fairways</span>
+                  <span className="font-semibold block">Fairway Direct Craft Pricing</span>
+                  <span className="text-[11px] text-slate-400">No bloated boutique markups delivered direct to golfers</span>
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-slate-300">$26.00</div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-white font-bold">$26.00</div>
+                <div className="col-span-3 sm:col-span-3 text-right font-mono text-slate-300">Standard</div>
+                <div className="col-span-3 sm:col-span-2 text-right font-mono text-[#38BDF8] font-bold">Included</div>
               </div>
 
               {/* Total Row */}
