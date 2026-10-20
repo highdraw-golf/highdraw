@@ -316,7 +316,7 @@ export const UserReviews: React.FC = () => {
         <div className="lg:col-span-8 space-y-3.5">
           <Quote size={28} className="text-[#B12535] opacity-80" />
           <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1F26] font-bold leading-snug">
-            &ldquo;As a senior golfer, I want a shirt that fits around my shoulders and my torso. The micro-pique drape is identical to boutique brands that charge +.&rdquo;
+            &ldquo;As a senior golfer, I want a shirt that fits around my shoulders and my torso. The micro-pique drape is identical to boutique brands that charge $120+.&rdquo;
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
             The High Draw ball flight tracer embroidered on the left chest is pure understated class. You step onto the 1st tee looking like you belong, without spending half your greens fee on a shirt.
