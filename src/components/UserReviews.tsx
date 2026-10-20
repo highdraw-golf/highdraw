@@ -49,7 +49,7 @@ export const UserReviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(() => {
     if (typeof window === 'undefined') return INITIAL_REVIEWS;
     try {
-      const saved = localStorage.getItem('highdraw_user_reviews');
+      const saved = localStorage.getItem('highdraw_user_reviews_v2');
       return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
     } catch {
       return INITIAL_REVIEWS;
@@ -69,7 +69,7 @@ export const UserReviews: React.FC = () => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('highdraw_user_reviews', JSON.stringify(reviews));
+      localStorage.setItem('highdraw_user_reviews_v2', JSON.stringify(reviews));
     } catch {
       // ignore
     }
@@ -298,6 +298,38 @@ export const UserReviews: React.FC = () => {
           </form>
         </div>
       )}
+
+            {/* Founder Editorial Note (Restored with Dr. Ken Cyree's Verified Photo & Quote) */}
+      <div className="max-w-7xl mx-auto mb-16 bg-[#FBFBFA] border-y border-slate-200/80 py-10 px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="lg:col-span-4 relative aspect-[4/3] rounded-xs overflow-hidden shadow-lg border border-slate-200/60">
+          <img 
+            src="/assets/founder/ken_fairway_wave_sun.jpg" 
+            alt="Dr. Ken Cyree on the fairway" 
+            className="w-full h-full object-cover object-[center_35%]"
+          />
+          <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
+            <ShieldCheck size={12} className="text-[#38BDF8]" />
+            <span>Dr. Ken Cyree &bull; 2.9 Index</span>
+          </div>
+        </div>
+
+        <div className="lg:col-span-8 space-y-3.5">
+          <Quote size={28} className="text-[#B12535] opacity-80" />
+          <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1F26] font-bold leading-snug">
+            &ldquo;As a senior golfer, I want a shirt that fits around my shoulders and my torso. The micro-pique drape is identical to boutique brands that charge +.&rdquo;
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
+            The High Draw ball flight tracer embroidered on the left chest is pure understated class. You step onto the 1st tee looking like you belong, without spending half your greens fee on a shirt.
+          </p>
+          <div className="pt-1 flex items-center gap-3 text-xs text-slate-500">
+            <span className="font-bold text-[#1C2C24]">Dr. Ken Cyree</span>
+            <span>&bull;</span>
+            <span>Co-Founder &bull; 2.9 Handicap Index</span>
+            <span>&bull;</span>
+            <span className="font-mono text-[#1C2C24] font-semibold">The Tour Performance Polo (L)</span>
+          </div>
+        </div>
+      </div>
 
       {/* Spaced-Out Field Notes Grid (Frameless Editorial Stories, Zero Clunky Boxed Cards) */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
