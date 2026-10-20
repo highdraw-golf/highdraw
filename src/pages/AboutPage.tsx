@@ -50,7 +50,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <img 
               src="/assets/founder/ken_tee_shot_backswing.jpg" 
               alt="Dr. Ken Cyree at top of backswing on elevated tee box" 
-              className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700" 
+              className="w-full h-full object-cover object-[24%_center] group-hover:scale-102 transition-transform duration-700" 
             />
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto bg-[#1C2C24]/90 backdrop-blur-md text-white p-3.5 sm:px-5 sm:py-3 rounded-xs border border-white/10 shadow-lg">
               <div className="font-serif font-bold text-sm sm:text-base text-white">Dr. Ken Cyree &bull; 3.8 Handicap Index</div>
