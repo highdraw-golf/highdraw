@@ -299,38 +299,6 @@ export const UserReviews: React.FC = () => {
         </div>
       )}
 
-      {/* Featured Lead Editorial Testimonial (Spaced-Out Luxury Spread) */}
-      <div className="max-w-7xl mx-auto mb-20 bg-[#FBFBFA] border-y border-slate-200/80 py-12 px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-4 relative aspect-[4/3] rounded-xs overflow-hidden shadow-lg border border-slate-200/60">
-          <img 
-            src="/assets/founder/ken_fairway_wave_sun.jpg" 
-            alt="Ken Cyree wearing High Draw Navy Polo" 
-            className="w-full h-full object-cover object-[center_35%]"
-          />
-          <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
-            <ShieldCheck size={12} className="text-[#38BDF8]" />
-            <span>Ken Cyree &bull; 3.8 Index</span>
-          </div>
-        </div>
-
-        <div className="lg:col-span-8 space-y-4">
-          <Quote size={32} className="text-[#B12535] opacity-80" />
-          <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1F26] font-bold leading-snug">
-            &ldquo;As a senior golfer, I want a shirt that fits around my shoulders and my torso. The micro-pique drape is identical to boutique brands that charge $120.&rdquo;
-          </h3>
-          <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
-            The High Draw ball flight tracer embroidered on the left chest is pure understated class. You step onto the 1st tee looking like you belong, without spending half your greens fee on a shirt.
-          </p>
-          <div className="pt-2 flex items-center gap-3 text-xs text-slate-500">
-            <span className="font-bold text-[#1C2C24]">Ken Cyree</span>
-            <span>&bull;</span>
-            <span>Founder &amp; Dedicated Weekender</span>
-            <span>&bull;</span>
-            <span className="font-mono text-[#1C2C24] font-semibold">The Classic Deep Navy Polo (L)</span>
-          </div>
-        </div>
-      </div>
-
       {/* Spaced-Out Field Notes Grid (Frameless Editorial Stories, Zero Clunky Boxed Cards) */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
         {filteredReviews.map((r) => (

@@ -56,7 +56,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
                 className="w-full h-full object-cover object-[22%_center] group-hover:scale-103 transition-transform duration-700" 
               />
               <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md p-3 rounded-xs border border-white/10 text-xs font-mono">
-                <span className="text-white font-bold block">Dr. Ken Cyree &bull; 3.8 Index</span>
+                <span className="text-white font-bold block">Dr. Ken Cyree &bull; 2.9 Index</span>
                 <span className="text-[#38BDF8] text-[10px]">Weekend Fairway Apex &bull; 40+ Years of Avid Play (Not on Tour)</span>
               </div>
             </div>
@@ -71,7 +71,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
               </div>
               <div className="p-4 bg-white/5 border border-white/10 rounded-xs space-y-1">
                 <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Handicap Index</div>
-                <div className="font-mono text-2xl font-bold text-[#38BDF8]">3.8</div>
+                <div className="font-mono text-2xl font-bold text-[#38BDF8]">2.9</div>
                 <div className="text-[11px] text-slate-300">Senior Athletic Drape</div>
               </div>
               <div className="p-4 bg-white/5 border border-white/10 rounded-xs space-y-1">

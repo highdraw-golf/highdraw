@@ -39,7 +39,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
       id: 'rev-03',
       author: 'Ken Cyree',
       club: 'Country Club Weekender',
-      handicap: '3.8 Index',
+      handicap: '2.9 Index',
       rating: 5,
       title: 'Luxury pro shop drape without the $125 retail markup',
       comment: 'At 60, I want a polo that fits properly across the shoulders without hugging my stomach. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the left chest is pure understated class.',
