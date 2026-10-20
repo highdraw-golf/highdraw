@@ -42,19 +42,7 @@ const INITIAL_REVIEWS: Review[] = [
     date: '1 week ago',
     tag: 'foursome',
   },
-  {
-    id: 'rev-03',
-    author: 'Ken Cyree',
-    club: 'Country Club Weekender',
-    handicap: '3.8 Index',
-    rating: 5,
-    title: 'Luxury pro shop drape without the $125 retail markup',
-    comment: 'As a senior golfer, I want a shirt that fits around my shoulders and my torso without clinging. The micro-pique drape is identical to boutique brands that charge $120. The High Draw ball flight tracer embroidered on the left chest is pure understated class.',
-    image: '/assets/founder/ken_fairway_wave_sun.jpg',
-    productWorn: 'The Classic Deep Navy Polo (L)',
-    date: '2 weeks ago',
-    tag: 'course',
-  },
+  
 ];
 
 export const UserReviews: React.FC = () => {
