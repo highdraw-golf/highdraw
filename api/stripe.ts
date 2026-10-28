@@ -1,6 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || "";
+// Support standard key name and common aliases
+const STRIPE_SECRET_KEY = 
+  process.env.STRIPE_SECRET_KEY || 
+  process.env.STRIPE_API_KEY || 
+  process.env.STRIPE_RESTRICTED_KEY || 
+  process.env.STRIPE_KEY || 
+  "";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
@@ -25,12 +31,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Check if real Stripe key is provided in Vercel environment
       if (!STRIPE_SECRET_KEY) {
-        console.warn('⚠️ [Stripe API] STRIPE_SECRET_KEY is not configured yet. Returning simulated checkout ready response.');
+        console.warn('⚠️ [Stripe API] STRIPE_SECRET_KEY is empty in environment.');
         return res.status(200).json({
           configured: false,
           message: 'Stripe integration is prepped and ready. Add STRIPE_SECRET_KEY in Vercel environment variables to activate live credit card processing.',
           simulated: true,
           orderId: orderId || `HD-${Date.now()}`,
+          envDiagnostics: {
+            hasStripeSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
+            hasStripeApiKey: Boolean(process.env.STRIPE_API_KEY),
+            hasStripeRestrictedKey: Boolean(process.env.STRIPE_RESTRICTED_KEY),
+            hasStripeKey: Boolean(process.env.STRIPE_KEY),
+            hasPublishableKey: Boolean(process.env.VITE_STRIPE_PUBLISHABLE_KEY || process.env.STRIPE_PUBLISHABLE_KEY),
+            nodeEnv: process.env.NODE_ENV,
+            vercelEnv: process.env.VERCEL_ENV,
+          }
         });
       }
 
@@ -74,7 +89,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (!response.ok) {
         console.error('Stripe Checkout session error:', data);
-        return res.status(response.status).json({ error: data.error?.message || 'Failed to create Stripe checkout session' });
+        return res.status(response.status).json({ 
+          error: data.error?.message || 'Failed to create Stripe checkout session',
+          stripeErrorType: data.error?.type,
+          stripeErrorCode: data.error?.code
+        });
       }
 
       return res.status(200).json({
