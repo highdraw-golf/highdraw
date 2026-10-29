@@ -179,7 +179,16 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Sub-Footer Signature Banner */}
         <div className="pt-8 mt-8 border-t border-slate-800/80 text-center">
           <p className="text-xs text-slate-400 tracking-wider">
-            made with &lt;3 by Colon Hyphen Braclet.
+            made with &lt;3 by{' '}
+            <a
+              href="https://colonhyphenbracket.pink"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-white underline underline-offset-4 transition-colors"
+            >
+              Colon Hyphen Bracket
+            </a>
+            .
           </p>
         </div>
 
