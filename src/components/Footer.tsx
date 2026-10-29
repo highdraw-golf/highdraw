@@ -230,12 +230,20 @@ export const Footer: React.FC<FooterProps> = ({
               )}
               {modalType === 'privacy' && (
                 <>
-                  <p>High Draw Gear values customer privacy. We never sell, rent, or trade your personal information, address, or email to third-party data brokers. Payment information is securely encrypted via SSL checkout.</p>
+                  <p className="font-semibold text-slate-800">High Draw Golf Enterprise Zero-Knowledge Privacy Architecture:</p>
+                  <p>1. <strong>Direct Stripe Tokenization:</strong> All credit card details, Apple Pay authorizations, and billing transactions are encrypted with 256-bit AES encryption and tokenized directly inside Stripe&apos;s Level 1 PCI-DSS compliant vault. High Draw Golf never receives, touches, or stores your raw credit card numbers or security codes.</p>
+                  <p>2. <strong>Zero Data Selling:</strong> We operate under a strict anti-broker policy. We will never sell, rent, trade, or monetize your name, physical address, phone number, or email with data brokers, ad networks, or third parties.</p>
+                  <p>3. <strong>Operational Necessity Only:</strong> Customer data is strictly utilized for automated order routing via Printify manufacturing, tracking dispatch notifications via USPS/FedEx, and direct customer care.</p>
+                  <p>4. <strong>Right to Erasure:</strong> You maintain full ownership of your customer profile. Contact care@highdrawgear.com at any time to request complete data deletion under CCPA/GDPR guidelines.</p>
                 </>
               )}
               {modalType === 'terms' && (
                 <>
-                  <p>High Draw Gear products are engineered for recreational and competitive golf play. All direct purchases are covered by our 30-Day Fairway Guarantee and manufacturer defect warranty.</p>
+                  <p className="font-semibold text-slate-800">High Draw Golf Terms of Service &amp; Fair Play Charter:</p>
+                  <p>1. <strong>Direct-to-Golfer Honest Pricing:</strong> High Draw Golf guarantees tour-grade luxury materials and stay-flat collar craftsmanship without artificial 300% markup or country club retail premiums.</p>
+                  <p>2. <strong>30-Day Fairway Guarantee:</strong> Wear it, wash it, sweat in it for 18 holes. If the collar fails or the performance drape does not exceed expectations, return it within 30 days for a full refund or exchange.</p>
+                  <p>3. <strong>100+ Washes Standard:</strong> Our garments are engineered to withstand at least 100 industrial wash cycles without fraying, collar curl, or color fade.</p>
+                  <p>4. <strong>Delivery &amp; Claims:</strong> In the rare event of transit damage or manufacturing discrepancy, contact us within 14 days of delivery for an immediate expedited replacement.</p>
                 </>
               )}
             </div>

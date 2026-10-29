@@ -465,10 +465,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
               </button>
 
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs space-y-1.5 text-[10px] text-slate-500 font-mono">
+                <div className="flex items-center gap-1.5 text-slate-800 font-semibold text-[11px]">
+                  <Lock size={12} className="text-emerald-700" />
+                  <span>Stripe PCI-DSS Level 1 Encrypted Vault</span>
+                </div>
+                <p className="leading-relaxed">
+                  Your payment data is tokenized directly via Stripe. High Draw Golf never stores or has access to your full card number or security code. Zero data brokerage guarantee.
+                </p>
+                <div className="flex items-center gap-3 pt-1 text-[9px] uppercase tracking-wider text-slate-400">
+                  <span>&bull; 256-Bit SSL</span>
+                  <span>&bull; Apple Pay Ready</span>
+                  <span>&bull; 30-Day Money-Back Guarantee</span>
+                </div>
+              </div>
+
               <button
                 type="submit"
                 disabled={isCheckingOut}
-                className="w-full btn-obsidian py-3 text-xs tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full btn-obsidian py-3 text-xs tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer opacity-80 hover:opacity-100"
               >
                 <span>CONFIRM DIRECT ORDER (PAY ON INVOICE)</span>
                 <ArrowRight size={14} />
