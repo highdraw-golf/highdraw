@@ -54,7 +54,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const origin = returnUrl || `${protocol}://${host}`;
 
       const params = new URLSearchParams();
-      params.append('payment_method_types[0]', 'card');
+      // Note: payment_method_types is deprecated in modern Stripe APIs; 
+      // Stripe uses dynamic payment methods enabled in the dashboard.
       params.append('mode', 'payment');
       if (customerEmail) {
         params.append('customer_email', customerEmail);
