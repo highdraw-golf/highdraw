@@ -33,7 +33,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
   const [orders, setOrders] = useState<OrderNotification[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
-      return JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
+      return JSON.parse(sessionStorage.getItem('highdraw_orders_session') || '[]');
     } catch {
       return [];
     }
@@ -43,7 +43,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
   useEffect(() => {
     const handleStorage = () => {
       try {
-        const stored = JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
+        const stored = JSON.parse(sessionStorage.getItem('highdraw_orders_session') || '[]');
         setOrders(stored);
       } catch (e) {
         console.error(e);

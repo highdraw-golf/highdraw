@@ -16,36 +16,18 @@ export interface OrderNotification {
  * Notifies Ken's dad instantly whenever an order is placed and sent to Printify.
  */
 export const sendOrderNotificationEmail = async (notification: OrderNotification) => {
-  console.log(`✉️ [Gmail Automation] Dispatching order alert for #${notification.orderId} to highdrawgear@gmail.com`);
-
-  const emailBody = `
-==================================================
-🏌️ HIGH DRAW GOLF — AUTOMATED ORDER ALERT
-==================================================
-Order ID: #${notification.orderId}
-Customer: ${notification.customerName} (${notification.customerEmail})
-Shipping Address: ${notification.shippingAddress}
-
-ITEMS ORDERED:
-${notification.items.map(item => `- ${item.name} (${item.size}) — $${item.price}`).join("\n")}
-
-TOTAL PAID: $${notification.totalAmount}
-PRINTIFY STATUS: ${notification.printifyStatus} (Automated Fulfillment In Progress)
-==================================================
-`;
-
-  console.log(emailBody);
-
-  // Store in localStorage for live Owner Console access
+  // Store in sessionStorage (ephemeral session memory) for live Owner Console access during active session
+  // Never persist customer PII in permanent localStorage
   try {
-    const existing = JSON.parse(localStorage.getItem('highdraw_orders') || '[]');
+    localStorage.removeItem('highdraw_orders');
+    const existing = JSON.parse(sessionStorage.getItem('highdraw_orders_session') || '[]');
     existing.unshift({
       ...notification,
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
     });
-    localStorage.setItem('highdraw_orders', JSON.stringify(existing));
-  } catch (e) {
-    console.error("Local order storage error:", e);
+    sessionStorage.setItem('highdraw_orders_session', JSON.stringify(existing.slice(0, 20)));
+  } catch {
+    // ignore storage errors
   }
 
   return true;

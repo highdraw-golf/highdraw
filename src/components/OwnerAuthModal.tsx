@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Lock, Eye, EyeOff, ArrowRight, X, ShieldAlert } from 'lucide-react';
-import { OWNER_PASSCODES } from '../lib/auth';
+import { verifyOwnerPasscode } from '../lib/auth';
 
 interface OwnerAuthModalProps {
   isOpen: boolean;
@@ -23,12 +23,11 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const clean = passcode.trim().toLowerCase();
-    if (OWNER_PASSCODES.includes(clean)) {
+    const valid = await verifyOwnerPasscode(passcode);
+    if (valid) {
       setError(false);
-      sessionStorage.setItem('highdraw_owner_auth', 'true');
       onSuccess();
     } else {
       setError(true);
@@ -84,7 +83,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
                   setPasscode(e.target.value);
                   if (error) setError(false);
                 }}
-                placeholder="Owner PIN (e.g. ken2026)"
+                placeholder="Enter encrypted Owner PIN"
                 className="w-full bg-black/40 border border-slate-600 rounded px-3.5 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#38BDF8] transition-colors font-mono tracking-widest"
               />
               <button

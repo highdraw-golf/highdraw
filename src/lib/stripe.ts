@@ -50,8 +50,20 @@ export async function createStripeCheckoutSession(payload: StripeCheckoutPayload
     }
 
     if (data.configured && data.checkoutUrl) {
-      // Direct redirect to Stripe Hosted Checkout
-      window.location.href = data.checkoutUrl;
+      // Strictly validate redirect destination is an official Stripe Checkout HTTPS domain
+      try {
+        const parsedUrl = new URL(data.checkoutUrl);
+        if (parsedUrl.protocol !== 'https:' || !parsedUrl.hostname.endsWith('.stripe.com')) {
+          throw new Error('Untrusted checkout redirect host blocked.');
+        }
+        window.location.href = parsedUrl.toString();
+      } catch (urlErr: any) {
+        return {
+          success: false,
+          configured: true,
+          error: urlErr.message || 'Invalid checkout redirect URL.',
+        };
+      }
       return {
         success: true,
         configured: true,
