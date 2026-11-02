@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({
   cartCount,
   onOpenCart,
   onNavigate,
-  tickerText = 'FREE SHIPPING ON ORDERS OVER $75 • 10-WASH STAY-FLAT COLLAR GUARANTEE • DIRECT $48 PRICING',
+  tickerText = 'FREE SHIPPING ON ORDERS OVER $75 • CUSTOM EMBROIDERY SUITE • DIRECT $48 PRICING',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -24,23 +24,22 @@ export const Header: React.FC<HeaderProps> = ({
         <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]"></span>
         <span className="uppercase">{tickerText}</span>
         <span className="hidden md:inline opacity-40">•</span>
-        <span className="hidden md:inline text-slate-300">HONEST MID-MARKET GOLF APPAREL</span>
+        <span className="hidden md:inline text-slate-300">MEN'S &amp; WOMEN'S BESPOKE GOLF APPAREL</span>
       </div>
 
       {/* Main Single-Line Navbar: Logo on Far Left */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-6">
         
-        {/* FAR LEFT: Official High Draw Logo & Wordmark */}
+        {/* FAR LEFT: Official High Draw Mark + Monogram & Wordmark */}
         <div 
           className="flex items-center gap-3 cursor-pointer select-none shrink-0"
           onClick={() => onNavigate('home')}
           title="High Draw Golf — Home"
         >
-          {/* Official High Draw Cyan Tracer Mark */}
           <img 
-            src="/assets/brand/logo_tracer_cyan.png" 
-            alt="High Draw Ball Flight Tracer" 
-            className="h-10 w-auto object-contain hover:scale-105 transition-transform"
+            src="/assets/brand/logos/mark_monogram_cyan.png" 
+            alt="High Draw Official Mark + Monogram" 
+            className="h-11 w-auto object-contain hover:scale-105 transition-transform"
           />
           <div className="flex flex-col">
             <span className="font-serif text-2xl font-black tracking-[0.2em] text-[#1A1F26] uppercase leading-none">
@@ -134,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos'); }} 
             className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535]"
           >
-            TOUR PERFORMANCE POLOS
+            SHOP POLOS (MEN'S &amp; WOMEN'S)
           </button>
           <button 
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'outerwear'); }} 
@@ -176,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos'); }}
             className="w-full py-3.5 bg-[#B12535] text-white font-bold text-center mt-3 flex items-center justify-center gap-2 rounded-sm shadow-md"
           >
-            <span>SHOP MEN'S POLOS &bull; $48</span>
+            <span>SHOP POLOS &bull; $48</span>
             <ArrowRight size={14} />
           </button>
         </div>

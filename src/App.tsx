@@ -212,6 +212,16 @@ export function App() {
             <FullscreenHero 
               heroImage={heroImage}
               onScrollToShop={() => navigateTo('collection', { category: 'polos' })}
+              onShopMens={() => {
+                const menPolo = PRODUCTS.find(p => p.id === 'men-polo-st740');
+                if (menPolo) navigateTo('product', { product: menPolo });
+                else navigateTo('collection', { category: 'polos' });
+              }}
+              onShopWomens={() => {
+                const womenPolo = PRODUCTS.find(p => p.id === 'women-polo-lst740');
+                if (womenPolo) navigateTo('product', { product: womenPolo });
+                else navigateTo('collection', { category: 'polos' });
+              }}
               onScrollToWhy={() => navigateTo('craftsmanship')}
             />
 

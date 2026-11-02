@@ -156,8 +156,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         const qty = Math.max(1, Math.min(20, Math.floor(Number(rawItem?.quantity) || 1)));
-        const safeColor = sanitizeText(rawItem?.color || 'Standard', 36);
-        const safeSize = sanitizeText(rawItem?.size || 'L', 12);
+        const safeColor = sanitizeText(rawItem?.color || 'Standard', 96);
+        const safeSize = sanitizeText(rawItem?.size || 'L', 16);
 
         subtotalCents += catalogProduct.unitAmountCents * qty;
 

@@ -19,6 +19,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 }) => {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
   const [selectedColorFilter, setSelectedColorFilter] = useState<string>('all');
+  const [selectedUserFilter, setSelectedUserFilter] = useState<'all' | 'mens' | 'womens'>('all');
 
   const categoryTitles = {
     all: 'Complete Fairway Collection',
@@ -39,6 +40,12 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
   let filtered = category === 'all' 
     ? products 
     : products.filter(p => p.category === category);
+
+  if (selectedUserFilter !== 'all') {
+    filtered = filtered.filter(
+      p => p.userType === selectedUserFilter || p.userType === 'unisex' || p.userType === 'foursome'
+    );
+  }
 
   if (selectedColorFilter !== 'all') {
     filtered = filtered.filter(p => p.colors.some(c => c.name.toLowerCase().includes(selectedColorFilter.toLowerCase())));
@@ -66,9 +73,9 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
+              <img src="/assets/brand/logos/mark_monogram_cyan.png" alt="High Draw Mark + Monogram" className="h-5 w-auto object-contain" />
               <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
-                HIGH DRAW GOLF CO. &bull; FLAGSHIP STORE
+                HIGH DRAW GOLF CO. &bull; BESPOKE CUSTOMIZATION SUITE
               </span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold">
@@ -108,8 +115,28 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
             ))}
           </div>
 
-          {/* Sort & Color Controls */}
-          <div className="flex items-center gap-4">
+          {/* Sort, Golfer Profile & Color Controls */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center bg-white border border-slate-300 rounded p-0.5 text-[11px]">
+              {[
+                { id: 'all', label: 'All Cuts' },
+                { id: 'mens', label: "Men's" },
+                { id: 'womens', label: "Women's" },
+              ].map((u) => (
+                <button
+                  key={u.id}
+                  type="button"
+                  onClick={() => setSelectedUserFilter(u.id as any)}
+                  className={`px-2.5 py-1 rounded-xs font-bold uppercase cursor-pointer transition-colors ${
+                    selectedUserFilter === u.id
+                      ? 'bg-[#1A1F26] text-white'
+                      : 'text-slate-600 hover:text-black'
+                  }`}
+                >
+                  {u.label}
+                </button>
+              ))}
+            </div>
             <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
               Showing {sorted.length} Products
             </span>
@@ -122,9 +149,11 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
               >
                 <option value="all">All Colors</option>
                 <option value="navy">Navy</option>
-                <option value="cypress">Cypress</option>
-                <option value="white">White</option>
+                <option value="black">Onyx Black</option>
+                <option value="white">Crisp White</option>
                 <option value="blue">Carolina Blue</option>
+                <option value="green">Forest Green</option>
+                <option value="red">Deep Red</option>
               </select>
             </div>
             <div className="flex items-center gap-2">

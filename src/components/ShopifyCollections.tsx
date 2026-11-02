@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Check, X, ShieldCheck, ShoppingBag, RefreshCw, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, Check, X, ShieldCheck, ShoppingBag, RefreshCw, ExternalLink, Sparkles } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
 import type { Product } from '../data/products';
+import { LogoCustomizer } from './ui/LogoCustomizer';
+import {
+  LOGO_STYLE_OPTIONS,
+  LOGO_COLOR_OPTIONS,
+  getLogoAssetPath,
+  formatCustomizationSummary,
+} from './brand/HighDrawLogo';
+import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
 
 export type { Product };
 
 interface ShopifyCollectionsProps {
   activeCategory: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
   onSelectCategory: (category: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
-  onAddToCart: (item: { id: string; name: string; price: number; color: string; size: string; image: string }) => void;
+  onAddToCart: (item: {
+    id: string;
+    name: string;
+    price: number;
+    color: string;
+    size: string;
+    image: string;
+    logoStyle?: LogoStyle;
+    logoColor?: LogoVariant;
+  }) => void;
   onSelectProduct?: (product: Product) => void;
 }
 
@@ -20,9 +37,17 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 }) => {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('L');
-  const [selectedColor, setSelectedColor] = useState<string>('Cypress Green');
+  const [selectedColor, setSelectedColor] = useState<string>('Deep Midnight Navy');
+  const [selectedLogoStyle, setSelectedLogoStyle] = useState<LogoStyle>('mark_monogram');
+  const [selectedLogoColor, setSelectedLogoColor] = useState<LogoVariant>('gold');
   const [activeCardImages, setActiveCardImages] = useState<Record<string, string>>({});
   const [addedId, setAddedId] = useState<string | null>(null);
+
+  // Interactive Homepage Studio Showcase State
+  const [showcaseStyle, setShowcaseStyle] = useState<LogoStyle>('mark_monogram');
+  const [showcaseColor, setShowcaseColor] = useState<LogoVariant>('cyan');
+  const [showcaseShirtHex, setShowcaseShirtHex] = useState<string>('#1E293B');
+  const [showcaseShirtName, setShowcaseShirtName] = useState<string>('Deep Midnight Navy');
 
   const products: Product[] = PRODUCTS;
 
@@ -40,13 +65,17 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
   const handleQuickAdd = () => {
     if (!quickViewProduct) return;
 
+    const customSummary = formatCustomizationSummary(selectedLogoStyle, selectedLogoColor);
+
     onAddToCart({
-      id: quickViewProduct.id,
-      name: quickViewProduct.name,
+      id: `${quickViewProduct.id}-${selectedColor}-${selectedSize}-${selectedLogoStyle}-${selectedLogoColor}`,
+      name: `${quickViewProduct.name} — ${selectedColor}`,
       price: quickViewProduct.price,
-      color: selectedColor,
+      color: `${selectedColor} • ${customSummary}`,
       size: selectedSize,
       image: activeCardImages[quickViewProduct.id] || quickViewProduct.image,
+      logoStyle: selectedLogoStyle,
+      logoColor: selectedLogoColor,
     });
 
     setAddedId(quickViewProduct.id);
@@ -55,6 +84,8 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       setQuickViewProduct(null);
     }, 1200);
   };
+
+  const showcaseLogoSrc = getLogoAssetPath(showcaseStyle, showcaseColor);
 
   return (
     <section id="collections" className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-white border-b border-slate-200">
@@ -70,19 +101,19 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <img 
-              src="/assets/brand/logo_tracer_cyan.png" 
+              src="/assets/brand/logos/mark_monogram_cyan.png" 
               alt="High Draw Mark" 
-              className="h-4 w-auto object-contain"
+              className="h-5 w-auto object-contain"
             />
             <span className="text-xs font-bold uppercase tracking-widest text-[#B12535]">
-              MID-MARKET VALUE REVOLUTION &bull; $48 TOUR DRAPE
+              MID-MARKET VALUE REVOLUTION &bull; $48 BESPOKE TOUR DRAPE
             </span>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl text-[#1A1F26] font-bold tracking-tight">
             Crafted for Life on the Fairway
           </h2>
           <p className="text-sm text-slate-500 mt-2 max-w-xl">
-            Zero $120 boutique retail markups. Engineered with 4-way stretch drape and wash-tested 100+ times to stay crisp, comfortable, and wrinkle-free.
+            Zero $120 boutique retail markups. Every garment is custom-embroidered to your exact specification: choose between Men’s and Women’s cuts, 4 official High Draw marks, 4 thread colors, or an optional clean unbranded finish.
           </p>
         </div>
 
@@ -110,13 +141,13 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         </div>
       </div>
 
-      {/* Spaced-Out Editorial Collection Showcase (Borderless Luxury Presentation) */}
+      {/* Spaced-Out Editorial Collection Showcase */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 lg:gap-x-14 lg:gap-y-24">
         {filteredProducts.map((p, index) => {
           const currentImage = activeCardImages[p.id] || p.image;
           const cardSpecBadge =
             p.category === 'polos'
-              ? '180 GSM Micro-Pique'
+              ? '4 Logo Marks • $48'
               : p.category === 'outerwear'
               ? '4-Way Stretch Layer'
               : p.category === 'headwear'
@@ -125,7 +156,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
           return (
             <React.Fragment key={p.id}>
-              {/* Optional Editorial Lookbook Intermission after 3 Polos */}
+              {/* Editorial Lookbook Intermission after 3 items */}
               {index === 3 && (activeCategory === 'all' || activeCategory === 'polos') && (
                 <div className="col-span-1 md:col-span-2 lg:col-span-3 my-6 py-12 px-6 sm:px-12 bg-[#1C2C24] text-white rounded-xs grid grid-cols-1 lg:grid-cols-12 gap-10 items-center shadow-xl">
                   <div className="lg:col-span-5 relative aspect-[16/10] rounded-xs overflow-hidden shadow-lg border border-white/10">
@@ -146,7 +177,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       Equip Your Entire Foursome for $160 ($40/Shirt)
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans max-w-xl">
-                      Why show up to your club scramble in mismatching gym polos? Every High Draw polo features identical 180 GSM matte drape, stay-flat fused collar engineering, and the subtle left-chest ball flight tracer.
+                      Why show up to your club scramble in mismatching gym polos? Mix and match Men’s and Women’s cuts, shirt colorways, and any of our 4 signature High Draw embroidery marks for your group.
                     </p>
                     <div className="pt-2">
                       <button
@@ -168,8 +199,9 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     onSelectProduct(p);
                   } else {
                     setQuickViewProduct(p);
-                    setSelectedColor(p.colors[0]?.name || 'Cypress Green');
-                    setSelectedSize(p.sizes?.[0] || 'L');
+                    setSelectedColor(p.colors[0]?.name || 'Deep Midnight Navy');
+                    setSelectedLogoColor(p.colors[0]?.defaultLogoColor || 'gold');
+                    setSelectedSize(p.sizes?.[2] || p.sizes?.[0] || 'L');
                   }
                 }}
                 className="group cursor-pointer flex flex-col justify-between"
@@ -196,9 +228,14 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       <span>100+ Washes</span>
                     </div>
 
+                    {/* Custom Logo Options Pill */}
+                    <div className="absolute top-3.5 right-3.5 bg-black/75 backdrop-blur-md text-white text-[9px] font-mono tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm">
+                      4 Marks + Optional Clean
+                    </div>
+
                     {/* Subtle Hover Action Button */}
                     <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-[11px] font-bold tracking-wider px-4 py-2.5 rounded-xs shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                      <span>{onSelectProduct ? 'VIEW DETAILS' : 'QUICK VIEW'}</span>
+                      <span>{onSelectProduct ? 'CUSTOMIZE & VIEW' : 'QUICK CUSTOMIZE'}</span>
                       <ArrowUpRight size={13} />
                     </div>
                   </div>
@@ -248,16 +285,172 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         })}
       </div>
 
+      {/* Interactive Bespoke Embroidery Studio Showcase Banner */}
+      <div className="mt-24 p-6 sm:p-10 bg-[#15191E] text-white rounded-xs border border-slate-800 shadow-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7 space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono uppercase tracking-widest text-[#38BDF8]">
+              <Sparkles size={12} />
+              <span>BESPOKE EMBROIDERY ARCHITECTURE &bull; INCLUDED ON EVERY ORDER</span>
+            </div>
+            <h3 className="font-serif text-3xl sm:text-4xl font-bold leading-tight text-white">
+              Your Shirt. Your Mark. <br />
+              <span className="italic font-normal text-slate-300">Four Official Lockups or Pure Unbranded Drape.</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+              Every High Draw garment is embroidered to order. Choose between our <strong>Mark + Monogram (`H | D`)</strong>, <strong>Mark-Only (`Ball Flight Tracer`)</strong>, <strong>Monogram (`HD` Serif Initials)</strong>, or <strong>Mark + Text (`HIGH DRAW`)</strong> across four thread colors—or select <strong>Optional No Logo</strong> for a completely unbranded silhouette.
+            </p>
+
+            {/* Interactive Style Switcher Pills */}
+            <div className="space-y-2 pt-1">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block">
+                1. PREVIEW LOGO ARCHITECTURE:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {LOGO_STYLE_OPTIONS.map((st) => (
+                  <button
+                    key={st.id}
+                    type="button"
+                    onClick={() => setShowcaseStyle(st.id)}
+                    className={`px-3.5 py-2 rounded-xs text-xs font-bold transition-all cursor-pointer border ${
+                      showcaseStyle === st.id
+                        ? 'bg-[#B12535] text-white border-[#B12535] shadow-md'
+                        : 'bg-white/5 text-slate-300 border-white/15 hover:bg-white/10'
+                    }`}
+                  >
+                    {st.shortLabel}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Interactive Thread Color + Shirt Color Switcher */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block">
+                  2. SELECT THREAD COLOR:
+                </span>
+                <div className="flex items-center gap-2">
+                  {LOGO_COLOR_OPTIONS.map((co) => (
+                    <button
+                      key={co.id}
+                      type="button"
+                      disabled={showcaseStyle === 'none'}
+                      onClick={() => setShowcaseColor(co.id)}
+                      className={`px-3 py-1.5 rounded-xs text-xs font-semibold flex items-center gap-1.5 border transition-all cursor-pointer ${
+                        showcaseStyle === 'none'
+                          ? 'opacity-40 cursor-not-allowed border-white/10 bg-white/5'
+                          : showcaseColor === co.id
+                          ? 'bg-white text-[#15191E] border-white font-bold'
+                          : 'bg-white/5 text-slate-300 border-white/15 hover:bg-white/10'
+                      }`}
+                    >
+                      <span
+                        className="w-3 h-3 rounded-full border border-slate-400"
+                        style={{ backgroundColor: co.hex }}
+                      />
+                      <span>{co.shortLabel}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block">
+                  3. TEST ON GARMENT FABRIC:
+                </span>
+                <div className="flex items-center gap-2">
+                  {[
+                    { name: 'Midnight Navy', hex: '#1E293B' },
+                    { name: 'Onyx Black', hex: '#111827' },
+                    { name: 'Carolina Blue', hex: '#6BA4B8' },
+                    { name: 'Forest Green', hex: '#1E3A2F' },
+                    { name: 'Crisp White', hex: '#FFFFFF' },
+                    { name: 'Deep Red', hex: '#991B1B' },
+                  ].map((sh) => (
+                    <button
+                      key={sh.name}
+                      type="button"
+                      title={sh.name}
+                      onClick={() => {
+                        setShowcaseShirtHex(sh.hex);
+                        setShowcaseShirtName(sh.name);
+                      }}
+                      style={{ backgroundColor: sh.hex }}
+                      className={`w-7 h-7 rounded-full border-2 transition-transform cursor-pointer ${
+                        showcaseShirtHex === sh.hex
+                          ? 'border-[#38BDF8] scale-115 shadow-md'
+                          : 'border-white/30 hover:scale-105'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Live High-Res Embroidery Preview Stage */}
+          <div className="lg:col-span-5">
+            <div
+              className="aspect-[4/3] rounded-xs border-2 border-white/20 shadow-2xl flex flex-col items-center justify-center p-8 relative overflow-hidden transition-colors duration-300"
+              style={{ backgroundColor: showcaseShirtHex }}
+            >
+              {/* Subtle Micro-Pique Fabric Texture Grid */}
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  backgroundImage:
+                    'radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)',
+                  backgroundSize: '4px 4px',
+                }}
+              />
+
+              <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                {showcaseLogoSrc ? (
+                  <img
+                    src={showcaseLogoSrc}
+                    alt="High Draw Official Embroidery Preview"
+                    className="max-h-36 max-w-[220px] w-auto object-contain drop-shadow-md transition-all duration-300"
+                  />
+                ) : (
+                  <div
+                    className={`text-center space-y-1 px-6 py-4 rounded border ${
+                      showcaseShirtHex === '#FFFFFF'
+                        ? 'border-slate-300 text-slate-700 bg-slate-100/80'
+                        : 'border-white/20 text-white bg-black/25'
+                    }`}
+                  >
+                    <span className="font-mono text-xs uppercase tracking-widest font-bold block">
+                      OPTIONAL CLEAN / UNBRANDED
+                    </span>
+                    <span className="text-[11px] opacity-80 block">
+                      180 GSM Micro-Pique • Zero Exterior Logos
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/75 backdrop-blur-md text-white px-3.5 py-2 rounded-2xs text-[10px] font-mono">
+                <span>FABRIC: {showcaseShirtName.toUpperCase()}</span>
+                <span className="text-[#38BDF8] font-bold">
+                  {formatCustomizationSummary(showcaseStyle, showcaseColor).toUpperCase()}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Quick View & Fitting Slide-Over Modal */}
       {quickViewProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
-          <div className="relative w-full max-w-3xl bg-white rounded-lg shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in duration-200">
+          <div className="relative w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in duration-200">
             
             {/* Header */}
             <div className="bg-[#1C2C24] text-white p-6 flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#38BDF8] block">
-                  {quickViewProduct.collectionLabel} &bull; HONEST MID-MARKET PRICING
+                  {quickViewProduct.collectionLabel} &bull; BESPOKE CUSTOMIZATION
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-white">
                   {quickViewProduct.name}
@@ -276,7 +469,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-6 sm:p-8">
               
               {/* Product Image */}
-              <div className="md:col-span-6 aspect-[4/5] bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+              <div className="md:col-span-5 aspect-[4/5] bg-slate-100 rounded-lg overflow-hidden border border-slate-200 relative">
                 <img 
                   src={activeCardImages[quickViewProduct.id] || quickViewProduct.image} 
                   alt={quickViewProduct.name} 
@@ -285,7 +478,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               </div>
 
               {/* Product Options & Checkout */}
-              <div className="md:col-span-6 space-y-6 flex flex-col justify-between">
+              <div className="md:col-span-7 space-y-5 flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold font-mono text-[#1A1F26]">${quickViewProduct.price} USD</span>
@@ -295,20 +488,10 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     </span>
                   </div>
 
-                  {/* Wash Durability Callout */}
-                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-sm text-xs text-slate-700 flex items-center gap-2">
-                    <RefreshCw size={15} className="text-[#1C2C24]" />
-                    <span className="font-bold">{quickViewProduct.washGuarantee}</span>
-                  </div>
-
-                  <p className="text-xs text-slate-600 font-normal leading-relaxed">
-                    {quickViewProduct.description}
-                  </p>
-
                   {/* Color Selector */}
                   <div className="space-y-2">
                     <span className="text-xs font-bold text-slate-700 block uppercase">
-                      Colorway: <span className="text-[#1A1F26]">{selectedColor}</span>
+                      Shirt Colorway: <span className="text-[#1A1F26]">{selectedColor}</span>
                     </span>
                     <div className="flex gap-2 flex-wrap">
                       {quickViewProduct.colors.map((c) => (
@@ -316,6 +499,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                           key={c.name}
                           onClick={() => {
                             setSelectedColor(c.name);
+                            if (c.defaultLogoColor) setSelectedLogoColor(c.defaultLogoColor);
                             if (c.image) {
                               setActiveCardImages(prev => ({ ...prev, [quickViewProduct.id]: c.image! }));
                             }
@@ -333,7 +517,23 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     </div>
                   </div>
 
-                  {/* Size Selector with S to 3XL options */}
+                  {/* Bespoke Logo Customizer */}
+                  <LogoCustomizer
+                    selectedStyle={selectedLogoStyle}
+                    onSelectStyle={setSelectedLogoStyle}
+                    selectedColor={selectedLogoColor}
+                    onSelectColor={setSelectedLogoColor}
+                    garmentHex={
+                      quickViewProduct.colors.find(c => c.name === selectedColor)?.hex || '#1E293B'
+                    }
+                    garmentColorName={selectedColor}
+                    recommendedColor={
+                      quickViewProduct.colors.find(c => c.name === selectedColor)?.defaultLogoColor || 'cyan'
+                    }
+                    compact
+                  />
+
+                  {/* Size Selector */}
                   <div className="space-y-2">
                     <span className="text-xs font-bold text-slate-700 block uppercase">
                       Select Size: <span className="text-[#1A1F26]">{selectedSize}</span>
@@ -374,7 +574,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     ) : (
                       <>
                         <ShoppingBag size={18} />
-                        <span>ADD TO BAG &bull; ${quickViewProduct.price}</span>
+                        <span>ADD CUSTOM ORDER TO BAG &bull; ${quickViewProduct.price}</span>
                       </>
                     )}
                   </button>

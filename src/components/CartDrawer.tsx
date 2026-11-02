@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, CreditCard } from 'lucide-react';
+import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, CreditCard, Lock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
@@ -12,6 +12,9 @@ export interface CartItem {
   color: string;
   size: string;
   image: string;
+  logoStyle?: string;
+  logoColor?: string;
+  userTypeLabel?: string;
 }
 
 interface CartDrawerProps {
