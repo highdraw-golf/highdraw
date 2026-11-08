@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
 import { createStripeCheckoutSession } from '../lib/stripe';
+import { StripeSecurityBeacon } from './motion/HighDrawBespokeMotion';
 
 export interface CartItem {
   id: string;
@@ -452,11 +453,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
             {/* Stripe & Direct Order Actions */}
             <div className="space-y-3 mt-4">
+              <StripeSecurityBeacon amount={total} />
+
               <button
                 type="button"
                 onClick={handleStripePayment}
                 disabled={isCheckingOut}
-                className="w-full py-4 bg-[#635BFF] hover:bg-[#4E44E6] text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98"
+                className="w-full py-4 bg-[#635BFF] hover:bg-[#4E44E6] text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press active:scale-98"
               >
                 {isCheckingOut ? (
                   <span>CONNECTING TO SECURE STRIPE CHECKOUT...</span>

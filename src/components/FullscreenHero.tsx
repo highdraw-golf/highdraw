@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import { RiseLines, FadeUp } from './motion/EditorialMotion';
+import { BallFlightReveal } from './motion/HighDrawBespokeMotion';
 
 interface FullscreenHeroProps {
   heroImage: string;
@@ -51,20 +53,29 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
             {/* Luxury Editorial Headline */}
             <div className="space-y-3">
               <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.02] text-white drop-shadow-lg tracking-tight">
-                Designed for Sport. <br />
-                <span className="font-normal italic text-slate-200">Crafted for Life.</span>
+                <RiseLines
+                  immediate
+                  lines={[
+                    'Designed for Sport.',
+                    <span key="sub" className="font-normal italic text-slate-200">
+                      Crafted for Life.
+                    </span>,
+                  ]}
+                />
               </h1>
-              <p className="text-base sm:text-lg text-slate-200 max-w-xl font-normal leading-relaxed pt-1">
-                Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, custom embroidered to order with your choice of 4 official High Draw marks and 4 thread colors—or optional clean finish. Direct for $48.
-              </p>
+              <FadeUp immediate delay={0.25}>
+                <p className="text-base sm:text-lg text-slate-200 max-w-xl font-normal leading-relaxed pt-1">
+                  Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, custom embroidered to order with your choice of 4 official High Draw marks and 4 thread colors—or optional clean finish. Direct for $48.
+                </p>
+              </FadeUp>
             </div>
 
             {/* Primary Action Suite: SHOP POLOS + Direct Men's / Women's Selection */}
-            <div className="pt-2 space-y-3">
+            <FadeUp immediate delay={0.35} className="pt-2 space-y-3">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                 <button
                   onClick={onScrollToShop}
-                  className="px-8 py-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.16em] transition-all rounded-xs shadow-2xl flex items-center justify-center gap-3 group active:scale-95 cursor-pointer"
+                  className="px-8 py-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.16em] transition-all rounded-xs shadow-2xl flex items-center justify-center gap-3 group t-press active:scale-95 cursor-pointer"
                 >
                   <span>SHOP POLOS &bull; $48</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -74,7 +85,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                 <div className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center">
                   <button
                     onClick={onShopMens || onScrollToShop}
-                    className="px-5 py-4 bg-white/15 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-white/30 font-bold text-xs uppercase tracking-[0.14em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                    className="px-5 py-4 bg-white/15 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-white/30 font-bold text-xs uppercase tracking-[0.14em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press"
                   >
                     <span>MEN'S POLOS</span>
                     <ArrowRight size={13} />
@@ -82,7 +93,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
 
                   <button
                     onClick={onShopWomens || onScrollToShop}
-                    className="px-5 py-4 bg-white/15 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-white/30 font-bold text-xs uppercase tracking-[0.14em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                    className="px-5 py-4 bg-white/15 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-white/30 font-bold text-xs uppercase tracking-[0.14em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press"
                   >
                     <span>WOMEN'S POLOS</span>
                     <ArrowRight size={13} />
@@ -93,7 +104,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               <div className="flex flex-wrap items-center gap-4 pt-1">
                 <button
                   onClick={onScrollToWhy}
-                  className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#38BDF8] hover:text-white underline underline-offset-4 cursor-pointer transition-colors"
+                  className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#38BDF8] hover:text-white link-swipe cursor-pointer transition-colors"
                 >
                   Explore The Craftsmanship Lab &rarr;
                 </button>
@@ -102,7 +113,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                   Available in Men's S–4XL &amp; Women's XS–4XL
                 </span>
               </div>
-            </div>
+            </FadeUp>
 
             {/* Direct Reassurance Micro-Copy */}
             <div className="flex flex-wrap items-center gap-6 pt-2 text-[12px] text-slate-300 font-medium">
@@ -124,111 +135,113 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
 
           {/* RIGHT: Elevated Bespoke Embroidery Suite Showcase Card */}
           <div className="lg:col-span-5 hidden md:block">
-            <div className="bg-[#15191E]/85 backdrop-blur-xl border border-white/20 rounded-xs p-6 shadow-2xl space-y-4">
-              <div className="flex items-center justify-between border-b border-white/15 pb-3">
-                <div className="flex items-center gap-2">
-                  <Sparkles size={14} className="text-[#38BDF8]" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#38BDF8] font-bold">
-                    BESPOKE EMBROIDERY SUITE
+            <BallFlightReveal delay={0.2}>
+              <div className="bg-[#15191E]/85 backdrop-blur-xl border border-white/20 rounded-xs p-6 shadow-2xl space-y-4">
+                <div className="flex items-center justify-between border-b border-white/15 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={14} className="text-[#38BDF8]" />
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#38BDF8] font-bold">
+                      BESPOKE EMBROIDERY SUITE
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-emerald-400 uppercase font-semibold">
+                    Included Free
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-emerald-400 uppercase font-semibold">
-                  Included Free
-                </span>
+
+                <div className="space-y-1">
+                  <h3 className="font-serif text-xl font-bold text-white">
+                    Customize Every Shirt &amp; Colorway
+                  </h3>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Select your preferred official High Draw lockup and thread color on any Men's or Women's garment—or order unbranded.
+                  </p>
+                </div>
+
+                {/* 4 Official Logo Lockups Visual Grid */}
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div
+                    onClick={onScrollToShop}
+                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3 t-press"
+                  >
+                    <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
+                      <img
+                        src="/assets/brand/logos/mark_monogram_gold.png"
+                        alt="Mark + Monogram"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[11px] font-bold text-white block truncate">Mark + Monogram</span>
+                      <span className="text-[9px] font-mono text-amber-400 uppercase block">H · Tracer · D</span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={onScrollToShop}
+                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3 t-press"
+                  >
+                    <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
+                      <img
+                        src="/assets/brand/logos/mark_only_cyan.png"
+                        alt="Mark-Only"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[11px] font-bold text-white block truncate">Mark-Only</span>
+                      <span className="text-[9px] font-mono text-[#38BDF8] uppercase block">Apex Tracer + Pin</span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={onScrollToShop}
+                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3 t-press"
+                  >
+                    <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
+                      <img
+                        src="/assets/brand/logos/monogram_white.png"
+                        alt="Monogram HD"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[11px] font-bold text-white block truncate">Monogram (HD)</span>
+                      <span className="text-[9px] font-mono text-slate-300 uppercase block">Serif Initials</span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={onScrollToShop}
+                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3 t-press"
+                  >
+                    <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
+                      <img
+                        src="/assets/brand/logos/mark_text_cyan.png"
+                        alt="Mark + Text"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[11px] font-bold text-white block truncate">Mark + Text</span>
+                      <span className="text-[9px] font-mono text-[#38BDF8] uppercase block">Full Lockup</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Thread Color Palette Footer */}
+                <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] uppercase text-slate-400">Thread Colors:</span>
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#00A3FF] border border-white/40" title="Cyan Tracer" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#E5A900] border border-white/40" title="Championship Gold" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-white border border-white/40" title="Crisp White" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#111827] border border-white/60" title="Onyx Black" />
+                  </div>
+                  <span className="font-mono text-[10px] text-slate-300">+ Optional No-Logo</span>
+                </div>
               </div>
-
-              <div className="space-y-1">
-                <h3 className="font-serif text-xl font-bold text-white">
-                  Customize Every Shirt &amp; Colorway
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Select your preferred official High Draw lockup and thread color on any Men's or Women's garment—or order unbranded.
-                </p>
-              </div>
-
-              {/* 4 Official Logo Lockups Visual Grid */}
-              <div className="grid grid-cols-2 gap-2.5">
-                <div
-                  onClick={onScrollToShop}
-                  className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                    <img
-                      src="/assets/brand/logos/mark_monogram_gold.png"
-                      alt="Mark + Monogram"
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[11px] font-bold text-white block truncate">Mark + Monogram</span>
-                    <span className="text-[9px] font-mono text-amber-400 uppercase block">H · Tracer · D</span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={onScrollToShop}
-                  className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                    <img
-                      src="/assets/brand/logos/mark_only_cyan.png"
-                      alt="Mark-Only"
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[11px] font-bold text-white block truncate">Mark-Only</span>
-                    <span className="text-[9px] font-mono text-[#38BDF8] uppercase block">Apex Tracer + Pin</span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={onScrollToShop}
-                  className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                    <img
-                      src="/assets/brand/logos/monogram_white.png"
-                      alt="Monogram HD"
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[11px] font-bold text-white block truncate">Monogram (HD)</span>
-                    <span className="text-[9px] font-mono text-slate-300 uppercase block">Serif Initials</span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={onScrollToShop}
-                  className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <div className="w-11 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                    <img
-                      src="/assets/brand/logos/mark_text_cyan.png"
-                      alt="Mark + Text"
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[11px] font-bold text-white block truncate">Mark + Text</span>
-                    <span className="text-[9px] font-mono text-[#38BDF8] uppercase block">Full Lockup</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Thread Color Palette Footer */}
-              <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase text-slate-400">Thread Colors:</span>
-                  <span className="w-3.5 h-3.5 rounded-full bg-[#00A3FF] border border-white/40" title="Cyan Tracer" />
-                  <span className="w-3.5 h-3.5 rounded-full bg-[#E5A900] border border-white/40" title="Championship Gold" />
-                  <span className="w-3.5 h-3.5 rounded-full bg-white border border-white/40" title="Crisp White" />
-                  <span className="w-3.5 h-3.5 rounded-full bg-[#111827] border border-white/60" title="Onyx Black" />
-                </div>
-                <span className="font-mono text-[10px] text-slate-300">+ Optional No-Logo</span>
-              </div>
-            </div>
+            </BallFlightReveal>
           </div>
 
         </div>

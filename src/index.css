@@ -83,3 +83,47 @@ body {
   background: rgba(9, 12, 16, 0.7);
   backdrop-filter: blur(4px);
 }
+
+/* ==========================================================================
+   Accént Motion 1.0 — Ergonomic Physics & Micro-Interactions (Tier 1 Baseline)
+   ========================================================================== */
+
+:root {
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-accent: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 120ms Ergonomic Press Physics */
+.t-press {
+  transition: transform var(--duration-fast) var(--ease-accent), opacity var(--duration-fast) var(--ease-accent);
+}
+.t-press:active {
+  transform: scale(0.97);
+}
+
+/* 200ms Color Crossfades */
+.t-color {
+  transition: color var(--duration-base) var(--ease-accent), background-color var(--duration-base) var(--ease-accent), border-color var(--duration-base) var(--ease-accent);
+}
+
+/* Editorial Underline Wipe */
+.link-swipe {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 2px no-repeat;
+  transition: background-size 0.35s var(--ease-editorial);
+}
+.link-swipe:hover {
+  background-size: 100% 2px;
+}
+
+/* Hard Kill-Switch for Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

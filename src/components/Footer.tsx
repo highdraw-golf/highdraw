@@ -177,7 +177,7 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Sub-Footer Signature Banner */}
-        <div className="pt-8 mt-8 border-t border-slate-800/80 text-center">
+        <div className="pt-8 mt-8 border-t border-slate-800/80 text-center space-y-2">
           <p className="text-xs text-slate-400 tracking-wider">
             made with &lt;3 by{' '}
             <a
@@ -189,6 +189,17 @@ export const Footer: React.FC<FooterProps> = ({
               Colon Hyphen Bracket
             </a>
             .
+          </p>
+          <p className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">
+            Powered by{' '}
+            <a
+              href="https://design.pipes.pink/foundations/motion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-[#38BDF8] underline underline-offset-2 transition-colors"
+            >
+              Acc&eacute;nt Motion 1.0
+            </a>
           </p>
         </div>
 
