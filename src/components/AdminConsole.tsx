@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail } from 'lucide-react';
+import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail, Layers } from 'lucide-react';
 import type { OrderNotification } from '../lib/emailService';
+import { SILHOUETTE_SPECS, getMatrixStats, type SilhouetteId } from '../lib/taxonomy';
+import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
+import { LOGO_STYLE_OPTIONS, LOGO_COLOR_OPTIONS, getLogoAssetPath, type LogoStyle, type LogoVariant } from './brand/HighDrawLogo';
 
 interface AdminConsoleProps {
   isOpen: boolean;
@@ -38,7 +41,13 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
       return [];
     }
   });
-  const [activeTab, setActiveTab] = useState<'settings' | 'orders'>('settings');
+  const [activeTab, setActiveTab] = useState<'settings' | 'taxonomy' | 'orders'>('taxonomy');
+  const [selectedSilhouette, setSelectedSilhouette] = useState<SilhouetteId>('men-polo-st740');
+  const [selectedColor, setSelectedColor] = useState<string>('Grey Concrete');
+  const [selectedLogo, setSelectedLogo] = useState<LogoStyle>('mark_only');
+  const [selectedThread, setSelectedThread] = useState<LogoVariant>('black');
+  const [selectedSize, setSelectedSize] = useState<string>('L');
+  const matrixStats = getMatrixStats();
 
   useEffect(() => {
     const handleStorage = () => {
@@ -153,17 +162,26 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
         {/* Tab Switcher */}
         <div className="flex border-b border-slate-200 bg-slate-100 text-xs font-bold uppercase tracking-wider">
           <button
+            onClick={() => setActiveTab('taxonomy')}
+            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+              activeTab === 'taxonomy' ? 'bg-white text-[#2A4236] border-b-2 border-[#2A4236]' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Layers size={14} />
+            <span>Sovereign Taxonomy ({matrixStats.totalPermutations.toLocaleString()} SKUs)</span>
+          </button>
+          <button
             onClick={() => setActiveTab('settings')}
-            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === 'settings' ? 'bg-white text-[#2A4236] border-b-2 border-[#2A4236]' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Sliders size={14} />
-            <span>Store Settings & Styling</span>
+            <span>Store Settings</span>
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3 px-4 text-center transition-colors flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === 'orders' ? 'bg-white text-[#2A4236] border-b-2 border-[#2A4236]' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -175,7 +193,206 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
         {/* Modal Content Body */}
         <div className="p-6 overflow-y-auto space-y-8 flex-1 text-slate-800">
 
-          {activeTab === 'settings' ? (
+          {activeTab === 'taxonomy' ? (
+            (() => {
+              const activeSpec = SILHOUETTE_SPECS[selectedSilhouette];
+              const colorKeys = Object.keys(activeSpec.colorMap);
+              const safeColor = colorKeys.includes(selectedColor) ? selectedColor : colorKeys[0];
+              const activeColorObj = activeSpec.colorMap[safeColor];
+              const resolved = resolvePrintifyFulfillment({
+                id: selectedSilhouette,
+                color: safeColor,
+                size: selectedSize,
+                logoStyle: selectedLogo,
+                logoColor: selectedThread,
+              });
+              const previewLogoSrc = getLogoAssetPath(selectedLogo, selectedThread);
+
+              return (
+                <div className="space-y-6">
+                  {/* Top Architecture Banner */}
+                  <div className="p-4 bg-[#1C2C24] text-white rounded-md space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#38BDF8] font-bold">
+                        ZERO-TOIL PRINTIFY BYPASS ENGINE &bull; STAGING PREVIEW
+                      </span>
+                      <span className="px-2 py-0.5 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-[10px] rounded-xs">
+                        {matrixStats.totalPermutations.toLocaleString()} Permutations Active
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-base font-bold">
+                      Sovereign Deterministic SKU &amp; Variant Matrix
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Instead of manually building {matrixStats.totalPermutations.toLocaleString()} separate products inside Printify&apos;s slow interface, High Draw computes SKUs deterministically and overlays all 4 marks &times; 4 thread colors dynamically on unbranded garment bases, resolving directly to Printify Provider #217 (Fulfill Engine) numeric variant IDs.
+                    </p>
+                  </div>
+
+                  {/* Interactive SKU & Variant Explorer */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-md border border-slate-200">
+                    <div className="space-y-3 text-xs">
+                      <label className="block space-y-1">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">1. Garment Silhouette</span>
+                        <select
+                          value={selectedSilhouette}
+                          onChange={(e) => {
+                            const nextSil = e.target.value as SilhouetteId;
+                            setSelectedSilhouette(nextSil);
+                            const firstCol = Object.keys(SILHOUETTE_SPECS[nextSil].colorMap)[0];
+                            setSelectedColor(firstCol);
+                            setSelectedSize(SILHOUETTE_SPECS[nextSil].sizes[0]);
+                          }}
+                          className="w-full p-2 bg-white border border-slate-300 rounded-xs font-medium"
+                        >
+                          {matrixStats.breakdown.map(b => (
+                            <option key={b.id} value={b.id}>
+                              {b.name} ({b.total} combos)
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+
+                      <label className="block space-y-1">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">2. Factory Colorway</span>
+                        <select
+                          value={safeColor}
+                          onChange={(e) => setSelectedColor(e.target.value)}
+                          className="w-full p-2 bg-white border border-slate-300 rounded-xs font-medium"
+                        >
+                          {colorKeys.map(c => (
+                            <option key={c} value={c}>
+                              {c} (Printify: {activeSpec.colorMap[c].printifyColorTitle})
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <label className="block space-y-1">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">3. Embroidery Mark</span>
+                          <select
+                            value={selectedLogo}
+                            onChange={(e) => setSelectedLogo(e.target.value as LogoStyle)}
+                            className="w-full p-2 bg-white border border-slate-300 rounded-xs font-medium"
+                          >
+                            {LOGO_STYLE_OPTIONS.map(l => (
+                              <option key={l.id} value={l.id}>{l.shortLabel}</option>
+                            ))}
+                          </select>
+                        </label>
+
+                        <label className="block space-y-1">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">4. Thread Color</span>
+                          <select
+                            value={selectedThread}
+                            onChange={(e) => setSelectedThread(e.target.value as LogoVariant)}
+                            disabled={selectedLogo === 'none'}
+                            className="w-full p-2 bg-white border border-slate-300 rounded-xs font-medium disabled:opacity-50"
+                          >
+                            {LOGO_COLOR_OPTIONS.map(c => (
+                              <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                          </select>
+                        </label>
+                      </div>
+
+                      <label className="block space-y-1">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">5. Size</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {activeSpec.sizes.map(sz => (
+                            <button
+                              key={sz}
+                              type="button"
+                              onClick={() => setSelectedSize(sz)}
+                              className={`px-2.5 py-1 rounded-xs font-mono text-xs font-bold border cursor-pointer ${
+                                selectedSize === sz
+                                  ? 'bg-[#2A4236] text-white border-[#2A4236]'
+                                  : 'bg-white text-slate-700 border-slate-300'
+                              }`}
+                            >
+                              {sz}
+                            </button>
+                          ))}
+                        </div>
+                      </label>
+                    </div>
+
+                    {/* Right Column: Live Resolved Output */}
+                    <div className="bg-white p-4 rounded-xs border border-slate-200 flex flex-col justify-between space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-16 h-16 rounded-xs border border-slate-300 flex items-center justify-center shrink-0 shadow-inner"
+                          style={{ backgroundColor: activeColorObj?.hex || '#1E293B' }}
+                        >
+                          {previewLogoSrc ? (
+                            <img src={previewLogoSrc} alt="Logo preview" className="w-12 h-12 object-contain" />
+                          ) : (
+                            <span className="text-[9px] font-mono uppercase text-white/80 font-bold">CLEAN</span>
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#B12535] font-bold block">
+                            DETERMINISTIC SKU
+                          </span>
+                          <code className="font-mono text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-2xs block mt-0.5">
+                            {resolved.sovereignSku}
+                          </code>
+                          <span className="text-[11px] text-slate-500 block mt-1">
+                            Blueprint #{activeSpec.blueprintId} &bull; Provider #{activeSpec.printProviderId}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs font-mono text-[11px] space-y-1.5">
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Printify Product ID:</span>
+                          <span className="font-bold text-slate-800">{resolved.printifyProductId}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Resolved Variant ID:</span>
+                          <span className="font-bold text-emerald-700">#{resolved.printifyVariantId}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Printify Color Key:</span>
+                          <span className="font-bold text-slate-800">{resolved.printifyColorTitle} / {resolved.size}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Decoration Position:</span>
+                          <span className="font-bold text-slate-800">{resolved.placeholderPosition} ({resolved.decorationMethod})</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Silhouette Matrix Breakdown Table */}
+                  <div className="border border-slate-200 rounded-md overflow-hidden">
+                    <table className="w-full text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="bg-slate-100 border-b border-slate-200 font-mono text-[10px] uppercase text-slate-600">
+                          <th className="py-2.5 px-3">Garment Blank</th>
+                          <th className="py-2.5 px-3">Colors</th>
+                          <th className="py-2.5 px-3">Sizes</th>
+                          <th className="py-2.5 px-3">Logo &times; Thread</th>
+                          <th className="py-2.5 px-3 text-right">Permutations</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200">
+                        {matrixStats.breakdown.map(row => (
+                          <tr key={row.id} className="hover:bg-slate-50">
+                            <td className="py-2.5 px-3 font-semibold text-slate-900">{row.name}</td>
+                            <td className="py-2.5 px-3 font-mono">{row.colors}</td>
+                            <td className="py-2.5 px-3 font-mono">{row.sizes}</td>
+                            <td className="py-2.5 px-3 font-mono">{row.logoCombinations} (4&times;4 + Clean)</td>
+                            <td className="py-2.5 px-3 font-mono font-bold text-right text-[#2A4236]">{row.total.toLocaleString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })()
+          ) : activeTab === 'settings' ? (
             <>
               {/* 1. Quick Live Deploy Button */}
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between">

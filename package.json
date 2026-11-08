@@ -12,6 +12,8 @@
     "test": "playwright test",
     "harness": "node scripts/image_harness.js --all",
     "harness:verify": "node scripts/image_harness.js --verify",
+    "printify:sync": "node scripts/provision_printify_catalog.mjs",
+    "printify:provision": "node scripts/provision_printify_catalog.mjs --apply",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

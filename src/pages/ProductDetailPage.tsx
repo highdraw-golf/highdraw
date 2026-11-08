@@ -13,7 +13,8 @@ import type { LogoStyle, LogoVariant } from '../components/brand/HighDrawLogo';
 import { Accordion } from '../components/ui/Accordion';
 import { Button } from '../components/ui/Button';
 import { SizeGuideModal } from '../components/SizeGuideModal';
-import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Check, ShoppingBag, Sparkles } from 'lucide-react';
+import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
+import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Check, ShoppingBag, Sparkles, Tag } from 'lucide-react';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -28,6 +29,9 @@ interface ProductDetailPageProps {
     logoStyle?: LogoStyle;
     logoColor?: LogoVariant;
     userTypeLabel?: string;
+    sovereignSku?: string;
+    printifyProductId?: string;
+    printifyVariantId?: number;
   }) => void;
   onSelectProduct: (product: Product) => void;
   allProducts: Product[];
@@ -117,6 +121,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const userTypeOptions = getUserTypeOptions();
   const activeUserTypeLabel = userTypeOptions?.find(u => u.id === userCutPreference)?.label;
 
+  const resolvedFulfillment = resolvePrintifyFulfillment({
+    id: product.id,
+    color: selectedColor,
+    size: selectedSize,
+    logoStyle: selectedLogoStyle,
+    logoColor: selectedLogoColor,
+  });
+
   const handleAddCurrent = () => {
     const colorWithCustomization = `${selectedColor} • ${customizationLabel}${
       product.category === 'bundles' && activeUserTypeLabel ? ` (${activeUserTypeLabel})` : ''
@@ -131,6 +143,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       logoStyle: selectedLogoStyle,
       logoColor: selectedLogoColor,
       userTypeLabel: activeUserTypeLabel,
+      sovereignSku: resolvedFulfillment.sovereignSku,
+      printifyProductId: resolvedFulfillment.printifyProductId,
+      printifyVariantId: resolvedFulfillment.printifyVariantId,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
@@ -482,12 +497,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             />
 
             {/* Bespoke Embroidery & Fulfillment Assurance */}
-            <div className="flex items-start gap-2.5 text-xs text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/15 px-3.5 py-2.5 rounded-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0 mt-1" />
-              <span>
-                <strong>Your Custom Spec ({selectedColor}, Size {selectedSize}):</strong>{' '}
-                {customizationLabel} &bull; Embroidered to order in the USA
-              </span>
+            <div className="p-3.5 text-xs text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/15 rounded-xs space-y-2">
+              <div className="flex items-start gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0 mt-1" />
+                <span>
+                  <strong>Your Custom Spec ({selectedColor}, Size {selectedSize}):</strong>{' '}
+                  {customizationLabel} &bull; Embroidered to order in the USA
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#1C2C24]/10 font-mono text-[10px] text-slate-600">
+                <span className="inline-flex items-center gap-1 font-bold text-[#1C2C24]">
+                  <Tag size={11} className="text-[#B12535]" />
+                  SKU: {resolvedFulfillment.sovereignSku}
+                </span>
+                <span className="text-slate-500">
+                  Factory ID: #{resolvedFulfillment.printifyVariantId} ({resolvedFulfillment.decorationMethod.toUpperCase()})
+                </span>
+              </div>
             </div>
 
             {/* Primary Add to Bag CTA */}

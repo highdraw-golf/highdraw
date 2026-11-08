@@ -4,6 +4,8 @@ import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
 import { createStripeCheckoutSession } from '../lib/stripe';
+import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
+import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
 import { StripeSecurityBeacon } from './motion/HighDrawBespokeMotion';
 
 export interface CartItem {
@@ -16,6 +18,9 @@ export interface CartItem {
   logoStyle?: string;
   logoColor?: string;
   userTypeLabel?: string;
+  sovereignSku?: string;
+  printifyProductId?: string;
+  printifyVariantId?: number;
 }
 
 interface CartDrawerProps {
@@ -136,15 +141,24 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     const formattedAddress = `${shippingForm.address1}${shippingForm.address2 ? ` ${shippingForm.address2}` : ''}, ${shippingForm.city}, ${shippingForm.state} ${shippingForm.zip}`;
 
     try {
-      // 1. Submit Real Customer Details to Printify Order API
+      // 1. Submit Real Customer Details to Printify Order API with resolved numeric variant IDs
       await createPrintifyOrder({
         external_id: orderNum,
         label: `High Draw Direct Order #${orderNum}`,
-        line_items: cartItems.map(item => ({
-          product_id: item.id,
-          variant_id: 12345,
-          quantity: 1,
-        })),
+        line_items: cartItems.map(item => {
+          const resolved = resolvePrintifyFulfillment({
+            id: item.id,
+            color: item.color,
+            size: item.size,
+            logoStyle: (item.logoStyle as LogoStyle) || 'mark_monogram',
+            logoColor: (item.logoColor as LogoVariant) || 'cyan',
+          });
+          return {
+            product_id: item.printifyProductId || resolved.printifyProductId,
+            variant_id: item.printifyVariantId || resolved.printifyVariantId,
+            quantity: 1,
+          };
+        }),
         shipping_method: 1,
         send_shipping_notification: true,
         address_to: {
@@ -260,6 +274,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                           <p className="font-mono text-[10px] text-slate-500 mt-1 uppercase">
                             COLOR: {item.color} &bull; SIZE: {item.size}
                           </p>
+                          {item.sovereignSku && (
+                            <p className="font-mono text-[9px] text-[#1C2C24] font-semibold mt-0.5">
+                              SKU: {item.sovereignSku}
+                            </p>
+                          )}
                         </div>
                         <div className="font-mono text-xs font-semibold text-[#090C10]">
                           ${item.price} USD

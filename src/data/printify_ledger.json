@@ -1,0 +1,670 @@
+{
+  "generatedAt": "2026-11-08T05:24:50.619Z",
+  "shopId": "29111523",
+  "providerId": 217,
+  "providerName": "Fulfill Engine",
+  "silhouettes": {
+    "men-polo-st740": {
+      "silhouetteId": "men-polo-st740",
+      "skuCode": "MST740",
+      "title": "The Tour Performance Polo — Men's",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "placeholderPosition": "front_left_chest",
+      "decorationMethod": "embroidery",
+      "retailPriceCents": 4800,
+      "canonicalShopProductId": "6aefb534afdf3f8ff4025e42",
+      "totalCatalogVariants": 63,
+      "colors": {
+        "Carolina Blue": {
+          "2XL": 122429,
+          "3XL": 122438,
+          "L": 122456,
+          "M": 122465,
+          "S": 122474,
+          "XL": 122483,
+          "XS": 122492
+        },
+        "Deep Red": {
+          "2XL": 122430,
+          "3XL": 122439,
+          "4XL": 122448,
+          "L": 122457,
+          "M": 122466,
+          "S": 122475,
+          "XL": 122484,
+          "XS": 122493
+        },
+        "Forest Green": {
+          "2XL": 122431,
+          "3XL": 122440,
+          "4XL": 122449,
+          "L": 122458,
+          "M": 122467,
+          "S": 122476,
+          "XL": 122485
+        },
+        "Graphite": {
+          "2XL": 122432,
+          "3XL": 122441,
+          "4XL": 122450,
+          "L": 122459,
+          "M": 122468,
+          "S": 122477,
+          "XL": 122486,
+          "XS": 122495
+        },
+        "Grey Concrete": {
+          "2XL": 122433,
+          "3XL": 122442,
+          "4XL": 122451,
+          "L": 122460,
+          "M": 122469,
+          "S": 122478,
+          "XL": 122487,
+          "XS": 122496
+        },
+        "True Navy": {
+          "2XL": 122434,
+          "3XL": 122443,
+          "4XL": 122452,
+          "L": 122461,
+          "M": 122470,
+          "S": 122479,
+          "XL": 122488,
+          "XS": 122497
+        },
+        "True Royal": {
+          "2XL": 122435,
+          "4XL": 122453,
+          "L": 122462,
+          "M": 122471,
+          "S": 122480,
+          "XL": 122489,
+          "XS": 122498
+        },
+        "White": {
+          "2XL": 122436,
+          "3XL": 122445,
+          "4XL": 122454,
+          "L": 122463,
+          "M": 122472,
+          "S": 122481,
+          "XL": 122490,
+          "XS": 122499
+        },
+        "Black": {
+          "4XL": 122446,
+          "S": 122473
+        }
+      }
+    },
+    "women-polo-lst740": {
+      "silhouetteId": "women-polo-lst740",
+      "skuCode": "WLST740",
+      "title": "The Tour Performance Polo — Women's",
+      "blueprintId": 3322,
+      "printProviderId": 217,
+      "placeholderPosition": "left_chest_dtf",
+      "decorationMethod": "dtf",
+      "retailPriceCents": 4800,
+      "canonicalShopProductId": "6aecb1678ba16c774e0f63e1",
+      "totalCatalogVariants": 55,
+      "colors": {
+        "Black": {
+          "XS": 189058,
+          "S": 189131,
+          "M": 189142,
+          "L": 189185,
+          "XL": 189194,
+          "2XL": 189260,
+          "XXL": 189260,
+          "3XL": 189275,
+          "4XL": 189326
+        },
+        "Graphite": {
+          "XS": 189084,
+          "S": 189123,
+          "M": 189145,
+          "L": 189178,
+          "XL": 189208,
+          "2XL": 189247,
+          "XXL": 189247,
+          "3XL": 189284,
+          "4XL": 189322
+        },
+        "Grey Concrete": {
+          "XS": 189093,
+          "S": 189122,
+          "M": 189148,
+          "L": 189175,
+          "XL": 189211,
+          "2XL": 189244,
+          "XXL": 189244,
+          "3XL": 189291,
+          "4XL": 189319
+        },
+        "True Navy": {
+          "XS": 189100,
+          "S": 189120,
+          "M": 189150,
+          "L": 189172,
+          "XL": 189215,
+          "2XL": 189239,
+          "XXL": 189239,
+          "3XL": 189295,
+          "4XL": 189317
+        },
+        "True Royal": {
+          "XS": 189106,
+          "S": 189119,
+          "M": 189152,
+          "L": 189167,
+          "XL": 189219,
+          "2XL": 189236,
+          "XXL": 189236,
+          "4XL": 189315
+        },
+        "White": {
+          "S": 189117,
+          "M": 189155,
+          "L": 189164,
+          "XL": 189224,
+          "2XL": 189233,
+          "XXL": 189233,
+          "3XL": 189300,
+          "4XL": 189311
+        },
+        "Carolina Blue": {
+          "M": 189138,
+          "L": 189187,
+          "XL": 189197,
+          "2XL": 189254,
+          "XXL": 189254,
+          "3XL": 189270,
+          "4XL": 189328
+        },
+        "Deep Red": {
+          "M": 189144,
+          "XL": 189203,
+          "4XL": 189324
+        }
+      }
+    },
+    "outerwear-st443": {
+      "silhouetteId": "outerwear-st443",
+      "skuCode": "MST443",
+      "title": "The Tour Tech Quarter-Zip Pullover — Men's",
+      "blueprintId": 4133,
+      "printProviderId": 217,
+      "placeholderPosition": "left_chest_dtf",
+      "decorationMethod": "dtf",
+      "retailPriceCents": 5600,
+      "canonicalShopProductId": "6ababb99f64086b4c307d74c",
+      "totalCatalogVariants": 40,
+      "colors": {
+        "Black/ Deep Red": {
+          "XS": 222855,
+          "S": 222876,
+          "M": 222879,
+          "L": 222888,
+          "XL": 222891,
+          "2XL": 222901,
+          "3XL": 222905,
+          "4XL": 222914
+        },
+        "Black/ White": {
+          "XS": 222860,
+          "S": 222875,
+          "M": 222878,
+          "L": 222889,
+          "XL": 222892,
+          "2XL": 222902,
+          "3XL": 222904,
+          "4XL": 222915
+        },
+        "Iron Grey/ White": {
+          "XS": 222864,
+          "S": 222874,
+          "M": 222880,
+          "L": 222887,
+          "XL": 222893,
+          "2XL": 222900,
+          "3XL": 222906,
+          "4XL": 222913
+        },
+        "True Navy/ White": {
+          "XS": 222868,
+          "S": 222873,
+          "M": 222881,
+          "L": 222885,
+          "XL": 222894,
+          "2XL": 222898,
+          "3XL": 222907,
+          "4XL": 222912
+        },
+        "True Royal/ White": {
+          "XS": 222870,
+          "S": 222872,
+          "M": 222882,
+          "L": 222884,
+          "XL": 222895,
+          "2XL": 222897,
+          "3XL": 222908,
+          "4XL": 222910
+        }
+      }
+    },
+    "headwear-flexfit-mesh": {
+      "silhouetteId": "headwear-flexfit-mesh",
+      "skuCode": "CAP",
+      "title": "The Tour Performance Poly-Mesh Cap",
+      "blueprintId": 5272,
+      "printProviderId": 217,
+      "placeholderPosition": "front_left_dtf",
+      "decorationMethod": "dtf",
+      "retailPriceCents": 3500,
+      "canonicalShopProductId": "6abac00a7ed05bbe6f073036",
+      "totalCatalogVariants": 11,
+      "colors": {
+        "Black": {
+          "S/M": 243294,
+          "L/XL": 243301
+        },
+        "Magnet": {
+          "S/M": 243296,
+          "L/XL": 243303
+        },
+        "True Navy": {
+          "S/M": 243297,
+          "L/XL": 243304
+        },
+        "True Red": {
+          "S/M": 243298
+        },
+        "True Royal": {
+          "S/M": 243299,
+          "L/XL": 243306
+        },
+        "White": {
+          "S/M": 243300
+        },
+        "Grey Heather": {
+          "L/XL": 243302
+        }
+      }
+    }
+  },
+  "shopProducts": [
+    {
+      "id": "6aefb534afdf3f8ff4025e42",
+      "title": "HD Logo in White ",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6aefb34e711d7c1bbb0a8183",
+      "title": "White Polo with Black HD logo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6aefb031a15478d5610a0c47",
+      "title": "Tall Heavyweight Cotton Pique Polo",
+      "blueprintId": 3308,
+      "printProviderId": 99,
+      "variantCount": 20,
+      "tags": [
+        "Men's Clothing",
+        "T-shirts",
+        "Cotton",
+        "Early Access"
+      ]
+    },
+    {
+      "id": "6aefad9a8e6566b5e60d927c",
+      "title": "HighDraw Words logo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6aee5afbb6db2ba2ef0e3c12",
+      "title": "Minimalist Golf Golfer Embroidery Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6aee5a1bcdc0f74a650142fd",
+      "title": "Minimalist Initials Embroidered Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6aecb1678ba16c774e0f63e1",
+      "title": "WORDS LOGO Women's Polo",
+      "blueprintId": 3322,
+      "printProviderId": 217,
+      "variantCount": 64,
+      "tags": [
+        "Women's Clothing",
+        "T-shirts",
+        "Sports",
+        "Sportswear",
+        "Activewear",
+        "Outdoor",
+        "Polyester",
+        "Early Access",
+        "Polos"
+      ]
+    },
+    {
+      "id": "6ae91401b3540b5aab0705c0",
+      "title": "Sport-Tek® Men's UV Micropique Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6abc6018af64ab5c460a98f6",
+      "title": "Women's UV Micropique Polo",
+      "blueprintId": 3322,
+      "printProviderId": 217,
+      "variantCount": 64,
+      "tags": [
+        "Women's Clothing",
+        "T-shirts",
+        "Sports",
+        "Sportswear",
+        "Activewear",
+        "Outdoor",
+        "Polyester",
+        "Early Access"
+      ]
+    },
+    {
+      "id": "6abc5b89edce974809081176",
+      "title": "Minimal Golf Tee Polo | Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6abc58205ebcf8bab909dc0d",
+      "title": "Sport-Tek® Men's UV Micropique Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6abc58193e6a4cbbac0ba747",
+      "title": "Minimal Lightning Bolt Polo shirt | Embroidered Chest Logo, White Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    },
+    {
+      "id": "6abac00a7ed05bbe6f073036",
+      "title": "Flexfit Cool & Dry Poly Block Mesh Cap",
+      "blueprintId": 5272,
+      "printProviderId": 217,
+      "variantCount": 14,
+      "tags": [
+        "Hats",
+        "Polyester",
+        "Sports",
+        "Sportswear",
+        "Activewear",
+        "Early Access",
+        "Accessories"
+      ]
+    },
+    {
+      "id": "6ababb99f64086b4c307d74c",
+      "title": "Minimal Chest Logo 1/4-Zip Pullover",
+      "blueprintId": 4133,
+      "printProviderId": 217,
+      "variantCount": 40,
+      "tags": [
+        "Men's Clothing",
+        "Outerwear",
+        "Jackets",
+        "Sports",
+        "Sportswear",
+        "Activewear",
+        "Eco-friendly",
+        "Sustainable",
+        "Recycled",
+        "With zipper",
+        "Early Access"
+      ]
+    },
+    {
+      "id": "6ababa4b31153278e80c3de5",
+      "title": "Classic Women's Polo Shirt | UV Micropique Performance Polo",
+      "blueprintId": 3322,
+      "printProviderId": 217,
+      "variantCount": 64,
+      "tags": [
+        "Women's Clothing",
+        "T-shirts",
+        "Sports",
+        "Sportswear",
+        "Activewear",
+        "Outdoor",
+        "Polyester",
+        "Early Access"
+      ]
+    },
+    {
+      "id": "6abaaa2ff31d1d9ed8053572",
+      "title": "Golf Flag Icon Polo",
+      "blueprintId": 1984,
+      "printProviderId": 217,
+      "variantCount": 72,
+      "tags": [
+        "Men's Clothing",
+        "Embroidery",
+        "DTF"
+      ]
+    }
+  ],
+  "uploadedAssets": [
+    {
+      "id": "6aefc663e4802dcc229c247f",
+      "fileName": "image_10494385943399228769",
+      "width": 1200,
+      "height": 1050,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/669a28a0-8194-438c-86c9-c1bc0980e36b"
+    },
+    {
+      "id": "6aefc662ee4a17f08680e779",
+      "fileName": "image_15829195472695666288",
+      "width": 1200,
+      "height": 1050,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/1fdbc84e-3a4f-4d15-98e2-9906e7a25fc8"
+    },
+    {
+      "id": "6aefc662165f14cbee580c1d",
+      "fileName": "image_888710658793834463",
+      "width": 1200,
+      "height": 1050,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/930f9888-2680-445d-8895-b98173ca1162"
+    },
+    {
+      "id": "6ad181d54fefaa3c1e06994f",
+      "fileName": "highdraw-logo-initials.png",
+      "width": 1085,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/f0917180-17bc-47b4-8764-3ce98da3ac46"
+    },
+    {
+      "id": "6ae8ff63b073ab0805ce608e",
+      "fileName": "highdraw-logo-initials 4.png",
+      "width": 1085,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/b8773c1a-c0f0-4808-8b5e-824e9aceb56b"
+    },
+    {
+      "id": "6ae8ff58a1cb45e196bf15b6",
+      "fileName": "highdraw-logo-initials 3.png",
+      "width": 1085,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/beef8805-cece-4140-a8fd-e6cb3e914a6e"
+    },
+    {
+      "id": "6ae8ff48d60b59a82b7bf5f7",
+      "fileName": "highdraw-logo-initials 2.png",
+      "width": 1085,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/87019dec-38da-42d4-b161-ca576419f525"
+    },
+    {
+      "id": "6ae8ff41ca9c741af393a473",
+      "fileName": "HD.png",
+      "width": 547,
+      "height": 255,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/f9d57434-c96f-4e8c-aa39-073c778d135e"
+    },
+    {
+      "id": "6ae8ff3b70a72ab556e66a73",
+      "fileName": "HD 4.png",
+      "width": 547,
+      "height": 255,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/09de03c0-5694-4d51-bd0a-3e4b63c31481"
+    },
+    {
+      "id": "6ae8ff358c5b14cfd384a5dc",
+      "fileName": "HD 3.png",
+      "width": 547,
+      "height": 255,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/c9cf9650-600f-414a-b441-676155b1c0bb"
+    },
+    {
+      "id": "6ae8ff2ca98ead0a6fe394fc",
+      "fileName": "HD 2.png",
+      "width": 547,
+      "height": 255,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/cf8a21ea-699d-4290-a7d4-e9047c865d11"
+    },
+    {
+      "id": "6ad181e2d990c7862e4c2bd1",
+      "fileName": "h0ghdraw-logo-fullText.png",
+      "width": 1687,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/99800fee-65ea-407e-ba98-ffcc4af93294"
+    },
+    {
+      "id": "6ae8ff1e8cc17781fd52bde7",
+      "fileName": "h0ghdraw-logo-fullText 4.png",
+      "width": 1687,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/c896e9af-9e55-48b1-b782-2e60541b2009"
+    },
+    {
+      "id": "6ae8ff17c1c8e1c339c5de62",
+      "fileName": "h0ghdraw-logo-fullText 3.png",
+      "width": 1687,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/47d3c974-7798-49f4-86d8-c778660bbca1"
+    },
+    {
+      "id": "6ae8ff0da1cb45e196bf15b1",
+      "fileName": "h0ghdraw-logo-fullText 2.png",
+      "width": 1687,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/dd782940-ec4c-4d12-befd-41bb5fe0db27"
+    },
+    {
+      "id": "6ad181c174faff6d2a0d3633",
+      "fileName": "hd-logo.png",
+      "width": 424,
+      "height": 86,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/8e3fd387-aa90-4009-8792-5aeb87f90b4c"
+    },
+    {
+      "id": "6abc6231c2ebb6fd9c766470",
+      "fileName": "image_6428069312503354779",
+      "width": 1200,
+      "height": 1050,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/04ea4acc-63c3-4714-9205-e19484667ed2"
+    },
+    {
+      "id": "6abaa6e136d7bfc860892b57",
+      "fileName": "highdraw-logo-light-blue.png",
+      "width": 451,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/cfd52b8d-fdd6-4e8d-b205-3867149e229f"
+    },
+    {
+      "id": "6abaa72a36d7bfc860892ba3",
+      "fileName": "highDraw-logo-black.png",
+      "width": 451,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/a1bd8dcd-9278-48f0-bda2-c80e7e4e719d"
+    },
+    {
+      "id": "6abaa7148207c62ab6e3ad5e",
+      "fileName": "highDraw-logo-gold.png",
+      "width": 451,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/f9ae48b1-dc36-43b0-8cb8-6ff3532d4bf9"
+    },
+    {
+      "id": "6abaa7057b0a9203d6491efb",
+      "fileName": "highdraw-logo-white.png",
+      "width": 451,
+      "height": 1387,
+      "previewUrl": "https://pfy-prod-image-storage.s3.us-east-2.amazonaws.com/28576056/e88d6dbb-b11a-4986-8889-7fc7f00c4bfb"
+    }
+  ]
+}
