@@ -7,6 +7,14 @@ export interface LogoPlacementSpec {
   angle?: number;
 }
 
+export interface ColorwayAngleShot {
+  id: 'custom_chest' | 'model_front' | 'model_back' | 'form_front' | 'form_back' | 'macro_detail';
+  label: string;
+  src: string;
+  supportsOverlay?: boolean;
+  placementOverride?: LogoPlacementSpec;
+}
+
 export interface ProductColorway {
   name: string;
   hex: string;
@@ -15,6 +23,7 @@ export interface ProductColorway {
   logoColor?: string;
   defaultLogoColor?: LogoVariant;
   logoPlacement?: LogoPlacementSpec;
+  angles?: ColorwayAngleShot[];
 }
 
 export interface Product {
@@ -71,6 +80,198 @@ const HAT_CATALOG_PLACEMENT: LogoPlacementSpec = {
   height: '6.2%',
   angle: 0,
 };
+
+/**
+ * Dynamically resolves all studio angles (Front, Back, Form, Macro Weave)
+ * for any Product + Colorway using the local asset vault — zero manual photo editing required.
+ */
+export function getColorwayAngles(product: Product, color: ProductColorway): ColorwayAngleShot[] {
+  if (color.angles && color.angles.length > 0) return color.angles;
+
+  const basePlacement = color.logoPlacement || MEN_POLO_CATALOG_PLACEMENT;
+  const primarySrc = color.unbrandedImage || color.image || product.image;
+
+  // Map human color names to factory file slugs
+  const slugMap: Record<string, string> = {
+    'Deep Midnight Navy': 'truenavy',
+    'Carolina Blue': 'carolinablue',
+    'Crisp White': 'white',
+    'Pure White': 'white',
+    'Onyx Black': 'black',
+    'Forest Green': 'forestgreen',
+    'Deep Red': 'deepred',
+    'True Red': 'truered',
+    'Graphite': 'graphite',
+    'Grey Concrete': 'greyconcrete',
+    'True Royal': 'trueroyal',
+    'Charcoal Grey Heather': 'greyheather',
+    'Magnet Slate': 'magnet',
+    'True Navy / White': 'truenavywhite',
+    'Black / White': 'blackwhite',
+    'Iron Grey / White': 'irongreywhite',
+    'True Royal / White': 'trueroyalwhite',
+    'Black / Deep Red': 'blackdeepred',
+  };
+
+  const slug = slugMap[color.name] || 'truenavy';
+
+  if (product.id === 'women-polo-lst740') {
+    const shots: ColorwayAngleShot[] = [
+      {
+        id: 'custom_chest',
+        label: 'Custom Embroidery View',
+        src: primarySrc,
+        supportsOverlay: true,
+        placementOverride: basePlacement,
+      },
+      {
+        id: 'model_back',
+        label: 'Rear Drape & Drop-Tail',
+        src: `/assets/products/womens-polo/LST740_${slug}_model_back.jpg`,
+        supportsOverlay: false,
+      },
+    ];
+    if (slug !== 'white') {
+      shots.push({
+        id: 'form_front',
+        label: 'Tailored Form Silhouette',
+        src: `/assets/products/womens-polo/LST740_${slug}_form_front.jpg`,
+        supportsOverlay: true,
+        placementOverride: { left: '56.5%', top: '39.0%', height: '3.0%', angle: 0 },
+      });
+    }
+    if (slug !== 'white' && slug !== 'trueroyal') {
+      shots.push({
+        id: 'form_back',
+        label: 'Rear Form Seam',
+        src: `/assets/products/womens-polo/LST740_${slug}_form_back.jpg`,
+        supportsOverlay: false,
+      });
+    }
+    shots.push({
+      id: 'macro_detail',
+      label: '180 GSM Micro-Pique Weave',
+      src: '/assets/polo_navy_macro.png',
+      supportsOverlay: false,
+    });
+    return shots;
+  }
+
+  if (product.id === 'outerwear-st443') {
+    return [
+      {
+        id: 'custom_chest',
+        label: 'Custom Embroidery View',
+        src: primarySrc,
+        supportsOverlay: true,
+        placementOverride: basePlacement,
+      },
+      {
+        id: 'model_front',
+        label: 'On-Course Model Fit',
+        src: `/assets/products/quarter-zip/ST443_${slug}_model_front.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'model_back',
+        label: 'Rear Raglan Shoulder View',
+        src: `/assets/products/quarter-zip/ST443_${slug}_model_back.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'form_back',
+        label: 'Rear Cadet Collar Stand',
+        src: `/assets/products/quarter-zip/ST443_${slug}_form_back.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'macro_detail',
+        label: 'Action Layering View',
+        src: '/assets/products/editorial/quarter_zip_pullover_action.jpg',
+        supportsOverlay: false,
+      },
+    ];
+  }
+
+  if (product.id === 'headwear-flexfit-mesh') {
+    return [
+      {
+        id: 'custom_chest',
+        label: 'Custom Crown Embroidery',
+        src: primarySrc,
+        supportsOverlay: true,
+        placementOverride: basePlacement,
+      },
+      {
+        id: 'form_front',
+        label: 'Centered Profile View',
+        src: `/assets/products/processed/hat_${slug}_centered.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'model_back',
+        label: 'Rear Honeycomb Mesh View',
+        src: `/assets/products/performance-hat/back-${slug}_hat.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'macro_detail',
+        label: 'Sunset Course Detail',
+        src: '/assets/products/editorial/cap_model_sunset_closeup.jpg',
+        supportsOverlay: false,
+      },
+    ];
+  }
+
+  // Default: Men's Tour Performance Polo (ST740) & Foursome Kit
+  const menShots: ColorwayAngleShot[] = [
+    {
+      id: 'custom_chest',
+      label: 'Custom Embroidery View',
+      src: primarySrc,
+      supportsOverlay: true,
+      placementOverride: basePlacement,
+    },
+  ];
+
+  // If the primary image is the wood flatlay, also provide the studio model front with live overlay!
+  if (primarySrc.includes('wood')) {
+    const modelSlug = slug === 'black' ? 'black' : 'truenavy';
+    menShots.push({
+      id: 'model_front',
+      label: 'Studio Model Drape',
+      src: `/assets/products/mens-polo/ST740_${modelSlug}_model_front.jpg`,
+      supportsOverlay: true,
+      placementOverride: MEN_POLO_CATALOG_PLACEMENT,
+    });
+  }
+
+  menShots.push(
+    {
+      id: 'form_front',
+      label: 'Stay-Flat Collar & Placket',
+      src: '/assets/craft_collar_macro.jpg',
+      supportsOverlay: false,
+    },
+    {
+      id: 'model_back',
+      label: 'On-Course Fairway Drape',
+      src:
+        slug === 'carolinablue'
+          ? '/assets/products/editorial/men_polo_carolina_course.jpg'
+          : '/assets/products/editorial/men_polo_navy_course.jpg',
+      supportsOverlay: false,
+    },
+    {
+      id: 'macro_detail',
+      label: '180 GSM Micro-Pique Weave',
+      src: '/assets/polo_navy_macro.png',
+      supportsOverlay: false,
+    }
+  );
+
+  return menShots;
+}
 
 export const PRODUCTS: Product[] = [
   {

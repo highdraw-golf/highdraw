@@ -10,6 +10,7 @@ import {
   formatCustomizationSummary,
 } from './brand/HighDrawLogo';
 import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
+import { InteractiveTracerStage } from './motion/InteractiveTracerStage';
 
 export type { Product };
 
@@ -41,6 +42,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
   const [selectedLogoStyle, setSelectedLogoStyle] = useState<LogoStyle>('mark_monogram');
   const [selectedLogoColor, setSelectedLogoColor] = useState<LogoVariant>('gold');
   const [activeCardImages, setActiveCardImages] = useState<Record<string, string>>({});
+  const [activeCardColorNames, setActiveCardColorNames] = useState<Record<string, string>>({});
   const [addedId, setAddedId] = useState<string | null>(null);
 
   // Interactive Homepage Studio Showcase State
@@ -57,6 +59,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
   const handleColorSwatchClick = (productId: string, color: { name: string; hex: string; image?: string }, e: React.MouseEvent) => {
     e.stopPropagation();
+    setActiveCardColorNames(prev => ({ ...prev, [productId]: color.name }));
     if (color.image) {
       setActiveCardImages(prev => ({ ...prev, [productId]: color.image! }));
     }
@@ -439,6 +442,9 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
             </div>
           </div>
         </div>
+
+        {/* 3-Layer Exploded Emblem & Animated Ball-Flight Tracer Stage */}
+        <InteractiveTracerStage />
       </div>
 
       {/* Quick View & Fitting Slide-Over Modal */}

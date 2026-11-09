@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Product } from '../data/products';
+import { getColorwayAngles, type Product } from '../data/products';
 import { SizeSelector } from '../components/ui/SizeSelector';
 import { ColorSwatch } from '../components/ui/ColorSwatch';
 import { LogoCustomizer } from '../components/ui/LogoCustomizer';
@@ -14,7 +14,7 @@ import { Accordion } from '../components/ui/Accordion';
 import { Button } from '../components/ui/Button';
 import { SizeGuideModal } from '../components/SizeGuideModal';
 import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
-import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Check, ShoppingBag, Sparkles, Tag } from 'lucide-react';
+import { Star, ShieldCheck, RefreshCw, Truck, ArrowLeft, Check, ShoppingBag, Sparkles, Tag, ZoomIn } from 'lucide-react';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -47,11 +47,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const initialColorObj = product.colors[0];
   const [selectedColor, setSelectedColor] = useState(initialColorObj?.name || '');
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[2] || product.sizes?.[0] || 'L');
-  const [activeImage, setActiveImage] = useState(product.image);
+  const [activeAngleIdx, setActiveAngleIdx] = useState<number>(0);
   const [selectedLogoStyle, setSelectedLogoStyle] = useState<LogoStyle>('mark_monogram');
   const [selectedLogoColor, setSelectedLogoColor] = useState<LogoVariant>(
     initialColorObj?.defaultLogoColor || 'cyan'
   );
+  const [stitchPulseKey, setStitchPulseKey] = useState<number>(0);
+  const [isHoverZooming, setIsHoverZooming] = useState<boolean>(false);
+  const [zoomCoords, setZoomCoords] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
   const [userCutPreference, setUserCutPreference] = useState<string>(
     product.userType === 'womens'
       ? 'womens'
@@ -66,13 +69,15 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const activeColorObj =
     product.colors.find(c => c.name === selectedColor) || product.colors[0];
 
+  const colorwayAngles = getColorwayAngles(product, activeColorObj);
+  const activeAngle = colorwayAngles[activeAngleIdx] || colorwayAngles[0];
+
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName);
+    setActiveAngleIdx(0);
+    setStitchPulseKey(k => k + 1);
     const foundColor = product.colors.find(c => c.name === colorName);
     if (foundColor) {
-      if (foundColor.image) {
-        setActiveImage(foundColor.image);
-      }
       if (foundColor.defaultLogoColor) {
         setSelectedLogoColor(foundColor.defaultLogoColor);
       }
@@ -139,7 +144,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       price: product.price,
       color: colorWithCustomization,
       size: selectedSize,
-      image: activeImage,
+      image: activeColorObj?.image || product.image,
       logoStyle: selectedLogoStyle,
       logoColor: selectedLogoColor,
       userTypeLabel: activeUserTypeLabel,
@@ -188,18 +193,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     setTimeout(() => setBundleAdded(false), 1500);
   };
 
-  // Determine whether the active main stage image supports live dynamic embroidery overlay
-  const isViewingColorwayPrimary =
-    activeColorObj &&
-    activeImage === activeColorObj.image &&
-    Boolean(activeColorObj.unbrandedImage && activeColorObj.logoPlacement);
-
-  const stageImageSrc = isViewingColorwayPrimary
-    ? activeColorObj.unbrandedImage!
-    : activeImage;
+  // Determine whether the active main stage angle supports live dynamic embroidery overlay
+  const isViewingColorwayPrimary = Boolean(activeAngle?.supportsOverlay);
+  const stageImageSrc = activeAngle?.src || activeColorObj?.unbrandedImage || product.image;
 
   const liveOverlayLogoPath = getLogoAssetPath(selectedLogoStyle, selectedLogoColor);
-  const placement = activeColorObj?.logoPlacement;
+  const placement = activeAngle?.placementOverride || activeColorObj?.logoPlacement;
 
   // Adjust aspect ratio scaling for wide logos (monogram / mark_text) so they fit the left chest naturally
   const getAdjustedPlacementStyle = (): React.CSSProperties | undefined => {
@@ -294,36 +293,58 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           
-          {/* LEFT: Multi-Image Photo Gallery with Live Custom Embroidery Preview */}
+          {/* LEFT: Multi-Image Photo Gallery with Live Custom Embroidery Preview & Macro Weave Loupe */}
           <div className="lg:col-span-7 space-y-4">
-            {/* Main Stage Image */}
-            <div className="aspect-[4/3] sm:aspect-[4/3] w-full bg-slate-100 rounded-sm overflow-hidden border border-slate-200 shadow-xs relative select-none">
+            {/* Main Stage Image with Interactive Hover Zoom Loupe */}
+            <div
+              onMouseEnter={() => setIsHoverZooming(true)}
+              onMouseLeave={() => setIsHoverZooming(false)}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                setZoomCoords({
+                  x: Math.max(0, Math.min(100, x)),
+                  y: Math.max(0, Math.min(100, y)),
+                });
+              }}
+              className="aspect-[4/3] sm:aspect-[4/3] w-full bg-slate-100 rounded-sm overflow-hidden border border-slate-200 shadow-xs relative select-none cursor-crosshair"
+            >
               <img 
                 src={stageImageSrc} 
-                alt={product.name} 
-                className="w-full h-full object-cover object-center transition-all duration-300"
+                alt={`${product.name} — ${activeAngle?.label || selectedColor}`} 
+                style={{
+                  transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
+                  transform: isHoverZooming ? 'scale(1.6)' : 'scale(1)',
+                }}
+                className="w-full h-full object-cover object-center transition-transform duration-200 ease-out"
               />
 
               {/* Live Dynamic Embroidery Overlay on Garment Chest/Crown */}
-              {isViewingColorwayPrimary && liveOverlayLogoPath && placement && (
+              {isViewingColorwayPrimary && liveOverlayLogoPath && placement && !isHoverZooming && (
                 <img
+                  key={`${selectedLogoStyle}-${selectedLogoColor}-${stitchPulseKey}`}
                   src={liveOverlayLogoPath}
                   alt="Custom Embroidery Preview"
                   style={getAdjustedPlacementStyle()}
-                  className="absolute w-auto object-contain pointer-events-none transition-all duration-200 z-10"
+                  className="absolute w-auto object-contain pointer-events-none transition-all duration-300 z-10 animate-in fade-in zoom-in-95"
                 />
               )}
 
-              {/* Top-Left Durability Badge */}
-              <div className="absolute top-4 left-4 z-20">
+              {/* Top-Left Durability & Angle Badge */}
+              <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2 pointer-events-none">
                 <span className="bg-[#1C2C24]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-xs flex items-center gap-1.5 shadow-sm">
                   <RefreshCw size={13} className="text-[#38BDF8]" />
                   <span>100+ Washes Tested</span>
                 </span>
+                <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-xs flex items-center gap-1 shadow-sm">
+                  <ZoomIn size={11} className="text-[#38BDF8]" />
+                  <span>{activeAngle?.label || 'Hover to Inspect 180 GSM Weave'}</span>
+                </span>
               </div>
 
               {/* Bottom-Right Live Embroidery Close-Up Loupe */}
-              <div className="absolute bottom-3.5 right-3.5 z-20 bg-black/80 backdrop-blur-md border border-white/20 text-white p-2.5 rounded-xs shadow-xl flex items-center gap-3 max-w-[260px]">
+              <div className="absolute bottom-3.5 right-3.5 z-20 bg-black/80 backdrop-blur-md border border-white/20 text-white p-2.5 rounded-xs shadow-xl flex items-center gap-3 max-w-[270px] pointer-events-none">
                 <div
                   className="w-12 h-12 rounded-2xs border border-white/30 flex items-center justify-center shrink-0 relative overflow-hidden"
                   style={{ backgroundColor: activeColorObj?.hex || '#1E293B' }}
@@ -356,21 +377,43 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
             </div>
 
-            {/* Thumbnail Gallery */}
-            <div className="grid grid-cols-5 gap-3">
-              {product.gallery.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImage(img)}
-                  className={`aspect-[4/3] rounded-xs overflow-hidden border-2 transition-all cursor-pointer ${
-                    activeImage === img
-                      ? 'border-[#1C2C24] shadow-sm'
-                      : 'border-slate-200 opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
+            {/* Dynamic Multi-Angle Colorway Strip (Front, Back, Form, Macro Weave) */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                <span>STUDIO ANGLES FOR {selectedColor.toUpperCase()} ({colorwayAngles.length} VIEWS)</span>
+                <span className="text-[#1C2C24] font-bold">Hover Main Photo to Magnify 1.6&times;</span>
+              </div>
+              <div className="grid grid-cols-5 gap-2.5">
+                {colorwayAngles.map((shot, idx) => {
+                  const isSelected = activeAngleIdx === idx;
+                  return (
+                    <button
+                      key={`${shot.id}-${idx}`}
+                      type="button"
+                      onClick={() => setActiveAngleIdx(idx)}
+                      className={`group rounded-xs overflow-hidden border-2 transition-all cursor-pointer text-left flex flex-col ${
+                        isSelected
+                          ? 'border-[#1C2C24] shadow-sm bg-white'
+                          : 'border-slate-200 opacity-75 hover:opacity-100 bg-slate-50'
+                      }`}
+                    >
+                      <div className="aspect-[4/3] w-full overflow-hidden relative bg-slate-100">
+                        <img
+                          src={shot.src}
+                          alt={shot.label}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {shot.supportsOverlay && liveOverlayLogoPath && (
+                          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs" title="Supports Live Embroidery Overlay" />
+                        )}
+                      </div>
+                      <span className="px-1.5 py-1 text-[9px] font-mono font-bold text-slate-700 truncate block w-full text-center">
+                        {shot.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Official 4-Mark Reference Bar under Gallery */}
@@ -393,9 +436,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       type="button"
                       onClick={() => {
                         setSelectedLogoStyle(styleOpt.id);
-                        if (activeColorObj?.image) setActiveImage(activeColorObj.image);
+                        setActiveAngleIdx(0);
+                        setStitchPulseKey(k => k + 1);
                       }}
-                      className={`p-2.5 rounded-xs border text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
+                      className={`p-2.5 rounded-xs border text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 t-press ${
                         active
                           ? 'border-[#1C2C24] bg-white shadow-xs'
                           : 'border-slate-200 bg-white/60 hover:bg-white'
@@ -473,12 +517,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               selectedStyle={selectedLogoStyle}
               onSelectStyle={(style) => {
                 setSelectedLogoStyle(style);
-                if (activeColorObj?.image) setActiveImage(activeColorObj.image);
+                setActiveAngleIdx(0);
+                setStitchPulseKey(k => k + 1);
               }}
               selectedColor={selectedLogoColor}
               onSelectColor={(color) => {
                 setSelectedLogoColor(color);
-                if (activeColorObj?.image) setActiveImage(activeColorObj.image);
+                setActiveAngleIdx(0);
+                setStitchPulseKey(k => k + 1);
               }}
               garmentHex={activeColorObj?.hex || '#1E293B'}
               garmentColorName={selectedColor}
