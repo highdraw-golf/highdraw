@@ -17,6 +17,8 @@ export type { Product };
 interface ShopifyCollectionsProps {
   activeCategory: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
   onSelectCategory: (category: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles') => void;
+  activeTier?: 'all' | 'weekender' | 'clubhouse' | 'tournament';
+  onSelectTier?: (tier: 'all' | 'weekender' | 'clubhouse' | 'tournament') => void;
   onAddToCart: (item: {
     id: string;
     name: string;
@@ -33,9 +35,15 @@ interface ShopifyCollectionsProps {
 export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({ 
   activeCategory, 
   onSelectCategory, 
+  activeTier = 'all',
+  onSelectTier,
   onAddToCart,
   onSelectProduct,
 }) => {
+  const [internalTier, setInternalTier] = useState<'all' | 'weekender' | 'clubhouse' | 'tournament'>('all');
+  const currentTier = onSelectTier ? activeTier : internalTier;
+  const setTier = onSelectTier || setInternalTier;
+
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('L');
   const [selectedColor, setSelectedColor] = useState<string>('Deep Midnight Navy');
@@ -44,6 +52,8 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
   const [activeCardImages, setActiveCardImages] = useState<Record<string, string>>({});
   const [activeCardColorNames, setActiveCardColorNames] = useState<Record<string, string>>({});
   const [addedId, setAddedId] = useState<string | null>(null);
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistJoined, setWaitlistJoined] = useState(false);
 
   // Interactive Homepage Studio Showcase State
   const [showcaseStyle, setShowcaseStyle] = useState<LogoStyle>('mark_monogram');
@@ -53,9 +63,11 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
   const products: Product[] = PRODUCTS;
 
-  const filteredProducts = activeCategory === 'all' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+  const filteredProducts = products.filter(p => {
+    const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
+    const matchesTier = currentTier === 'all' || (p.tier === currentTier) || (currentTier === 'weekender' && p.category === 'bundles');
+    return matchesCategory && matchesTier;
+  });
 
   const handleColorSwatchClick = (productId: string, color: { name: string; hex: string; image?: string }, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -98,6 +110,37 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       <div id="outerwear" className="-mt-24 pt-24"></div>
       <div id="headwear" className="-mt-24 pt-24"></div>
       <div id="bundles" className="-mt-24 pt-24"></div>
+
+      {/* Collections Tier Navigation Banner */}
+      <div className="mb-10 p-2 sm:p-2.5 bg-[#0D1520] border border-slate-800 rounded-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3 px-3">
+          <span className="font-mono text-[11px] tracking-widest text-[#38BDF8] uppercase font-bold">COLLECTION TIERS:</span>
+          <span className="hidden lg:inline text-xs text-slate-400 font-sans">Three distinct fabric systems crafted for fairway, dinner, and competition.</span>
+        </div>
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {[
+            { id: 'all', label: 'All Tiers', tag: 'Complete' },
+            { id: 'weekender', label: 'Weekender', tag: '$48' },
+            { id: 'clubhouse', label: 'The Clubhouse', tag: '$66' },
+            { id: 'tournament', label: 'Tournament', tag: 'Summer 2026' },
+          ].map(tier => (
+            <button
+              key={tier.id}
+              onClick={() => setTier(tier.id as any)}
+              className={`px-3.5 py-1.5 rounded-xs font-mono text-xs uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer ${
+                currentTier === tier.id
+                  ? 'bg-[#B12535] text-white font-bold shadow-md'
+                  : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700/50'
+              }`}
+            >
+              <span>{tier.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-2xs ${currentTier === tier.id ? 'bg-black/30 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                {tier.tag}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Category Navigation Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-slate-200 gap-6">
@@ -225,15 +268,21 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     />
 
-                    {/* Discreet Craftsmanship Tag */}
+                    {/* Discreet Craftsmanship Tag / Tier Badge */}
                     <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/85 backdrop-blur-md text-white text-[10px] font-mono tracking-widest px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
-                      <RefreshCw size={11} className="text-[#38BDF8]" />
-                      <span>100+ Washes</span>
+                      {p.badge ? (
+                        <span className="text-[#38BDF8] font-bold">{p.badge}</span>
+                      ) : (
+                        <>
+                          <RefreshCw size={11} className="text-[#38BDF8]" />
+                          <span>100+ Washes</span>
+                        </>
+                      )}
                     </div>
 
-                    {/* Custom Logo Options Pill */}
-                    <div className="absolute top-3.5 right-3.5 bg-black/75 backdrop-blur-md text-white text-[9px] font-mono tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm">
-                      4 Marks + Optional Clean
+                    {/* Custom Logo Options Pill or Coming Soon */}
+                    <div className={`absolute top-3.5 right-3.5 backdrop-blur-md text-white text-[9px] font-mono tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm ${p.isComingSoon ? 'bg-[#B12535]' : 'bg-black/75'}`}>
+                      {p.isComingSoon ? 'Summer 2026' : '3 Marks (Embroidery)'}
                     </div>
 
                     {/* Subtle Hover Action Button */}
