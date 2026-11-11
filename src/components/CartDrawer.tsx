@@ -1,5 +1,20 @@
-import React, { useState } from 'react';
-import { X, Trash2, ArrowRight, ShieldCheck, Plus, Sparkles, Check, ArrowLeft, Mail, CreditCard, Lock } from 'lucide-react';
+import React, { useState, useId } from 'react';
+import { m, AnimatePresence } from 'framer-motion';
+import {
+  X,
+  Trash2,
+  ArrowRight,
+  ShieldCheck,
+  Plus,
+  Minus,
+  Sparkles,
+  Check,
+  ArrowLeft,
+  Mail,
+  CreditCard,
+  Lock,
+  Truck,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
@@ -7,11 +22,14 @@ import { createStripeCheckoutSession } from '../lib/stripe';
 import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
 import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
 import { StripeSecurityBeacon } from './motion/HighDrawBespokeMotion';
+import { DURATION, EASE_ACCENT } from '../lib/motion/tokens';
+import { useMotionPreference } from './motion/MotionProvider';
 
 export interface CartItem {
   id: string;
   name: string;
   price: number;
+  quantity?: number;
   color: string;
   size: string;
   image: string;
@@ -28,12 +46,13 @@ interface CartDrawerProps {
   onClose: () => void;
   cartItems: CartItem[];
   onRemoveItem: (index: number) => void;
+  onUpdateQuantity?: (index: number, delta: number) => void;
+  onClearCart?: () => void;
   onAddUpsellHat: () => void;
 }
 
 interface ShippingForm {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phone: string;
   address1: string;
@@ -43,9 +62,18 @@ interface ShippingForm {
   zip: string;
 }
 
+const FREE_SHIPPING_THRESHOLD = 75;
+
 function generateOrderId(): string {
   const rand = Math.floor(1000 + Math.random() * 9000);
   return `HD-2026-${rand}`;
+}
+
+function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const parts = fullName.trim().split(/\s+/);
+  const firstName = parts[0] || 'Golfer';
+  const lastName = parts.slice(1).join(' ') || 'Member';
+  return { firstName, lastName };
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
@@ -53,16 +81,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onClose,
   cartItems,
   onRemoveItem,
+  onUpdateQuantity,
+  onClearCart,
   onAddUpsellHat,
 }) => {
+  const { isReduced } = useMotionPreference();
+  const baseId = useId();
   const [step, setStep] = useState<'bag' | 'shipping' | 'confirmed'>('bag');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [lastOrderId, setLastOrderId] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const [shippingForm, setShippingForm] = useState<ShippingForm>({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     phone: '',
     address1: '',
@@ -72,16 +103,55 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     zip: '',
   });
 
-  if (!isOpen) return null;
-
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
-  const shipping = subtotal >= 75 || subtotal === 0 ? 0 : 8;
+  const totalUnits = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 8;
   const total = subtotal + shipping;
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const freeShippingProgress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD);
+
+  const hasCapInBag = cartItems.some(item => item.id.startsWith('headwear-flexfit-mesh'));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setShippingForm(prev => ({ ...prev, [name]: value }));
     if (errorMessage) setErrorMessage('');
+  };
+
+  /**
+   * 1-Click Express Stripe Checkout directly from the Bag view:
+   * If Stripe Hosted Checkout is active on the deployment, redirects immediately to Stripe
+   * (where Apple Pay, Google Pay, Link, and native address collection live).
+   * If Stripe env keys are not yet configured, transitions smoothly to the shipping form.
+   */
+  const handleExpressStripeFromBag = async () => {
+    if (cartItems.length === 0) return;
+    setIsCheckingOut(true);
+    const orderNum = generateOrderId();
+
+    try {
+      const res = await createStripeCheckoutSession({
+        items: cartItems.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          color: item.color,
+          size: item.size,
+          quantity: item.quantity || 1,
+        })),
+        customerEmail: shippingForm.email || undefined,
+        orderId: orderNum,
+      });
+
+      if (res.configured && res.checkoutUrl) {
+        return; // Browser redirects to Stripe Hosted Checkout
+      }
+      setIsCheckingOut(false);
+      setStep('shipping');
+    } catch {
+      setIsCheckingOut(false);
+      setStep('shipping');
+    }
   };
 
   const handleProceedToShipping = () => {
@@ -91,8 +161,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleStripePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!shippingForm.firstName || !shippingForm.lastName || !shippingForm.email || !shippingForm.address1 || !shippingForm.city || !shippingForm.state || !shippingForm.zip) {
-      setErrorMessage('Please fill in all shipping fields for Stripe Checkout.');
+    if (
+      !shippingForm.fullName.trim() ||
+      !shippingForm.email.trim() ||
+      !shippingForm.address1.trim() ||
+      !shippingForm.city.trim() ||
+      !shippingForm.state.trim() ||
+      !shippingForm.zip.trim()
+    ) {
+      setErrorMessage('Please complete all required shipping fields.');
       return;
     }
 
@@ -107,17 +184,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           price: item.price,
           color: item.color,
           size: item.size,
-          quantity: 1,
+          quantity: item.quantity || 1,
         })),
-        customerEmail: shippingForm.email,
+        customerEmail: shippingForm.email.trim(),
         orderId: orderNum,
       });
 
       if (res.configured && res.checkoutUrl) {
-        return; // Redirected by browser
+        return;
       }
 
-      // If Stripe keys are not yet configured in Vercel environment, fallback to direct transmission
       await handleSubmitOrder(e);
     } catch (err) {
       console.warn('Stripe checkout error, falling back:', err);
@@ -127,9 +203,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Simple Validation
-    if (!shippingForm.firstName || !shippingForm.lastName || !shippingForm.email || !shippingForm.address1 || !shippingForm.city || !shippingForm.state || !shippingForm.zip) {
+
+    if (
+      !shippingForm.fullName.trim() ||
+      !shippingForm.email.trim() ||
+      !shippingForm.address1.trim() ||
+      !shippingForm.city.trim() ||
+      !shippingForm.state.trim() ||
+      !shippingForm.zip.trim()
+    ) {
       setErrorMessage('Please fill in all required shipping fields.');
       return;
     }
@@ -138,10 +220,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     const orderNum = generateOrderId();
     setLastOrderId(orderNum);
 
-    const formattedAddress = `${shippingForm.address1}${shippingForm.address2 ? ` ${shippingForm.address2}` : ''}, ${shippingForm.city}, ${shippingForm.state} ${shippingForm.zip}`;
+    const { firstName, lastName } = splitFullName(shippingForm.fullName);
+    const formattedAddress = `${shippingForm.address1}${
+      shippingForm.address2 ? ` ${shippingForm.address2}` : ''
+    }, ${shippingForm.city}, ${shippingForm.state} ${shippingForm.zip}`;
 
     try {
-      // 1. Submit Real Customer Details to Printify Order API with resolved numeric variant IDs
       await createPrintifyOrder({
         external_id: orderNum,
         label: `High Draw Direct Order #${orderNum}`,
@@ -151,19 +235,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             color: item.color,
             size: item.size,
             logoStyle: (item.logoStyle as LogoStyle) || 'mark_monogram',
-            logoColor: (item.logoColor as LogoVariant) || 'cyan',
+            logoColor: (item.logoColor as LogoVariant) || 'white',
           });
           return {
             product_id: item.printifyProductId || resolved.printifyProductId,
             variant_id: item.printifyVariantId || resolved.printifyVariantId,
-            quantity: 1,
+            quantity: item.quantity || 1,
           };
         }),
         shipping_method: 1,
         send_shipping_notification: true,
         address_to: {
-          first_name: shippingForm.firstName.trim(),
-          last_name: shippingForm.lastName.trim(),
+          first_name: firstName,
+          last_name: lastName,
           email: shippingForm.email.trim(),
           phone: shippingForm.phone.trim(),
           country: 'US',
@@ -175,25 +259,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         },
       });
 
-      // 2. Automate Email Alert to brand inbox
       await sendOrderNotificationEmail({
         orderId: orderNum,
-        customerName: `${shippingForm.firstName} ${shippingForm.lastName}`.trim(),
+        customerName: shippingForm.fullName.trim(),
         customerEmail: shippingForm.email.trim(),
         shippingAddress: formattedAddress,
         items: cartItems,
         totalAmount: total,
         printifyStatus: 'Queued for Printify Production & Embroidery',
       });
-    } catch (e) {
-      console.error('Order transmission warning:', e);
+    } catch (err) {
+      console.error('Order transmission warning:', err);
     }
 
     setTimeout(() => {
       setIsCheckingOut(false);
       setStep('confirmed');
-      confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
-    }, 1200);
+      if (onClearCart) onClearCart();
+      confetti({ particleCount: 90, spread: 75, origin: { y: 0.5 } });
+    }, 900);
   };
 
   const handleResetAndClose = () => {
@@ -202,386 +286,554 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end modal-overlay">
-      <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
-        
-        {/* Cart Header */}
-        <div className="p-6 bg-[#090C10] text-white hairline-b flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {step === 'shipping' && (
-              <button
-                onClick={() => setStep('bag')}
-                className="p-1 mr-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
-                title="Back to Bag"
-              >
-                <ArrowLeft size={18} />
-              </button>
-            )}
-            <span className="font-serif text-xl tracking-wider">
-              {step === 'bag' && 'YOUR BAG'}
-              {step === 'shipping' && 'SHIPPING DETAILS'}
-              {step === 'confirmed' && 'ORDER CONFIRMED'}
-            </span>
-            {step === 'bag' && (
-              <span className="font-mono text-xs px-2 py-0.5 bg-white/10 rounded-full text-slate-300">
-                {cartItems.length} ITEMS
-              </span>
-            )}
-          </div>
-          <button onClick={handleResetAndClose} className="p-2 text-slate-400 hover:text-white transition-colors cursor-pointer">
-            <X size={20} />
-          </button>
-        </div>
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end overflow-hidden overscroll-contain">
+          {/* Backdrop */}
+          <m.div
+            key="cart-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: DURATION.base, ease: EASE_ACCENT }}
+            onClick={handleResetAndClose}
+            className="fixed inset-0 modal-overlay"
+            aria-hidden="true"
+          />
 
-        {/* STEP 1: CART ITEMS */}
-        {step === 'bag' && (
-          <div className="p-6 flex-1 overflow-y-auto space-y-6">
-            {cartItems.length === 0 ? (
-              <div className="text-center py-16 space-y-4">
-                <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
-                  YOUR BAG IS CURRENTLY EMPTY
-                </p>
+          {/* Slide-Out Drawer Panel */}
+          <m.div
+            key="cart-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Shopping Bag"
+            initial={isReduced ? { opacity: 0 } : { x: '100%' }}
+            animate={isReduced ? { opacity: 1 } : { x: 0 }}
+            exit={isReduced ? { opacity: 0 } : { x: '100%' }}
+            transition={{ duration: DURATION.slow, ease: EASE_ACCENT }}
+            className="relative z-10 w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between overscroll-contain"
+          >
+            {/* Cart Header */}
+            <div>
+              <div className="p-5 sm:p-6 bg-[#090C10] text-white border-b border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {step === 'shipping' && (
+                    <button
+                      type="button"
+                      onClick={() => setStep('bag')}
+                      className="p-1 mr-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                      title="Back to Bag"
+                    >
+                      <ArrowLeft size={18} />
+                    </button>
+                  )}
+                  <span className="font-serif text-xl tracking-wider">
+                    {step === 'bag' && 'YOUR BAG'}
+                    {step === 'shipping' && 'SHIPPING & PAYMENT'}
+                    {step === 'confirmed' && 'ORDER CONFIRMED'}
+                  </span>
+                  {step === 'bag' && (
+                    <span className="font-mono text-xs px-2 py-0.5 bg-white/10 rounded-full text-slate-300">
+                      {totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'}
+                    </span>
+                  )}
+                </div>
                 <button
-                  onClick={onClose}
-                  className="btn-outline text-xs px-6 py-3 cursor-pointer"
+                  type="button"
+                  onClick={handleResetAndClose}
+                  className="p-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Close bag"
                 >
-                  EXPLORE THE COLLECTION
+                  <X size={20} />
                 </button>
               </div>
-            ) : (
-              <>
-                <div className="space-y-4">
-                  {cartItems.map((item, idx) => (
-                    <div key={idx} className="flex gap-4 p-4 hairline-all bg-[#FBFBFA]">
-                      <img 
-                        src={item.image} 
-                        alt={item.name} 
-                        className="w-16 h-20 object-cover border border-slate-200 shrink-0"
-                      />
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex justify-between items-start">
-                            <h4 className="font-serif text-sm font-medium text-[#090C10]">
-                              {item.name}
-                            </h4>
-                            <button
-                              onClick={() => onRemoveItem(idx)}
-                              className="text-slate-400 hover:text-rose-600 p-1 cursor-pointer"
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          </div>
-                          <p className="font-mono text-[10px] text-slate-500 mt-1 uppercase">
-                            COLOR: {item.color} &bull; SIZE: {item.size}
-                          </p>
-                          {item.sovereignSku && (
-                            <p className="font-mono text-[9px] text-[#1C2C24] font-semibold mt-0.5">
-                              SKU: {item.sovereignSku}
-                            </p>
-                          )}
-                        </div>
-                        <div className="font-mono text-xs font-semibold text-[#090C10]">
-                          ${item.price} USD
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
-                {/* 1-Click Hat Upsell Banner */}
-                <div className="p-4 bg-[#090C10] text-white hairline-all space-y-3">
-                  <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.15em]">
-                    <span className="text-[#38BDF8] font-semibold flex items-center gap-1">
-                      <Sparkles size={12} /> BUNDLE & SAVE $7
+              {/* GPU-Safe $75 Free US Shipping Progress Bar (`scaleX` transform, zero width reflow) */}
+              {step !== 'confirmed' && cartItems.length > 0 && (
+                <div className="px-5 py-3 bg-[#1C2C24] text-white border-b border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between text-[11px] font-mono">
+                    <span className="flex items-center gap-1.5 font-semibold">
+                      <Truck size={13} className="text-[#38BDF8] shrink-0" />
+                      {remainingForFreeShipping === 0 ? (
+                        <span className="text-emerald-300">
+                          Unlocked Complimentary US Shipping!
+                        </span>
+                      ) : (
+                        <span>
+                          Add <strong className="text-[#38BDF8]">${remainingForFreeShipping}</strong> more for{' '}
+                          <strong>FREE US Shipping</strong>
+                        </span>
+                      )}
                     </span>
-                    <span className="text-slate-400">1-CLICK ADD</span>
+                    <span className="text-[10px] text-slate-300">
+                      ${Math.min(subtotal, FREE_SHIPPING_THRESHOLD)} / ${FREE_SHIPPING_THRESHOLD}
+                    </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-serif text-sm font-medium">Tour Performance Poly-Mesh Cap</div>
-                      <div className="font-mono text-xs text-slate-300">
-                        $28 USD <span className="line-through text-slate-500 text-[10px]">$35</span>
-                      </div>
-                    </div>
+                  <div className="h-1.5 w-full bg-white/15 rounded-full overflow-hidden">
+                    <m.div
+                      initial={false}
+                      animate={{ scaleX: freeShippingProgress }}
+                      transition={{ duration: DURATION.slow, ease: EASE_ACCENT }}
+                      style={{ transformOrigin: 'left center' }}
+                      className={`h-full w-full rounded-full ${
+                        remainingForFreeShipping === 0 ? 'bg-emerald-400' : 'bg-[#38BDF8]'
+                      }`}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* STEP 1: CART ITEMS */}
+            {step === 'bag' && (
+              <div className="p-5 sm:p-6 flex-1 overflow-y-auto overscroll-contain space-y-5">
+                {cartItems.length === 0 ? (
+                  <div className="text-center py-16 space-y-4">
+                    <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
+                      YOUR BAG IS CURRENTLY EMPTY
+                    </p>
                     <button
-                      onClick={onAddUpsellHat}
-                      className="px-3 py-2 bg-white text-[#090C10] font-mono text-[10px] uppercase font-bold hover:bg-slate-200 transition-colors flex items-center gap-1 cursor-pointer"
+                      type="button"
+                      onClick={onClose}
+                      className="px-6 py-3 bg-[#1C2C24] text-white text-xs font-bold uppercase tracking-wider rounded-xs cursor-pointer t-press"
                     >
-                      <Plus size={12} />
-                      ADD TO BAG
+                      EXPLORE THE COLLECTION
                     </button>
                   </div>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-
-        {/* STEP 2: REAL SHIPPING & CONTACT FORM */}
-        {step === 'shipping' && (
-          <form onSubmit={handleSubmitOrder} className="p-6 flex-1 overflow-y-auto space-y-4">
-            <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs flex items-center justify-between text-xs font-mono">
-              <span className="text-slate-600">{cartItems.length} Items Selected</span>
-              <span className="font-bold text-[#1C2C24]">Total: ${total} USD</span>
-            </div>
-
-            {errorMessage && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xs">
-                {errorMessage}
-              </div>
-            )}
-
-            <div className="space-y-3">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
-                Contact Information
-              </span>
-              <div>
-                <label className="text-[11px] font-medium text-slate-700 block mb-1">Email Address *</label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={shippingForm.email}
-                    onChange={handleInputChange}
-                    placeholder="golfer@example.com"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                  />
-                  <Mail size={14} className="absolute right-3 top-2.5 text-slate-400" />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-medium text-slate-700 block mb-1">Phone Number (For Tracking)</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={shippingForm.phone}
-                  onChange={handleInputChange}
-                  placeholder="(555) 000-0000"
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                />
-              </div>
-
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 block pt-2">
-                Shipping Destination
-              </span>
-
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="text-[11px] font-medium text-slate-700 block mb-1">First Name *</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    required
-                    value={shippingForm.firstName}
-                    onChange={handleInputChange}
-                    placeholder="John"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-medium text-slate-700 block mb-1">Last Name *</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    required
-                    value={shippingForm.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Smith"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-medium text-slate-700 block mb-1">Street Address *</label>
-                <input
-                  type="text"
-                  name="address1"
-                  required
-                  value={shippingForm.address1}
-                  onChange={handleInputChange}
-                  placeholder="123 Fairway Drive"
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                />
-              </div>
-
-              <div>
-                <label className="text-[11px] font-medium text-slate-700 block mb-1">Apt, Suite, Unit (Optional)</label>
-                <input
-                  type="text"
-                  name="address2"
-                  value={shippingForm.address2}
-                  onChange={handleInputChange}
-                  placeholder="Apt 4B"
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                />
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <div className="col-span-1">
-                  <label className="text-[11px] font-medium text-slate-700 block mb-1">City *</label>
-                  <input
-                    type="text"
-                    name="city"
-                    required
-                    value={shippingForm.city}
-                    onChange={handleInputChange}
-                    placeholder="Scottsdale"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-medium text-slate-700 block mb-1">State *</label>
-                  <input
-                    type="text"
-                    name="state"
-                    required
-                    maxLength={2}
-                    value={shippingForm.state}
-                    onChange={handleInputChange}
-                    placeholder="AZ"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs uppercase focus:outline-none focus:border-[#1C2C24]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-medium text-slate-700 block mb-1">ZIP Code *</label>
-                  <input
-                    type="text"
-                    name="zip"
-                    required
-                    value={shippingForm.zip}
-                    onChange={handleInputChange}
-                    placeholder="85251"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xs space-y-1">
-              <div className="flex items-center gap-2 text-emerald-800 text-xs font-bold">
-                <ShieldCheck size={16} />
-                <span>30-Day Fairway Trial &amp; 100+ Washes Guarantee</span>
-              </div>
-              <p className="text-[11px] text-emerald-700 leading-relaxed">
-                Orders are custom embroidered and inspected before dispatch. If your collar curls or flops, free replacement guaranteed.
-              </p>
-            </div>
-
-            {/* Stripe & Direct Order Actions */}
-            <div className="space-y-3 mt-4">
-              <StripeSecurityBeacon amount={total} />
-
-              <button
-                type="button"
-                onClick={handleStripePayment}
-                disabled={isCheckingOut}
-                className="w-full py-4 bg-[#635BFF] hover:bg-[#4E44E6] text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press active:scale-98"
-              >
-                {isCheckingOut ? (
-                  <span>CONNECTING TO SECURE STRIPE CHECKOUT...</span>
                 ) : (
                   <>
-                    <CreditCard size={16} />
-                    <span>PAY WITH STRIPE (CARD / APPLE PAY) &bull; ${total} USD</span>
+                    <div className="space-y-3.5">
+                      {cartItems.map((item, idx) => {
+                        const qty = item.quantity || 1;
+                        return (
+                          <div
+                            key={`${item.id}-${idx}`}
+                            className="flex gap-3.5 p-3.5 border border-slate-200 rounded-xs bg-[#FBFBFA]"
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-18 h-22 object-cover border border-slate-200 rounded-2xs shrink-0"
+                            />
+                            <div className="flex-1 flex flex-col justify-between min-w-0">
+                              <div>
+                                <div className="flex justify-between items-start gap-2">
+                                  <h4 className="font-serif text-sm font-bold text-[#090C10] leading-snug">
+                                    {item.name}
+                                  </h4>
+                                  <button
+                                    type="button"
+                                    onClick={() => onRemoveItem(idx)}
+                                    className="text-slate-400 hover:text-rose-600 p-1 cursor-pointer shrink-0"
+                                    aria-label={`Remove ${item.name}`}
+                                  >
+                                    <Trash2 size={14} />
+                                  </button>
+                                </div>
+                                <p className="font-mono text-[10px] text-slate-500 mt-1 uppercase leading-relaxed">
+                                  {item.color} &bull; SIZE: {item.size}
+                                </p>
+                              </div>
+
+                              <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-slate-200/70">
+                                {/* Quantity Stepper */}
+                                <div className="inline-flex items-center border border-slate-300 rounded-2xs bg-white">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      onUpdateQuantity
+                                        ? onUpdateQuantity(idx, -1)
+                                        : qty <= 1 && onRemoveItem(idx)
+                                    }
+                                    className="px-2 py-1 text-slate-600 hover:text-black cursor-pointer"
+                                    aria-label="Decrease quantity"
+                                  >
+                                    <Minus size={11} />
+                                  </button>
+                                  <span className="px-2.5 font-mono text-xs font-bold text-[#090C10]">
+                                    {qty}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => onUpdateQuantity && onUpdateQuantity(idx, 1)}
+                                    className="px-2 py-1 text-slate-600 hover:text-black cursor-pointer"
+                                    aria-label="Increase quantity"
+                                  >
+                                    <Plus size={11} />
+                                  </button>
+                                </div>
+
+                                <div className="font-mono text-xs font-bold text-[#090C10]">
+                                  ${item.price * qty} USD
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* 1-Click Hat Upsell Banner (Unlocks $75 Free Shipping when paired with $48 Polo!) */}
+                    {!hasCapInBag && (
+                      <div className="p-4 bg-[#090C10] text-white rounded-xs border border-slate-800 space-y-2.5">
+                        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.15em]">
+                          <span className="text-[#38BDF8] font-bold flex items-center gap-1">
+                            <Sparkles size={12} />
+                            {subtotal >= 47 && subtotal < 75
+                              ? 'UNLOCK FREE SHIPPING + SAVE $7'
+                              : 'BUNDLE & SAVE $7'}
+                          </span>
+                          <span className="text-emerald-400 font-semibold">+$28</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <img
+                              src="/assets/products/bespoke/hat_hero_wood.jpg"
+                              alt="Tour Performance Poly-Mesh Cap"
+                              className="w-11 h-11 object-cover rounded-2xs border border-white/15 shrink-0"
+                            />
+                            <div className="min-w-0">
+                              <div className="font-serif text-sm font-medium truncate">
+                                Tour Poly-Mesh Cap (Pure White)
+                              </div>
+                              <div className="font-mono text-xs text-slate-300">
+                                $28 USD <span className="line-through text-slate-500 text-[10px]">$35</span>
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={onAddUpsellHat}
+                            className="px-3 py-2 bg-white text-[#090C10] font-mono text-[10px] uppercase font-bold hover:bg-slate-200 transition-colors flex items-center gap-1 rounded-2xs cursor-pointer t-press shrink-0"
+                          >
+                            <Plus size={12} />
+                            <span>ADD</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
-              </button>
-
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs space-y-1.5 text-[10px] text-slate-500 font-mono">
-                <div className="flex items-center gap-1.5 text-slate-800 font-semibold text-[11px]">
-                  <Lock size={12} className="text-emerald-700" />
-                  <span>Stripe PCI-DSS Level 1 Encrypted Vault</span>
-                </div>
-                <p className="leading-relaxed">
-                  Your payment data is tokenized directly via Stripe. High Draw Golf never stores or has access to your full card number or security code. Zero data brokerage guarantee.
-                </p>
-                <div className="flex items-center gap-3 pt-1 text-[9px] uppercase tracking-wider text-slate-400">
-                  <span>&bull; 256-Bit SSL</span>
-                  <span>&bull; Apple Pay Ready</span>
-                  <span>&bull; 30-Day Money-Back Guarantee</span>
-                </div>
               </div>
+            )}
 
-              <button
-                type="submit"
-                disabled={isCheckingOut}
-                className="w-full btn-obsidian py-3 text-xs tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer opacity-80 hover:opacity-100"
+            {/* STEP 2: STREAMLINED SHIPPING & PAYMENT FORM (Full Browser Autofill Compliance) */}
+            {step === 'shipping' && (
+              <form
+                onSubmit={handleSubmitOrder}
+                className="p-5 sm:p-6 flex-1 overflow-y-auto overscroll-contain space-y-4"
               >
-                <span>CONFIRM DIRECT ORDER (PAY ON INVOICE)</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-          </form>
-        )}
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-600">
+                    {totalUnits} {totalUnits === 1 ? 'Item' : 'Items'} &bull;{' '}
+                    {shipping === 0 ? 'Free US Shipping' : '$8 Shipping'}
+                  </span>
+                  <span className="font-bold text-[#1C2C24]">Total: ${total} USD</span>
+                </div>
 
-        {/* STEP 3: ORDER CONFIRMED */}
-        {step === 'confirmed' && (
-          <div className="p-8 text-center my-auto space-y-6">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
-              <Check size={32} />
-            </div>
-            <div className="space-y-2">
-              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#B12535]">
-                ORDER CONFIRMED // EDITION 001
+                {errorMessage && (
+                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xs">
+                    {errorMessage}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
+                    Contact &amp; Delivery Destination
+                  </span>
+
+                  <div>
+                    <label
+                      htmlFor={`${baseId}-email`}
+                      className="text-[11px] font-medium text-slate-700 block mb-1"
+                    >
+                      Email Address (For Tracking) *
+                    </label>
+                    <div className="relative">
+                      <input
+                        id={`${baseId}-email`}
+                        type="email"
+                        name="email"
+                        autoComplete="email"
+                        required
+                        value={shippingForm.email}
+                        onChange={handleInputChange}
+                        placeholder="golfer@example.com"
+                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                      />
+                      <Mail size={14} className="absolute right-3 top-2.5 text-slate-400 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor={`${baseId}-fullName`}
+                      className="text-[11px] font-medium text-slate-700 block mb-1"
+                    >
+                      Full Name *
+                    </label>
+                    <input
+                      id={`${baseId}-fullName`}
+                      type="text"
+                      name="fullName"
+                      autoComplete="name"
+                      required
+                      value={shippingForm.fullName}
+                      onChange={handleInputChange}
+                      placeholder="Dr. Ken Cyree"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor={`${baseId}-phone`}
+                      className="text-[11px] font-medium text-slate-700 block mb-1"
+                    >
+                      Mobile Phone (Optional SMS Updates)
+                    </label>
+                    <input
+                      id={`${baseId}-phone`}
+                      type="tel"
+                      name="phone"
+                      autoComplete="tel"
+                      value={shippingForm.phone}
+                      onChange={handleInputChange}
+                      placeholder="(555) 000-0000"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor={`${baseId}-address1`}
+                      className="text-[11px] font-medium text-slate-700 block mb-1"
+                    >
+                      Street Address *
+                    </label>
+                    <input
+                      id={`${baseId}-address1`}
+                      type="text"
+                      name="address1"
+                      autoComplete="address-line1"
+                      required
+                      value={shippingForm.address1}
+                      onChange={handleInputChange}
+                      placeholder="123 Fairway Drive"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor={`${baseId}-address2`}
+                      className="text-[11px] font-medium text-slate-700 block mb-1"
+                    >
+                      Apt, Suite, Club Box (Optional)
+                    </label>
+                    <input
+                      id={`${baseId}-address2`}
+                      type="text"
+                      name="address2"
+                      autoComplete="address-line2"
+                      value={shippingForm.address2}
+                      onChange={handleInputChange}
+                      placeholder="Suite 4B"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <label
+                        htmlFor={`${baseId}-city`}
+                        className="text-[11px] font-medium text-slate-700 block mb-1"
+                      >
+                        City *
+                      </label>
+                      <input
+                        id={`${baseId}-city`}
+                        type="text"
+                        name="city"
+                        autoComplete="address-level2"
+                        required
+                        value={shippingForm.city}
+                        onChange={handleInputChange}
+                        placeholder="Scottsdale"
+                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor={`${baseId}-state`}
+                        className="text-[11px] font-medium text-slate-700 block mb-1"
+                      >
+                        State *
+                      </label>
+                      <input
+                        id={`${baseId}-state`}
+                        type="text"
+                        name="state"
+                        autoComplete="address-level1"
+                        required
+                        maxLength={2}
+                        value={shippingForm.state}
+                        onChange={handleInputChange}
+                        placeholder="AZ"
+                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs uppercase focus:outline-none focus:border-[#1C2C24]"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor={`${baseId}-zip`}
+                        className="text-[11px] font-medium text-slate-700 block mb-1"
+                      >
+                        ZIP Code *
+                      </label>
+                      <input
+                        id={`${baseId}-zip`}
+                        type="text"
+                        name="zip"
+                        inputMode="numeric"
+                        autoComplete="postal-code"
+                        required
+                        value={shippingForm.zip}
+                        onChange={handleInputChange}
+                        placeholder="85251"
+                        className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xs focus:outline-none focus:border-[#1C2C24]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stripe & Direct Order Actions */}
+                <div className="space-y-3 pt-2">
+                  <StripeSecurityBeacon amount={total} />
+
+                  <button
+                    type="button"
+                    onClick={handleStripePayment}
+                    disabled={isCheckingOut}
+                    className="w-full py-4 bg-[#635BFF] hover:bg-[#4E44E6] text-white text-xs font-bold tracking-[0.14em] uppercase rounded-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press"
+                  >
+                    {isCheckingOut ? (
+                      <span>CONNECTING TO SECURE STRIPE CHECKOUT...</span>
+                    ) : (
+                      <>
+                        <CreditCard size={16} />
+                        <span>PROCEED TO PAYMENT (CARD / APPLE PAY) &bull; ${total}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={isCheckingOut}
+                    className="w-full py-3 bg-[#090C10] hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-[0.14em] rounded-xs flex items-center justify-center gap-2 cursor-pointer t-press"
+                  >
+                    <span>SUBMIT DIRECT ORDER (INVOICE DISPATCH)</span>
+                    <ArrowRight size={14} />
+                  </button>
+
+                  <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-slate-500 pt-1">
+                    <Lock size={11} className="text-emerald-700" />
+                    <span>256-Bit SSL &bull; 30-Day Fairway Trial Guarantee</span>
+                  </div>
+                </div>
+              </form>
+            )}
+
+            {/* STEP 3: ORDER CONFIRMED */}
+            {step === 'confirmed' && (
+              <div className="p-8 text-center my-auto space-y-6">
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
+                  <Check size={32} />
+                </div>
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#B12535]">
+                    ORDER CONFIRMED // EDITION 2026
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
+                  <p className="font-sans text-xs text-slate-500 leading-relaxed">
+                    Your custom order <strong>#{lastOrderId}</strong> has been queued for precision embroidery and direct fulfillment.
+                  </p>
+                </div>
+                <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
+                  <div>ORDER ID: #{lastOrderId}</div>
+                  <div>RECIPIENT: {shippingForm.fullName}</div>
+                  <div>
+                    SHIP TO: {shippingForm.address1}, {shippingForm.city}, {shippingForm.state}{' '}
+                    {shippingForm.zip}
+                  </div>
+                  <div>EST. DISPATCH: 2–4 BUSINESS DAYS</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetAndClose}
+                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-xs cursor-pointer t-press"
+                >
+                  CONTINUE SHOPPING
+                </button>
               </div>
-              <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
-              <p className="font-sans text-xs text-slate-500 font-light leading-relaxed">
-                Your order #{lastOrderId} has been routed directly to Printify for precision embroidery &amp; direct fulfillment.
-              </p>
-            </div>
-            <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 hairline-all text-left space-y-1.5">
-              <div>ORDER ID: #{lastOrderId}</div>
-              <div>RECIPIENT: {shippingForm.firstName} {shippingForm.lastName}</div>
-              <div>SHIP TO: {shippingForm.address1}, {shippingForm.city}, {shippingForm.state} {shippingForm.zip}</div>
-              <div>FULFILLMENT: PRINTIFY AUTO-SHIP</div>
-              <div>EST. DELIVERY: 3–5 BUSINESS DAYS</div>
-            </div>
-            <button
-              onClick={handleResetAndClose}
-              className="w-full btn-obsidian py-3.5 text-xs tracking-[0.2em] cursor-pointer"
-            >
-              CONTINUE SHOPPING
-            </button>
-          </div>
-        )}
+            )}
 
-        {/* Cart Bottom Summary (When in Bag mode) */}
-        {step === 'bag' && cartItems.length > 0 && (
-          <div className="p-6 bg-[#FBFBFA] hairline-t space-y-4">
-            <div className="space-y-2 font-mono text-xs text-slate-600">
-              <div className="flex justify-between">
-                <span>SUBTOTAL</span>
-                <span className="font-semibold text-[#090C10]">${subtotal} USD</span>
+            {/* Cart Bottom Summary (When in Bag mode) */}
+            {step === 'bag' && cartItems.length > 0 && (
+              <div className="p-5 sm:p-6 bg-[#FBFBFA] border-t border-slate-200 space-y-3.5">
+                <div className="space-y-1.5 font-mono text-xs text-slate-600">
+                  <div className="flex justify-between">
+                    <span>SUBTOTAL ({totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'})</span>
+                    <span className="font-semibold text-[#090C10]">${subtotal} USD</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>US SHIPPING</span>
+                    <span>
+                      {shipping === 0 ? (
+                        <span className="text-emerald-700 font-bold">FREE</span>
+                      ) : (
+                        `$${shipping} USD`
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm font-bold text-[#090C10] pt-2 border-t border-slate-200">
+                    <span>ESTIMATED TOTAL</span>
+                    <span>${total} USD</span>
+                  </div>
+                </div>
+
+                {/* Primary 1-Click Express Stripe Checkout + Secondary Address Flow */}
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={handleExpressStripeFromBag}
+                    disabled={isCheckingOut}
+                    className="w-full py-3.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.16em] rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-md t-press"
+                  >
+                    <CreditCard size={15} />
+                    <span>
+                      {isCheckingOut ? 'LOADING CHECKOUT...' : `EXPRESS CHECKOUT • $${total}`}
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleProceedToShipping}
+                    className="w-full py-2.5 bg-white hover:bg-slate-100 text-[#090C10] border border-slate-300 font-mono text-[11px] font-bold uppercase tracking-wider rounded-xs flex items-center justify-center gap-1.5 cursor-pointer t-press"
+                  >
+                    <span>ENTER SHIPPING DETAILS</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-center gap-2 font-mono text-[10px] text-slate-500">
+                  <ShieldCheck size={13} className="text-emerald-600" />
+                  <span>Apple Pay &bull; Stripe 256-Bit Vault &bull; 30-Day Guarantee</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span>EST. SHIPPING</span>
-                <span>{shipping === 0 ? <span className="text-emerald-700 font-semibold">FREE</span> : `$${shipping} USD`}</span>
-              </div>
-              <div className="flex justify-between text-sm font-bold text-[#090C10] pt-2 hairline-t">
-                <span>TOTAL</span>
-                <span>${total} USD</span>
-              </div>
-            </div>
-
-            <button
-              onClick={handleProceedToShipping}
-              className="w-full btn-obsidian py-4 text-xs tracking-[0.25em] flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>PROCEED TO CHECKOUT &bull; ${total}</span>
-              <ArrowRight size={14} />
-            </button>
-
-            <div className="flex items-center justify-center gap-2 font-mono text-[10px] text-slate-500 pt-1">
-              <ShieldCheck size={13} className="text-emerald-600" />
-              <span>Stripe 256-Bit Encrypted Checkout &bull; Printify Auto-Ship</span>
-            </div>
-          </div>
-        )}
-
-      </div>
-    </div>
+            )}
+          </m.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };

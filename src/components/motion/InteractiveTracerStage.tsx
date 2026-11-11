@@ -21,7 +21,7 @@ export const InteractiveTracerStage: React.FC = () => {
       id: 'monogram',
       title: 'Layer 01 • Tailored H·D Monogram',
       subtitle: '12,400-Stitch High-Density Satin Column Lockup',
-      src: '/assets/brand/hd-monogram/layer_1_hd_monogram.png',
+      src: '/assets/brand/hd-monogram/layer_1_monogram_hd_classic.png',
       offsetY: isExploded ? 26 : 0,
       offsetX: isExploded ? -18 : 0,
       scale: isExploded ? 0.94 : 1,

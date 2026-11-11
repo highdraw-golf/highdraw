@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
+import { TierComparisonStrip } from './components/TierComparisonStrip';
 import { ShopifyCollections } from './components/ShopifyCollections';
 import { WhyHighDraw } from './components/WhyHighDraw';
 import { FounderSpotlight } from './components/FounderSpotlight';
@@ -18,12 +19,19 @@ import { AboutPage } from './pages/AboutPage';
 import { LogoStudioPage } from './pages/LogoStudioPage';
 import { OwnerAuthModal } from './components/OwnerAuthModal';
 import { isOwnerAuthorized, lockOwnerSession } from './lib/auth';
+import { resolvePrintifyFulfillment } from './lib/fulfillmentResolver';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
 
+type TierFilter = 'all' | 'weekender' | 'clubhouse' | 'tournament';
+
 type ActiveRoute =
   | { view: 'home' }
-  | { view: 'collection'; category: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles' }
+  | {
+      view: 'collection';
+      category: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
+      tier?: TierFilter;
+    }
   | { view: 'product'; product: Product }
   | { view: 'craftsmanship' }
   | { view: 'reviews' }
@@ -31,9 +39,29 @@ type ActiveRoute =
   | { view: 'about' }
   | { view: 'logo-studio' };
 
+const CART_STORAGE_KEY = 'highdraw_cart_v1';
+
+function loadPersistedCart(): CartItem[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 function parseRouteFromLocation(): ActiveRoute {
   if (typeof window === 'undefined') return { view: 'home' };
   const path = window.location.pathname.toLowerCase();
+  const params = new URLSearchParams(window.location.search);
+  const queryTier = params.get('tier')?.toLowerCase();
+  const validTier: TierFilter =
+    queryTier === 'weekender' || queryTier === 'clubhouse' || queryTier === 'tournament'
+      ? queryTier
+      : 'all';
 
   if (path.startsWith('/products/')) {
     const slug = path.replace('/products/', '').replace(/\/$/, '').trim();
@@ -42,9 +70,13 @@ function parseRouteFromLocation(): ActiveRoute {
 
     // 2. Intent-based fuzzy fallbacks for friendly/legacy URLs
     if (!prod) {
-      if (slug.includes('women')) {
+      if (slug.includes('clubhouse') && slug.includes('women')) {
+        prod = PRODUCTS.find(p => p.id === 'women-polo-lk830');
+      } else if (slug.includes('clubhouse')) {
+        prod = PRODUCTS.find(p => p.id === 'men-polo-k830');
+      } else if (slug.includes('women')) {
         prod = PRODUCTS.find(p => p.id.includes('women') || p.slug.includes('women'));
-      } else if (slug.includes('zip') || slug.includes('pullover') || slug.includes('outerwear')) {
+      } else if (slug.includes('zip') || slug.includes('pullover') || slug.includes('fleece') || slug.includes('outerwear')) {
         prod = PRODUCTS.find(p => p.category === 'outerwear' || p.slug.includes('zip'));
       } else if (slug.includes('cap') || slug.includes('hat') || slug.includes('headwear')) {
         prod = PRODUCTS.find(p => p.category === 'headwear');
@@ -59,11 +91,14 @@ function parseRouteFromLocation(): ActiveRoute {
   }
 
   if (path.startsWith('/collections/')) {
-    const cat = path.replace('/collections/', '').replace(/\/$/, '').trim();
-    if (['all', 'polos', 'outerwear', 'headwear', 'bundles'].includes(cat)) {
-      return { view: 'collection', category: cat as any };
+    const seg = path.replace('/collections/', '').replace(/\/$/, '').trim();
+    if (seg === 'weekender' || seg === 'clubhouse' || seg === 'tournament') {
+      return { view: 'collection', category: 'all', tier: seg };
     }
-    return { view: 'collection', category: 'all' };
+    if (['all', 'polos', 'outerwear', 'headwear', 'bundles'].includes(seg)) {
+      return { view: 'collection', category: seg as any, tier: validTier };
+    }
+    return { view: 'collection', category: 'all', tier: validTier };
   }
 
   if (path === '/pages/craftsmanship' || path === '/craftsmanship') {
@@ -87,19 +122,30 @@ function parseRouteFromLocation(): ActiveRoute {
 
 export function App() {
   const [route, setRoute] = useState<ActiveRoute>(parseRouteFromLocation);
-
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(loadPersistedCart);
 
   const [activeCategory, setActiveCategory] = useState<'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles'>('all');
+  const [activeHomeTier, setActiveHomeTier] = useState<TierFilter>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isOwnerAuthenticated, setIsOwnerAuthenticated] = useState<boolean>(isOwnerAuthorized);
 
   // Store Brand State (Configurable by Brand Owner via AdminConsole)
-  const [tickerText, setTickerText] = useState('FREE SHIPPING ON ORDERS OVER $75 • TOUR-GRADE DRAPE AT $48');
+  const [tickerText, setTickerText] = useState(
+    'FREE US SHIPPING OVER $75 • WEEKENDER ($48) & THE CLUBHOUSE ($66)'
+  );
   const [poloPrice, setPoloPrice] = useState(48);
   const [activeBoard, setActiveBoard] = useState('Autumn Fairways');
   const [heroImage, setHeroImage] = useState('/assets/lifestyle_golf.jpg');
+
+  // Persist shopping bag to localStorage so returning or mobile shoppers never lose items
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    } catch {
+      // ignore storage quota errors
+    }
+  }, [cartItems]);
 
   // Handle browser back/forward buttons
   useEffect(() => {
@@ -126,6 +172,7 @@ export function App() {
     view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio',
     opts?: {
       category?: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
+      tier?: TierFilter;
       product?: Product;
     }
   ) => {
@@ -133,9 +180,10 @@ export function App() {
     let nextRoute: ActiveRoute = { view: 'home' };
 
     if (view === 'collection') {
-      const cat = opts?.category || 'polos';
-      newPath = `/collections/${cat}`;
-      nextRoute = { view: 'collection', category: cat };
+      const cat = opts?.category || 'all';
+      const tier = opts?.tier || 'all';
+      newPath = tier !== 'all' ? `/collections/${cat}?tier=${tier}` : `/collections/${cat}`;
+      nextRoute = { view: 'collection', category: cat, tier };
       setActiveCategory(cat);
     } else if (view === 'product' && opts?.product) {
       newPath = `/products/${opts.product.slug}`;
@@ -160,7 +208,8 @@ export function App() {
       nextRoute = { view: 'home' };
     }
 
-    if (window.location.pathname !== newPath) {
+    const currentFull = `${window.location.pathname}${window.location.search}`;
+    if (currentFull !== newPath) {
       window.history.pushState(null, '', newPath);
     }
     setRoute(nextRoute);
@@ -168,26 +217,52 @@ export function App() {
   };
 
   const handleAddToCart = (item: CartItem) => {
-    setCartItems((prev) => [...prev, item]);
+    setCartItems(prev => {
+      const existingIdx = prev.findIndex(existing => existing.id === item.id);
+      if (existingIdx > -1) {
+        return prev.map((existing, idx) =>
+          idx === existingIdx
+            ? { ...existing, quantity: (existing.quantity || 1) + (item.quantity || 1) }
+            : existing
+        );
+      }
+      return [...prev, { ...item, quantity: item.quantity || 1 }];
+    });
     setIsCartOpen(true);
   };
 
+  const handleUpdateQuantity = (index: number, delta: number) => {
+    setCartItems(prev =>
+      prev
+        .map((item, idx) =>
+          idx === index ? { ...item, quantity: (item.quantity || 1) + delta } : item
+        )
+        .filter(item => (item.quantity || 1) > 0)
+    );
+  };
+
   const handleRemoveFromCart = (index: number) => {
-    setCartItems((prev) => prev.filter((_, i) => i !== index));
+    setCartItems(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleAddUpsellHat = () => {
-    setCartItems((prev) => [
-      ...prev,
-      {
-        id: 'headwear-flexfit-mesh-Pure White-S/M',
-        name: 'The Tour Performance Poly-Mesh Cap',
-        price: 28,
-        color: 'Pure White',
-        size: 'S/M',
-        image: '/assets/products/bespoke/hat_hero_wood.jpg',
-      },
-    ]);
+    const resolvedCap = resolvePrintifyFulfillment({
+      id: 'headwear-flexfit-mesh',
+      color: 'Pure White',
+      size: 'S/M',
+    });
+    handleAddToCart({
+      id: 'headwear-flexfit-mesh-Pure White-S/M',
+      name: 'The Tour Performance Poly-Mesh Cap — Pure White',
+      price: 28,
+      quantity: 1,
+      color: 'Pure White',
+      size: 'S/M',
+      image: resolvedCap.officialMockupUrl || '/assets/products/bespoke/hat_hero_wood.jpg',
+      sovereignSku: resolvedCap.sovereignSku,
+      printifyProductId: resolvedCap.printifyProductId,
+      printifyVariantId: resolvedCap.printifyVariantId,
+    });
   };
 
   const handleSelectPipesBoard = (boardName: string, image: string) => {
@@ -195,58 +270,87 @@ export function App() {
     setHeroImage(image);
   };
 
+  const totalBagCount = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+  const scrollToHomeTier = (tier: TierFilter) => {
+    setActiveHomeTier(tier);
+    setActiveCategory('all');
+    const el = document.getElementById('collections');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans text-[#1A1F26] selection:bg-[#B12535] selection:text-white">
-      {/* Header with Far-Left Logo, Working Nav Links (Pipes & Owner Console Removed) */}
-      <Header 
-        cartCount={cartItems.length}
+      {/* Header with Direct 3-Tier Navigation */}
+      <Header
+        cartCount={totalBagCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onNavigate={(view, category) => navigateTo(view, { category })}
+        onNavigate={(view, category, tier) => navigateTo(view, { category, tier })}
         tickerText={tickerText}
       />
 
-      <main className="pt-20">
+      <main className="pt-28">
         {route.view === 'home' && (
           <>
             {/* Flagship Editorial Hero */}
-            <FullscreenHero 
+            <FullscreenHero
               heroImage={heroImage}
-              onScrollToShop={() => navigateTo('collection', { category: 'polos' })}
+              onScrollToShop={() => navigateTo('collection', { category: 'all' })}
               onShopMens={() => {
                 const menPolo = PRODUCTS.find(p => p.id === 'men-polo-st740');
                 if (menPolo) navigateTo('product', { product: menPolo });
-                else navigateTo('collection', { category: 'polos' });
+                else navigateTo('collection', { category: 'polos', tier: 'weekender' });
               }}
               onShopWomens={() => {
                 const womenPolo = PRODUCTS.find(p => p.id === 'women-polo-lst740');
                 if (womenPolo) navigateTo('product', { product: womenPolo });
-                else navigateTo('collection', { category: 'polos' });
+                else navigateTo('collection', { category: 'polos', tier: 'weekender' });
+              }}
+              onShopClubhouse={() => {
+                const clubhousePolo = PRODUCTS.find(p => p.id === 'men-polo-k830');
+                if (clubhousePolo) navigateTo('product', { product: clubhousePolo });
+                else navigateTo('collection', { category: 'all', tier: 'clubhouse' });
               }}
               onScrollToWhy={() => navigateTo('craftsmanship')}
             />
 
-            {/* Picture-Heavy Shopify Collections with Working Filters & Swatches */}
-            <ShopifyCollections 
-              activeCategory={activeCategory}
-              onSelectCategory={(cat) => {
-                setActiveCategory(cat);
+            {/* 3-Tier Architecture Showcase Strip */}
+            <TierComparisonStrip
+              onExploreTier={tier => scrollToHomeTier(tier)}
+              onSelectWeekenderPolo={() => {
+                const p = PRODUCTS.find(item => item.id === 'men-polo-st740');
+                if (p) navigateTo('product', { product: p });
               }}
-              onAddToCart={handleAddToCart}
-              onSelectProduct={(prod) => navigateTo('product', { product: prod })}
+              onSelectClubhousePolo={() => {
+                const p = PRODUCTS.find(item => item.id === 'men-polo-k830');
+                if (p) navigateTo('product', { product: p });
+              }}
             />
 
-            {/* Redesigned Craftsmanship Showcase (Macro Collar Detail & $48 Math) */}
-            <WhyHighDraw 
+            {/* Picture-Heavy Collections with Working Tier + Category Filters & Swatches */}
+            <ShopifyCollections
+              activeCategory={activeCategory}
+              onSelectCategory={cat => setActiveCategory(cat)}
+              activeTier={activeHomeTier}
+              onSelectTier={tier => setActiveHomeTier(tier)}
+              onAddToCart={handleAddToCart}
+              onSelectProduct={prod => navigateTo('product', { product: prod })}
+            />
+
+            {/* Craftsmanship Showcase (Macro Collar Detail & Direct Pricing Math) */}
+            <WhyHighDraw
               onScrollToShop={() => navigateTo('collection', { category: 'polos' })}
             />
 
             {/* Authentic Co-Founder Spotlight (Dr. Ken Cyree & 47-State Fairways) */}
-            <FounderSpotlight 
+            <FounderSpotlight
               onLearnMore={() => navigateTo('about')}
               onShopNow={() => navigateTo('collection', { category: 'polos' })}
             />
 
-            {/* Real Golfer Course Reviews with Authentic Photography */}
+            {/* Real Golfer Course Reviews */}
             <UserReviews />
           </>
         )}
@@ -254,9 +358,10 @@ export function App() {
         {route.view === 'collection' && (
           <CollectionPage
             category={route.category}
+            initialTier={route.tier || 'all'}
             products={PRODUCTS}
-            onSelectProduct={(prod) => navigateTo('product', { product: prod })}
-            onSelectCategory={(cat) => navigateTo('collection', { category: cat })}
+            onSelectProduct={prod => navigateTo('product', { product: prod })}
+            onSelectCategory={(cat, tier) => navigateTo('collection', { category: cat, tier })}
             onBackToHome={() => navigateTo('home')}
           />
         )}
@@ -265,9 +370,19 @@ export function App() {
           <ProductDetailPage
             key={route.product.id}
             product={route.product}
-            onBackToShop={() => navigateTo('collection', { category: route.product.category })}
+            onBackToShop={() =>
+              navigateTo('collection', {
+                category: route.product.category,
+                tier:
+                  route.product.tier === 'weekender' ||
+                  route.product.tier === 'clubhouse' ||
+                  route.product.tier === 'tournament'
+                    ? route.product.tier
+                    : 'all',
+              })
+            }
             onAddToCart={handleAddToCart}
-            onSelectProduct={(prod) => navigateTo('product', { product: prod })}
+            onSelectProduct={prod => navigateTo('product', { product: prod })}
             allProducts={PRODUCTS}
           />
         )}
@@ -325,12 +440,12 @@ export function App() {
       </main>
 
       {/* Fully Functional Footer with Policy Modals & Discrete Admin Link */}
-      <Footer 
+      <Footer
         onNavigate={(view, category) => navigateTo(view, { category })}
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
-      {/* Owner Command Center Modal (Zero-Code Management for Dad) */}
+      {/* Owner Command Center Modal */}
       {isAdminOpen && (
         isOwnerAuthenticated ? (
           <AdminConsole
@@ -357,12 +472,14 @@ export function App() {
         )
       )}
 
-      {/* Interactive Cart Drawer */}
-      <CartDrawer 
+      {/* Interactive Cart Drawer with Persistence, Stepper & Free Shipping Bar */}
+      <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onRemoveItem={handleRemoveFromCart}
+        onUpdateQuantity={handleUpdateQuantity}
+        onClearCart={() => setCartItems([])}
         onAddUpsellHat={handleAddUpsellHat}
       />
     </div>

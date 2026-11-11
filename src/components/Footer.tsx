@@ -85,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({
                 onClick={() => handleNav('collection', 'outerwear')} 
                 className="block text-left hover:text-[#38BDF8] transition-colors cursor-pointer"
               >
-                1/4-Zip Outerwear ($56)
+                1/4-Zip Fleece Outerwear ($68)
               </button>
               <button 
                 onClick={() => handleNav('collection', 'headwear')} 

@@ -19,6 +19,28 @@ export interface LogoColorOption {
   borderHex: string;
 }
 
+export const CHEST_LOGO_STYLE_OPTIONS: LogoStyleOption[] = [
+  {
+    id: 'mark_monogram',
+    name: 'Mark + Monogram (H | D)',
+    shortLabel: 'Mark + Monogram',
+    description: 'Signature H·D serif initials flanking the High Draw ball flight tracer & flagstick.',
+    badge: 'SIGNATURE',
+  },
+  {
+    id: 'mark_only',
+    name: 'Mark-Only (Ball Flight Tracer)',
+    shortLabel: 'Mark-Only',
+    description: 'Minimalist tour ball flight apex tracer and pin without initials.',
+  },
+  {
+    id: 'mark_text',
+    name: 'Mark + Wordmark (HIGH DRAW)',
+    shortLabel: 'Mark + Wordmark',
+    description: 'Full HIGH DRAW championship wordmark split by the ball flight tracer.',
+  },
+];
+
 export const LOGO_STYLE_OPTIONS: LogoStyleOption[] = [
   {
     id: 'mark_monogram',
@@ -41,8 +63,8 @@ export const LOGO_STYLE_OPTIONS: LogoStyleOption[] = [
   },
   {
     id: 'mark_text',
-    name: 'Mark + Text (HIGH DRAW)',
-    shortLabel: 'Mark + Text',
+    name: 'Mark + Wordmark (HIGH DRAW)',
+    shortLabel: 'Mark + Wordmark',
     description: 'Full HIGH DRAW championship wordmark split by the ball flight tracer.',
   },
   {

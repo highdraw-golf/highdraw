@@ -32,13 +32,14 @@ export function StripeSecurityBeacon({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {/* Pulsing Encrypted Radar Beacon */}
+          {/* Subtle Encrypted Vault Beacon (Finite Settle — Zero Infinite Loops) */}
           <div className="relative flex items-center justify-center w-5 h-5">
             {!isReduced && (
               <m.span
                 className="absolute w-full h-full rounded-full bg-[#635BFF]/40"
-                animate={{ scale: [1, 1.8, 1], opacity: [0.7, 0, 0.7] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                initial={{ scale: 0.85, opacity: 0.8 }}
+                animate={{ scale: 1.5, opacity: 0 }}
+                transition={{ duration: DURATION.slow, ease: EASE_ACCENT }}
               />
             )}
             <span className="w-2.5 h-2.5 rounded-full bg-[#635BFF] relative z-10" />

@@ -1,4 +1,4 @@
-import type { LogoVariant } from '../components/brand/HighDrawLogo';
+import type { LogoStyle, LogoVariant } from '../components/brand/HighDrawLogo';
 
 export interface LogoPlacementSpec {
   left: string;
@@ -8,7 +8,7 @@ export interface LogoPlacementSpec {
 }
 
 export interface ColorwayAngleShot {
-  id: 'custom_chest' | 'model_front' | 'model_back' | 'form_front' | 'form_back' | 'macro_detail';
+  id: 'custom_chest' | 'factory_mockup' | 'model_front' | 'model_back' | 'form_front' | 'form_back' | 'macro_detail' | 'collar_detail' | 'course_drape' | 'weave_macro' | 'action_layer';
   label: string;
   src: string;
   supportsOverlay?: boolean;
@@ -88,11 +88,125 @@ const HAT_CATALOG_PLACEMENT: LogoPlacementSpec = {
  * Dynamically resolves all studio angles (Front, Back, Form, Macro Weave)
  * for any Product + Colorway using the local asset vault — zero manual photo editing required.
  */
-export function getColorwayAngles(product: Product, color: ProductColorway): ColorwayAngleShot[] {
+export function getColorwayAngles(
+  product: Product,
+  color: ProductColorway,
+  selectedLogoStyle: LogoStyle = 'mark_monogram'
+): ColorwayAngleShot[] {
   if (color.angles && color.angles.length > 0) return color.angles;
 
   const basePlacement = color.logoPlacement || MEN_POLO_CATALOG_PLACEMENT;
   const primarySrc = color.unbrandedImage || color.image || product.image;
+
+  const logoMockupSlug =
+    selectedLogoStyle === 'mark_only'
+      ? 'mark-only'
+      : selectedLogoStyle === 'mark_text'
+      ? 'mark-wordmark'
+      : 'mark-monogram';
+
+  const colorSlugMap: Record<string, string> = {
+    'Deep Midnight Navy': 'true-navy',
+    'Carolina Blue': 'carolina-blue',
+    'Crisp White': 'white',
+    'Pure White': 'white',
+    'Onyx Black': 'black',
+    'Black': 'black',
+    'Forest Green': 'forest-green',
+    'Deep Red': 'deep-red',
+    'True Red': 'true-red',
+    'Graphite': 'graphite',
+    'Grey Concrete': 'grey-concrete',
+    'True Royal': 'true-royal',
+    'True Navy': 'true-navy',
+    'Iron Grey': 'iron-grey',
+    'Charcoal Grey Heather': 'grey-heather',
+    'Magnet Slate': 'magnet',
+    'Aegean Blue Heather': 'aegean-blue-heather',
+    'Black Heather': 'black-heather',
+    'Charcoal Heather': 'charcoal-heather',
+    'Dark Teal Heather': 'dark-teal-heather',
+    'River Blue Navy Heather': 'river-blue-navy-heather',
+  };
+  const mockupColorSlug = colorSlugMap[color.name] || 'true-navy';
+
+  // Clubhouse Men's Fine Pique (K830)
+  if (product.id === 'men-polo-k830') {
+    return [
+      {
+        id: 'factory_mockup',
+        label: `Stitched Studio View (${logoMockupSlug.replace('mark-', '').toUpperCase()})`,
+        src: `/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-${logoMockupSlug}--${mockupColorSlug}.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'collar_detail',
+        label: 'Fine Pique Collar & Placket',
+        src: '/assets/craft_collar_macro.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'course_drape',
+        label: 'Clubhouse Evening Drape',
+        src: '/assets/products/editorial/men_polo_navy_course.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'weave_macro',
+        label: '57/43 Cotton-Poly Fine Pique',
+        src: '/assets/polo_navy_macro.png',
+        supportsOverlay: false,
+      },
+    ];
+  }
+
+  // Clubhouse Women's Fine Pique (LK830)
+  if (product.id === 'women-polo-lk830') {
+    return [
+      {
+        id: 'factory_mockup',
+        label: `Stitched Studio View (${logoMockupSlug.replace('mark-', '').toUpperCase()})`,
+        src: `/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-${logoMockupSlug}--${mockupColorSlug}.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'course_drape',
+        label: 'Tailored Open Y-Neck Drape',
+        src: '/assets/products/editorial/women_polo_carolina_course.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'weave_macro',
+        label: '57/43 Cotton-Poly Fine Pique',
+        src: '/assets/polo_navy_macro.png',
+        supportsOverlay: false,
+      },
+    ];
+  }
+
+  // Clubhouse Value Fleece 1/4-Zip (F218)
+  if (product.id === 'outerwear-f218-fleece') {
+    return [
+      {
+        id: 'factory_mockup',
+        label: `Embroidered Fleece (${logoMockupSlug.replace('mark-', '').toUpperCase()})`,
+        src: `/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-${logoMockupSlug}--${mockupColorSlug}.jpg`,
+        supportsOverlay: false,
+      },
+      {
+        id: 'action_layer',
+        label: 'Twilight Layering Fit',
+        src: '/assets/products/editorial/quarter_zip_pullover_action.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'collar_detail',
+        label: 'Cadet Collar & Coil Zip',
+        src: '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
+        supportsOverlay: false,
+      },
+    ];
+  }
 
   // Map human color names to factory file slugs
   const slugMap: Record<string, string> = {
@@ -121,11 +235,10 @@ export function getColorwayAngles(product: Product, color: ProductColorway): Col
   if (product.id === 'women-polo-lst740') {
     const shots: ColorwayAngleShot[] = [
       {
-        id: 'custom_chest',
-        label: 'Custom Embroidery View',
-        src: primarySrc,
-        supportsOverlay: true,
-        placementOverride: basePlacement,
+        id: 'factory_mockup',
+        label: `Stitched Studio View (${logoMockupSlug.replace('mark-', '').toUpperCase()})`,
+        src: `/assets/products/printify_mockups/high-draw-weekender-women-s-polo-${logoMockupSlug}--${mockupColorSlug}.jpg`,
+        supportsOverlay: false,
       },
       {
         id: 'model_back',
@@ -139,15 +252,6 @@ export function getColorwayAngles(product: Product, color: ProductColorway): Col
         id: 'form_front',
         label: 'Tailored Form Silhouette',
         src: `/assets/products/womens-polo/LST740_${slug}_form_front.jpg`,
-        supportsOverlay: true,
-        placementOverride: { left: '56.5%', top: '39.0%', height: '3.0%', angle: 0 },
-      });
-    }
-    if (slug !== 'white' && slug !== 'trueroyal') {
-      shots.push({
-        id: 'form_back',
-        label: 'Rear Form Seam',
-        src: `/assets/products/womens-polo/LST740_${slug}_form_back.jpg`,
         supportsOverlay: false,
       });
     }
@@ -226,26 +330,46 @@ export function getColorwayAngles(product: Product, color: ProductColorway): Col
     ];
   }
 
-  // Default: Men's Tour Performance Polo (ST740) & Foursome Kit
+  if (product.id === 'tournament-tour-spec-polo') {
+    return [
+      {
+        id: 'course_drape',
+        label: 'Tour Prototype Testing',
+        src: '/assets/founder/ken_overcast_apex_swing.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'collar_detail',
+        label: 'Stay-Flat Collar Architecture',
+        src: '/assets/craft_collar_macro.jpg',
+        supportsOverlay: false,
+      },
+      {
+        id: 'weave_macro',
+        label: 'High-Tensile Micro-Knit',
+        src: '/assets/polo_navy_macro.png',
+        supportsOverlay: false,
+      },
+    ];
+  }
+
+  // Default: Men's Weekender Performance Polo (ST740) & Foursome Kit
   const menShots: ColorwayAngleShot[] = [
     {
-      id: 'custom_chest',
-      label: 'Custom Embroidery View',
-      src: primarySrc,
-      supportsOverlay: true,
-      placementOverride: basePlacement,
+      id: 'factory_mockup',
+      label: `Stitched Studio View (${logoMockupSlug.replace('mark-', '').toUpperCase()})`,
+      src: `/assets/products/printify_mockups/high-draw-weekender-men-s-polo-${logoMockupSlug}--${mockupColorSlug}.jpg`,
+      supportsOverlay: false,
     },
   ];
 
-  // If the primary image is the wood flatlay, also provide the studio model front with live overlay!
   if (primarySrc.includes('wood')) {
-    const modelSlug = slug === 'black' ? 'black' : 'truenavy';
     menShots.push({
-      id: 'model_front',
-      label: 'Studio Model Drape',
-      src: `/assets/products/mens-polo/ST740_${modelSlug}_model_front.jpg`,
+      id: 'custom_chest',
+      label: 'Bespoke Table Flatlay',
+      src: primarySrc,
       supportsOverlay: true,
-      placementOverride: MEN_POLO_CATALOG_PLACEMENT,
+      placementOverride: basePlacement,
     });
   }
 
@@ -382,10 +506,10 @@ export const PRODUCTS: Product[] = [
       },
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
-    description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered for pure fairway comfort, athletic drape, and moisture-wicking capillary airflow with UPF 50+ UV solar protection. Customize your left-chest embroidery across 4 official High Draw marks and 4 thread colors — or order it completely unbranded.',
+    description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered for pure fairway comfort, athletic drape, and moisture-wicking capillary airflow with UPF 50+ UV solar protection. Stitched to order in the USA with your choice of 3 official High Draw chest marks.',
     features: [
-      'Customizable left-chest embroidery: choose Mark + Monogram, Mark-Only, Monogram (HD), Mark + Text, or Optional No Logo',
-      'Four precision thread colorways (Cyan, Gold, Crisp White, Onyx Black) tailored to any shirt color',
+      'Customizable 2.5" left-chest embroidery: choose Mark + Monogram (H | D), Mark-Only (Ball Flight Tracer), or Mark + Wordmark (HIGH DRAW)',
+      'Tailor-matched contrast thread: Light Blue tracer thread on Crisp White garments and Crisp White thread on dark & rich colorways',
       'UPF 50+ UV solar shield woven directly into technical micropique yarns',
       'Tailored flat-knit collar engineered for breathability and comfort under the sun',
       '3-button placket with tone-on-tone pearlized buttons and angled shoulder seams',
@@ -496,9 +620,9 @@ export const PRODUCTS: Product[] = [
       },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
-    description: 'Feel the fabric. Tour-grade micro-pique stretch blend with a contoured feminine silhouette and open self-fabric Y-neck collar. Engineered for 100+ fairway washes without losing its drape. Customize your left-chest embroidery with any of the 4 official High Draw marks and 4 thread colors — or select Optional No Logo.',
+    description: 'Feel the fabric. Tour-grade micro-pique stretch blend with a contoured feminine silhouette and open self-fabric Y-neck collar. Engineered for 100+ fairway washes without losing its drape. Crafted to order with your choice of 3 official High Draw chest marks calibrated to 2.25" tall and lower-aligned for a flattering fit.',
     features: [
-      'Customizable left-chest embroidery: choose Mark + Monogram, Mark-Only, Monogram (HD), Mark + Text, or Optional No Logo',
+      'Customizable 2.25" lower-aligned chest mark: choose Mark + Monogram (H | D), Mark-Only (Ball Flight Tracer), or Mark + Wordmark (HIGH DRAW)',
       'Open self-fabric collar with elegant elongated Y-neck placket',
       'Contoured feminine silhouette with curved drop-tail hem',
       'UPF 50+ UV solar shield woven directly into the fabric',
@@ -512,89 +636,6 @@ export const PRODUCTS: Product[] = [
       collar: 'Self-Fabric Open Y-Neck Placket',
       fit: 'Feminine contoured fit with slight waist shaping (XS–4XL)',
       protection: 'UPF 50+ Solar Block UV Protection',
-    },
-  },
-  {
-    id: 'outerwear-st443',
-    slug: 'mens-tour-tech-quarter-zip',
-    name: "The Tour Tech Quarter-Zip Pullover — Men's",
-    category: 'outerwear',
-    userType: 'mens',
-    collectionLabel: 'OUTERWEAR & LAYERING',
-    price: 56,
-    originalPrice: 128,
-    image: '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
-    secondaryImage: '/assets/products/editorial/quarter_zip_pullover_action.jpg',
-    gallery: [
-      '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
-      '/assets/products/editorial/quarter_zip_pullover_action.jpg',
-      '/assets/products/catalog/quarter_zip_truenavywhite.jpg',
-      '/assets/products/catalog/quarter_zip_blackwhite.jpg',
-      '/assets/products/catalog/quarter_zip_irongreywhite.jpg',
-    ],
-    colors: [
-      {
-        name: 'True Navy / White',
-        hex: '#1E293B',
-        image: '/assets/products/bespoke/quarter_zip_hero_wood.jpg',
-        unbrandedImage: '/assets/products/unbranded/quarter_zip_hero_wood.jpg',
-        logoColor: 'Cyan Tracer',
-        defaultLogoColor: 'cyan',
-        logoPlacement: { left: '54.3%', top: '38.5%', height: '5.3%', angle: 16 },
-      },
-      {
-        name: 'Black / White',
-        hex: '#111827',
-        image: '/assets/products/catalog/quarter_zip_blackwhite.jpg',
-        unbrandedImage: '/assets/products/unbranded/quarter_zip_blackwhite.jpg',
-        logoColor: 'Cyan Tracer',
-        defaultLogoColor: 'cyan',
-        logoPlacement: QUARTER_ZIP_CATALOG_PLACEMENT,
-      },
-      {
-        name: 'Iron Grey / White',
-        hex: '#4B5563',
-        image: '/assets/products/catalog/quarter_zip_irongreywhite.jpg',
-        unbrandedImage: '/assets/products/unbranded/quarter_zip_irongreywhite.jpg',
-        logoColor: 'Cyan Tracer',
-        defaultLogoColor: 'cyan',
-        logoPlacement: QUARTER_ZIP_CATALOG_PLACEMENT,
-      },
-      {
-        name: 'True Royal / White',
-        hex: '#1D4ED8',
-        image: '/assets/products/catalog/quarter_zip_trueroyalwhite.jpg',
-        unbrandedImage: '/assets/products/unbranded/quarter_zip_trueroyalwhite.jpg',
-        logoColor: 'White Tracer',
-        defaultLogoColor: 'white',
-        logoPlacement: QUARTER_ZIP_CATALOG_PLACEMENT,
-      },
-      {
-        name: 'Black / Deep Red',
-        hex: '#7F1D1D',
-        image: '/assets/products/catalog/quarter_zip_blackdeepred.jpg',
-        unbrandedImage: '/assets/products/unbranded/quarter_zip_blackdeepred.jpg',
-        logoColor: 'White Tracer',
-        defaultLogoColor: 'white',
-        logoPlacement: QUARTER_ZIP_CATALOG_PLACEMENT,
-      },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
-    description: 'Tour-engineered stretch 1/4-zip pullover for crisp morning rounds and cool evening play. Features 90/10 poly-spandex performance jersey, cadet collar, reverse coil zipper with chin guard, and contrast colorblocking along the sleeves and collar. Custom embroidered with your choice of High Draw logo style and thread color — or optional clean finish.',
-    features: [
-      'Customizable left-chest embroidery across 4 official High Draw logo styles & 4 thread colors (or No Logo)',
-      '90/10 poly/spandex technical jersey with 4-way active swing stretch',
-      'Cadet stand collar with soft lockdown zipper garage to eliminate chin friction',
-      'Sport-wick moisture management technology keeps you warm without sweat buildup',
-      'Colorblock contrast sleeve and collar panels for athletic styling',
-    ],
-    washGuarantee: 'Cold Wash Tested • Retains Shape & Loft',
-    specs: {
-      fabric: '90% Poly, 10% Spandex Sport-Wick Jersey (6.8 oz/yd²)',
-      weight: '230 GSM Mid-Weight Layering Fabric',
-      collar: 'Cadet Stand Collar with Contrast Inner Facing',
-      fit: 'Athletic layering drape tailored to wear over High Draw polos (XS–4XL)',
-      protection: 'Wind-Resistant Thermal Stretch Barrier',
     },
   },
   {
@@ -681,9 +722,9 @@ export const PRODUCTS: Product[] = [
       },
     ],
     sizes: ['S/M', 'L/XL'],
-    description: 'Official Flexfit® Cool & Dry Poly Block Mesh Cap engineered for maximum airflow under intense heat. Features breathable honeycomb poly-mesh architecture, moisture-wicking internal sweatband, and silver anti-glare underbill. Customize the front crown with your choice of High Draw mark and thread color.',
+    description: 'Official Flexfit® Cool & Dry Poly Block Mesh Cap engineered for maximum airflow under intense heat. Features breathable honeycomb poly-mesh architecture, moisture-wicking internal sweatband, silver anti-glare underbill, and structured High Draw crown embroidery.',
     features: [
-      'Customizable crown embroidery: Mark + Monogram, Mark-Only, Monogram (HD), Mark + Text, or No Logo',
+      'Structured front crown embroidery featuring the official High Draw mark',
       'Authentic Flexfit® stretch-to-fit elastic sweatband for all-day comfort',
       'Cool & Dry poly-block honeycomb mesh keeps scalp ventilated on the back nine',
       'Structured 6-panel mid-profile silhouette with permacurv visor',
@@ -780,42 +821,42 @@ export const PRODUCTS: Product[] = [
     collectionLabel: "MEN'S CLUBHOUSE POLOS",
     price: 66,
     originalPrice: 125,
-    image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-0.jpg',
-    secondaryImage: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram-color-1.jpg',
+    image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--aegean-blue-heather.jpg',
+    secondaryImage: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only--river-blue-navy-heather.jpg',
     gallery: [
-      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-0.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram-color-1.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-wordmark-color-2.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--aegean-blue-heather.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only--river-blue-navy-heather.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-wordmark--charcoal-heather.jpg',
     ],
     colors: [
       {
         name: 'Aegean Blue Heather',
         hex: '#4A6B82',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-0.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--aegean-blue-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Black Heather',
         hex: '#2B2B2B',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-1.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--black-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Charcoal Heather',
         hex: '#4A4A4A',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-2.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--charcoal-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Dark Teal Heather',
         hex: '#1F4E5B',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-3.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--dark-teal-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'River Blue Navy Heather',
         hex: '#22384D',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-only-color-4.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-mark-monogram--river-blue-navy-heather.jpg',
         defaultLogoColor: 'white',
       },
     ],
@@ -848,30 +889,30 @@ export const PRODUCTS: Product[] = [
     collectionLabel: "WOMEN'S CLUBHOUSE POLOS",
     price: 66,
     originalPrice: 125,
-    image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only-color-0.jpg',
-    secondaryImage: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram-color-1.jpg',
+    image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram--aegean-blue-heather.jpg',
+    secondaryImage: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only--charcoal-heather.jpg',
     gallery: [
-      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only-color-0.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram-color-1.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-wordmark-color-2.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram--aegean-blue-heather.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only--charcoal-heather.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-wordmark--black-heather.jpg',
     ],
     colors: [
       {
         name: 'Aegean Blue Heather',
         hex: '#4A6B82',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only-color-0.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram--aegean-blue-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Black Heather',
         hex: '#2B2B2B',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only-color-1.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram--black-heather.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Charcoal Heather',
         hex: '#4A4A4A',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-only-color-2.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-women-s-polo-mark-monogram--charcoal-heather.jpg',
         defaultLogoColor: 'white',
       },
     ],
@@ -903,30 +944,30 @@ export const PRODUCTS: Product[] = [
     collectionLabel: 'CLUBHOUSE LAYERING',
     price: 68,
     originalPrice: 135,
-    image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only-color-0.jpg',
-    secondaryImage: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram-color-1.jpg',
+    image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram--true-navy.jpg',
+    secondaryImage: '/assets/products/editorial/quarter_zip_pullover_action.jpg',
     gallery: [
-      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only-color-0.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram-color-1.jpg',
-      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-wordmark-color-2.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram--true-navy.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only--iron-grey.jpg',
+      '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-wordmark--black.jpg',
     ],
     colors: [
       {
-        name: 'Black',
-        hex: '#111827',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only-color-0.jpg',
+        name: 'True Navy',
+        hex: '#1E293B',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram--true-navy.jpg',
         defaultLogoColor: 'white',
       },
       {
         name: 'Iron Grey',
         hex: '#4B5563',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only-color-1.jpg',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram--iron-grey.jpg',
         defaultLogoColor: 'white',
       },
       {
-        name: 'True Navy',
-        hex: '#1E293B',
-        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-only-color-2.jpg',
+        name: 'Black',
+        hex: '#111827',
+        image: '/assets/products/printify_mockups/high-draw-clubhouse-fleece-quarter-zip-mark-monogram--black.jpg',
         defaultLogoColor: 'white',
       },
     ],
@@ -959,10 +1000,10 @@ export const PRODUCTS: Product[] = [
     collectionLabel: 'TOURNAMENT ALLOCATION',
     price: 110,
     originalPrice: 195,
-    image: '/assets/products/editorial/founder_ken_range.jpg',
+    image: '/assets/founder/ken_overcast_apex_swing.jpg',
     secondaryImage: '/assets/products/bespoke/men_polo_hero_wood.jpg',
     gallery: [
-      '/assets/products/editorial/founder_ken_range.jpg',
+      '/assets/founder/ken_overcast_apex_swing.jpg',
       '/assets/products/bespoke/men_polo_hero_wood.jpg',
     ],
     colors: [

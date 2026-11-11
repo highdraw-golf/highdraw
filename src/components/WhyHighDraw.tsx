@@ -26,7 +26,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         </h2>
 
         <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-sans">
-          We eliminated the $125 legacy boutique retail tax to build the ultimate mid-market golf shirt: tour-grade 4-way stretch drape, breathable 4-way stretch drape, and honest  pricing.
+          We eliminated the $125 legacy boutique retail tax to build a purposeful 3-tier golf wardrobe: tour-grade 4-way stretch drape, fused stay-flat collars, and honest direct pricing ($48 Weekender &amp; $66 Clubhouse).
         </p>
       </div>
 
