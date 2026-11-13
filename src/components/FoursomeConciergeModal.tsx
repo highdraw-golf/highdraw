@@ -24,12 +24,12 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
 
   const handleShareGroup = () => {
     confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-    const text = encodeURIComponent("Check out our foursome kit in High Draw Golf polos for Saturday's round! Tour quality without the $110 overpriced retail markup: https://highdrawgolf.com");
+    const text = encodeURIComponent("Check out our foursome kit in High Draw Golf polos for Saturday's round! Tour quality without the $110 overpriced retail markup: https://www.highdrawgear.com/products/the-saturday-foursome-scramble-kit");
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText("https://highdrawgolf.com/concierge?group=foursome-01");
+    navigator.clipboard.writeText("https://www.highdrawgear.com/products/the-saturday-foursome-scramble-kit");
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };

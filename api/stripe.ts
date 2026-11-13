@@ -881,8 +881,6 @@ export const SERVER_PRINTIFY_LEDGER: Record<string, ServerLedgerProduct> = {
 const ALLOWED_ORIGINS = new Set([
   'https://www.highdrawgear.com',
   'https://highdrawgear.com',
-  'https://highdrawgolf.com',
-  'https://www.highdrawgolf.com',
   'https://highdraw.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000',

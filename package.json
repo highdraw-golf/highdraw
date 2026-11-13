@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender_social_routes.mjs",
+    "og:generate": "node scripts/generate_og_cards.mjs",
     "typecheck": "tsc",
     "lint": "oxlint",
     "preview": "vite preview",

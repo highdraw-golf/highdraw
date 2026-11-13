@@ -29,6 +29,7 @@ import {
   Tag,
   ZoomIn,
   Bell,
+  Share2,
 } from 'lucide-react';
 
 interface ProductDetailPageProps {
@@ -82,8 +83,32 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [added, setAdded] = useState(false);
   const [bundleAdded, setBundleAdded] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [waitlistJoined, setWaitlistJoined] = useState(false);
+
+  const handleShareProduct = async () => {
+    const canonicalShareUrl = `https://www.highdrawgear.com/products/${product.slug}`;
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({
+          title: `${product.name} | High Draw Golf`,
+          text: `${product.name} ($${product.price}) — ${product.washGuarantee}`,
+          url: canonicalShareUrl,
+        });
+        return;
+      } catch {
+        // User cancelled or native share unsupported; fall back to clipboard copy
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(canonicalShareUrl);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    } catch {
+      // ignore clipboard errors
+    }
+  };
 
   const activeColorObj =
     product.colors.find(c => c.name === selectedColor) || product.colors[0];
@@ -331,12 +356,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <span>BACK TO COLLECTION</span>
           </button>
 
-          <div className="hidden sm:flex items-center gap-2 text-slate-400 font-mono text-[11px]">
-            <span>HOME</span>
-            <span>/</span>
-            <span className="uppercase">{product.tier || product.category}</span>
-            <span>/</span>
-            <span className="text-slate-700 font-semibold">{product.name}</span>
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-2 text-slate-400 font-mono text-[11px]">
+              <span>HOME</span>
+              <span>/</span>
+              <span className="uppercase">{product.tier || product.category}</span>
+              <span>/</span>
+              <span className="text-slate-700 font-semibold">{product.name}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleShareProduct}
+              aria-label="Share product link"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 bg-white hover:border-[#1C2C24] text-slate-700 hover:text-[#1C2C24] font-mono text-[11px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer"
+            >
+              {linkCopied ? <Check size={13} className="text-emerald-700" /> : <Share2 size={13} />}
+              <span>{linkCopied ? 'LINK COPIED' : 'SHARE LINK'}</span>
+            </button>
           </div>
         </div>
       </div>

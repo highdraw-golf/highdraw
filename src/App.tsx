@@ -22,6 +22,7 @@ import { OwnerAuthModal } from './components/OwnerAuthModal';
 import { isOwnerAuthorized, lockOwnerSession } from './lib/auth';
 import { resolvePrintifyFulfillment } from './lib/fulfillmentResolver';
 import { fulfillStripeCheckoutSession } from './lib/stripe';
+import { syncDocumentSocialMetadata } from './lib/socialMetadata.ts';
 import { sendOrderNotificationEmail } from './lib/emailService';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
@@ -175,6 +176,11 @@ export function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  // Keep document title, canonical link, and Open Graph/Twitter meta tags in sync with active route
+  useEffect(() => {
+    syncDocumentSocialMetadata(window.location.pathname, window.location.search);
+  }, [route]);
 
   // Keyboard shortcut for Brand Owner console (Ctrl+Shift+O / Cmd+Shift+O)
   useEffect(() => {
