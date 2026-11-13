@@ -983,6 +983,17 @@ function resolveCatalogItem(
   return null;
 }
 
+const PAIR_DISCOUNT_CENTS_PER_POLO = 500;
+
+function isPairEligibleCatalogEntry(entry: CatalogEntry): boolean {
+  return (
+    entry === AUTHORITATIVE_CATALOG['men-polo-st740'] ||
+    entry === AUTHORITATIVE_CATALOG['women-polo-lst740'] ||
+    entry === AUTHORITATIVE_CATALOG['men-polo-k830'] ||
+    entry === AUTHORITATIVE_CATALOG['women-polo-lk830']
+  );
+}
+
 const SILHOUETTE_BLUEPRINTS: Record<string, number> = {
   'men-polo-st740': 1984,
   'women-polo-lst740': 3322,
@@ -1515,7 +1526,7 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
     try {
       if (action === 'checkout') {
         const body = (req.body && typeof req.body === 'object' ? req.body : {}) as Record<string, any>;
-        const { items, customerEmail, orderId, returnUrl } = body;
+        const { items, customerEmail, orderId, returnUrl, attribution } = body;
 
         if (!Array.isArray(items) || items.length === 0 || items.length > 25) {
           return res.status(400).json({ error: 'Invalid cart items payload.' });
@@ -1538,6 +1549,7 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
 
         const params = new URLSearchParams();
         params.append('mode', 'payment');
+        params.append('allow_promotion_codes', 'true');
 
         if (customerEmail && typeof customerEmail === 'string') {
           const cleanEmail = customerEmail.trim().slice(0, 120);
@@ -1556,9 +1568,8 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
         params.append('shipping_address_collection[allowed_countries][0]', 'US');
         params.append('shipping_address_collection[allowed_countries][1]', 'CA');
 
-        let lineItemIndex = 0;
-        let subtotalCents = 0;
-
+        let eligiblePoloUnits = 0;
+        const resolvedCartEntries = [];
         for (const rawItem of items) {
           const catalogProduct = resolveCatalogItem(
             String(rawItem?.id || ''),
@@ -1570,8 +1581,20 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
               .status(400)
               .json({ error: `Unrecognized product SKU: ${sanitizeText(rawItem?.id, 32)}` });
           }
-
           const qty = Math.max(1, Math.min(20, Math.floor(Number(rawItem?.quantity) || 1)));
+          const pairEligible = isPairEligibleCatalogEntry(catalogProduct);
+          if (pairEligible) {
+            eligiblePoloUnits += qty;
+          }
+          resolvedCartEntries.push({ rawItem, catalogProduct, qty, pairEligible });
+        }
+
+        const pairDiscountActive = eligiblePoloUnits >= 2;
+        let lineItemIndex = 0;
+        let subtotalCents = 0;
+
+        for (const entry of resolvedCartEntries) {
+          const { rawItem, catalogProduct, qty, pairEligible } = entry;
           const safeColor = sanitizeText(rawItem?.color || 'Standard', 96);
           const safeSize = sanitizeText(rawItem?.size || 'L', 16);
           const unitFulfillment = resolveServerFulfillmentItems({
@@ -1584,12 +1607,18 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
             quantity: 1,
           });
 
-          subtotalCents += catalogProduct.unitAmountCents * qty;
+          const unitAmountCents =
+            pairDiscountActive && pairEligible
+              ? Math.max(100, catalogProduct.unitAmountCents - PAIR_DISCOUNT_CENTS_PER_POLO)
+              : catalogProduct.unitAmountCents;
+          const pairSuffix = pairDiscountActive && pairEligible ? ' — 2+ Polo Pair (-$5)' : '';
+
+          subtotalCents += unitAmountCents * qty;
 
           params.append(`line_items[${lineItemIndex}][price_data][currency]`, 'usd');
           params.append(
             `line_items[${lineItemIndex}][price_data][product_data][name]`,
-            `${catalogProduct.name} (${safeColor}, Size ${safeSize})`
+            `${catalogProduct.name} (${safeColor}, Size ${safeSize})${pairSuffix}`
           );
           params.append(
             `line_items[${lineItemIndex}][price_data][product_data][metadata][fulfillment_type]`,
@@ -1601,7 +1630,7 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
           );
           params.append(
             `line_items[${lineItemIndex}][price_data][unit_amount]`,
-            catalogProduct.unitAmountCents.toString()
+            unitAmountCents.toString()
           );
           params.append(`line_items[${lineItemIndex}][quantity]`, qty.toString());
           lineItemIndex++;
@@ -1624,6 +1653,26 @@ export function createStripeGatewayHandler(deps: StripeGatewayDeps = {}) {
         params.append('metadata[orderId]', safeOrderId);
         params.append('metadata[fulfillment]', 'printify_auto');
         params.append('metadata[securityVersion]', 'v3-printify-bridge');
+        params.append('metadata[pairDiscountApplied]', pairDiscountActive ? 'true' : 'false');
+        params.append('metadata[pairEligibleUnits]', String(eligiblePoloUnits));
+
+        if (attribution && typeof attribution === 'object') {
+          const attr = attribution as Record<string, unknown>;
+          const attrFields: Array<[string, unknown]> = [
+            ['utm_source', attr.utm_source],
+            ['utm_medium', attr.utm_medium],
+            ['utm_campaign', attr.utm_campaign],
+            ['utm_content', attr.utm_content],
+            ['ref_code', attr.ref_code],
+            ['landing_path', attr.landing_path],
+          ];
+          for (const [key, rawVal] of attrFields) {
+            const cleanVal = sanitizeText(rawVal, 120);
+            if (cleanVal) {
+              params.append(`metadata[${key}]`, cleanVal);
+            }
+          }
+        }
 
         const response = await fetchFn('https://api.stripe.com/v1/checkout/sessions', {
           method: 'POST',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail, Layers } from 'lucide-react';
+import { X, Sliders, RefreshCw, CheckCircle, Store, Zap, Sparkles, Tag, PackageCheck, Mail, Layers, TrendingUp, ArrowRight } from 'lucide-react';
 import type { OrderNotification } from '../lib/emailService';
 import { SILHOUETTE_SPECS, getMatrixStats, type SilhouetteId } from '../lib/taxonomy';
 import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
@@ -9,6 +9,7 @@ interface AdminConsoleProps {
   isOpen: boolean;
   onClose: () => void;
   onLock?: () => void;
+  onOpenMarketingCommand?: () => void;
   tickerText: string;
   onUpdateTicker: (newText: string) => void;
   activeBoard: string;
@@ -21,6 +22,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
   isOpen,
   onClose,
   onLock,
+  onOpenMarketingCommand,
   tickerText,
   onUpdateTicker,
   activeBoard,
@@ -192,6 +194,36 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
 
         {/* Modal Content Body */}
         <div className="p-6 overflow-y-auto space-y-8 flex-1 text-slate-800">
+          {onOpenMarketingCommand && (
+            <div className="p-4 sm:p-5 rounded-lg bg-[#1C2C24] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md border border-emerald-900/50">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded bg-[#FDE022]/15 text-[#FDE022] shrink-0">
+                  <TrendingUp size={20} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-bold uppercase tracking-wider">
+                      Marketing &amp; Growth Command Center (Cloud Sync)
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">
+                      Start-Small $150–$250 OS
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300 mt-1">
+                    Track Facebook Ads, Outreach CRM, US demand map, QR/Promo minting, and Scale/Kill verdicts across devices.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={onOpenMarketingCommand}
+                className="shrink-0 px-4 py-2.5 rounded-sm bg-[#FDE022] hover:bg-yellow-300 text-[#1C2C24] text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                <span>Open Marketing Command Center</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
+          )}
 
           {activeTab === 'taxonomy' ? (
             (() => {

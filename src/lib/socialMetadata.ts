@@ -223,6 +223,23 @@ export function resolveSocialMetadata(
     };
   }
 
+  if (cleanPath === '/admin/marketing' || cleanPath === '/pages/marketing-command') {
+    return {
+      canonicalUrl: `${origin}/admin/marketing`,
+      title: 'Marketing & Growth Command Center | High Draw Golf',
+      description:
+        'Owner command center for High Draw’s Month 1 ($150–$250) Facebook Ads experiments, 2-Polo Pair conversion tracking, outreach CRM, and Stripe-backed cloud telemetry.',
+      ogType: 'website',
+      ogTitle: 'High Draw Marketing & Growth Command Center',
+      ogDescription:
+        'PIN-protected cloud-synced marketing analytics, experiment verdicts, US state demand map, and campaign studio.',
+      ogImage: `${origin}/assets/og/og-home.jpg`,
+      ogImageAlt: 'High Draw Golf Marketing Command Center',
+      ogImageWidth: OG_IMAGE_WIDTH,
+      ogImageHeight: OG_IMAGE_HEIGHT,
+    };
+  }
+
   return {
     canonicalUrl: `${origin}/`,
     title: 'High Draw Golf | Designed for Sport, Crafted for Life',

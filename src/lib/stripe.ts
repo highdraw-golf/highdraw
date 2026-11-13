@@ -1,4 +1,5 @@
 // High Draw Golf — Client-side Stripe Gateway Helper
+import { getCheckoutAttributionMetadata } from './attribution';
 
 export interface StripeCheckoutPayload {
   items: Array<{
@@ -52,6 +53,7 @@ export async function createStripeCheckoutSession(payload: StripeCheckoutPayload
       body: JSON.stringify({
         ...payload,
         returnUrl: window.location.origin,
+        attribution: getCheckoutAttributionMetadata(),
       }),
     });
 

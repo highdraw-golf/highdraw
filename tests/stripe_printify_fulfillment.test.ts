@@ -190,12 +190,14 @@ test('2. Checkout action accepts all SKUs, ignores tampered client prices, sets 
 
   assert.equal(multiRes.statusCode, 200);
   const p2 = new URLSearchParams(capturedStripeBody);
+  // men-polo-st740 upsell ($40) stays $40; the 2 base polos (women-polo-lst740 + women-polo-lk830) trigger 2+ Polo Pair (-$5 each)
   assert.equal(p2.get('line_items[0][price_data][unit_amount]'), '4000');
-  assert.equal(p2.get('line_items[1][price_data][unit_amount]'), '4800');
-  assert.equal(p2.get('line_items[2][price_data][unit_amount]'), '6600');
+  assert.equal(p2.get('line_items[1][price_data][unit_amount]'), '4300');
+  assert.equal(p2.get('line_items[2][price_data][unit_amount]'), '6100');
   assert.equal(p2.get('line_items[3][price_data][unit_amount]'), '6800');
   assert.equal(p2.get('line_items[4][price_data][unit_amount]'), '2800');
   assert.equal(p2.get('line_items[5][price_data][unit_amount]'), '16000');
+  assert.equal(p2.get('allow_promotion_codes'), 'true');
   // Subtotal >= $75 => no shipping line item
   assert.equal(p2.get('line_items[6][price_data][unit_amount]'), null);
 

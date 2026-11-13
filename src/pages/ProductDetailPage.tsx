@@ -15,6 +15,7 @@ import { Accordion } from '../components/ui/Accordion';
 import { Button } from '../components/ui/Button';
 import { SizeGuideModal } from '../components/SizeGuideModal';
 import { resolvePrintifyFulfillment, getFactoryThreadColor } from '../lib/fulfillmentResolver';
+import { isPairEligiblePoloItem } from '../lib/bundlePricing';
 import { DURATION, EASE_ACCENT } from '../lib/motion/tokens';
 import { useMotionPreference } from '../components/motion/MotionProvider';
 import {
@@ -184,6 +185,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const activeUserTypeLabel = userTypeOptions?.find(u => u.id === userCutPreference)?.label;
 
   const isCap = product.category === 'headwear' || product.id === 'headwear-flexfit-mesh';
+  const isPairEligible = isPairEligiblePoloItem({ id: product.id, price: product.price });
   const decorationSpecLabel = isCap
     ? 'Structured Front Crown Mark'
     : product.userType === 'womens'
@@ -653,6 +655,20 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   >
                     {added ? 'ADDED TO YOUR BAG' : `ADD TO BAG • $${product.price}`}
                   </Button>
+
+                  {isPairEligible && (
+                    <div className="px-3.5 py-2.5 bg-emerald-50 border border-emerald-200 rounded-xs flex items-center justify-between gap-2 text-[11px] text-emerald-950">
+                      <span className="font-semibold">
+                        <strong className="uppercase tracking-wider font-mono text-[10px] text-emerald-800 mr-1.5">
+                          2-Polo Pair Offer:
+                        </strong>
+                        Mix &amp; Match Any 2+ Polos &mdash; Save $10 + Free US Shipping
+                      </span>
+                      <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
+                        -$10 AUTO
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex items-center justify-center gap-4 text-[11px] text-slate-500 font-medium flex-wrap">
                     <span className="flex items-center gap-1">

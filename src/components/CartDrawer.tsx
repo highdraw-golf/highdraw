@@ -21,7 +21,14 @@ import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
 import { createStripeCheckoutSession } from '../lib/stripe';
+import { trackBeginCheckout } from '../lib/analytics';
+import { recordLocalFunnelStep } from '../lib/attribution';
 import { resolvePrintifyOrderLineItems } from '../lib/fulfillmentResolver';
+import {
+  calculateCartPricing,
+  FREE_SHIPPING_THRESHOLD_DOLLARS,
+  isPairEligiblePoloItem,
+} from '../lib/bundlePricing';
 import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
 import { StripeSecurityBeacon } from './motion/HighDrawBespokeMotion';
 import { DURATION, EASE_ACCENT } from '../lib/motion/tokens';
@@ -76,7 +83,7 @@ interface ShippingForm {
   zip: string;
 }
 
-const FREE_SHIPPING_THRESHOLD = 75;
+const FREE_SHIPPING_THRESHOLD = FREE_SHIPPING_THRESHOLD_DOLLARS;
 
 function generateOrderId(): string {
   const rand = Math.floor(1000 + Math.random() * 9000);
@@ -136,12 +143,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, externalConfirmation, onClearExternalConfirmation, onClose]);
 
-  const totalUnits = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 8;
-  const total = subtotal + shipping;
-  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const freeShippingProgress = Math.min(1, subtotal / FREE_SHIPPING_THRESHOLD);
+  const pricing = calculateCartPricing(cartItems);
+  const totalUnits = pricing.totalUnits;
+  const rawSubtotal = pricing.rawSubtotal;
+  const pairEligibleUnits = pricing.pairEligibleUnits;
+  const pairDiscountDollars = pricing.pairDiscountDollars;
+  const subtotal = pricing.discountedSubtotal;
+  const shipping = pricing.shippingDollars;
+  const total = pricing.totalDollars;
+  const remainingForFreeShipping = pricing.remainingForFreeShipping;
+  const freeShippingProgress = pricing.freeShippingProgress;
 
   const hasCapInBag = cartItems.some(item => item.id.startsWith('headwear-flexfit-mesh'));
 
@@ -159,6 +170,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
    */
   const handleExpressStripeFromBag = async () => {
     if (cartItems.length === 0) return;
+    trackBeginCheckout(cartItems, subtotal);
+    recordLocalFunnelStep('begin_checkout');
     setIsCheckingOut(true);
     setErrorMessage('');
     const orderNum = generateOrderId();
@@ -197,6 +210,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleProceedToShipping = () => {
     if (cartItems.length === 0) return;
+    trackBeginCheckout(cartItems, subtotal);
+    recordLocalFunnelStep('begin_checkout');
     setErrorMessage('');
     setStep('shipping');
   };
@@ -593,9 +608,44 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                 ) : (
                   <>
+                    {/* 2+ Polo Pair Promo Banner */}
+                    {pairEligibleUnits === 1 && (
+                      <div
+                        data-testid="pair-upsell-banner"
+                        className="p-3 bg-emerald-50 border border-emerald-200 rounded-xs flex items-center justify-between gap-2 text-xs text-emerald-950"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <Sparkles size={14} className="text-emerald-700 shrink-0" />
+                          <span>
+                            Add <strong>1 more polo</strong> to save <strong>$10</strong> automatically + unlock <strong>Free US Shipping</strong>
+                          </span>
+                        </div>
+                        <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
+                          -$10 PAIR
+                        </span>
+                      </div>
+                    )}
+                    {pairEligibleUnits >= 2 && pairDiscountDollars > 0 && (
+                      <div
+                        data-testid="pair-applied-banner"
+                        className="p-3 bg-emerald-900 text-white rounded-xs border border-emerald-800 flex items-center justify-between gap-2 text-xs"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <Check size={14} className="text-emerald-300 shrink-0" />
+                          <span>
+                            <strong>2+ Polo Pair Applied:</strong> -${pairDiscountDollars} Pair Savings &amp; Free US Shipping
+                          </span>
+                        </div>
+                        <span className="font-mono text-[10px] font-bold text-emerald-200 bg-white/10 px-2 py-0.5 rounded-2xs shrink-0">
+                          -${pairDiscountDollars}
+                        </span>
+                      </div>
+                    )}
+
                     <div className="space-y-3.5">
                       {cartItems.map((item, idx) => {
                         const qty = item.quantity || 1;
+                        const itemGetsPair = pairEligibleUnits >= 2 && isPairEligiblePoloItem(item);
                         return (
                           <div
                             key={`${item.id}-${idx}`}
@@ -654,8 +704,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                                   </button>
                                 </div>
 
-                                <div className="font-mono text-xs font-bold text-[#090C10]">
-                                  ${item.price * qty} USD
+                                <div className="font-mono text-xs font-bold text-[#090C10] text-right">
+                                  {itemGetsPair ? (
+                                    <>
+                                      <span className="line-through text-slate-400 mr-1.5 text-[11px]">
+                                        ${item.price * qty}
+                                      </span>
+                                      <span className="text-emerald-800">
+                                        ${Math.max(0, (item.price - 5) * qty)} USD
+                                      </span>
+                                    </>
+                                  ) : (
+                                    `$${item.price * qty} USD`
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -974,7 +1035,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="p-5 sm:p-6 bg-[#FBFBFA] border-t border-slate-200 space-y-3.5">
                 <div className="space-y-1.5 font-mono text-xs text-slate-600">
                   <div className="flex justify-between">
-                    <span>SUBTOTAL ({totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'})</span>
+                    <span>ITEMS ({totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'})</span>
+                    <span className="font-semibold text-[#090C10]">${rawSubtotal} USD</span>
+                  </div>
+                  {pairDiscountDollars > 0 && (
+                    <div className="flex justify-between text-emerald-700 font-bold">
+                      <span>2+ POLO PAIR SAVINGS</span>
+                      <span>-${pairDiscountDollars} USD</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span>SUBTOTAL</span>
                     <span className="font-semibold text-[#090C10]">${subtotal} USD</span>
                   </div>
                   <div className="flex justify-between">

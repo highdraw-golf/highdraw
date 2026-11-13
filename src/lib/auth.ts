@@ -9,6 +9,7 @@ const AUTHORIZED_DIGESTS = new Set([
 
 const SESSION_KEY = 'highdraw_owner_auth_token';
 const SESSION_TOKEN_VALUE = 'hd_verified_session_v2';
+const PIN_SESSION_KEY = 'highdraw_owner_pin_session';
 
 export async function verifyOwnerPasscode(rawInput: string): Promise<boolean> {
   if (typeof window === 'undefined' || !window.crypto?.subtle) return false;
@@ -18,10 +19,11 @@ export async function verifyOwnerPasscode(rawInput: string): Promise<boolean> {
     const msgBuffer = new TextEncoder().encode(`highdraw-salt-2026:${clean}`);
     const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 
     if (AUTHORIZED_DIGESTS.has(hashHex)) {
       sessionStorage.setItem(SESSION_KEY, SESSION_TOKEN_VALUE);
+      sessionStorage.setItem(PIN_SESSION_KEY, clean);
       return true;
     }
     return false;
@@ -33,7 +35,10 @@ export async function verifyOwnerPasscode(rawInput: string): Promise<boolean> {
 export function isOwnerAuthorized(): boolean {
   if (typeof window === 'undefined') return false;
   try {
-    return sessionStorage.getItem(SESSION_KEY) === SESSION_TOKEN_VALUE;
+    return (
+      sessionStorage.getItem(SESSION_KEY) === SESSION_TOKEN_VALUE &&
+      Boolean(sessionStorage.getItem(PIN_SESSION_KEY))
+    );
   } catch {
     return false;
   }
@@ -43,8 +48,20 @@ export function lockOwnerSession(): void {
   if (typeof window === 'undefined') return;
   try {
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(PIN_SESSION_KEY);
     sessionStorage.removeItem('highdraw_owner_auth');
   } catch {
     // ignore
+  }
+}
+
+export function getOwnerApiHeaders(): Record<string, string> {
+  if (typeof window === 'undefined') return {};
+  try {
+    if (!isOwnerAuthorized()) return {};
+    const pin = sessionStorage.getItem(PIN_SESSION_KEY) || '';
+    return pin ? { 'X-Owner-Pin': pin } : {};
+  } catch {
+    return {};
   }
 }

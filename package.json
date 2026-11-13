@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender_social_routes.mjs",
     "og:generate": "node scripts/generate_og_cards.mjs",
+    "pdf:marketing": "node scripts/generate_marketing_playbook_pdf.cjs",
     "typecheck": "tsc",
     "lint": "oxlint",
     "preview": "vite preview",
@@ -19,12 +20,18 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@nivo/core": "^0.99.0",
+    "@nivo/scatterplot": "^0.99.0",
     "canvas-confetti": "^1.9.4",
     "firebase": "^12.19.0",
     "framer-motion": "^14.10.1",
     "lucide-react": "^1.46.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-simple-maps": "^5.0.5",
+    "recharts": "^3.10.1",
+    "us-atlas": "^3.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
@@ -33,6 +40,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.13.3",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",

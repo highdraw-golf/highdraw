@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import confetti from 'canvas-confetti';
 import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
@@ -24,8 +24,12 @@ import { resolvePrintifyFulfillment } from './lib/fulfillmentResolver';
 import { fulfillStripeCheckoutSession } from './lib/stripe';
 import { syncDocumentSocialMetadata } from './lib/socialMetadata.ts';
 import { sendOrderNotificationEmail } from './lib/emailService';
+import { captureAttributionOnLoad, recordLocalFunnelStep } from './lib/attribution';
+import { initMetaPixel, trackViewProduct, trackAddToCart, trackPurchase } from './lib/analytics';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
+
+const MarketingCommandPage = lazy(() => import('./pages/MarketingCommandPage'));
 
 type TierFilter = 'all' | 'weekender' | 'clubhouse' | 'tournament';
 
@@ -41,7 +45,8 @@ type ActiveRoute =
   | { view: 'reviews' }
   | { view: 'guarantee' }
   | { view: 'about' }
-  | { view: 'logo-studio' };
+  | { view: 'logo-studio' }
+  | { view: 'marketing-command' };
 
 const CART_STORAGE_KEY = 'highdraw_cart_v1';
 
@@ -134,6 +139,9 @@ function parseRouteFromLocation(): ActiveRoute {
   if (path === '/pages/logo-studio' || path === '/logo-studio') {
     return { view: 'logo-studio' };
   }
+  if (path === '/admin/marketing' || path === '/pages/marketing-command') {
+    return { view: 'marketing-command' };
+  }
 
   return { view: 'home' };
 }
@@ -182,6 +190,12 @@ export function App() {
     syncDocumentSocialMetadata(window.location.pathname, window.location.search);
   }, [route]);
 
+  // Capture marketing UTM/ref attribution + boot Meta Pixel if configured
+  useEffect(() => {
+    captureAttributionOnLoad();
+    initMetaPixel();
+  }, []);
+
   // Keyboard shortcut for Brand Owner console (Ctrl+Shift+O / Cmd+Shift+O)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -195,7 +209,7 @@ export function App() {
   }, []);
 
   const navigateTo = (
-    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio',
+    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio' | 'marketing-command',
     opts?: {
       category?: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
       tier?: TierFilter;
@@ -214,6 +228,13 @@ export function App() {
     } else if (view === 'product' && opts?.product) {
       newPath = `/products/${opts.product.slug}`;
       nextRoute = { view: 'product', product: opts.product };
+      trackViewProduct({
+        id: opts.product.id,
+        name: opts.product.name,
+        price: opts.product.price,
+        category: opts.product.category,
+      });
+      recordLocalFunnelStep('view_item');
     } else if (view === 'craftsmanship') {
       newPath = '/pages/craftsmanship';
       nextRoute = { view: 'craftsmanship' };
@@ -229,6 +250,9 @@ export function App() {
     } else if (view === 'logo-studio') {
       newPath = '/pages/logo-studio';
       nextRoute = { view: 'logo-studio' };
+    } else if (view === 'marketing-command') {
+      newPath = '/admin/marketing';
+      nextRoute = { view: 'marketing-command' };
     } else {
       newPath = '/';
       nextRoute = { view: 'home' };
@@ -244,6 +268,14 @@ export function App() {
 
   const handleAddToCart = (item: CartItem) => {
     setExternalConfirmation(null);
+    trackAddToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      color: item.color,
+      size: item.size,
+    });
+    recordLocalFunnelStep('add_to_cart');
     setCartItems(prev => {
       const existingIdx = prev.findIndex(existing => existing.id === item.id);
       const updated =
@@ -311,6 +343,12 @@ export function App() {
         recipientFirstName: res.recipientFirstName,
         shipSummary: res.shipSummary,
       });
+      trackPurchase({
+        orderId: res.orderId || orderId,
+        value: res.amountTotalDollars || 0,
+        items: itemsSnapshot.length > 0 ? itemsSnapshot : undefined,
+      });
+      recordLocalFunnelStep('purchase');
       confetti({ particleCount: 90, spread: 75, origin: { y: 0.5 } });
     } else {
       setExternalConfirmation({
@@ -386,6 +424,41 @@ export function App() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  if (route.view === 'marketing-command') {
+    if (isOwnerAuthenticated) {
+      return (
+        <Suspense
+          fallback={
+            <div className="min-h-screen flex items-center justify-center bg-[#f4f5f3] font-mono text-xs text-slate-600">
+              Loading High Draw Marketing Command Center...
+            </div>
+          }
+        >
+          <MarketingCommandPage
+            onNavigateBack={() => navigateTo('home')}
+            onLockSession={() => {
+              lockOwnerSession();
+              setIsOwnerAuthenticated(false);
+              navigateTo('home');
+            }}
+          />
+        </Suspense>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#1C2C24] px-4 py-20">
+        <OwnerAuthModal
+          isOpen={true}
+          title="Marketing Command Center — Owner Access"
+          description="Enter your High Draw Owner PIN to open cloud-synced Facebook Ads telemetry, Experiment Verdicts, Outreach CRM, and Stripe reporting."
+          onClose={() => navigateTo('home')}
+          onSuccess={() => setIsOwnerAuthenticated(true)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#1A1F26] selection:bg-[#B12535] selection:text-white">
@@ -563,6 +636,10 @@ export function App() {
               lockOwnerSession();
               setIsOwnerAuthenticated(false);
               setIsAdminOpen(false);
+            }}
+            onOpenMarketingCommand={() => {
+              setIsAdminOpen(false);
+              navigateTo('marketing-command');
             }}
             tickerText={tickerText}
             onUpdateTicker={setTickerText}
