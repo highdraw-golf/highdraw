@@ -1,4 +1,16 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+export interface ApiRequest {
+  method?: string;
+  headers: Record<string, string | string[] | undefined>;
+  query: Record<string, string | string[] | undefined>;
+  body?: unknown;
+}
+
+export interface ApiResponse {
+  setHeader(name: string, value: string): unknown;
+  status(code: number): ApiResponse;
+  json(payload: unknown): unknown;
+  end(): unknown;
+}
 
 const PRINTIFY_API_TOKEN = process.env.PRINTIFY_API_TOKEN || "";
 const PRINTIFY_SHOP_ID = process.env.PRINTIFY_SHOP_ID || "29111523";
@@ -22,8 +34,9 @@ function isAllowedOrigin(origin: string | undefined): boolean {
   return false;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const requestOrigin = req.headers.origin;
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+  const rawOrigin = req.headers.origin;
+  const requestOrigin = Array.isArray(rawOrigin) ? rawOrigin[0] : rawOrigin;
   const corsOrigin = isAllowedOrigin(requestOrigin) ? requestOrigin! : 'https://www.highdrawgear.com';
 
   // Strict CORS & Security Headers
@@ -43,7 +56,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(503).json({ error: 'Fulfillment gateway configuration pending.' });
   }
 
-  const { action } = req.query;
+  const rawAction = req.query.action;
+  const action = Array.isArray(rawAction) ? rawAction[0] : rawAction;
 
   try {
     // 1. Fetch Products (Read-Only Catalog)
@@ -63,14 +77,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json(data);
     }
 
-    // 2. Create Automated Order (With Strict Schema Validation)
+    // 2. Create Automated Order (With Strict Schema Validation & Idempotency)
     if (req.method === 'POST' && action === 'order') {
       // Verify request comes from an allowed origin or internal webhook
       if (requestOrigin && !isAllowedOrigin(requestOrigin)) {
         return res.status(403).json({ error: 'Forbidden origin' });
       }
 
-      const orderPayload = req.body;
+      const orderPayload = req.body as Record<string, any> | undefined;
       if (
         !orderPayload ||
         typeof orderPayload !== 'object' ||
@@ -83,6 +97,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'Invalid order payload structure' });
       }
 
+      const externalId = typeof orderPayload.external_id === 'string' ? orderPayload.external_id.trim() : '';
+      if (externalId) {
+        const existingRes = await fetch(`https://api.printify.com/v1/shops/${PRINTIFY_SHOP_ID}/orders.json?limit=50`, {
+          headers: {
+            'Authorization': `Bearer ${PRINTIFY_API_TOKEN}`,
+            'User-Agent': 'HighDrawGolf-Backend/2.0',
+          },
+        });
+        if (existingRes.ok) {
+          const existingJson = (await existingRes.json()) as { data?: Array<Record<string, any>> };
+          const existing = (existingJson.data || []).find(
+            o => o?.metadata?.shop_order_id === externalId || o?.metadata?.shop_order_label === externalId
+          );
+          if (existing) {
+            return res.status(200).json({ id: existing.id, status: existing.status, alreadyFulfilled: true });
+          }
+        }
+      }
+
+      const sanitizedPayload = {
+        ...orderPayload,
+        line_items: orderPayload.line_items.map((li: Record<string, any>) => ({
+          product_id: String(li.product_id || ''),
+          variant_id: Number(li.variant_id),
+          quantity: Math.max(1, Math.floor(Number(li.quantity) || 1)),
+        })),
+      };
+
       const response = await fetch(`https://api.printify.com/v1/shops/${PRINTIFY_SHOP_ID}/orders.json`, {
         method: 'POST',
         headers: {
@@ -90,20 +132,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           'Authorization': `Bearer ${PRINTIFY_API_TOKEN}`,
           'User-Agent': 'HighDrawGolf-Backend/2.0',
         },
-        body: JSON.stringify(orderPayload),
+        body: JSON.stringify(sanitizedPayload),
       });
 
       if (!response.ok) {
         return res.status(response.status).json({ error: 'Printify order creation failed' });
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as { id: string; status: string };
       return res.status(200).json({ id: data.id, status: data.status });
     }
 
     return res.status(400).json({ error: 'Invalid action or method' });
-  } catch (error: any) {
-    console.error('Printify backend error:', error);
+  } catch (error) {
+    console.error('Printify backend error:', error instanceof Error ? error.message : 'Unknown error');
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }

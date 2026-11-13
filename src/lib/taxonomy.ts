@@ -302,6 +302,30 @@ export const SILHOUETTE_SPECS: Record<SilhouetteId, SilhouetteBlueprintSpec> = {
     priceCents: 16000,
     sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
     colorMap: {
+      'Mixed Foursome Selection': {
+        code: 'MIX4',
+        printifyColorTitle: 'True Navy',
+        hex: '#1E293B',
+        recommendedThread: 'white',
+      },
+      'All Deep Midnight Navy': {
+        code: 'NVY4',
+        printifyColorTitle: 'True Navy',
+        hex: '#0F172A',
+        recommendedThread: 'white',
+      },
+      'All Carolina Blue': {
+        code: 'CAR4',
+        printifyColorTitle: 'Carolina Blue',
+        hex: '#6BA4B8',
+        recommendedThread: 'white',
+      },
+      'All Crisp White': {
+        code: 'WHT4',
+        printifyColorTitle: 'White',
+        hex: '#FFFFFF',
+        recommendedThread: 'cyan',
+      },
       'Deep Midnight Navy (x4)': {
         code: 'NVY4',
         printifyColorTitle: 'True Navy',

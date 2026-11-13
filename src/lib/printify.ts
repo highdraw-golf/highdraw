@@ -35,28 +35,24 @@ export interface PrintifyOrderPayload {
  * The secret API token is kept strictly on the backend and never exposed to client bundles.
  */
 export const createPrintifyOrder = async (order: PrintifyOrderPayload) => {
-  try {
-    const response = await fetch('/api/printify?action=order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(order),
-    });
+  const response = await fetch('/api/printify?action=order', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(order),
+  });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
+  if (!response.ok) {
+    let errMessage = 'Unable to submit order to fulfillment gateway.';
+    try {
+      const errData = (await response.json()) as { error?: string };
+      if (errData?.error) errMessage = errData.error;
+    } catch {
+      // ignore non-json error bodies
     }
-  } catch (e) {
-    console.warn("Backend API route unavailable, using local fulfillment queue:", e);
+    throw new Error(errMessage);
   }
 
-  return {
-    id: `printify_${Date.now()}`,
-    status: "pending",
-    external_id: order.external_id,
-    shipment_status: "created",
-    message: "Order queued for automated printing and shipping."
-  };
+  return response.json();
 };

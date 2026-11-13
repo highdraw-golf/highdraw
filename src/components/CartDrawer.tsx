@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -14,12 +14,14 @@ import {
   CreditCard,
   Lock,
   Truck,
+  RefreshCw,
+  AlertTriangle,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { createPrintifyOrder } from '../lib/printify';
 import { sendOrderNotificationEmail } from '../lib/emailService';
 import { createStripeCheckoutSession } from '../lib/stripe';
-import { resolvePrintifyFulfillment } from '../lib/fulfillmentResolver';
+import { resolvePrintifyOrderLineItems } from '../lib/fulfillmentResolver';
 import type { LogoStyle, LogoVariant } from './brand/HighDrawLogo';
 import { StripeSecurityBeacon } from './motion/HighDrawBespokeMotion';
 import { DURATION, EASE_ACCENT } from '../lib/motion/tokens';
@@ -41,6 +43,15 @@ export interface CartItem {
   printifyVariantId?: number;
 }
 
+export interface ExternalFulfillmentConfirmation {
+  status: 'verifying' | 'confirmed' | 'error';
+  orderId: string;
+  printifyOrderId?: string;
+  recipientFirstName?: string;
+  shipSummary?: string;
+  errorMessage?: string;
+}
+
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,6 +60,9 @@ interface CartDrawerProps {
   onUpdateQuantity?: (index: number, delta: number) => void;
   onClearCart?: () => void;
   onAddUpsellHat: () => void;
+  externalConfirmation?: ExternalFulfillmentConfirmation | null;
+  onClearExternalConfirmation?: () => void;
+  onRetryExternalFulfillment?: () => void;
 }
 
 interface ShippingForm {
@@ -84,12 +98,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onUpdateQuantity,
   onClearCart,
   onAddUpsellHat,
+  externalConfirmation = null,
+  onClearExternalConfirmation,
+  onRetryExternalFulfillment,
 }) => {
   const { isReduced } = useMotionPreference();
   const baseId = useId();
   const [step, setStep] = useState<'bag' | 'shipping' | 'confirmed'>('bag');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [lastOrderId, setLastOrderId] = useState('');
+  const [lastPrintifyOrderId, setLastPrintifyOrderId] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const [shippingForm, setShippingForm] = useState<ShippingForm>({
@@ -102,6 +120,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     state: '',
     zip: '',
   });
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (externalConfirmation) {
+          onClearExternalConfirmation?.();
+        }
+        setStep('bag');
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, externalConfirmation, onClearExternalConfirmation, onClose]);
 
   const totalUnits = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
@@ -127,6 +160,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const handleExpressStripeFromBag = async () => {
     if (cartItems.length === 0) return;
     setIsCheckingOut(true);
+    setErrorMessage('');
     const orderNum = generateOrderId();
 
     try {
@@ -138,6 +172,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           color: item.color,
           size: item.size,
           quantity: item.quantity || 1,
+          logoStyle: item.logoStyle,
+          logoColor: item.logoColor,
+          userTypeLabel: item.userTypeLabel,
         })),
         customerEmail: shippingForm.email || undefined,
         orderId: orderNum,
@@ -147,6 +184,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         return; // Browser redirects to Stripe Hosted Checkout
       }
       setIsCheckingOut(false);
+      if (res.configured && res.error) {
+        setErrorMessage(res.error);
+        return;
+      }
       setStep('shipping');
     } catch {
       setIsCheckingOut(false);
@@ -156,6 +197,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleProceedToShipping = () => {
     if (cartItems.length === 0) return;
+    setErrorMessage('');
     setStep('shipping');
   };
 
@@ -174,6 +216,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setIsCheckingOut(true);
+    setErrorMessage('');
     const orderNum = generateOrderId();
 
     try {
@@ -185,6 +228,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           color: item.color,
           size: item.size,
           quantity: item.quantity || 1,
+          logoStyle: item.logoStyle,
+          logoColor: item.logoColor,
+          userTypeLabel: item.userTypeLabel,
         })),
         customerEmail: shippingForm.email.trim(),
         orderId: orderNum,
@@ -194,10 +240,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         return;
       }
 
-      await handleSubmitOrder(e);
-    } catch (err) {
-      console.warn('Stripe checkout error, falling back:', err);
-      await handleSubmitOrder(e);
+      if (res.configured === false) {
+        await handleSubmitOrder(e);
+        return;
+      }
+
+      setIsCheckingOut(false);
+      setErrorMessage(res.error || 'Unable to start Stripe Checkout. Please verify your cart.');
+    } catch (err: any) {
+      setIsCheckingOut(false);
+      setErrorMessage(err?.message || 'Unable to connect to Stripe Checkout.');
     }
   };
 
@@ -217,6 +269,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setIsCheckingOut(true);
+    setErrorMessage('');
     const orderNum = generateOrderId();
     setLastOrderId(orderNum);
 
@@ -225,24 +278,33 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       shippingForm.address2 ? ` ${shippingForm.address2}` : ''
     }, ${shippingForm.city}, ${shippingForm.state} ${shippingForm.zip}`;
 
+    const mergedLineItems = new Map<string, { product_id: string; variant_id: number; quantity: number }>();
+    for (const item of cartItems) {
+      const expanded = resolvePrintifyOrderLineItems({
+        id: item.id,
+        color: item.color,
+        size: item.size,
+        logoStyle: (item.logoStyle as LogoStyle) || 'mark_monogram',
+        logoColor: (item.logoColor as LogoVariant) || 'white',
+        userTypeLabel: item.userTypeLabel,
+        quantity: item.quantity || 1,
+      });
+      for (const line of expanded) {
+        const key = `${line.product_id}:${line.variant_id}`;
+        const existing = mergedLineItems.get(key);
+        if (existing) {
+          existing.quantity += line.quantity;
+        } else {
+          mergedLineItems.set(key, { ...line });
+        }
+      }
+    }
+
     try {
-      await createPrintifyOrder({
+      const printifyRes = await createPrintifyOrder({
         external_id: orderNum,
-        label: `High Draw Direct Order #${orderNum}`,
-        line_items: cartItems.map(item => {
-          const resolved = resolvePrintifyFulfillment({
-            id: item.id,
-            color: item.color,
-            size: item.size,
-            logoStyle: (item.logoStyle as LogoStyle) || 'mark_monogram',
-            logoColor: (item.logoColor as LogoVariant) || 'white',
-          });
-          return {
-            product_id: item.printifyProductId || resolved.printifyProductId,
-            variant_id: item.printifyVariantId || resolved.printifyVariantId,
-            quantity: item.quantity || 1,
-          };
-        }),
+        label: orderNum,
+        line_items: Array.from(mergedLineItems.values()),
         shipping_method: 1,
         send_shipping_notification: true,
         address_to: {
@@ -259,6 +321,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         },
       });
 
+      setLastPrintifyOrderId(printifyRes?.id || '');
+
       await sendOrderNotificationEmail({
         orderId: orderNum,
         customerName: shippingForm.fullName.trim(),
@@ -268,19 +332,24 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         totalAmount: total,
         printifyStatus: 'Queued for Printify Production & Embroidery',
       });
-    } catch (err) {
-      console.error('Order transmission warning:', err);
-    }
 
-    setTimeout(() => {
       setIsCheckingOut(false);
       setStep('confirmed');
       if (onClearCart) onClearCart();
       confetti({ particleCount: 90, spread: 75, origin: { y: 0.5 } });
-    }, 900);
+    } catch (err: any) {
+      setIsCheckingOut(false);
+      setErrorMessage(
+        err?.message || 'Unable to dispatch order to Printify fulfillment. Please try again.'
+      );
+    }
   };
 
   const handleResetAndClose = () => {
+    if (externalConfirmation) {
+      onClearExternalConfirmation?.();
+    }
+    setErrorMessage('');
     setStep('bag');
     onClose();
   };
@@ -317,7 +386,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <div>
               <div className="p-5 sm:p-6 bg-[#090C10] text-white border-b border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  {step === 'shipping' && (
+                  {!externalConfirmation && step === 'shipping' && (
                     <button
                       type="button"
                       onClick={() => setStep('bag')}
@@ -328,11 +397,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </button>
                   )}
                   <span className="font-serif text-xl tracking-wider">
-                    {step === 'bag' && 'YOUR BAG'}
-                    {step === 'shipping' && 'SHIPPING & PAYMENT'}
-                    {step === 'confirmed' && 'ORDER CONFIRMED'}
+                    {externalConfirmation
+                      ? externalConfirmation.status === 'verifying'
+                        ? 'VERIFYING ORDER'
+                        : externalConfirmation.status === 'confirmed'
+                        ? 'ORDER CONFIRMED'
+                        : 'FULFILLMENT SYNC'
+                      : (
+                        <>
+                          {step === 'bag' && 'YOUR BAG'}
+                          {step === 'shipping' && 'SHIPPING & PAYMENT'}
+                          {step === 'confirmed' && 'ORDER CONFIRMED'}
+                        </>
+                      )}
                   </span>
-                  {step === 'bag' && (
+                  {!externalConfirmation && step === 'bag' && (
                     <span className="font-mono text-xs px-2 py-0.5 bg-white/10 rounded-full text-slate-300">
                       {totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'}
                     </span>
@@ -349,7 +428,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
 
               {/* GPU-Safe $75 Free US Shipping Progress Bar (`scaleX` transform, zero width reflow) */}
-              {step !== 'confirmed' && cartItems.length > 0 && (
+              {!externalConfirmation && step !== 'confirmed' && cartItems.length > 0 && (
                 <div className="px-5 py-3 bg-[#1C2C24] text-white border-b border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-[11px] font-mono">
                     <span className="flex items-center gap-1.5 font-semibold">
@@ -384,9 +463,121 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               )}
             </div>
 
+            {/* EXTERNAL STRIPE CHECKOUT RETURN STATES */}
+            {externalConfirmation && externalConfirmation.status === 'verifying' && (
+              <div className="p-8 my-auto space-y-6 text-center">
+                <div className="w-16 h-16 bg-[#1C2C24] text-[#38BDF8] rounded-full flex items-center justify-center mx-auto shadow-md">
+                  <RefreshCw size={28} className="animate-spin" />
+                </div>
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#1C2C24] font-bold">
+                    STRIPE PAYMENT RECEIVED // DISPATCHING PRINTIFY
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#090C10]">
+                    Confirming Embroidery Specs
+                  </h3>
+                  <p className="font-sans text-xs text-slate-500 leading-relaxed">
+                    Verifying payment session and queueing order{' '}
+                    <strong>#{externalConfirmation.orderId}</strong> for direct Printify production.
+                  </p>
+                </div>
+                <div
+                  role="progressbar"
+                  aria-label="Verifying payment and dispatching order"
+                  className="w-full h-2 bg-slate-200 rounded-full overflow-hidden"
+                >
+                  <div className="h-full w-2/3 bg-[#1C2C24] rounded-full animate-pulse" />
+                </div>
+              </div>
+            )}
+
+            {externalConfirmation && externalConfirmation.status === 'confirmed' && (
+              <div className="p-8 text-center my-auto space-y-6">
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
+                  <Check size={32} />
+                </div>
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#B12535]">
+                    ORDER CONFIRMED // EDITION 2026
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
+                  <p className="font-sans text-xs text-slate-500 leading-relaxed">
+                    Your Stripe payment cleared and order <strong>#{externalConfirmation.orderId}</strong>{' '}
+                    is queued for precision embroidery and direct fulfillment.
+                  </p>
+                </div>
+                <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
+                  <div>ORDER ID: #{externalConfirmation.orderId}</div>
+                  {externalConfirmation.printifyOrderId && (
+                    <div>PRINTIFY ID: {externalConfirmation.printifyOrderId}</div>
+                  )}
+                  {externalConfirmation.recipientFirstName && (
+                    <div>GOLFER: {externalConfirmation.recipientFirstName}</div>
+                  )}
+                  {externalConfirmation.shipSummary && (
+                    <div>DESTINATION: {externalConfirmation.shipSummary}</div>
+                  )}
+                  <div>EST. DISPATCH: 2–4 BUSINESS DAYS</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetAndClose}
+                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-xs cursor-pointer t-press"
+                >
+                  CONTINUE SHOPPING
+                </button>
+              </div>
+            )}
+
+            {externalConfirmation && externalConfirmation.status === 'error' && (
+              <div role="alert" className="p-8 my-auto space-y-5 text-center">
+                <div className="w-16 h-16 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto">
+                  <AlertTriangle size={30} />
+                </div>
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-rose-700 font-bold">
+                    FULFILLMENT HANDOFF ATTENTION
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#090C10]">
+                    Payment Recorded — Retry Sync
+                  </h3>
+                  <p className="font-sans text-xs text-slate-600 leading-relaxed">
+                    {externalConfirmation.errorMessage ||
+                      'We could not confirm the Printify dispatch yet.'}{' '}
+                    Reference order <strong>#{externalConfirmation.orderId}</strong> or reach{' '}
+                    <span className="font-mono text-[#1C2C24]">highdrawgear@gmail.com</span>.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  {onRetryExternalFulfillment && (
+                    <button
+                      type="button"
+                      onClick={onRetryExternalFulfillment}
+                      className="w-full py-3.5 bg-[#1C2C24] hover:bg-[#132019] text-white font-bold text-xs uppercase tracking-[0.18em] rounded-xs cursor-pointer t-press flex items-center justify-center gap-2"
+                    >
+                      <RefreshCw size={14} />
+                      <span>RETRY FULFILLMENT SYNC</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleResetAndClose}
+                    className="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-mono text-[11px] uppercase tracking-wider rounded-xs cursor-pointer"
+                  >
+                    CLOSE DRAWER
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* STEP 1: CART ITEMS */}
-            {step === 'bag' && (
+            {!externalConfirmation && step === 'bag' && (
               <div className="p-5 sm:p-6 flex-1 overflow-y-auto overscroll-contain space-y-5">
+                {errorMessage && (
+                  <div role="alert" className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xs">
+                    {errorMessage}
+                  </div>
+                )}
                 {cartItems.length === 0 ? (
                   <div className="text-center py-16 space-y-4">
                     <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
@@ -518,7 +709,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             )}
 
             {/* STEP 2: STREAMLINED SHIPPING & PAYMENT FORM (Full Browser Autofill Compliance) */}
-            {step === 'shipping' && (
+            {!externalConfirmation && step === 'shipping' && (
               <form
                 onSubmit={handleSubmitOrder}
                 className="p-5 sm:p-6 flex-1 overflow-y-auto overscroll-contain space-y-4"
@@ -532,7 +723,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
 
                 {errorMessage && (
-                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xs">
+                  <div role="alert" className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xs">
                     {errorMessage}
                   </div>
                 )}
@@ -744,7 +935,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             )}
 
             {/* STEP 3: ORDER CONFIRMED */}
-            {step === 'confirmed' && (
+            {!externalConfirmation && step === 'confirmed' && (
               <div className="p-8 text-center my-auto space-y-6">
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto">
                   <Check size={32} />
@@ -760,6 +951,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
                 <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
                   <div>ORDER ID: #{lastOrderId}</div>
+                  {lastPrintifyOrderId && <div>PRINTIFY ID: {lastPrintifyOrderId}</div>}
                   <div>RECIPIENT: {shippingForm.fullName}</div>
                   <div>
                     SHIP TO: {shippingForm.address1}, {shippingForm.city}, {shippingForm.state}{' '}
@@ -778,7 +970,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             )}
 
             {/* Cart Bottom Summary (When in Bag mode) */}
-            {step === 'bag' && cartItems.length > 0 && (
+            {!externalConfirmation && step === 'bag' && cartItems.length > 0 && (
               <div className="p-5 sm:p-6 bg-[#FBFBFA] border-t border-slate-200 space-y-3.5">
                 <div className="space-y-1.5 font-mono text-xs text-slate-600">
                   <div className="flex justify-between">

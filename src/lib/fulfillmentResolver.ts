@@ -211,16 +211,22 @@ export function resolvePrintifyFulfillment(input: {
   const shopProduct = findPrintifyShopProduct(silhouetteId, logoStyle);
   const printifyProductId = shopProduct?.id || '6af3a55dcb8adff71a02b775';
 
-  // Match variant in Printify product (`title` format: "L / True Navy" or "True Navy / L")
+  // Match variant in Printify product (`title` format: "L / True Navy", "XXL / White", or "L/XL / True Navy")
   const targetColorLower = colorEntry.printifyColorTitle.toLowerCase();
   const targetSizeUpper = cleanSize.toUpperCase();
+  const validSizes =
+    targetSizeUpper === '2XL' || targetSizeUpper === 'XXL'
+      ? ['2XL', 'XXL']
+      : targetSizeUpper === '3XL' || targetSizeUpper === 'XXXL'
+      ? ['3XL', 'XXXL']
+      : [targetSizeUpper];
 
   let matchedVariant: LedgerVariant | undefined;
   if (shopProduct?.variants) {
     matchedVariant = shopProduct.variants.find(v => {
-      const parts = v.title.split('/').map(s => s.trim());
+      const parts = v.title.split(/\s+\/\s+/).map(s => s.trim());
       const hasColor = parts.some(p => p.toLowerCase() === targetColorLower);
-      const hasSize = parts.some(p => p.toUpperCase() === targetSizeUpper);
+      const hasSize = parts.some(p => validSizes.includes(p.toUpperCase()));
       return hasColor && hasSize;
     });
 
@@ -254,4 +260,83 @@ export function resolvePrintifyFulfillment(input: {
     isStockAvailable: Boolean(matchedVariant ? matchedVariant.is_enabled : true),
     officialMockupUrl,
   };
+}
+
+/**
+ * Expands any storefront cart item (including 4-polo Saturday Foursome Scramble Kits)
+ * into concrete Printify `{ product_id, variant_id, quantity }` line items and merges duplicates.
+ */
+export function resolvePrintifyOrderLineItems(input: {
+  id: string;
+  color: string;
+  size: string;
+  logoStyle?: LogoStyle;
+  logoColor?: LogoVariant;
+  userTypeLabel?: string;
+  quantity?: number;
+}): Array<{ product_id: string; variant_id: number; quantity: number }> {
+  const qty = Math.max(1, Math.floor(Number(input.quantity) || 1));
+  if (input.id.startsWith('bundle-foursome-01')) {
+    const colorLower = (input.color || '').split('•')[0].trim().toLowerCase();
+    let colors: [string, string, string, string] = [
+      'Deep Midnight Navy',
+      'Carolina Blue',
+      'Crisp White',
+      'Onyx Black',
+    ];
+    if (colorLower.includes('navy')) {
+      colors = ['Deep Midnight Navy', 'Deep Midnight Navy', 'Deep Midnight Navy', 'Deep Midnight Navy'];
+    } else if (colorLower.includes('carolina')) {
+      colors = ['Carolina Blue', 'Carolina Blue', 'Carolina Blue', 'Carolina Blue'];
+    } else if (colorLower.includes('white')) {
+      colors = ['Crisp White', 'Crisp White', 'Crisp White', 'Crisp White'];
+    }
+
+    const cutHint = `${input.userTypeLabel || ''} ${input.color || ''}`.toLowerCase();
+    let cuts: [SilhouetteId, SilhouetteId, SilhouetteId, SilhouetteId] = [
+      'men-polo-st740',
+      'men-polo-st740',
+      'men-polo-st740',
+      'men-polo-st740',
+    ];
+    if (cutHint.includes("2 men's + 2 women's") || cutHint.includes('2m-2w')) {
+      cuts = ['men-polo-st740', 'men-polo-st740', 'women-polo-lst740', 'women-polo-lst740'];
+    } else if (cutHint.includes("3 men's + 1 women's") || cutHint.includes('3m-1w')) {
+      cuts = ['men-polo-st740', 'men-polo-st740', 'men-polo-st740', 'women-polo-lst740'];
+    } else if (cutHint.includes("4 women's") || cutHint.includes('4-womens')) {
+      cuts = ['women-polo-lst740', 'women-polo-lst740', 'women-polo-lst740', 'women-polo-lst740'];
+    }
+
+    const merged = new Map<string, { product_id: string; variant_id: number; quantity: number }>();
+    for (let i = 0; i < 4; i++) {
+      const resolved = resolvePrintifyFulfillment({
+        id: cuts[i],
+        color: colors[i],
+        size: input.size,
+        logoStyle: input.logoStyle,
+        logoColor: input.logoColor,
+      });
+      const key = `${resolved.printifyProductId}:${resolved.printifyVariantId}`;
+      const existing = merged.get(key);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        merged.set(key, {
+          product_id: resolved.printifyProductId,
+          variant_id: resolved.printifyVariantId,
+          quantity: qty,
+        });
+      }
+    }
+    return Array.from(merged.values());
+  }
+
+  const resolved = resolvePrintifyFulfillment(input);
+  return [
+    {
+      product_id: resolved.printifyProductId,
+      variant_id: resolved.printifyVariantId,
+      quantity: qty,
+    },
+  ];
 }

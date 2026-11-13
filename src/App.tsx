@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
 import { TierComparisonStrip } from './components/TierComparisonStrip';
@@ -7,7 +8,7 @@ import { WhyHighDraw } from './components/WhyHighDraw';
 import { FounderSpotlight } from './components/FounderSpotlight';
 import { UserReviews } from './components/UserReviews';
 import { CartDrawer } from './components/CartDrawer';
-import type { CartItem } from './components/CartDrawer';
+import type { CartItem, ExternalFulfillmentConfirmation } from './components/CartDrawer';
 import { Footer } from './components/Footer';
 import { AdminConsole } from './components/AdminConsole';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -20,6 +21,8 @@ import { LogoStudioPage } from './pages/LogoStudioPage';
 import { OwnerAuthModal } from './components/OwnerAuthModal';
 import { isOwnerAuthorized, lockOwnerSession } from './lib/auth';
 import { resolvePrintifyFulfillment } from './lib/fulfillmentResolver';
+import { fulfillStripeCheckoutSession } from './lib/stripe';
+import { sendOrderNotificationEmail } from './lib/emailService';
 import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
 
@@ -51,6 +54,20 @@ function loadPersistedCart(): CartItem[] {
   } catch {
     return [];
   }
+}
+
+function normalizeCartUpsells(items: CartItem[]): CartItem[] {
+  const hasNonHeadwear = items.some(i => !i.id.startsWith('headwear-flexfit-mesh'));
+  const hasHeadwear = items.some(i => i.id.startsWith('headwear-flexfit-mesh'));
+  return items.map(item => {
+    if (item.id.startsWith('headwear-flexfit-mesh') && !hasNonHeadwear && item.price === 28) {
+      return { ...item, price: 35 };
+    }
+    if (item.id.startsWith('men-polo-st740') && !hasHeadwear && item.price === 40) {
+      return { ...item, price: 48 };
+    }
+    return item;
+  });
 }
 
 function parseRouteFromLocation(): ActiveRoute {
@@ -127,8 +144,11 @@ export function App() {
   const [activeCategory, setActiveCategory] = useState<'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles'>('all');
   const [activeHomeTier, setActiveHomeTier] = useState<TierFilter>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [externalConfirmation, setExternalConfirmation] = useState<ExternalFulfillmentConfirmation | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isOwnerAuthenticated, setIsOwnerAuthenticated] = useState<boolean>(isOwnerAuthorized);
+  const handledReturnRef = useRef(false);
+  const pendingRetrySessionRef = useRef<{ sessionId: string; orderId: string } | null>(null);
 
   // Store Brand State (Configurable by Brand Owner via AdminConsole)
   const [tickerText, setTickerText] = useState(
@@ -217,33 +237,113 @@ export function App() {
   };
 
   const handleAddToCart = (item: CartItem) => {
+    setExternalConfirmation(null);
     setCartItems(prev => {
       const existingIdx = prev.findIndex(existing => existing.id === item.id);
-      if (existingIdx > -1) {
-        return prev.map((existing, idx) =>
-          idx === existingIdx
-            ? { ...existing, quantity: (existing.quantity || 1) + (item.quantity || 1) }
-            : existing
-        );
-      }
-      return [...prev, { ...item, quantity: item.quantity || 1 }];
+      const updated =
+        existingIdx > -1
+          ? prev.map((existing, idx) =>
+              idx === existingIdx
+                ? { ...existing, quantity: (existing.quantity || 1) + (item.quantity || 1) }
+                : existing
+            )
+          : [...prev, { ...item, quantity: item.quantity || 1 }];
+      return normalizeCartUpsells(updated);
     });
     setIsCartOpen(true);
   };
 
   const handleUpdateQuantity = (index: number, delta: number) => {
     setCartItems(prev =>
-      prev
-        .map((item, idx) =>
-          idx === index ? { ...item, quantity: (item.quantity || 1) + delta } : item
-        )
-        .filter(item => (item.quantity || 1) > 0)
+      normalizeCartUpsells(
+        prev
+          .map((item, idx) =>
+            idx === index ? { ...item, quantity: (item.quantity || 1) + delta } : item
+          )
+          .filter(item => (item.quantity || 1) > 0)
+      )
     );
   };
 
   const handleRemoveFromCart = (index: number) => {
-    setCartItems(prev => prev.filter((_, i) => i !== index));
+    setCartItems(prev => normalizeCartUpsells(prev.filter((_, i) => i !== index)));
   };
+
+  const runStripeSessionFulfillment = async (sessionId: string, orderId: string) => {
+    setIsCartOpen(true);
+    setExternalConfirmation({ status: 'verifying', orderId });
+
+    const res = await fulfillStripeCheckoutSession(sessionId, orderId);
+    if (res.fulfilled) {
+      pendingRetrySessionRef.current = null;
+      const itemsSnapshot = [...cartItems];
+      setCartItems([]);
+      await sendOrderNotificationEmail({
+        orderId: res.orderId || orderId,
+        customerName: res.recipientFirstName || 'High Draw Golfer',
+        customerEmail: 'stripe-verified@highdrawgear.com',
+        shippingAddress: res.shipSummary || 'Verified via Stripe Checkout',
+        items:
+          itemsSnapshot.length > 0
+            ? itemsSnapshot
+            : [
+                {
+                  name: 'Verified Stripe Checkout Order',
+                  size: '-',
+                  price: res.amountTotalDollars || 0,
+                },
+              ],
+        totalAmount: res.amountTotalDollars || 0,
+        printifyStatus: res.alreadyFulfilled
+          ? `Already Dispatched (${res.printifyOrderId || 'Printify'})`
+          : `Queued on Printify (${res.printifyOrderId || 'Printify'})`,
+      });
+      setExternalConfirmation({
+        status: 'confirmed',
+        orderId: res.orderId || orderId,
+        printifyOrderId: res.printifyOrderId,
+        recipientFirstName: res.recipientFirstName,
+        shipSummary: res.shipSummary,
+      });
+      confetti({ particleCount: 90, spread: 75, origin: { y: 0.5 } });
+    } else {
+      setExternalConfirmation({
+        status: 'error',
+        orderId: res.orderId || orderId,
+        errorMessage: res.error || 'Unable to verify payment and dispatch Printify order.',
+      });
+    }
+  };
+
+  // Handle Stripe Checkout return URL (`?payment=success&orderId=...&session_id=cs_...` or `?payment=cancelled`)
+  useEffect(() => {
+    if (typeof window === 'undefined' || handledReturnRef.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const paymentState = params.get('payment');
+    if (!paymentState) return;
+
+    handledReturnRef.current = true;
+    const orderId = params.get('orderId') || `HD-${Date.now()}`;
+    const sessionId = (params.get('session_id') || '').trim();
+
+    // Immediately scrub session_id and payment params from browser history/address bar
+    params.delete('payment');
+    params.delete('orderId');
+    params.delete('session_id');
+    const remainingSearch = params.toString();
+    const cleanUrl = `${window.location.pathname}${remainingSearch ? `?${remainingSearch}` : ''}${window.location.hash}`;
+    window.history.replaceState(null, '', cleanUrl);
+
+    if (paymentState === 'cancelled') {
+      setIsCartOpen(true);
+      return;
+    }
+
+    if (paymentState === 'success' && /^cs_(live|test)_[a-zA-Z0-9_]+$/.test(sessionId)) {
+      pendingRetrySessionRef.current = { sessionId, orderId };
+      void runStripeSessionFulfillment(sessionId, orderId);
+    }
+  }, []);
 
   const handleAddUpsellHat = () => {
     const resolvedCap = resolvePrintifyFulfillment({
@@ -283,6 +383,7 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#1A1F26] selection:bg-[#B12535] selection:text-white">
+      <div inert={isCartOpen || undefined}>
       {/* Header with Direct 3-Tier Navigation */}
       <Header
         cartCount={totalBagCount}
@@ -444,6 +545,7 @@ export function App() {
         onNavigate={(view, category) => navigateTo(view, { category })}
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
+      </div>
 
       {/* Owner Command Center Modal */}
       {isAdminOpen && (
@@ -481,6 +583,16 @@ export function App() {
         onUpdateQuantity={handleUpdateQuantity}
         onClearCart={() => setCartItems([])}
         onAddUpsellHat={handleAddUpsellHat}
+        externalConfirmation={externalConfirmation}
+        onClearExternalConfirmation={() => setExternalConfirmation(null)}
+        onRetryExternalFulfillment={
+          pendingRetrySessionRef.current
+            ? () => {
+                const pending = pendingRetrySessionRef.current;
+                if (pending) void runStripeSessionFulfillment(pending.sessionId, pending.orderId);
+              }
+            : undefined
+        }
       />
     </div>
   );
