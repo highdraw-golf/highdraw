@@ -439,8 +439,8 @@ async function generatePdf() {
         <div class="meta-item-val">4.5 Hours / Week</div>
       </div>
       <div>
-        <div class="meta-item-label">Cloud Sync Architecture</div>
-        <div class="meta-item-val">Zero-Cost Stripe Ledger</div>
+        <div class="meta-item-label">Category Positioning</div>
+        <div class="meta-item-val">Tour-Grade Work-to-Course</div>
       </div>
     </div>
   </div>
@@ -451,13 +451,156 @@ async function generatePdf() {
   </div>
 </div>
 
-<!-- PAGE 2: WHAT WORKS IN CHALLENGER GOLF BRANDS -->
-<h2>1. What Successful Challenger Golf Brands Actually Did</h2>
+<!-- SECTION 1: MACRO INDUSTRY & CATEGORY ANALYSIS -->
+<h2>1. Industry Review: The Made-to-Order &amp; DTC Golf Apparel Shift</h2>
+<p>
+  Over the last decade, the golf apparel landscape underwent a structural transformation. Understanding these industry shifts reveals exactly why High Draw’s operational model is uniquely positioned for capital efficiency:
+</p>
+
+<div class="glossary-grid">
+  <div class="glossary-card">
+    <div class="glossary-term">1. The $125 Pro-Shop "Markup Fatigue"</div>
+    <p class="glossary-def">
+      Legacy resort brands (Peter Millar, Greyson, RLX) pushed polo prices from $85 up to $115–$145. Core golfers who play 20+ rounds a year have developed acute markup fatigue and actively seek challenger brands offering identical micro-pique drape without paying a 300% resort markup.
+    </p>
+  </div>
+  <div class="glossary-card">
+    <div class="glossary-term">2. On-Demand Just-in-Time Manufacturing</div>
+    <p class="glossary-def">
+      Historically, launching a golf label required a $40,000–$75,000 offshore bulk order (1,500 units min.) that sat in a garage. Mismatched sizing curves (excess S or 3XL) bled cash. High Draw’s zero-inventory print-and-embroider model eliminates dead stock and delivers immediate positive cash flow.
+    </p>
+  </div>
+  <div class="glossary-card">
+    <div class="glossary-term">3. Post-2020 "Work-to-Course" Dressing</div>
+    <p class="glossary-def">
+      Hybrid corporate culture permanently established performance pique polos as everyday business attire. High Draw’s restrained 2.25" tonal chest embroidery and classic solids ("Take Play to Work") bridge the boardroom and fairway seamlessly.
+    </p>
+  </div>
+  <div class="glossary-card">
+    <div class="glossary-term">4. The Grassroots Seeding Multiplier</div>
+    <p class="glossary-def">
+      DTC brands can no longer rely purely on paid social ads due to rising digital customer acquisition costs. Modern winners ignite momentum by putting physical shirts on influential foursome buddies and scramble organizers, turning every round into a living trunk show.
+    </p>
+  </div>
+</div>
+
+<!-- SECTION 2: COMPETITIVE LANDSCAPE -->
+<h2>2. Competitive Landscape &amp; Positioning Matrix</h2>
+<p>
+  The golf apparel market is segregated into four clear tiers. High Draw enters as a disciplined value-luxury bridge:
+</p>
+
+<div class="exhibit-header">Exhibit 1 — Market Segmentation &amp; Competitive Tiers</div>
+<table>
+  <thead>
+    <tr>
+      <th>Market Tier</th>
+      <th>Key Players</th>
+      <th>Price Point</th>
+      <th>Vulnerabilities &amp; Market Gaps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Legacy Luxury Pro-Shop</strong></td>
+      <td>Peter Millar, Greyson, Holderness &amp; Bourne, G/FORE</td>
+      <td class="num">$115 – $145</td>
+      <td>Priced out of everyday 2-shirt rotation purchases; reliant on exclusive green-grass accounts.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Modern DTC Challengers</strong></td>
+      <td>Rhoback, Bad Birdie, Swannies, Criquet</td>
+      <td class="num">$84 – $98</td>
+      <td>Rhoback is creeping toward $100; Bad Birdie leans into loud Hawaiian prints unwearable at traditional clubs or offices.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Athletic Value / Modern Direct</strong></td>
+      <td><strong>★ HIGH DRAW GOLF ★</strong>, Primo Golf, Sunday Swagger</td>
+      <td class="num">$48 – $66<br>($86 Pair)</td>
+      <td>High Draw’s sweet spot: tour-grade 180 GSM micro-pique &amp; structured collar at half the pro-shop price.</td>
+    </tr>
+    <tr>
+      <td><strong>4. Big-Box Commodity</strong></td>
+      <td>Amazon Generics, Walter Hagen (Dick's), Target</td>
+      <td class="num">$25 – $40</td>
+      <td>Flimsy ribbed collars that curl after 2 washes; boxy cuts; zero brand cachet or prestige.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 3: COURSE SEGMENTATION TRADEOFFS -->
+<h2>3. Course Segmentation Tradeoffs: Private vs. High-End Public</h2>
+<p>
+  How High Draw frames its message across different course environments determines ad conversion and brand perception:
+</p>
+
+<div class="exhibit-header">Exhibit 2 — Positioning Across Course Environments</div>
+<table>
+  <thead>
+    <tr>
+      <th>Course Environment</th>
+      <th>Golfer Psychology &amp; Preferences</th>
+      <th>Ad &amp; Outreach Conversion Dynamics</th>
+      <th>High Draw Strategic Play</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exclusive Private / Country Club</strong></td>
+      <td>Traditional, status-conscious, logo-protective. Members charge shirts with their *own* club crest to member accounts. Reject humor or loud prints.</td>
+      <td>Cold ad conversion is low without social proof. High conversion via <strong>1-to-1 sample gifting to outing chairs &amp; club pros</strong>.</td>
+      <td>Pitch the <strong>Saturday Foursome Kit ($160)</strong> or custom crest packages for member-guest gifts and charity scrambles.</td>
+    </tr>
+    <tr>
+      <td><strong>High-End Daily Fee / Municipal</strong></td>
+      <td>Value-aware, plays 10–25 rounds/year. Buys online or at PGA Tour Superstore. Considers $125 shirts an overpriced markup.</td>
+      <td>Extremely receptive to digital offer hooks (e.g. <strong>"2-Polo Pair $86 Free Shipping"</strong>) and founder direct-to-consumer savings.</td>
+      <td>Primary target for <strong>Meta Facebook Ads ($10/day)</strong> using the "Two Tour Polos for $86" and "3.8-Index Founder Fit" ad angles.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout callout-gold avoid-break">
+  <div class="callout-title">The Strategic Sweet Spot: "The Transitional Modern Player"</div>
+  <p style="margin-bottom:0;">
+    High Draw should neither position itself as a pretentious private-club snob label nor as a discount commodity shirt. The winning posture is: <strong>"Tour-grade collar engineering and micro-pique drape for serious golfers who refuse to pay a $125 retail gouge."</strong>
+  </p>
+</div>
+
+<!-- SECTION 4: REAL-WORLD AD SCHEDULING & AD CONSIDERATIONS -->
+<div class="page-break"></div>
+<h2>4. Facebook Ad Flighting, Seasonality &amp; Real-World Factors</h2>
+
+<h3>Best Days to Advertise: Behavioral Purchasing Patterns</h3>
+<ul>
+  <li><strong>Thursday Evening &rarr; Friday Afternoon (High Planning Intent):</strong> Golfers make weekend tee times, check weather, message foursome group chats, and scroll social feeds. Cognitive proximity to golf peaks.</li>
+  <li><strong>Sunday 4:00 PM &rarr; 10:00 PM (Peak Checkout Window):</strong> The single highest converting e-commerce window. Having just played 18 holes, golfers relax on the couch, reflecting on poor-fitting or worn-out shirts.</li>
+  <li><strong>Algorithmic Continuous Delivery Rule:</strong> While purchase intent peaks Thu–Sun, <strong>do not manually pause campaigns on Monday mornings</strong>. Pausing resets Meta’s machine learning auction loop. Instead, run the $10/day sprint <em>continuously for 15 days</em>, starting on a <strong>Thursday at 6:00 AM</strong> so initial optimization happens during peak intent.</li>
+</ul>
+
+<h3>Real-World Environmental &amp; Operational Factors</h3>
+<div class="glossary-grid">
+  <div class="glossary-card">
+    <div class="glossary-term">Winter Seasonality &amp; Sunbelt Geo-Fencing</div>
+    <p class="glossary-def">
+      Between November and March, northern courses are frozen. In Meta Ads Manager, restrict geographic delivery strictly to active year-round golf states: <strong>Florida, Georgia, Texas, Arizona, California, the Carolinas, Alabama, and Mississippi</strong>.
+    </p>
+  </div>
+  <div class="glossary-card">
+    <div class="glossary-term">Core Size Curve Concentration (L &amp; XL)</div>
+    <p class="glossary-def">
+      Golfers aged 35–65 overwhelmingly wear <strong>Large (42–44") and XL (46–48")</strong>. Medium is steady, while Small and 3XL represent less than 12% of total demand. Focus all ad imagery and sample inventory on Men’s Large in core evergreen colorways (Navy, White, Black, Carolina Blue).
+    </p>
+  </div>
+</div>
+
+<!-- SECTION 5: CHALLENGER BENCHMARKS -->
+<h2>5. What Successful Challenger Golf Brands Actually Did</h2>
 <p>
   Every independent golf apparel brand that broke into the $10M–$100M tier started without big agency retainers or PGA Tour patch sponsorships. Their early traction came from matching high-margin bundle offers with relentless grassroots proof and tight attribution.
 </p>
 
-<div class="exhibit-header">Exhibit 1 — Challenger Golf Growth Playbook Comparison</div>
+<div class="exhibit-header">Exhibit 3 — Challenger Golf Growth Playbook Comparison</div>
 <div class="exhibit-title">How Modern Golf Labels Earned Early Orders Without Burning Cash</div>
 <table>
   <thead>
@@ -496,21 +639,73 @@ async function generatePdf() {
   </tbody>
 </table>
 
-<div class="callout callout-gold avoid-break">
-  <div class="callout-title">Two Non-Negotiable Principles For Zero Marketing Data</div>
-  <p style="margin-bottom:0;">
-    <strong>1. Concentrate your small budget — never dilute $200 across five networks.</strong> Splitting $200 across Instagram, Google Search, TikTok, and LinkedIn buys fewer than 30 clicks each — total statistical noise. Putting $150 into <em>one</em> concentrated Facebook Sales campaign at $10/day for 15 days forces Meta’s algorithm through initial learning.<br>
-    <strong>2. Track Cash-In-Bank Margin, not "Likes" or "ROAS."</strong> A 2.0x ROAS can still lose cash after Printify garment cost and shipping. High Draw’s Command Center computes net cash after Printify blanks, postage, and Stripe’s 2.9% + $0.30 fee automatically.
-  </p>
-</div>
+<!-- SECTION 6: MULTI-STAGE REVENUE EXPECTATIONS -->
+<div class="page-break"></div>
+<h2>6. Multi-Stage Revenue Expectations &amp; Growth Milestones</h2>
+<p>
+  Because High Draw operates on a disciplined self-funding model without venture capital burn, revenue growth follows an <strong>operational staircase</strong>:
+</p>
 
-<!-- SECTION 2: UNIT ECONOMICS & 2-POLO PAIR HOOK -->
-<h2>2. Why We Shipped the Automatic &ldquo;2-Polo Pair ($86)&rdquo; Hook</h2>
+<div class="exhibit-header">Exhibit 4 — High Draw Growth &amp; Profit Milestones (12–24 Month Outlook)</div>
+<table>
+  <thead>
+    <tr>
+      <th>Growth Stage</th>
+      <th>Timeline</th>
+      <th>Monthly Volume</th>
+      <th>Gross Sales</th>
+      <th>Mktg Outlay</th>
+      <th>Net Cash Profit</th>
+      <th>Key Milestone Trigger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Phase 1: Lean Validation</strong></td>
+      <td>Months 1–3</td>
+      <td class="num">12 – 25 shirts</td>
+      <td class="num">$600 – $1,250</td>
+      <td class="num">$150 – $200</td>
+      <td class="num">+$100 to +$320</td>
+      <td>Prove $86 Pair conversion; validate 3 ad angles; close 1st buddy scramble order.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2: Grassroots Momentum</strong></td>
+      <td>Months 4–6</td>
+      <td class="num">35 – 70 shirts</td>
+      <td class="num">$1,800 – $3,600</td>
+      <td class="num">$300 – $500</td>
+      <td class="num">+$450 to +$1,000</td>
+      <td>Reach 100-shirt milestone; unlock bulk blank pricing (+$5/shirt margin jump).</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3: Tournament &amp; Scramble Scale</strong></td>
+      <td>Months 7–12</td>
+      <td class="num">100 – 250 shirts</td>
+      <td class="num">$5,000 – $13,000</td>
+      <td class="num">$800 – $1,500</td>
+      <td class="num">+$1,400 to +$4,300</td>
+      <td>Land 2–3 recurring alumni outings / charity tournaments (24–48 shirts each).</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 4: Mature Regional Brand</strong></td>
+      <td>Year 2</td>
+      <td class="num">300 – 600 shirts</td>
+      <td class="num">$16,000 – $32,000</td>
+      <td class="num">$2,500 – $4,500</td>
+      <td class="num">+$5,000 to +$10,500/mo</td>
+      <td>Custom woven neck-tags; expansion into Sunbelt club pro-shop tournament consignment.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7: UNIT ECONOMICS & 2-POLO PAIR HOOK -->
+<h2>7. Why We Shipped the Automatic &ldquo;2-Polo Pair ($86)&rdquo; Hook</h2>
 <p>
   Because a single shirt pays $5.50+ in Printify postage while carrying Stripe’s $0.30 base fee and single-item ad acquisition cost, convincing a cold Facebook shopper to buy <strong>2 polos instead of 1</strong> transforms our unit economics overnight.
 </p>
 
-<div class="exhibit-header">Exhibit 2 — High Draw Per-Order Contribution Margin (CM1)</div>
+<div class="exhibit-header">Exhibit 5 — High Draw Per-Order Contribution Margin (CM1)</div>
 <div class="exhibit-title">Safe Advertising Room Before Losing Cash (Live Catalog Pricing)</div>
 <table>
   <thead>
@@ -562,18 +757,18 @@ async function generatePdf() {
 <div class="figure-box avoid-break">
   <img src="${pairCartUri}" alt="High Draw Cart Drawer showing automatic 2-Polo Pair discount (-$10) and $86 Free US Shipping" />
   <div class="figure-caption">
-    <strong>Exhibit 3 (Verified Staging Build):</strong> When any shopper mixes two Weekender or Clubhouse polos (men’s or women’s), High Draw’s Cart Drawer and Stripe Checkout automatically apply <code>-$5/polo</code> (-$10 total) and unlock <strong>Free US Shipping</strong> at $86 — with zero coupon friction required.
+    <strong>Exhibit 6 (Verified Staging Build):</strong> When any shopper mixes two Weekender or Clubhouse polos (men’s or women’s), High Draw’s Cart Drawer and Stripe Checkout automatically apply <code>-$5/polo</code> (-$10 total) and unlock <strong>Free US Shipping</strong> at $86 — with zero coupon friction required.
   </div>
 </div>
 
-<!-- SECTION 3: MONTH 1 BUDGET & WEEKLY TIME -->
+<!-- SECTION 8: MONTH 1 BUDGET & WEEKLY TIME -->
 <div class="page-break"></div>
-<h2>3. Month 1 Budget Plan ($150–$250) &amp; Founder Weekly Cadence</h2>
+<h2>8. Month 1 Budget Plan ($150–$250) &amp; Founder Weekly Cadence</h2>
 <p>
   With a recommended Month 1 ceiling of <strong>$200</strong> (adjustable inside the Command Center from $150 to $1,000), every dollar goes into one of three capital-efficient buckets:
 </p>
 
-<div class="exhibit-header">Exhibit 4 — Month 1 Allocation Tiers ($150 Minimum, $200 Recommended, $250 Cap)</div>
+<div class="exhibit-header">Exhibit 7 — Month 1 Allocation Tiers ($150 Minimum, $200 Recommended, $250 Cap)</div>
 <table>
   <thead>
     <tr>
@@ -617,7 +812,7 @@ async function generatePdf() {
   Sunday    (0.75 hr) &rarr; Open highdrawgear.com/admin/marketing: check Sunday CFO Digest, update click spend, Kill or Scale.
 </div>
 
-<h2>4. Exact Step-by-Step Facebook Ads Setup (No Agency Needed)</h2>
+<h2>9. Exact Step-by-Step Facebook Ads Setup (No Agency Needed)</h2>
 <div class="callout callout-red avoid-break">
   <div class="callout-title">Rule #1: NEVER Click the &ldquo;Boost Post&rdquo; Button</div>
   <p style="margin-bottom:0;">
@@ -628,7 +823,7 @@ async function generatePdf() {
 <ol>
   <li><strong>Paste your Meta Pixel ID once:</strong> Open Tab 4 (<em>FB Ads &amp; QR Studio</em>) inside High Draw’s Command Center, paste your 15-digit Meta Pixel ID, and click <strong>Save &amp; Sync Pixel</strong>. High Draw automatically fires <code>PageView</code>, <code>ViewContent</code>, <code>AddToCart</code>, <code>InitiateCheckout</code>, and <code>Purchase</code>.</li>
   <li><strong>Campaign Setup:</strong> Click <em>Create</em> &rarr; Choose <strong>Sales</strong> objective &rarr; Set Conversion Location to <strong>Website</strong> &rarr; Event = <strong>Purchase</strong> &rarr; Turn Advantage+ Campaign Budget ON at <strong>$10.00 / day</strong>.</li>
-  <li><strong>Ad Set Audience &amp; Placements:</strong> Location = <strong>United States</strong>, Age = <strong>35–65+</strong>, Detailed Targeting = <em>Golf, Country club, PGA Tour</em>. Switch Placements to Manual and <strong>UNCHECK Audience Network</strong> (prevents accidental mobile game clicks).</li>
+  <li><strong>Ad Set Audience &amp; Placements:</strong> Location = <strong>Sunbelt / Active US Golf States</strong>, Age = <strong>35–65+</strong>, Detailed Targeting = <em>Golf, Country club, PGA Tour</em>. Switch Placements to Manual and <strong>UNCHECK Audience Network</strong> (prevents accidental mobile game clicks).</li>
   <li><strong>Load 3 Contrast Ads Using Tracked UTM Links:</strong> Use Tab 4 to copy ready-made UTM links (<code>?utm_source=facebook&amp;utm_medium=paid_social&amp;utm_campaign=fb_m1_pair86&amp;utm_content=...</code>) and upload:
     <ul>
       <li><strong>Ad A (Offer Hook):</strong> <em>&ldquo;Two Tour-Grade Polos. $86 Total + Free Shipping.&rdquo;</em></li>
@@ -638,9 +833,9 @@ async function generatePdf() {
   </li>
 </ol>
 
-<!-- SECTION 5: COMMAND CENTER VISUAL GUIDE -->
+<!-- SECTION 10: COMMAND CENTER VISUAL GUIDE -->
 <div class="page-break"></div>
-<h2>5. Central Marketing Command Center Tour</h2>
+<h2>10. Central Marketing Command Center Tour</h2>
 <p>
   Visit <code>https://www.highdrawgear.com/admin/marketing</code> on any laptop, tablet, or phone and enter your Owner PIN. Because High Draw runs on Vercel’s Free Tier and Kyle &amp; Ken do not need extra SaaS accounts or GitHub tokens, <strong>Cloud Sync compresses and stores your experiment ledger automatically inside High Draw’s existing Stripe account</strong> (under an internal system record <code>ledger-sync@internal.highdrawgear.com</code>). Edits you make on your iPad appear immediately on Kyle’s MacBook.
 </p>
@@ -662,7 +857,7 @@ async function generatePdf() {
 <div class="page-break"></div>
 
 <div class="figure-box avoid-break">
-  <img src="${outreachMapUri}" alt="Outreach CRM and Live US State Demand Footprint Map" />
+  <img src="${outreachMapUri}" alt="Outreach CRM and Live US Demand Footprint Map" />
   <div class="figure-caption">
     <strong>Tab 3 — Outreach CRM &amp; US Demand Map:</strong> Tracks charity scrambles, alumni outings, and golf connectors alongside a live US state demand choropleth populated directly from verified Stripe shipping addresses — flagging any seeded sample past 7 days for immediate follow-up.
   </div>
