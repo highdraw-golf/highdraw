@@ -30,7 +30,6 @@ import {
   CloudOff,
   Copy,
   Download,
-  ExternalLink,
   FileDown,
   Lock,
   Plus,
@@ -780,15 +779,14 @@ export function MarketingCommandPage({
               ))}
             </div>
 
-            {/* Download Executive PDF */}
-            <a
-              href="/High_Draw_Start_Small_Marketing_Playbook_Colon_Hyphen_Bracket.pdf"
-              download
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-[#FDE022] hover:bg-yellow-300 text-[#1C2C24] text-xs font-bold uppercase tracking-wider transition-colors"
+            {/* Private Local Executive Playbook Indicator */}
+            <div
+              title="Saved locally to Desktop (High_Draw_Start_Small_Marketing_Playbook_Colon_Hyphen_Bracket.pdf) — kept off public web for competitive privacy"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold tracking-wide"
             >
-              <FileDown size={14} />
-              <span>Download PDF (For Ken)</span>
-            </a>
+              <FileDown size={14} className="text-[#FDE022]" />
+              <span>Playbook on Desktop (Private)</span>
+            </div>
 
             <button
               type="button"
@@ -2336,15 +2334,9 @@ export function MarketingCommandPage({
               <h3 id="benchmark-table-heading" className="text-sm font-bold uppercase tracking-wider text-slate-900">
                 What Successful Challenger Golf Brands Actually Did Early On
               </h3>
-              <a
-                href="/High_Draw_Start_Small_Marketing_Playbook_Colon_Hyphen_Bracket.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-bold text-[#0b4628] inline-flex items-center gap-1 underline"
-              >
-                <span>Open Full PDF Brief</span>
-                <ExternalLink size={12} />
-              </a>
+              <span className="text-xs font-semibold text-slate-500 italic">
+                Local Desktop PDF Brief: High_Draw_Start_Small_Marketing_Playbook_Colon_Hyphen_Bracket.pdf
+              </span>
             </div>
             <div tabIndex={0} role="region" aria-labelledby="benchmark-table-heading" className="hd-table-wrapper">
               <table className="hd-table">

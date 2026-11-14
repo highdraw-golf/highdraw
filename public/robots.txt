@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /*.pdf$
+Disallow: /api/
+
+Sitemap: https://www.highdrawgear.com/sitemap.xml

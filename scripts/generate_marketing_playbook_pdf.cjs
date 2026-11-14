@@ -890,7 +890,6 @@ async function generatePdf() {
   await page.setContent(htmlContent, { waitUntil: 'networkidle' });
 
   const pdfFileName = 'High_Draw_Start_Small_Marketing_Playbook_Colon_Hyphen_Bracket.pdf';
-  const outPublic = path.join(publicDir, pdfFileName);
   const outBrain = path.join(brainDir, pdfFileName);
   const outDesktop = path.join(desktopDir, pdfFileName);
 
@@ -918,9 +917,7 @@ async function generatePdf() {
     `,
   });
 
-  fs.writeFileSync(outPublic, pdfBuffer);
   fs.writeFileSync(outBrain, pdfBuffer);
-  console.log('Saved to Public:', outPublic);
   console.log('Saved to Brain:', outBrain);
 
   try {
