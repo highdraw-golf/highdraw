@@ -61,8 +61,8 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
       <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-3">
         <div>
           <div className="flex items-center gap-1.5">
-            <Sparkles size={13} className="text-[#B12535]" />
-            <span className="text-[10px] tabular-nums font-bold uppercase tracking-wider text-[#B12535]">
+            <Sparkles size={13} className="text-[#14241D]" />
+            <span className="text-[10px] tabular-nums font-bold uppercase tracking-wider text-[#14241D]">
               BESPOKE EMBROIDERY SUITE
             </span>
           </div>

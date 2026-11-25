@@ -244,7 +244,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
               {onShopNow && (
                 <button
                   onClick={onShopNow}
-                  className="px-7 py-3.5 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2 transition-all hover:scale-102"
+                  className="px-7 py-3.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2 transition-all hover:scale-102"
                 >
                   <span>SHOP KEN&apos;S PICK &bull; $48</span>
                   <ArrowRight size={14} />

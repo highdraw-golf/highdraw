@@ -293,7 +293,7 @@ const BRAND_SWATCHES = [
   { name: 'Cyan Tracer', hex: '#38BDF8' },
   { name: 'Championship Gold', hex: '#D4AF37' },
   { name: 'Midnight Navy', hex: '#1E293B' },
-  { name: 'Tour Crimson', hex: '#B12535' },
+  { name: 'Tour Crimson', hex: '#14241D' },
   { name: 'Onyx Black', hex: '#111827' },
   { name: 'Pure White', hex: '#FFFFFF' },
 ];
@@ -303,7 +303,7 @@ export const LogoStudioPage: React.FC<LogoStudioPageProps> = ({ onBackToHome, on
   const [monogramColor, setMonogramColor] = useState('#1C2C24');
   const [tracerColor, setTracerColor] = useState('#38BDF8');
   const [cupColor, setCupColor] = useState('#1C2C24');
-  const [flagColor, setFlagColor] = useState('#B12535');
+  const [flagColor, setFlagColor] = useState('#14241D');
   const [useCutout, setUseCutout] = useState(true);
   const [canvasBg, setCanvasBg] = useState<string>('transparent');
   const [copiedSvg, setCopiedSvg] = useState(false);
@@ -481,7 +481,7 @@ ${cupMarkup}
             </button>
             <button
               onClick={() => handleDownloadPng(false)}
-              className="px-5 py-3.5 bg-[#B12535] hover:bg-[#8f1d2a] text-white font-bold text-xs uppercase tracking-wider rounded-xs flex items-center gap-2 cursor-pointer transition"
+              className="px-5 py-3.5 bg-[#14241D] hover:bg-[#8f1d2a] text-white font-bold text-xs uppercase tracking-wider rounded-xs flex items-center gap-2 cursor-pointer transition"
             >
               <Download size={16} />
               <span>EXPORT 2048PX .PNG</span>
@@ -552,7 +552,7 @@ ${cupMarkup}
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <button
-                onClick={() => applyThemePreset({ mono: '#1C2C24', tracer: '#38BDF8', cup: '#1C2C24', flag: '#B12535', bg: '#F9F8F6' })}
+                onClick={() => applyThemePreset({ mono: '#1C2C24', tracer: '#38BDF8', cup: '#1C2C24', flag: '#14241D', bg: '#F9F8F6' })}
                 className="p-2.5 border border-slate-200 hover:border-slate-900 rounded-xs text-left cursor-pointer transition"
               >
                 <div className="flex gap-1.5 mb-1.5">
@@ -576,7 +576,7 @@ ${cupMarkup}
               </button>
 
               <button
-                onClick={() => applyThemePreset({ mono: '#1E293B', tracer: '#D4AF37', cup: '#1E293B', flag: '#B12535', bg: '#FFFFFF' })}
+                onClick={() => applyThemePreset({ mono: '#1E293B', tracer: '#D4AF37', cup: '#1E293B', flag: '#14241D', bg: '#FFFFFF' })}
                 className="p-2.5 border border-slate-200 hover:border-slate-900 rounded-xs text-left cursor-pointer transition"
               >
                 <div className="flex gap-1.5 mb-1.5">
@@ -588,7 +588,7 @@ ${cupMarkup}
               </button>
 
               <button
-                onClick={() => applyThemePreset({ mono: '#FFFFFF', tracer: '#38BDF8', cup: '#FFFFFF', flag: '#B12535', bg: '#111827' })}
+                onClick={() => applyThemePreset({ mono: '#FFFFFF', tracer: '#38BDF8', cup: '#FFFFFF', flag: '#14241D', bg: '#111827' })}
                 className="p-2.5 border border-slate-200 hover:border-slate-900 rounded-xs text-left cursor-pointer transition"
               >
                 <div className="flex gap-1.5 mb-1.5">

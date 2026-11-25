@@ -54,7 +54,7 @@ export const PipesCurationModal: React.FC<PipesCurationModalProps> = ({
         {/* Header */}
         <div className="bg-[#2A4236] text-white p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#B12535] text-white rounded">
+            <div className="p-2 bg-[#14241D] text-white rounded">
               <Sparkles size={18} />
             </div>
             <div>

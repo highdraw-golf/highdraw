@@ -25,8 +25,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
           <span className="italic font-normal text-slate-500">Engineered for 100+ Fairways.</span>
         </h2>
 
-        <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-sans">
-          We eliminated the $125 legacy boutique retail tax to build a purposeful 3-tier golf wardrobe: tour-grade 4-way stretch drape, fused stay-flat collars, and honest direct pricing ($48 Weekender &amp; $66 Clubhouse).
+        <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed font-sans">
+          Pro-shop drape, stay-flat collars, and breathable fabrics made to order—without paying for corporate tour sponsorships or three layers of retail markup.
         </p>
       </div>
 
@@ -37,92 +37,94 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <div className="lg:col-span-6 space-y-7">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
-              <Shirt size={16} />
-              <span>CRAFTSMANSHIP PILLAR 01</span>
+            <div className="flex items-center gap-2 text-[#14241D] text-xs font-semibold uppercase tracking-[0.1em]">
+              <Shirt size={15} />
+              <span>Fit &amp; Collar Architecture</span>
             </div>
 
-            <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1A1F26] font-bold leading-tight">
-              Senior Athletic Fit & Freedom of Motion
+            <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#151B23] font-normal leading-tight">
+              A Relaxed Athletic Cut That Moves With Your Swing
             </h3>
 
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
-              Most golf shirts are either suffocatingly tight modern slim cuts or baggy gym shirts that cling awkwardly. High Draw is engineered around real golfer feedback: structured cleanly across the shoulders and chest with comfortable ease through the torso, giving you total freedom of movement through the driver apex.
+            <p className="text-stone-600 text-sm sm:text-base leading-relaxed font-sans">
+              Most golf shirts are either painted-on modern slim cuts or boxy gym tees. High Draw is cut cleanly across the shoulders and chest with comfortable room through the midsection, so nothing tugs at the top of your backswing.
             </p>
 
             {/* Master Tailor's Challenge (Editorial Hairline Callout) */}
-            <div className="pt-6 pb-2 border-y border-slate-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1C2C24]">
-                <Award size={16} className="text-[#B12535]" />
-                <span>40+ Years of Golfer Feedback</span>
+            <div className="pt-6 pb-2 border-y border-stone-200 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#14241D]">
+                <Award size={16} />
+                <span>40+ Years on the Fairway</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed font-sans">
-                Take any $120 polo in your closet and wash it next to High Draw 10 times. If our fused collar stand rolls or curls into bacon, we will ship a replacement or refund you 100%.
+              <p className="text-xs text-stone-600 leading-relaxed font-sans">
+                Wash any $120 club-shop polo ten times next to ours. If a High Draw collar ever loses its shape, frays, or rolls at the points, we will replace it or refund your order in full.
               </p>
             </div>
 
             {/* Two Hallmarks Divided by Clean Hairline */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
               <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1C2C24]">
-                  <RefreshCw size={14} className="text-[#38BDF8]" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#14241D]">
+                  <RefreshCw size={14} className="text-[#0284C7]" />
                   <span>100+ Washes Guarantee</span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Won&rsquo;t fray, bacon, or lose its shape in cold or warm machine wash cycles.
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Holds its collar structure, color, and drape wash after wash.
                 </p>
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1C2C24]">
-                  <ShieldCheck size={14} className="text-emerald-700" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#14241D]">
+                  <ShieldCheck size={14} className="text-[#14241D]" />
                   <span>Clean 3-Button Placket</span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Mother-of-pearl engraved buttons set on a reinforced structured 3-button placket.
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Tone-on-tone buttons set on a reinforced, structured placket.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-6 relative aspect-[4/3] rounded-xs overflow-hidden shadow-xl border border-slate-200/60 group">
+          <div className="lg:col-span-6 relative aspect-[4/3] rounded-xs overflow-hidden shadow-xl border border-stone-200 group">
             <img 
               src="/assets/founder/ken_tee_shot_backswing.jpg" 
-              alt="High Draw Stay-Flat Collar Craftsmanship" 
+              alt="Dr. Ken Cyree at the top of his backswing" 
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
             />
-            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] tabular-nums px-3.5 py-1.5 rounded-xs flex items-center gap-2">
-              <ShieldCheck size={14} className="text-[#38BDF8]" />
+            <div className="absolute bottom-5 left-5 bg-[#14241D]/90 backdrop-blur-md text-white text-[11px] px-3.5 py-1.5 rounded-xs flex items-center gap-2">
+              <ShieldCheck size={14} className="text-[#7DD3FC]" />
               <span>Relaxed athletic cut</span>
             </div>
           </div>
 
         </div>
 
-        {/* Feature 2: Tour Drape & Zero Gym Sheen (Alternating Magazine Spread) */}
+        {/* Feature 2: Tour Drape & Matte Hand */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          <div className="lg:col-span-6 relative aspect-[4/3] order-2 lg:order-1 rounded-xs overflow-hidden shadow-xl border border-slate-200/60 group">
+          <div className="lg:col-span-6 relative aspect-[4/3] order-2 lg:order-1 rounded-xs overflow-hidden shadow-xl border border-stone-200 group">
             <img 
               src="/assets/products/editorial/men_polo_navy_course.jpg" 
               alt="High Draw Fairway Drape in Action" 
+              loading="lazy"
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103"
             />
-            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] tabular-nums px-3.5 py-1.5 rounded-xs flex items-center gap-2">
-              <ShieldCheck size={14} className="text-[#38BDF8]" />
-              <span>180 GSM MATTE MICRO-PIQUE</span>
+            <div className="absolute bottom-5 left-5 bg-[#14241D]/90 backdrop-blur-md text-white text-[11px] tabular-nums px-3.5 py-1.5 rounded-xs flex items-center gap-2">
+              <ShieldCheck size={14} className="text-[#7DD3FC]" />
+              <span>180 GSM Matte Micro-Pique</span>
             </div>
           </div>
 
           <div className="lg:col-span-6 space-y-7 order-1 lg:order-2">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
-              <Sparkles size={16} />
-              <span>CRAFTSMANSHIP PILLAR 02</span>
+            <div className="flex items-center gap-2 text-[#14241D] text-xs font-semibold uppercase tracking-[0.1em]">
+              <Sparkles size={15} />
+              <span>Fabric &amp; Hand Feel</span>
             </div>
 
-            <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1A1F26] font-bold leading-tight">
+            <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#151B23] font-normal leading-tight">
               Matte Micro-Pique. <br />
-              <span className="font-normal italic text-slate-500">A matte finish that looks right at dinner.</span>
+              <span className="font-light italic text-stone-500">A finish that looks right at dinner.</span>
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
@@ -132,7 +134,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             {/* Three Typographic Hallmarks */}
             <div className="space-y-4 pt-2">
               <div className="flex items-start gap-3.5 pb-3 border-b border-slate-200/70">
-                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">01</span>
+                <span className="tabular-nums text-xs font-bold text-[#14241D] mt-0.5">01</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">4-Way Mechanical Stretch</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Complete rotational freedom through full driver swings without pulling out of your waistband.</p>
@@ -140,7 +142,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               </div>
 
               <div className="flex items-start gap-3.5 pb-3 border-b border-slate-200/70">
-                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">02</span>
+                <span className="tabular-nums text-xs font-bold text-[#14241D] mt-0.5">02</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">UPF 50+ Solar Shield</h4>
                   <p className="text-xs text-slate-500 mt-0.5">All-day UV protection woven directly into the technical yarns, not chemical dip-coatings that wash out.</p>
@@ -148,7 +150,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">03</span>
+                <span className="tabular-nums text-xs font-bold text-[#14241D] mt-0.5">03</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">Tailored Fit for Dedicated Weekenders</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Structured across the shoulders and chest with a flattering, unrestrictive drape through the midsection.</p>
@@ -237,7 +239,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             <div className="text-center pt-2">
               <button
                 onClick={onScrollToShop}
-                className="px-8 py-4 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider transition-all rounded-xs shadow-lg inline-flex items-center gap-2 cursor-pointer"
+                className="px-8 py-4 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider transition-all rounded-xs shadow-lg inline-flex items-center gap-2 cursor-pointer"
               >
                 <span>EXPERIENCE TOUR DRAPE &bull; $48</span>
                 <ArrowRight size={14} />

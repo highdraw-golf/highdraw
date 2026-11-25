@@ -72,19 +72,23 @@ import type {
   OutreachLeadStage,
 } from '../lib/marketingEngine';
 
+import { ChbAutopilotPanel } from '../components/marketing/ChbAutopilotPanel';
+import { createSeededChbAutopilotLeads } from '../lib/chbOutreachAutopilot';
+
 export interface MarketingCommandPageProps {
   onNavigateBack: () => void;
   onLockSession: () => void;
 }
 
-type CommandTabId = 'overview' | 'experiments' | 'outreach' | 'studio' | 'playbook';
+type CommandTabId = 'overview' | 'experiments' | 'outreach' | 'autopilot' | 'studio' | 'playbook';
 
 const TABS: Array<{ id: CommandTabId; label: string }> = [
   { id: 'overview', label: '1. Executive Overview' },
   { id: 'experiments', label: "2. What's Tried & Verdicts" },
   { id: 'outreach', label: '3. Outreach CRM & US Map' },
-  { id: 'studio', label: '4. FB Ads & QR Studio' },
-  { id: 'playbook', label: '5. Start-Small Budget & Playbook' },
+  { id: 'autopilot', label: '4. CHB Outreach Autopilot' },
+  { id: 'studio', label: '5. FB Ads & QR Studio' },
+  { id: 'playbook', label: '6. Start-Small Budget & Playbook' },
 ];
 
 const CHANNELS: ExperimentChannel[] = [
@@ -2365,6 +2369,25 @@ export function MarketingCommandPage({
               </table>
             </div>
           </div>
+        </section>
+
+        {/* TAB: CHB OUTREACH AUTOPILOT & ASK DAD QUEUE */}
+        <section
+          id="panel-autopilot"
+          role="tabpanel"
+          aria-labelledby="tab-autopilot"
+          hidden={activeTab !== 'autopilot'}
+          className="space-y-6"
+        >
+          <ChbAutopilotPanel
+            items={ledger.autopilotLeads || createSeededChbAutopilotLeads()}
+            onChangeItems={next =>
+              updateLedger(prev => ({
+                ...prev,
+                autopilotLeads: next,
+              }))
+            }
+          />
         </section>
       </main>
     </div>

@@ -1,6 +1,8 @@
 // High Draw Golf — Deterministic CFO Marketing Engine & Cloud Ledger Model
 // Tier 1 Zero-AI Financial Rules Engine: 0ms latency, $0 AI token cost, exact unit-economics math.
 
+import { createSeededChbAutopilotLeads } from './chbOutreachAutopilot.ts';
+
 export type ExperimentChannel =
   | 'Facebook / Meta Ads'
   | 'Tournament & Outing Outreach'
@@ -89,6 +91,7 @@ export interface MarketingCloudLedger {
   experiments: MarketingExperiment[];
   outreachLeads: OutreachLead[];
   weeklyChecklist: WeeklyChecklistItem[];
+  autopilotLeads?: import('./chbOutreachAutopilot').ChbAutopilotLead[];
 }
 
 export interface TelemetryOrder {
@@ -344,6 +347,7 @@ export function createDefaultMarketingLedger(): MarketingCloudLedger {
         completed: false,
       },
     ],
+    autopilotLeads: createSeededChbAutopilotLeads(),
   };
 }
 
@@ -371,6 +375,10 @@ export function normalizeCloudLedger(
       Array.isArray(candidate.weeklyChecklist) && candidate.weeklyChecklist.length > 0
         ? candidate.weeklyChecklist
         : defaults.weeklyChecklist,
+    autopilotLeads:
+      Array.isArray(candidate.autopilotLeads) && candidate.autopilotLeads.length > 0
+        ? candidate.autopilotLeads
+        : defaults.autopilotLeads,
   };
 }
 

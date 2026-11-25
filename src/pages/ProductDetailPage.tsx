@@ -404,6 +404,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   key={`${stageImageSrc}-${stitchPulseKey}`}
                   src={stageImageSrc}
                   alt={`${product.name} — ${activeAngle?.label || selectedColor}`}
+                  fetchPriority="high"
                   initial={isReduced ? { opacity: 1 } : { opacity: 0.25, scale: 0.99 }}
                   animate={{ opacity: 1, scale: isHoverZooming ? 1.6 : 1 }}
                   exit={isReduced ? { opacity: 1 } : { opacity: 0 }}
@@ -510,46 +511,37 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Collection & Tier Header */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <img src="/assets/brand/logos/mark_monogram_cyan.png" alt="High Draw Mark" className="h-4 w-auto object-contain" />
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535]">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-stone-500">
                   {product.collectionLabel}
                 </span>
                 {product.tier && product.tier !== 'core' && (
-                  <span className="text-[10px] tabular-nums uppercase tracking-wider px-2 py-0.5 rounded-2xs bg-[#1C2C24] text-[#38BDF8] font-bold">
-                    {product.tier.toUpperCase()} TIER
+                  <span className="text-[10px] tabular-nums uppercase tracking-wider px-2 py-0.5 rounded-2xs bg-[#14241D] text-stone-100 font-medium">
+                    {product.tier.toUpperCase()}
                   </span>
                 )}
               </div>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1F26] leading-tight">
+              <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#151B23] leading-tight">
                 {product.name}
               </h1>
             </div>
 
-            {/* Social Proof Row */}
-            <div className="flex items-center gap-3 text-xs flex-wrap">
-              <div className="flex text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={15} fill="currentColor" />
-                ))}
-              </div>
-              <span className="font-bold text-slate-800">5.0 / 5.0</span>
-              <span className="text-slate-400">&bull;</span>
-              <span className="text-slate-500">48 Verified Golfer Reviews</span>
-              <span className="text-slate-400">&bull;</span>
-              <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                <ShieldCheck size={14} /> True to Size
+            {/* Honest Trust & Fit Row */}
+            <div className="flex items-center gap-3 text-xs flex-wrap text-stone-600">
+              <span className="text-[#14241D] font-semibold flex items-center gap-1">
+                <ShieldCheck size={14} /> True-to-Size Relaxed Athletic Cut
               </span>
+              <span className="text-stone-300">&middot;</span>
+              <span>100+ Washes Guaranteed</span>
             </div>
 
-            {/* Price & Direct Value Comparison */}
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-3">
-                <span className="tabular-nums text-3xl font-black text-[#1A1F26]">${product.price} USD</span>
+            {/* Price & Made-to-Order Assurance */}
+            <div className="p-4 bg-[#FAF9F6] border border-stone-200 rounded-xs flex items-baseline justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="tabular-nums text-3xl font-semibold text-[#151B23]">${product.price}</span>
+                <span className="text-xs text-stone-500">USD</span>
               </div>
-              <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[11px] font-bold uppercase tracking-wider rounded-xs whitespace-nowrap">
-                {product.isComingSoon
-                  ? 'SUMMER 2026 DROP'
-                  : "MADE TO ORDER"}
+              <span className="px-2.5 py-1 bg-[#14241D]/10 text-[#14241D] text-[11px] font-semibold uppercase tracking-wider rounded-2xs whitespace-nowrap">
+                {product.isComingSoon ? 'Summer 2026 Drop' : 'Stitched to Order in USA'}
               </span>
             </div>
 
@@ -616,7 +608,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     />
                     <button
                       type="submit"
-                      className="px-5 py-2.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
+                      className="px-5 py-2.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
                     >
                       NOTIFY ME
                     </button>
@@ -636,7 +628,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
                   <div className="flex items-center justify-between pt-1.5 border-t border-[#1C2C24]/10 tabular-nums text-[10px] text-slate-500">
                     <span className="inline-flex items-center gap-1 font-semibold text-[#1C2C24]">
-                      <Tag size={11} className="text-[#B12535]" />
+                      <Tag size={11} className="text-[#14241D]" />
                       Tailor Spec: {resolvedFulfillment.sovereignSku}
                     </span>
                     <span className="text-emerald-700 font-semibold">In Stock &amp; Ready to Stitch</span>
@@ -688,7 +680,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <div className="p-4 bg-[#1C2C24]/5 border border-[#1C2C24]/15 rounded-xs space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <Sparkles size={14} className="text-[#B12535]" />
+                      <Sparkles size={14} className="text-[#14241D]" />
                       <span className="text-[11px] font-bold uppercase tracking-wider text-[#1C2C24]">
                         Pair &amp; Unlock Free Shipping ($75+)
                       </span>
@@ -731,7 +723,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             </h3>
             <button
               onClick={onBackToShop}
-              className="text-xs font-bold text-[#B12535] hover:underline uppercase tracking-wider cursor-pointer"
+              className="text-xs font-bold text-[#14241D] hover:underline uppercase tracking-wider cursor-pointer"
             >
               View Full Collection &rarr;
             </button>
@@ -753,10 +745,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   )}
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#B12535] block">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#14241D] block">
                     {rel.collectionLabel}
                   </span>
-                  <h4 className="font-serif text-lg font-bold text-[#1A1F26] group-hover:text-[#B12535] transition-colors">
+                  <h4 className="font-serif text-lg font-bold text-[#1A1F26] group-hover:text-[#14241D] transition-colors">
                     {rel.name}
                   </h4>
                   <div className="flex items-baseline gap-2 tabular-nums text-sm">
@@ -783,7 +775,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           <button
             type="button"
             onClick={handleAddCurrent}
-            className="px-5 py-3 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-md flex items-center gap-2 shrink-0 t-press cursor-pointer"
+            className="px-5 py-3 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-md flex items-center gap-2 shrink-0 t-press cursor-pointer"
           >
             {added ? <Check size={15} /> : <ShoppingBag size={15} />}
             <span>{added ? 'ADDED!' : `ADD • $${product.price}`}</span>

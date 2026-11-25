@@ -9,15 +9,6 @@ import { UserReviews } from './components/UserReviews';
 import { CartDrawer } from './components/CartDrawer';
 import type { CartItem, ExternalFulfillmentConfirmation } from './components/CartDrawer';
 import { Footer } from './components/Footer';
-import { AdminConsole } from './components/AdminConsole';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { CollectionPage } from './pages/CollectionPage';
-import { CraftsmanshipPage } from './pages/CraftsmanshipPage';
-import { ReviewsPage } from './pages/ReviewsPage';
-import { GuaranteePage } from './pages/GuaranteePage';
-import { AboutPage } from './pages/AboutPage';
-import { LogoStudioPage } from './pages/LogoStudioPage';
-import { OwnerAuthModal } from './components/OwnerAuthModal';
 import { isOwnerAuthorized, lockOwnerSession } from './lib/auth';
 import { resolvePrintifyFulfillment } from './lib/fulfillmentResolver';
 import { fulfillStripeCheckoutSession } from './lib/stripe';
@@ -29,6 +20,34 @@ import { PRODUCTS } from './data/products';
 import type { Product } from './data/products';
 
 const MarketingCommandPage = lazy(() => import('./pages/MarketingCommandPage'));
+const SemiLookbookPage = lazy(() => import('./pages/SemiLookbookPage'));
+const ProductDetailPage = lazy(() =>
+  import('./pages/ProductDetailPage').then(m => ({ default: m.ProductDetailPage }))
+);
+const CollectionPage = lazy(() =>
+  import('./pages/CollectionPage').then(m => ({ default: m.CollectionPage }))
+);
+const CraftsmanshipPage = lazy(() =>
+  import('./pages/CraftsmanshipPage').then(m => ({ default: m.CraftsmanshipPage }))
+);
+const ReviewsPage = lazy(() =>
+  import('./pages/ReviewsPage').then(m => ({ default: m.ReviewsPage }))
+);
+const GuaranteePage = lazy(() =>
+  import('./pages/GuaranteePage').then(m => ({ default: m.GuaranteePage }))
+);
+const AboutPage = lazy(() =>
+  import('./pages/AboutPage').then(m => ({ default: m.AboutPage }))
+);
+const LogoStudioPage = lazy(() =>
+  import('./pages/LogoStudioPage').then(m => ({ default: m.LogoStudioPage }))
+);
+const AdminConsole = lazy(() =>
+  import('./components/AdminConsole').then(m => ({ default: m.AdminConsole }))
+);
+const OwnerAuthModal = lazy(() =>
+  import('./components/OwnerAuthModal').then(m => ({ default: m.OwnerAuthModal }))
+);
 
 type TierFilter = 'all' | 'weekender' | 'clubhouse' | 'tournament';
 
@@ -44,6 +63,7 @@ type ActiveRoute =
   | { view: 'reviews' }
   | { view: 'guarantee' }
   | { view: 'about' }
+  | { view: 'semi' }
   | { view: 'logo-studio' }
   | { view: 'marketing-command' };
 
@@ -135,6 +155,9 @@ function parseRouteFromLocation(): ActiveRoute {
   if (path === '/pages/about' || path === '/about') {
     return { view: 'about' };
   }
+  if (path === '/semi' || path === '/pages/semi' || path === '/pages/womens-lookbook' || path === '/womens-lookbook') {
+    return { view: 'semi' };
+  }
   if (path === '/pages/logo-studio' || path === '/logo-studio') {
     return { view: 'logo-studio' };
   }
@@ -160,7 +183,7 @@ export function App() {
 
   // Store Brand State (Configurable by Brand Owner via AdminConsole)
   const [tickerText, setTickerText] = useState(
-    'FREE US SHIPPING OVER $75 • WEEKENDER ($48) & THE CLUBHOUSE ($66)'
+    'Complimentary US Shipping on 2+ Polos ($75+) • Save $10 Automatically on Any Pair'
   );
   const [poloPrice, setPoloPrice] = useState(48);
   const [activeBoard, setActiveBoard] = useState('Autumn Fairways');
@@ -208,7 +231,7 @@ export function App() {
   }, []);
 
   const navigateTo = (
-    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'logo-studio' | 'marketing-command',
+    view: 'home' | 'collection' | 'product' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'semi' | 'logo-studio' | 'marketing-command',
     opts?: {
       category?: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles';
       tier?: TierFilter;
@@ -246,6 +269,9 @@ export function App() {
     } else if (view === 'about') {
       newPath = '/pages/about';
       nextRoute = { view: 'about' };
+    } else if (view === 'semi') {
+      newPath = '/semi';
+      nextRoute = { view: 'semi' };
     } else if (view === 'logo-studio') {
       newPath = '/pages/logo-studio';
       nextRoute = { view: 'logo-studio' };
@@ -415,21 +441,12 @@ export function App() {
 
   const totalBagCount = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  const scrollToHomeTier = (tier: TierFilter) => {
-    setActiveHomeTier(tier);
-    setActiveCategory('all');
-    const el = document.getElementById('collections');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   if (route.view === 'marketing-command') {
     if (isOwnerAuthenticated) {
       return (
         <Suspense
           fallback={
-            <div className="min-h-screen flex items-center justify-center bg-[#f4f5f3] tabular-nums text-xs text-slate-600">
+            <div className="min-h-screen flex items-center justify-center bg-[#FAF9F6] text-xs text-stone-600">
               Loading High Draw Marketing Command Center...
             </div>
           }
@@ -447,22 +464,24 @@ export function App() {
     }
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#1C2C24] px-4 py-20">
-        <OwnerAuthModal
-          isOpen={true}
-          title="Marketing Command Center — Owner Access"
-          description="Enter your High Draw Owner PIN to open cloud-synced Facebook Ads telemetry, Experiment Verdicts, Outreach CRM, and Stripe reporting."
-          onClose={() => navigateTo('home')}
-          onSuccess={() => setIsOwnerAuthenticated(true)}
-        />
+      <div className="min-h-screen flex items-center justify-center bg-[#14241D] px-4 py-20">
+        <Suspense fallback={null}>
+          <OwnerAuthModal
+            isOpen={true}
+            title="Marketing Command Center — Owner Access"
+            description="Enter your High Draw Owner PIN to open cloud-synced Facebook Ads telemetry, Experiment Verdicts, CHB Outreach Autopilot, and Stripe reporting."
+            onClose={() => navigateTo('home')}
+            onSuccess={() => setIsOwnerAuthenticated(true)}
+          />
+        </Suspense>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#1A1F26] selection:bg-[#B12535] selection:text-white">
+    <div className="min-h-screen bg-[#FAF9F6] font-sans text-[#151B23] selection:bg-[#14241D] selection:text-white">
       <div inert={isCartOpen || undefined}>
-      {/* Header with Direct 3-Tier Navigation */}
+      {/* Header with Clean Editorial Navigation */}
       <Header
         cartCount={totalBagCount}
         onOpenCart={() => setIsCartOpen(true)}
@@ -476,7 +495,11 @@ export function App() {
             {/* Flagship Editorial Hero */}
             <FullscreenHero
               heroImage={heroImage}
-              onScrollToShop={() => navigateTo('collection', { category: 'all' })}
+              onScrollToShop={() => {
+                const el = document.getElementById('collections');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                else navigateTo('collection', { category: 'all' });
+              }}
               onShopMens={() => {
                 const menPolo = PRODUCTS.find(p => p.id === 'men-polo-st740');
                 if (menPolo) navigateTo('product', { product: menPolo });
@@ -495,7 +518,7 @@ export function App() {
               onScrollToWhy={() => navigateTo('craftsmanship')}
             />
 
-            {/* Picture-Heavy Collections with Working Tier + Category Filters & Swatches */}
+            {/* Editorial Wardrobe Grid */}
             <ShopifyCollections
               activeCategory={activeCategory}
               onSelectCategory={cat => setActiveCategory(cat)}
@@ -505,12 +528,12 @@ export function App() {
               onSelectProduct={prod => navigateTo('product', { product: prod })}
             />
 
-            {/* Craftsmanship Showcase (Macro Collar Detail & Direct Pricing Math) */}
+            {/* Craftsmanship Showcase */}
             <WhyHighDraw
               onScrollToShop={() => navigateTo('collection', { category: 'polos' })}
             />
 
-            {/* Authentic Co-Founder Spotlight (Dr. Ken Cyree & 47-State Fairways) */}
+            {/* Authentic Co-Founder Spotlight (Dr. Ken Cyree) */}
             <FounderSpotlight
               onLearnMore={() => navigateTo('about')}
               onShopNow={() => navigateTo('collection', { category: 'polos' })}
@@ -521,91 +544,107 @@ export function App() {
           </>
         )}
 
-        {route.view === 'collection' && (
-          <CollectionPage
-            category={route.category}
-            initialTier={route.tier || 'all'}
-            products={PRODUCTS}
-            onSelectProduct={prod => navigateTo('product', { product: prod })}
-            onSelectCategory={(cat, tier) => navigateTo('collection', { category: cat, tier })}
-            onBackToHome={() => navigateTo('home')}
-          />
-        )}
-
-        {route.view === 'product' && (
-          <ProductDetailPage
-            key={route.product.id}
-            product={route.product}
-            onBackToShop={() =>
-              navigateTo('collection', {
-                category: route.product.category,
-                tier:
-                  route.product.tier === 'weekender' ||
-                  route.product.tier === 'clubhouse' ||
-                  route.product.tier === 'tournament'
-                    ? route.product.tier
-                    : 'all',
-              })
-            }
-            onAddToCart={handleAddToCart}
-            onSelectProduct={prod => navigateTo('product', { product: prod })}
-            allProducts={PRODUCTS}
-          />
-        )}
-
-        {route.view === 'craftsmanship' && (
-          <CraftsmanshipPage
-            onBackToHome={() => navigateTo('home')}
-            onGoToShop={() => navigateTo('collection', { category: 'polos' })}
-          />
-        )}
-
-        {route.view === 'reviews' && (
-          <ReviewsPage
-            onBackToHome={() => navigateTo('home')}
-            onGoToShop={() => navigateTo('collection', { category: 'polos' })}
-          />
-        )}
-
-        {route.view === 'guarantee' && (
-          <GuaranteePage
-            onBackToHome={() => navigateTo('home')}
-            onGoToShop={() => navigateTo('collection', { category: 'polos' })}
-          />
-        )}
-
-        {route.view === 'about' && (
-          <AboutPage
-            onBackToHome={() => navigateTo('home')}
-            onGoToShop={() => navigateTo('collection', { category: 'polos' })}
-          />
-        )}
-
-        {route.view === 'logo-studio' && (
-          isOwnerAuthenticated ? (
-            <LogoStudioPage
-              onBackToHome={() => navigateTo('home')}
-              onLock={() => {
-                lockOwnerSession();
-                setIsOwnerAuthenticated(false);
-                navigateTo('home');
-              }}
-            />
-          ) : (
-            <div className="min-h-[70vh] flex items-center justify-center bg-[#1C2C24] px-4 py-20">
-              <OwnerAuthModal
-                isOpen={true}
-                title="Logo Studio — Brand Asset Protection"
-                description="High Draw vector SVG and master PNG files are proprietary assets. Please enter the Owner PIN to access the Logo Studio."
-                onClose={() => navigateTo('home')}
-                onSuccess={() => setIsOwnerAuthenticated(true)}
-              />
+        <Suspense
+          fallback={
+            <div className="min-h-[60vh] flex items-center justify-center bg-[#FAF9F6] text-xs text-stone-500">
+              Loading...
             </div>
-          )
-        )}
+          }
+        >
+          {route.view === 'collection' && (
+            <CollectionPage
+              category={route.category}
+              initialTier={route.tier || 'all'}
+              products={PRODUCTS}
+              onSelectProduct={prod => navigateTo('product', { product: prod })}
+              onSelectCategory={(cat, tier) => navigateTo('collection', { category: cat, tier })}
+              onBackToHome={() => navigateTo('home')}
+            />
+          )}
+
+          {route.view === 'product' && (
+            <ProductDetailPage
+              key={route.product.id}
+              product={route.product}
+              onBackToShop={() =>
+                navigateTo('collection', {
+                  category: route.product.category,
+                  tier:
+                    route.product.tier === 'weekender' ||
+                    route.product.tier === 'clubhouse' ||
+                    route.product.tier === 'tournament'
+                      ? route.product.tier
+                      : 'all',
+                })
+              }
+              onAddToCart={handleAddToCart}
+              onSelectProduct={prod => navigateTo('product', { product: prod })}
+              allProducts={PRODUCTS}
+            />
+          )}
+
+          {route.view === 'craftsmanship' && (
+            <CraftsmanshipPage
+              onBackToHome={() => navigateTo('home')}
+              onGoToShop={() => navigateTo('collection', { category: 'polos' })}
+            />
+          )}
+
+          {route.view === 'reviews' && (
+            <ReviewsPage
+              onBackToHome={() => navigateTo('home')}
+              onGoToShop={() => navigateTo('collection', { category: 'polos' })}
+            />
+          )}
+
+          {route.view === 'guarantee' && (
+            <GuaranteePage
+              onBackToHome={() => navigateTo('home')}
+              onGoToShop={() => navigateTo('collection', { category: 'polos' })}
+            />
+          )}
+
+          {route.view === 'about' && (
+            <AboutPage
+              onBackToHome={() => navigateTo('home')}
+              onGoToShop={() => navigateTo('collection', { category: 'polos' })}
+            />
+          )}
+
+          {route.view === 'semi' && (
+            <SemiLookbookPage
+              onSelectProduct={prod => navigateTo('product', { product: prod })}
+              onNavigateCollection={() => navigateTo('collection', { category: 'polos', tier: 'weekender' })}
+              onBackHome={() => navigateTo('home')}
+            />
+          )}
+
+          {route.view === 'logo-studio' && (
+            isOwnerAuthenticated ? (
+              <LogoStudioPage
+                onBackToHome={() => navigateTo('home')}
+                onLock={() => {
+                  lockOwnerSession();
+                  setIsOwnerAuthenticated(false);
+                  navigateTo('home');
+                }}
+              />
+            ) : (
+              <div className="min-h-[70vh] flex items-center justify-center bg-[#14241D] px-4 py-20">
+                <OwnerAuthModal
+                  isOpen={true}
+                  title="Logo Studio — Brand Asset Protection"
+                  description="High Draw vector SVG and master PNG files are proprietary assets. Please enter the Owner PIN to access the Logo Studio."
+                  onClose={() => navigateTo('home')}
+                  onSuccess={() => setIsOwnerAuthenticated(true)}
+                />
+              </div>
+            )
+          )}
+        </Suspense>
       </main>
 
-      {/* Fully Functional Footer with Policy Modals & Discrete Admin Link */}
+      {/* Footer */}
       <Footer
         onNavigate={(view, category) => navigateTo(view, { category })}
         onOpenAdmin={() => setIsAdminOpen(true)}
@@ -614,33 +653,35 @@ export function App() {
 
       {/* Owner Command Center Modal */}
       {isAdminOpen && (
-        isOwnerAuthenticated ? (
-          <AdminConsole
-            isOpen={isAdminOpen}
-            onClose={() => setIsAdminOpen(false)}
-            onLock={() => {
-              lockOwnerSession();
-              setIsOwnerAuthenticated(false);
-              setIsAdminOpen(false);
-            }}
-            onOpenMarketingCommand={() => {
-              setIsAdminOpen(false);
-              navigateTo('marketing-command');
-            }}
-            tickerText={tickerText}
-            onUpdateTicker={setTickerText}
-            activeBoard={activeBoard}
-            onSelectBoard={handleSelectPipesBoard}
-            poloPrice={poloPrice}
-            onUpdatePrice={setPoloPrice}
-          />
-        ) : (
-          <OwnerAuthModal
-            isOpen={isAdminOpen}
-            onClose={() => setIsAdminOpen(false)}
-            onSuccess={() => setIsOwnerAuthenticated(true)}
-          />
-        )
+        <Suspense fallback={null}>
+          {isOwnerAuthenticated ? (
+            <AdminConsole
+              isOpen={isAdminOpen}
+              onClose={() => setIsAdminOpen(false)}
+              onLock={() => {
+                lockOwnerSession();
+                setIsOwnerAuthenticated(false);
+                setIsAdminOpen(false);
+              }}
+              onOpenMarketingCommand={() => {
+                setIsAdminOpen(false);
+                navigateTo('marketing-command');
+              }}
+              tickerText={tickerText}
+              onUpdateTicker={setTickerText}
+              activeBoard={activeBoard}
+              onSelectBoard={handleSelectPipesBoard}
+              poloPrice={poloPrice}
+              onUpdatePrice={setPoloPrice}
+            />
+          ) : (
+            <OwnerAuthModal
+              isOpen={isAdminOpen}
+              onClose={() => setIsAdminOpen(false)}
+              onSuccess={() => setIsOwnerAuthenticated(true)}
+            />
+          )}
+        </Suspense>
       )}
 
       {/* Interactive Cart Drawer with Persistence, Stepper & Free Shipping Bar */}

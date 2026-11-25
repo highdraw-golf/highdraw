@@ -107,7 +107,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
           <div className="pt-2 flex flex-col gap-2">
             <button
               type="submit"
-              className="w-full py-3 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <span>UNLOCK OWNER CONSOLE</span>
               <ArrowRight size={14} />

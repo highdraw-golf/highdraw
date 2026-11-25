@@ -123,7 +123,7 @@ export const UserReviews: React.FC = () => {
               alt="High Draw Mark" 
               className="h-4 w-auto object-contain"
             />
-            <span className="text-xs tabular-nums font-bold uppercase tracking-wider text-[#B12535]">
+            <span className="text-xs tabular-nums font-bold uppercase tracking-wider text-[#14241D]">
               FIELD NOTES &bull; VERIFIED 100+ ROUND EXPERIENCES
             </span>
           </div>
@@ -170,7 +170,7 @@ export const UserReviews: React.FC = () => {
 
           <button
             onClick={() => setFormOpen(!formOpen)}
-            className="px-5 py-2.5 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-sm active:scale-95 flex items-center gap-2 cursor-pointer"
+            className="px-5 py-2.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs transition-all shadow-sm active:scale-95 flex items-center gap-2 cursor-pointer"
           >
             <Plus size={16} />
             <span>SUBMIT FIELD NOTE</span>
@@ -275,7 +275,7 @@ export const UserReviews: React.FC = () => {
             <div className="flex items-center justify-between pt-2">
               <button 
                 type="submit" 
-                className="px-6 py-3.5 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-xs hover:bg-[#8E1D29] transition-colors flex items-center gap-2 cursor-pointer shadow-md"
+                className="px-6 py-3.5 bg-[#14241D] text-white font-bold text-xs uppercase tracking-wider rounded-xs hover:bg-[#0c1712] transition-colors flex items-center gap-2 cursor-pointer shadow-md"
               >
                 {submitted ? (
                   <>
@@ -314,7 +314,7 @@ export const UserReviews: React.FC = () => {
         </div>
 
         <div className="lg:col-span-8 space-y-3.5">
-          <Quote size={28} className="text-[#B12535] opacity-80" />
+          <Quote size={28} className="text-[#14241D] opacity-80" />
           <h3 className="font-serif text-2xl sm:text-3xl text-[#1A1F26] font-bold leading-snug">
             &ldquo;As a senior golfer, I want a shirt that fits around my shoulders and my torso. The micro-pique drape is identical to boutique brands that charge $120+.&rdquo;
           </h3>

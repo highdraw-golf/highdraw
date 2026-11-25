@@ -52,7 +52,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
         {/* Modal Header */}
         <div className="bg-[#0D1B2A] text-white p-6 hairline-b flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#C03221] text-white rounded-sm">
+            <div className="p-2 bg-[#14241D] text-white rounded-sm">
               <Sparkles size={18} />
             </div>
             <div>
@@ -127,7 +127,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
 
                   {isProcessing && (
                     <div className="absolute inset-0 bg-[#090C10]/80 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-3 tabular-nums text-xs">
-                      <Sparkles size={24} className="text-[#C03221] animate-spin" />
+                      <Sparkles size={24} className="text-[#14241D] animate-spin" />
                       <span>SEGMENTING FOURSOME & APPLYING HIGH DRAW POLOS...</span>
                     </div>
                   )}
@@ -148,7 +148,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
               {/* Right Options & Viral Sharing (5 Cols) */}
               <div className="md:col-span-5 space-y-6">
                 <div>
-                  <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block mb-1">
+                  <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#14241D] font-semibold block mb-1">
                     GARMENT SELECTION
                   </span>
                   <h3 className="font-serif text-xl text-[#090C10] font-medium">
@@ -182,7 +182,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                 {/* Viral Share Actions */}
                 <div className="hairline-all bg-[#FBFBFA] p-4 space-y-3">
                   <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#090C10] font-semibold flex items-center gap-1.5">
-                    <Share2 size={12} className="text-[#C03221]" />
+                    <Share2 size={12} className="text-[#14241D]" />
                     <span>SHARE WITH FOURSOME CHAT</span>
                   </div>
 

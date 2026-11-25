@@ -97,7 +97,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
             <div className="md:col-span-5 bg-white/5 border border-white/10 p-5 rounded-xs space-y-3">
               <div className="text-xs tabular-nums uppercase tracking-wider text-slate-300 font-bold flex items-center gap-2">
-                <MapPin size={14} className="text-[#B12535]" />
+                <MapPin size={14} className="text-[#14241D]" />
                 <span>Remaining 3 States</span>
               </div>
               <ul className="space-y-2 text-xs tabular-nums text-slate-300">
@@ -124,7 +124,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* The $125 Pro Shop Tax & Southern Humidity */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-6 space-y-4">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-[#14241D] text-xs font-bold uppercase tracking-wider">
               <Award size={16} />
               <span>THE FINANCE PROFESSOR'S CALCULUS</span>
             </div>
@@ -223,7 +223,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             </div>
           </div>
           <div className="md:col-span-7 space-y-4">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-[#14241D] text-xs font-bold uppercase tracking-wider">
               <Heart size={16} />
               <span>THE SPOUSE &amp; FAMILY PERSPECTIVE</span>
             </div>
@@ -304,7 +304,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </p>
           <button
             onClick={onGoToShop}
-            className="px-8 py-4 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2 transition-all hover:scale-102"
+            className="px-8 py-4 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2 transition-all hover:scale-102"
           >
             <span>SHOP THE CORE POLO COLLECTION &bull; $48</span>
             <ArrowRight size={16} />

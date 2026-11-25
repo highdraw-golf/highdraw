@@ -185,7 +185,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                       <m.span
                         layoutId={isReduced ? undefined : 'collection-tier-pill'}
                         transition={SPRING_LAYOUT}
-                        className="absolute inset-0 bg-[#B12535] rounded-2xs"
+                        className="absolute inset-0 bg-[#14241D] rounded-2xs"
                       />
                     )}
                     <span className="relative z-10">{t.label}</span>
@@ -326,7 +326,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
+                  className="px-5 py-2.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
                 >
                   NOTIFY ME
                 </button>
@@ -432,10 +432,10 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535] block">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#14241D] block">
                         {p.collectionLabel}
                       </span>
-                      <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
+                      <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#14241D] transition-colors leading-snug">
                         {p.name}
                       </h3>
                     </div>

@@ -35,7 +35,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2.5 max-w-2xl">
-            <span className="inline-flex items-center gap-2 tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#B12535] font-bold">
+            <span className="inline-flex items-center gap-2 tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#14241D] font-bold">
               <span>THE HIGH DRAW 3-TIER APPAREL ARCHITECTURE</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A1F26] tracking-tight leading-[1.08]">
@@ -128,11 +128,11 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
           <StaggerItem className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#FBFBFA]/60">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="tabular-nums text-[11px] font-bold uppercase tracking-[0.08em] text-[#B12535] flex items-center gap-1.5">
-                  <Wine size={14} className="text-[#B12535]" />
+                <span className="tabular-nums text-[11px] font-bold uppercase tracking-[0.08em] text-[#14241D] flex items-center gap-1.5">
+                  <Wine size={14} className="text-[#14241D]" />
                   <span>02 / THE CLUBHOUSE</span>
                 </span>
-                <span className="tabular-nums text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">
+                <span className="tabular-nums text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#14241D]/10 text-[#14241D]">
                   $66 – $68
                 </span>
               </div>
@@ -178,7 +178,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
               <button
                 type="button"
                 onClick={() => (onSelectClubhousePolo ? onSelectClubhousePolo() : onExploreTier('clubhouse'))}
-                className="w-full py-3 px-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 cursor-pointer t-press shadow-xs"
+                className="w-full py-3 px-4 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 cursor-pointer t-press shadow-xs"
               >
                 <span>EXPLORE THE CLUBHOUSE &bull; $66</span>
                 <ArrowRight size={14} />

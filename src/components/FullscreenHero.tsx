@@ -1,7 +1,9 @@
-import React from 'react';
-import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { m } from 'framer-motion';
+import { ArrowRight, RotateCcw } from 'lucide-react';
 import { RiseLines, FadeUp } from './motion/EditorialMotion';
-import { BallFlightReveal } from './motion/HighDrawBespokeMotion';
+import { useMotionPreference } from './motion/MotionProvider';
+import { SPRING_LAYOUT } from '../lib/motion/tokens';
 
 interface FullscreenHeroProps {
   heroImage: string;
@@ -12,275 +14,335 @@ interface FullscreenHeroProps {
   onScrollToWhy: () => void;
 }
 
+type HeroMarkOption = {
+  id: 'mark-monogram' | 'mark-only' | 'mark-wordmark';
+  label: string;
+  caption: string;
+};
+
+type HeroSwatchOption = {
+  id: 'navy' | 'white' | 'heather';
+  label: string;
+  hex: string;
+  tierLabel: string;
+  price: number;
+  getSrc: (mark: HeroMarkOption['id']) => string;
+  target: 'mens' | 'clubhouse';
+};
+
+const HERO_MARKS: HeroMarkOption[] = [
+  { id: 'mark-monogram', label: 'H | D Crest', caption: 'Signature Monogram' },
+  { id: 'mark-only', label: 'The Tracer', caption: 'Ball Flight + Pin' },
+  { id: 'mark-wordmark', label: 'Wordmark', caption: 'Full High Draw Lockup' },
+];
+
+const HERO_SWATCHES: HeroSwatchOption[] = [
+  {
+    id: 'navy',
+    label: 'Midnight Navy',
+    hex: '#1E293B',
+    tierLabel: 'Weekender Micropique',
+    price: 48,
+    getSrc: mark => `/assets/products/printify_mockups/high-draw-weekender-men-s-polo-${mark}--true-navy.jpg`,
+    target: 'mens',
+  },
+  {
+    id: 'heather',
+    label: 'Aegean Heather',
+    hex: '#4A6B82',
+    tierLabel: 'Clubhouse Fine Pique',
+    price: 66,
+    getSrc: mark => `/assets/products/printify_mockups/high-draw-clubhouse-men-s-polo-${mark}--aegean-blue-heather.jpg`,
+    target: 'clubhouse',
+  },
+  {
+    id: 'white',
+    label: 'Crisp White',
+    hex: '#FFFFFF',
+    tierLabel: 'Weekender Micropique',
+    price: 48,
+    getSrc: mark => `/assets/products/printify_mockups/high-draw-weekender-men-s-polo-${mark}--white.jpg`,
+    target: 'mens',
+  },
+];
+
 export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
   heroImage,
   onScrollToShop,
   onShopMens,
-  onShopWomens,
   onShopClubhouse,
   onScrollToWhy,
 }) => {
+  const { isReduced } = useMotionPreference();
+  const [selectedMark, setSelectedMark] = useState<HeroMarkOption['id']>('mark-monogram');
+  const [selectedSwatchId, setSelectedSwatchId] = useState<HeroSwatchOption['id']>('navy');
+  const [flightKey, setFlightKey] = useState(0);
+
+  const activeSwatch = HERO_SWATCHES.find(s => s.id === selectedSwatchId) || HERO_SWATCHES[0];
+  const activeMark = HERO_MARKS.find(m => m.id === selectedMark) || HERO_MARKS[0];
+  const previewSrc = activeSwatch.getSrc(selectedMark);
+
+  const handleOpenSelectedGarment = () => {
+    if (activeSwatch.target === 'clubhouse' && onShopClubhouse) {
+      onShopClubhouse();
+      return;
+    }
+    if (onShopMens) {
+      onShopMens();
+      return;
+    }
+    onScrollToShop();
+  };
+
   return (
-    <div>
-      <section className="relative w-full min-h-[700px] lg:h-[88vh] lg:max-h-[900px] flex items-end lg:items-center justify-between overflow-hidden bg-[#15191E] text-white py-14 lg:py-0">
-        
-        {/* Picture-Heavy Full Bleed Lifestyle Photography (LCP Candidate) */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={heroImage} 
-            alt="High Draw Golf Tour Performance Lifestyle" 
-            {...({ fetchpriority: 'high' } as any)}
-            className="w-full h-full object-cover object-top sm:object-center transition-all duration-700 brightness-95"
-          />
-          {/* Luxury Multi-Stop Editorial Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#15191E] via-[#15191E]/65 to-black/25 sm:bg-gradient-to-r sm:from-[#15191E]/95 sm:via-[#15191E]/55 sm:to-black/20"></div>
-        </div>
+    <section className="relative w-full min-h-[720px] lg:min-h-[86vh] flex items-center overflow-hidden bg-[#111916] text-white py-20 lg:py-24">
+      {/* Full-Bleed Coastal Course Photography (LCP Candidate) */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroImage}
+          alt="Morning golf round overlooking coastal fairways"
+          fetchPriority="high"
+          className="w-full h-full object-cover object-center brightness-[0.88]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0F1814] via-[#0F1814]/70 to-[#0F1814]/30 lg:bg-gradient-to-r lg:from-[#0F1814]/92 lg:via-[#0F1814]/62 lg:to-[#0F1814]/25" />
+      </div>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end lg:items-center">
-          
-          {/* LEFT: Hero Editorial Content & Men's / Women's / Clubhouse Action Suite */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            
-            {/* Official Brand Badge with Signature Mark + Monogram */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wider text-slate-100 shadow-xl">
-              <img 
-                src="/assets/brand/logos/mark_monogram_cyan.png" 
-                alt="High Draw Mark + Monogram" 
-                className="h-5 w-auto object-contain" 
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        {/* LEFT: Quiet Editorial Authority — One Headline, One Promise, One Primary Action */}
+        <div className="lg:col-span-7 space-y-7 text-left">
+          <p className="text-xs font-medium tracking-[0.14em] uppercase text-[#7DD3FC]">
+            Founded in Oxford, Mississippi &middot; Stitched to Order
+          </p>
+
+          <div className="space-y-5">
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-[68px] font-normal leading-[1.04] text-white tracking-[-0.018em]">
+              <RiseLines
+                immediate
+                lines={[
+                  'Designed for Sport.',
+                  <span key="sub" className="italic font-light text-stone-200">
+                    Crafted for Life.
+                  </span>,
+                ]}
               />
-              <span className="tabular-nums text-[11px] tracking-wider text-[#38BDF8] uppercase font-bold">
-                WEEKENDER ($48) &amp; THE CLUBHOUSE ($66) &bull; BESPOKE EMBROIDERY
-              </span>
-            </div>
+            </h1>
 
-            {/* Luxury Editorial Headline */}
-            <div className="space-y-3">
-              <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.02] text-white drop-shadow-lg tracking-tight">
-                <RiseLines
-                  immediate
-                  lines={[
-                    'Designed for Sport.',
-                    <span key="sub" className="font-normal italic text-slate-200">
-                      Crafted for Life.
-                    </span>,
-                  ]}
-                />
-              </h1>
-              <FadeUp immediate delay={0.25}>
-                <p className="text-base sm:text-lg text-slate-200 max-w-xl font-normal leading-relaxed pt-1">
-                  Pro-shop quality, made to order. Choose the featherweight UPF 50+ <strong>Weekender ($48)</strong> for hot summer rounds or heathered 57/43 cotton-poly <strong>Clubhouse Fine Pique ($66)</strong> for evening dining—stitched to order with your choice of 3 signature High Draw chest marks.
-                </p>
-              </FadeUp>
-            </div>
-
-            {/* Primary Action Suite: SHOP POLOS + Direct Men's / Women's / Clubhouse Selection */}
-            <FadeUp immediate delay={0.35} className="pt-2 space-y-3">
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <button
-                  onClick={onShopMens || onScrollToShop}
-                  className="px-7 py-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.08em] transition-all rounded-xs shadow-2xl flex items-center justify-center gap-2.5 group t-press active:scale-95 cursor-pointer"
-                >
-                  <span>MEN&rsquo;S POLOS &bull; $48</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </button>
-
-                {/* Split Women's & Clubhouse Quick Decision Suite */}
-                <div className="grid grid-cols-2 gap-2.5 sm:flex sm:items-center">
-                  <button
-                    onClick={onShopWomens || onScrollToShop}
-                    className="px-5 py-4 bg-white/15 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-white/30 font-bold text-xs uppercase tracking-[0.13em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press"
-                  >
-                    <span>WOMEN&rsquo;S</span>
-                    <ArrowRight size={13} />
-                  </button>
-
-                  <button
-                    onClick={onShopClubhouse || onScrollToShop}
-                    className="px-5 py-4 bg-[#1C2C24]/85 hover:bg-white text-white hover:text-[#15191E] backdrop-blur-md border border-[#38BDF8]/40 font-bold text-xs uppercase tracking-[0.13em] transition-all rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg t-press"
-                  >
-                    <span>CLUBHOUSE &bull; $66</span>
-                    <ArrowRight size={13} />
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 pt-1">
-                <button
-                  onClick={onScrollToWhy}
-                  className="text-[11px] tabular-nums uppercase tracking-[0.08em] text-[#38BDF8] hover:text-white link-swipe cursor-pointer transition-colors"
-                >
-                  Explore The Craftsmanship Lab &rarr;
-                </button>
-                <span className="text-white/30 hidden sm:inline">&bull;</span>
-                <span className="text-[11px] tabular-nums text-slate-300">
-                  Available in Men&rsquo;s XS–4XL &amp; Women&rsquo;s XS–4XL
-                </span>
-              </div>
+            <FadeUp immediate delay={0.2}>
+              <p className="text-base sm:text-lg text-stone-200/95 max-w-xl leading-relaxed font-normal">
+                The polo you&rsquo;d pay $120 for in a club pro shop, made to order from $48. Built with a relaxed athletic drape, stay-flat collar, and your choice of three embroidered chest marks.
+              </p>
             </FadeUp>
-
-            {/* Direct Reassurance Micro-Copy */}
-            <div className="flex flex-wrap items-center gap-6 pt-2 text-[12px] text-slate-300 font-medium">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-                <span>Two fabrics. One standard.</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-                <span>3 Signature Embroidered Marks</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={15} className="text-emerald-400 shrink-0" />
-                <span>100+ Washes Guarantee</span>
-              </div>
-            </div>
-
           </div>
 
-          {/* RIGHT: Elevated Bespoke 3-Mark Embroidery Suite Card */}
-          <div className="lg:col-span-5 hidden md:block">
-            <BallFlightReveal delay={0.2}>
-              <div className="bg-[#15191E]/85 backdrop-blur-xl border border-white/20 rounded-xs p-6 shadow-2xl space-y-4">
-                <div className="flex items-center justify-between border-b border-white/15 pb-3">
-                  <div className="flex items-center gap-2">
-                    <Sparkles size={14} className="text-[#38BDF8]" />
-                    <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#38BDF8] font-bold">
-                      BESPOKE 3-MARK CHEST SUITE
-                    </span>
-                  </div>
-                  <span className="tabular-nums text-[10px] text-emerald-400 uppercase font-semibold">
-                    Included ($0)
+          {/* Focused Conversion CTA Pair (Eliminates 4-Link Redundancy) */}
+          <FadeUp immediate delay={0.3} className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+            <button
+              type="button"
+              onClick={onScrollToShop}
+              className="px-8 py-4 bg-white hover:bg-stone-100 text-[#14241D] font-semibold text-[13px] tracking-[0.05em] uppercase transition-colors rounded-xs shadow-xl flex items-center justify-center gap-2.5 group cursor-pointer t-press"
+            >
+              <span>Shop the Collection</span>
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              type="button"
+              onClick={onScrollToWhy}
+              className="px-7 py-4 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/25 font-medium text-[13px] tracking-[0.04em] transition-colors rounded-xs flex items-center justify-center gap-2 cursor-pointer t-press"
+            >
+              <span>Craft &amp; Fabric Standard</span>
+            </button>
+          </FadeUp>
+
+          {/* Quiet Proof Line */}
+          <div className="pt-3 border-t border-white/15 max-w-xl flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-stone-300">
+            <span>Men&rsquo;s &amp; Women&rsquo;s XS–4XL</span>
+            <span className="text-white/30">&middot;</span>
+            <span>Save $10 + Free Shipping on Any 2 Polos</span>
+            <span className="text-white/30">&middot;</span>
+            <span>100+ Washes Guaranteed</span>
+          </div>
+        </div>
+
+        {/* RIGHT: Converting Ball-Flight-to-Embroidery Interactive Polo Stage */}
+        <div className="lg:col-span-5">
+          <div className="bg-[#FAF9F6] text-[#151B23] rounded-xs p-5 sm:p-6 shadow-2xl border border-white/20 space-y-4">
+            {/* Top Header + Flight Replay */}
+            <div className="flex items-center justify-between gap-2 pb-3 border-b border-stone-200">
+              <div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-500 block">
+                  The Signature Shot &amp; Mark
+                </span>
+                <p className="font-serif text-lg text-[#151B23] leading-snug">
+                  Starts right. Peaks high. Draws to the pin.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFlightKey(k => k + 1)}
+                className="p-2 rounded-xs text-stone-500 hover:text-[#14241D] hover:bg-stone-200/60 transition-colors cursor-pointer"
+                title="Replay High Draw ball flight"
+                aria-label="Replay High Draw ball flight"
+              >
+                <RotateCcw size={15} />
+              </button>
+            </div>
+
+            {/* Split Visual: Live Ball-Flight Mini-Arc + Real Stitched Polo Preview */}
+            <div className="grid grid-cols-12 gap-3.5 items-center">
+              {/* Left 5 cols: Authentic Golfer's-Eye High Draw Trajectory */}
+              <div
+                key={flightKey}
+                className="col-span-5 h-48 rounded-xs bg-[#14241D] relative overflow-hidden p-3 flex flex-col justify-between text-white"
+              >
+                <span className="text-[10px] tracking-[0.08em] uppercase text-stone-300/90 z-10">
+                  Ball Flight
+                </span>
+
+                <svg
+                  viewBox="0 0 180 180"
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  {/* Horizon & Putting Green Oval */}
+                  <ellipse cx="78" cy="40" rx="28" ry="8" fill="rgba(255,255,255,0.08)" />
+                  {/* Flagstick & Pin at Target (78, 40) */}
+                  <line x1="78" y1="40" x2="78" y2="18" stroke="#FAF9F6" strokeWidth="1.4" />
+                  <path d="M 78 18 L 91 23 L 78 27 Z" fill="#38BDF8" />
+
+                  {/* Initial Push Line (Starts Right of Target) */}
+                  <line
+                    x1="86"
+                    y1="158"
+                    x2="138"
+                    y2="42"
+                    stroke="rgba(255,255,255,0.18)"
+                    strokeDasharray="3 4"
+                    strokeWidth="1"
+                  />
+
+                  {/* True Right-to-Left High Draw Curve: Tee (86,158) -> Right Apex (142,68) -> Pin (78,40) */}
+                  <m.path
+                    d="M 86 158 C 122 122, 148 64, 78 40"
+                    stroke="#38BDF8"
+                    strokeWidth="2.6"
+                    strokeLinecap="round"
+                    initial={isReduced ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0.4 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.35, ease: [0.2, 0.9, 0.3, 1] }}
+                  />
+
+                  {/* Pin-Seek Landing Ring */}
+                  <m.circle
+                    cx="78"
+                    cy="40"
+                    r="5"
+                    stroke="#7DD3FC"
+                    strokeWidth="1.5"
+                    fill="#FAF9F6"
+                    initial={isReduced ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: isReduced ? 0 : 1.15, duration: 0.3 }}
+                  />
+                  {/* Tee Marker */}
+                  <circle cx="86" cy="158" r="2.5" fill="rgba(255,255,255,0.65)" />
+                </svg>
+
+                <span className="text-[10px] text-[#7DD3FC] z-10 font-medium">
+                  {activeMark.label}
+                </span>
+              </div>
+
+              {/* Right 7 cols: Crisp Stitched Studio Garment Preview */}
+              <div
+                onClick={handleOpenSelectedGarment}
+                className="col-span-7 h-48 rounded-xs bg-white border border-stone-200/90 relative overflow-hidden cursor-pointer group flex items-center justify-center p-2"
+              >
+                <img
+                  src={previewSrc}
+                  alt={`${activeSwatch.label} polo with ${activeMark.label} embroidery`}
+                  fetchPriority="low"
+                  loading="lazy"
+                  width={320}
+                  height={320}
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+                <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-[#14241D]/90 text-white text-[10px] tabular-nums font-medium rounded-2xs">
+                  ${activeSwatch.price}
+                </span>
+              </div>
+            </div>
+
+            {/* Interactive 3-Mark Switcher */}
+            <div className="space-y-2">
+              <div className="grid grid-cols-3 gap-1.5 bg-stone-200/70 p-1 rounded-xs">
+                {HERO_MARKS.map(mk => {
+                  const active = selectedMark === mk.id;
+                  return (
+                    <button
+                      key={mk.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedMark(mk.id);
+                        setFlightKey(k => k + 1);
+                      }}
+                      className={`relative py-2 px-2 text-[11px] font-semibold rounded-2xs transition-colors cursor-pointer ${
+                        active ? 'text-white' : 'text-stone-600 hover:text-[#151B23]'
+                      }`}
+                    >
+                      {active && (
+                        <m.span
+                          layoutId={isReduced ? undefined : 'hero-mark-pill'}
+                          transition={SPRING_LAYOUT}
+                          className="absolute inset-0 bg-[#14241D] rounded-2xs shadow-xs"
+                        />
+                      )}
+                      <span className="relative z-10">{mk.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Colorway Swatches + Direct Customize Conversion Link */}
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center gap-2">
+                  {HERO_SWATCHES.map(sw => {
+                    const active = selectedSwatchId === sw.id;
+                    return (
+                      <button
+                        key={sw.id}
+                        type="button"
+                        onClick={() => setSelectedSwatchId(sw.id)}
+                        title={`${sw.label} (${sw.tierLabel})`}
+                        aria-label={`Preview ${sw.label}`}
+                        style={{ backgroundColor: sw.hex }}
+                        className={`w-5 h-5 rounded-full border transition-transform cursor-pointer ${
+                          active
+                            ? 'ring-2 ring-offset-2 ring-[#14241D] border-white scale-110'
+                            : 'border-stone-300 hover:scale-110'
+                        }`}
+                      />
+                    );
+                  })}
+                  <span className="text-xs text-stone-600 ml-1">
+                    {activeSwatch.label}
                   </span>
                 </div>
 
-                <div className="space-y-1">
-                  <h3 className="font-serif text-xl font-bold text-white">
-                    Stitched to Order on Every Silhouette
-                  </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Select any of our 3 official High Draw chest marks—calibrated to 2.25&Prime; on Men&rsquo;s cuts and 1.75&Prime; lower-aligned on Women&rsquo;s cuts.
-                  </p>
-                </div>
-
-                {/* 3 Official Chest Lockups Visual Stack */}
-                <div className="space-y-2.5">
-                  <div
-                    onClick={onScrollToShop}
-                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center justify-between gap-3 t-press"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-12 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                        <img
-                          src="/assets/brand/logos/mark_monogram_white.png"
-                          alt="Mark + Monogram"
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold text-white block truncate">Mark + Monogram (H | D)</span>
-                        <span className="text-[10px] tabular-nums text-[#38BDF8] uppercase block">Signature Crest &bull; H &middot; Tracer &middot; D</span>
-                      </div>
-                    </div>
-                    <span className="text-[9px] tabular-nums uppercase px-2 py-0.5 bg-[#38BDF8]/15 text-[#38BDF8] rounded-2xs shrink-0 font-bold">
-                      POPULAR
-                    </span>
-                  </div>
-
-                  <div
-                    onClick={onScrollToShop}
-                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center justify-between gap-3 t-press"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-12 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                        <img
-                          src="/assets/brand/logos/mark_only_white.png"
-                          alt="Mark-Only"
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold text-white block truncate">The Tracer</span>
-                        <span className="text-[10px] tabular-nums text-slate-300 uppercase block">Minimalist Tour Ball Flight + Pin</span>
-                      </div>
-                    </div>
-                    <ArrowRight size={13} className="text-slate-400 shrink-0" />
-                  </div>
-
-                  <div
-                    onClick={onScrollToShop}
-                    className="p-3 rounded-xs bg-[#1E293B]/90 border border-white/15 hover:border-[#38BDF8] transition-all cursor-pointer flex items-center justify-between gap-3 t-press"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-12 h-11 rounded-2xs bg-[#0F172A] border border-white/10 flex items-center justify-center shrink-0 p-1.5">
-                        <img
-                          src="/assets/brand/logos/mark_text_white.png"
-                          alt="Mark + Wordmark"
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold text-white block truncate">Mark + Wordmark</span>
-                        <span className="text-[10px] tabular-nums text-slate-300 uppercase block">The full High Draw wordmark</span>
-                      </div>
-                    </div>
-                    <ArrowRight size={13} className="text-slate-400 shrink-0" />
-                  </div>
-                </div>
-
-                {/* Contrast Calibration Footer */}
-                <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
-                  <div className="flex items-center gap-2">
-                    <span className="tabular-nums text-[10px] uppercase text-slate-400">Contrast Thread:</span>
-                    <span className="w-3.5 h-3.5 rounded-full bg-white border border-white/40" title="Crisp White Thread on Dark & Heathered Garments" />
-                    <span className="w-3.5 h-3.5 rounded-full bg-[#00A3FF] border border-white/40" title="Light Blue Tracer Thread on Crisp White Garments" />
-                  </div>
-                  <span className="tabular-nums text-[10px] text-emerald-400 font-semibold">Free US Shipping $75+</span>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleOpenSelectedGarment}
+                  className="text-xs font-semibold text-[#14241D] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Customize</span>
+                  <ArrowRight size={13} />
+                </button>
               </div>
-            </BallFlightReveal>
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* Sub-Hero 4-Column Luxury Architecture Ribbon */}
-      <div className="bg-[#1C2C24] text-white border-b border-slate-800 py-6 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-xs">
-          
-          <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">01</span>
-            <div>
-              <span className="font-bold text-white uppercase tracking-wider block text-[11px]">Weekender &bull; $48</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">180 GSM UPF 50+ micropique engineered for hot summer rounds.</span>
             </div>
           </div>
-
-          <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">02</span>
-            <div>
-              <span className="font-bold text-white uppercase tracking-wider block text-[11px]">The Clubhouse &bull; $66</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">57/43 combed cotton-poly fine pique heathers &amp; $68 fleece 1/4-zip.</span>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">03</span>
-            <div>
-              <span className="font-bold text-white uppercase tracking-wider block text-[11px]">3 Signature Marks</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">Choose Mark + Monogram, Mark-Only, or Mark + Wordmark at $0 extra.</span>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">04</span>
-            <div>
-              <span className="font-bold text-white uppercase tracking-wider block text-[11px]">100+ Washes Guarantee</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">30-Day Fairway Trial. Holds its shape for 100+ washes. Guaranteed.</span>
-            </div>
-          </div>
-
         </div>
       </div>
-    </div>
+    </section>
   );
 };

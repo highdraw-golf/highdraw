@@ -45,7 +45,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
         {/* Modal Header */}
         <div className="bg-[#090C10] text-white p-6 hairline-b flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#C03221] text-white rounded-sm">
+            <div className="p-2 bg-[#14241D] text-white rounded-sm">
               <Compass size={18} />
             </div>
             <div>
@@ -81,7 +81,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
 
                 {/* Badge */}
                 <div className="absolute top-4 left-4 bg-[#090C10]/90 border border-white/10 text-white tabular-nums text-[9px] uppercase tracking-[0.08em] px-3 py-1 flex items-center gap-1.5">
-                  <Users size={12} className="text-[#C03221]" />
+                  <Users size={12} className="text-[#14241D]" />
                   <span>FOURSOME MATCH KIT &bull; 4 POLOS + 4 ROPE CAPS</span>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
             <div className="md:col-span-5 space-y-6">
               
               <div>
-                <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block mb-1">
+                <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#14241D] font-semibold block mb-1">
                   PLAYER SIZING SETUP
                 </span>
                 <h3 className="font-serif text-xl text-[#090C10] font-medium">
@@ -156,7 +156,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
               {/* Share Actions */}
               <div className="hairline-all bg-[#FBFBFA] p-4 space-y-3">
                 <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#090C10] font-semibold flex items-center gap-1.5">
-                  <Share2 size={12} className="text-[#C03221]" />
+                  <Share2 size={12} className="text-[#14241D]" />
                   <span>SHARE WITH YOUR FOURSOME</span>
                 </div>
 

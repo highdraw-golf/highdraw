@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "high-draw-golf",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "upload_source_maps": true,
+  // Static assets in ./dist are served directly at Cloudflare's edge for $0 (unlimited static bandwidth).
+  // Only /api/* and social crawler deep-link metadata checks invoke the Worker (100,000 free/day).
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*",
+      "/products/*",
+      "/collections/*",
+      "/pages/*",
+      "/semi"
+    ]
+  },
+  "vars": {
+    "PRINTIFY_SHOP_ID": "29111523"
+  }
+  // Secrets (set once via `npx wrangler secret put <NAME>`):
+  // - STRIPE_SECRET_KEY
+  // - PRINTIFY_API_TOKEN
+  // - OWNER_PIN_HASH (optional custom SHA-256 PIN override)
+}

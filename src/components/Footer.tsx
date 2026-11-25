@@ -213,7 +213,7 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="flex items-center gap-2">
                 {modalType === 'guarantee' && <ShieldCheck className="text-emerald-700" size={20} />}
                 {modalType === 'shipping' && <Truck className="text-[#38BDF8]" size={20} />}
-                {modalType === 'privacy' && <Lock className="text-[#B12535]" size={20} />}
+                {modalType === 'privacy' && <Lock className="text-[#14241D]" size={20} />}
                 {modalType === 'terms' && <FileText className="text-slate-700" size={20} />}
                 <h3 className="font-serif text-xl font-bold">
                   {modalType === 'guarantee' && '30-Day Fairway Guarantee'}

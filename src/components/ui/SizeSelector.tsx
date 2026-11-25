@@ -25,7 +25,7 @@ export const SizeSelector: React.FC<SizeSelectorProps> = ({
           <button
             type="button"
             onClick={onOpenSizeGuide}
-            className="text-slate-500 hover:text-[#B12535] underline font-semibold text-[11px] cursor-pointer"
+            className="text-slate-500 hover:text-[#14241D] underline font-semibold text-[11px] cursor-pointer"
           >
             Find My Fit / Size Guide
           </button>

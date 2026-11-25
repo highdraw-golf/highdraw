@@ -56,7 +56,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
           {/* Campaign Style Toggle Badge */}
           <div className="absolute top-8 left-8 flex items-center gap-2">
             <div className="bg-[#090C10]/90 backdrop-blur-md px-4 py-2 border border-white/10 tabular-nums text-[10px] uppercase tracking-[0.08em] text-white flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C03221]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#14241D]"></span>
               <span>LOOKBOOK: {campaignStyle === 'veranda' ? 'VERANDA EDITION' : 'ARCHITECTURAL TWILIGHT'}</span>
             </div>
 
@@ -72,7 +72,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
           {/* Overlay Statement */}
           <div className="relative z-10 space-y-4 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C03221] text-white tabular-nums text-[10px] uppercase tracking-[0.08em]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#14241D] text-white tabular-nums text-[10px] uppercase tracking-[0.08em]">
               <Zap size={11} />
               <span>THE SMART VALUE PLAY</span>
             </div>
@@ -92,7 +92,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
             
             {/* Dossier Header */}
             <div>
-              <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold mb-2">
+              <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#14241D] font-semibold mb-2">
                 DOSSIER // EDITION 001
               </div>
               <h2 className="font-serif text-3xl md:text-4xl text-[#090C10] font-medium leading-tight">
@@ -206,7 +206,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
               onClick={onOpenConcierge}
               className="w-full btn-outline py-3.5 text-[11px] tracking-[0.08em] flex items-center justify-center gap-2"
             >
-              <Compass size={14} className="text-[#C03221]" />
+              <Compass size={14} className="text-[#14241D]" />
               <span>FOURSOME CONCIERGE & SCRAMBLE KITS</span>
             </button>
 

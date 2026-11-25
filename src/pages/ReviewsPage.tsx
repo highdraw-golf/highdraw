@@ -200,7 +200,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
               onChange={e => setComment(e.target.value)} 
               className="w-full bg-white border border-slate-300 p-2.5 text-xs rounded"
             />
-            <button type="submit" className="px-6 py-3 bg-[#B12535] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer">
+            <button type="submit" className="px-6 py-3 bg-[#14241D] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer">
               {submitted ? 'REVIEW POSTED!' : 'SUBMIT REVIEW'}
             </button>
           </form>
@@ -254,7 +254,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
           </p>
           <button
             onClick={onGoToShop}
-            className="px-8 py-3.5 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2"
+            className="px-8 py-3.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2"
           >
             <span>SHOP THE TOUR COLLECTION</span>
             <ArrowRight size={16} />

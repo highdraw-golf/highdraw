@@ -9,7 +9,7 @@
   --color-surface: #F8F9FA;
   --color-obsidian: #090C10;
   --color-navy: #0D1B2A;
-  --color-crimson: #C03221;
+  --color-crimson: #14241D;
 }
 
 :root {
@@ -40,7 +40,7 @@ body {
 }
 
 .btn-primary {
-  background-color: #C03221;
+  background-color: #14241D;
   color: #FFFFFF;
   font-family: var(--font-sans);
   font-weight: 600;
@@ -56,7 +56,7 @@ body {
   gap: 8px;
 }
 .btn-primary:hover {
-  background-color: #a62519;
+  background-color: #0c1712;
 }
 
 .btn-secondary {

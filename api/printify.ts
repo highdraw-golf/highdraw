@@ -12,14 +12,12 @@ export interface ApiResponse {
   end(): unknown;
 }
 
-const PRINTIFY_API_TOKEN = process.env.PRINTIFY_API_TOKEN || "";
-const PRINTIFY_SHOP_ID = process.env.PRINTIFY_SHOP_ID || "29111523";
-
 const ALLOWED_ORIGINS = new Set([
   'https://www.highdrawgear.com',
   'https://highdrawgear.com',
   'https://highdraw.vercel.app',
   'http://localhost:5173',
+  'http://localhost:8787',
   'http://localhost:3000',
 ]);
 
@@ -29,10 +27,15 @@ function isAllowedOrigin(origin: string | undefined): boolean {
   if (/^https:\/\/highdraw-[a-z0-9]+-high-draw-gear\.vercel\.app$/.test(origin)) {
     return true;
   }
+  if (/^https:\/\/high-draw-golf(\.[a-z0-9-]+)?\.workers\.dev$/.test(origin)) {
+    return true;
+  }
   return false;
 }
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
+  const PRINTIFY_API_TOKEN = process.env.PRINTIFY_API_TOKEN || '';
+  const PRINTIFY_SHOP_ID = process.env.PRINTIFY_SHOP_ID || '29111523';
   const rawOrigin = req.headers.origin;
   const requestOrigin = Array.isArray(rawOrigin) ? rawOrigin[0] : rawOrigin;
   const corsOrigin = isAllowedOrigin(requestOrigin) ? requestOrigin! : 'https://www.highdrawgear.com';

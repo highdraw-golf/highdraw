@@ -8,7 +8,7 @@ interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onNavigate: (
-    view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about',
+    view: 'home' | 'collection' | 'craftsmanship' | 'reviews' | 'guarantee' | 'about' | 'semi',
     category?: 'all' | 'polos' | 'outerwear' | 'headwear' | 'bundles',
     tier?: 'all' | 'weekender' | 'clubhouse' | 'tournament'
   ) => void;
@@ -19,124 +19,131 @@ export const Header: React.FC<HeaderProps> = ({
   cartCount,
   onOpenCart,
   onNavigate,
-  tickerText = 'FREE US SHIPPING OVER $75 • WEEKENDER ($48) & THE CLUBHOUSE ($66)',
+  tickerText = 'Complimentary US Shipping on 2+ Polos ($75+) • Save $10 Automatically on Any Pair',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isReduced } = useMotionPreference();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-b border-slate-200 text-[#1A1F26] transition-all">
-      
-      {/* Top Announcement Ticker */}
-      <div className="bg-[#1C2C24] text-white py-2 px-4 text-center text-[11px] font-semibold tracking-wider flex items-center justify-center gap-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] shrink-0"></span>
-        <span className="uppercase truncate">{tickerText}</span>
-        <span className="hidden md:inline opacity-40">&bull;</span>
-        <span className="hidden md:inline text-slate-300">MEN&rsquo;S &amp; WOMEN&rsquo;S BESPOKE GOLF APPAREL</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF9F6]/95 backdrop-blur-md border-b border-stone-200/90 text-[#151B23] transition-colors">
+      {/* Quiet Top Announcement Bar */}
+      <div className="bg-[#14241D] text-stone-100 py-2 px-4 text-center text-[11.5px] font-medium tracking-[0.03em] flex items-center justify-center gap-2.5">
+        <span className="truncate">{tickerText}</span>
+        <span className="hidden md:inline text-stone-400">&middot;</span>
+        <span className="hidden md:inline text-stone-300">Stitched to Order in the USA</span>
       </div>
 
-      {/* Main Single-Line Navbar: Logo on Far Left */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4 lg:gap-6">
-        
-        {/* FAR LEFT: Official High Draw Mark + Monogram & Wordmark */}
-        <div 
-          className="flex items-center gap-3 cursor-pointer select-none shrink-0"
+      {/* Main Single-Line Editorial Navbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4 lg:gap-8">
+        {/* Brand Lockup */}
+        <button
+          type="button"
+          className="flex items-center gap-3 cursor-pointer select-none shrink-0 text-left bg-transparent border-0 p-0"
           onClick={() => onNavigate('home')}
           title="High Draw Golf — Home"
         >
-          <img 
-            src="/assets/brand/logos/mark_monogram_cyan.png" 
-            alt="High Draw Official Mark + Monogram" 
-            className="h-11 w-auto object-contain hover:scale-105 transition-transform"
+          <img
+            src="/assets/brand/logos/mark_monogram_black.png"
+            alt="High Draw Mark + Monogram"
+            width={34}
+            height={44}
+            className="h-10 w-auto object-contain"
           />
           <div className="flex flex-col">
-            <span className="font-serif text-2xl font-black tracking-[0.08em] text-[#1A1F26] uppercase leading-none">
-              HIGH DRAW
+            <span className="font-serif text-[22px] font-medium tracking-[0.06em] text-[#151B23] uppercase leading-none">
+              High Draw
             </span>
-            <span className="text-[9px] tabular-nums tracking-[0.08em] text-slate-500 uppercase mt-0.5">
-              GOLF APPAREL CO.
+            <span className="text-[10px] tracking-[0.12em] text-stone-500 uppercase mt-1 font-medium">
+              Oxford &middot; Golf Apparel
             </span>
           </div>
-        </div>
+        </button>
 
-        {/* CENTER / NAVIGATION LINKS: Direct 3-Tier & Category Navigation */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-bold uppercase tracking-wider text-slate-700">
-          <button 
-            onClick={() => onNavigate('collection', 'polos', 'weekender')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
+        {/* Clean Center Navigation — Zero Price Chips */}
+        <nav
+          aria-label="Primary"
+          className="hidden lg:flex items-center gap-7 xl:gap-9 text-[13px] font-medium text-stone-700"
+        >
+          <button
+            type="button"
+            onClick={() => onNavigate('collection', 'polos', 'weekender')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            <span>WEEKENDER</span>
-            <span className="tabular-nums text-[10px] px-1.5 py-0.5 rounded-2xs bg-slate-100 text-slate-600">$48</span>
+            Weekender Polos
           </button>
-          <button 
-            onClick={() => onNavigate('collection', 'all', 'clubhouse')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
+          <button
+            type="button"
+            onClick={() => onNavigate('collection', 'all', 'clubhouse')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            <span>THE CLUBHOUSE</span>
-            <span className="tabular-nums text-[10px] px-1.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">$66</span>
+            The Clubhouse
           </button>
-          <button 
-            onClick={() => onNavigate('collection', 'outerwear', 'all')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
+          <button
+            type="button"
+            onClick={() => onNavigate('collection', 'outerwear', 'all')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            1/4-ZIP FLEECE
+            Quarter-Zips &amp; Caps
           </button>
-          <button 
-            onClick={() => onNavigate('collection', 'headwear', 'all')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
+          <button
+            type="button"
+            onClick={() => onNavigate('collection', 'bundles', 'all')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            CAPS
+            Foursome Kits
           </button>
-          <button 
-            onClick={() => onNavigate('about')} 
-            className="text-[#1C2C24] hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
+          <button
+            type="button"
+            onClick={() => onNavigate('semi')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]"></span>
-            OUR STORY
+            Women&rsquo;s Lookbook
           </button>
-          <button 
-            onClick={() => onNavigate('reviews')} 
-            className="hover:text-[#B12535] transition-colors py-2 cursor-pointer"
+          <button
+            type="button"
+            onClick={() => onNavigate('about')}
+            className="hover:text-[#14241D] transition-colors py-2 cursor-pointer"
           >
-            REVIEWS
+            Our Story
           </button>
         </nav>
 
-        {/* FAR RIGHT: Direct Action Suite */}
-        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+        {/* Right Action Suite */}
+        <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
           <button
+            type="button"
             onClick={() => onNavigate('collection', 'all', 'all')}
-            className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-[#B12535] hover:bg-[#8e1d29] text-white text-xs font-bold uppercase tracking-wider transition-all rounded-xs shadow-sm whitespace-nowrap t-press cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-[#14241D] hover:bg-[#0c1712] text-white text-xs font-semibold tracking-[0.06em] uppercase transition-colors rounded-xs cursor-pointer t-press"
           >
-            <span>SHOP COLLECTION</span>
+            <span>Shop All</span>
             <ArrowRight size={14} />
           </button>
 
           <button
+            type="button"
             onClick={onOpenCart}
-            className="relative p-2.5 text-[#1A1F26] hover:bg-slate-100 rounded-xs transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider cursor-pointer t-press"
+            className="relative p-2.5 text-[#151B23] hover:bg-stone-200/60 rounded-xs transition-colors flex items-center gap-2 text-xs font-semibold cursor-pointer t-press"
             aria-label={`Shopping Bag (${cartCount} items)`}
           >
-            <ShoppingBag size={21} />
-            <span className="w-5 h-5 rounded-full bg-[#B12535] text-white text-[11px] flex items-center justify-center font-bold">
+            <ShoppingBag size={20} strokeWidth={1.75} />
+            <span className="w-5 h-5 rounded-full bg-[#14241D] text-white text-[11px] tabular-nums flex items-center justify-center font-semibold">
               {cartCount}
             </span>
           </button>
 
-          {/* Mobile Hamburger Toggle */}
-          <button 
+          <button
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-[#1A1F26] p-2 hover:bg-slate-100 rounded-xs cursor-pointer"
+            className="lg:hidden text-[#151B23] p-2 hover:bg-stone-200/60 rounded-xs cursor-pointer"
             aria-label="Toggle Menu"
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <m.div
@@ -144,73 +151,46 @@ export const Header: React.FC<HeaderProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={isReduced ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: DURATION.base, ease: EASE_ACCENT }}
-            className="lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-3.5 text-xs font-bold uppercase tracking-wider text-slate-800 shadow-xl"
+            className="lg:hidden bg-[#FAF9F6] border-b border-stone-200 px-6 py-6 space-y-1 text-sm font-medium text-stone-800 shadow-lg"
           >
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'polos', 'weekender'); }} 
-              className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
-            >
-              <span>01 / WEEKENDER POLOS (MEN&rsquo;S &amp; WOMEN&rsquo;S)</span>
-              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-slate-100 text-[#1C2C24] rounded-2xs">$48</span>
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'all', 'clubhouse'); }} 
-              className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
-            >
-              <span>02 / THE CLUBHOUSE COLLECTION</span>
-              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-[#B12535]/10 text-[#B12535] rounded-2xs">$66–$68</span>
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'all', 'tournament'); }} 
-              className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
-            >
-              <span>03 / TOURNAMENT EDITION WAITLIST</span>
-              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-[#0D1520] text-[#38BDF8] rounded-2xs">SUMMER &rsquo;26</span>
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'outerwear', 'all'); }} 
-              className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] cursor-pointer"
-            >
-              1/4-ZIP FLEECE OUTERWEAR ($68)
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'headwear', 'all'); }} 
-              className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] cursor-pointer"
-            >
-              TOUR PERFORMANCE CAPS ($35)
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'bundles', 'all'); }} 
-              className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] cursor-pointer"
-            >
-              SATURDAY FOURSOME SCRAMBLE KITS ($160)
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('about'); }} 
-              className="w-full text-left py-2 border-b border-slate-100 text-[#1C2C24] font-black hover:text-[#B12535] flex items-center justify-between cursor-pointer"
-            >
-              <span>OUR STORY &bull; DR. KEN CYREE</span>
-              <span className="text-[10px] tabular-nums text-[#38BDF8] bg-[#1C2C24] px-2 py-0.5 rounded-2xs">47 STATES</span>
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('craftsmanship'); }} 
-              className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] cursor-pointer"
-            >
-              THE CRAFTSMANSHIP &amp; COLLAR LAB
-            </button>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onNavigate('reviews'); }} 
-              className="block w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] cursor-pointer"
-            >
-              VERIFIED GOLFER REVIEWS
-            </button>
-            <button
-              onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'all', 'all'); }}
-              className="w-full py-3.5 bg-[#B12535] text-white font-bold text-center mt-2 flex items-center justify-center gap-2 rounded-xs shadow-md cursor-pointer t-press"
-            >
-              <span>EXPLORE FULL COLLECTION</span>
-              <ArrowRight size={14} />
-            </button>
+            {[
+              { label: 'Weekender Polos', sub: '$48', action: () => onNavigate('collection', 'polos', 'weekender') },
+              { label: 'The Clubhouse Collection', sub: '$66–$68', action: () => onNavigate('collection', 'all', 'clubhouse') },
+              { label: 'Quarter-Zip Fleece', sub: '$68', action: () => onNavigate('collection', 'outerwear', 'all') },
+              { label: 'Performance Caps', sub: '$35', action: () => onNavigate('collection', 'headwear', 'all') },
+              { label: 'Foursome Scramble Kits', sub: '$160', action: () => onNavigate('collection', 'bundles', 'all') },
+              { label: "Women's Course Lookbook", sub: 'Editorial', action: () => onNavigate('semi') },
+              { label: 'Our Story — Dr. Ken Cyree', sub: '', action: () => onNavigate('about') },
+              { label: 'Craftsmanship & Fit', sub: '', action: () => onNavigate('craftsmanship') },
+              { label: '100+ Washes Guarantee', sub: '', action: () => onNavigate('guarantee') },
+            ].map(item => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  item.action();
+                }}
+                className="w-full text-left py-3 border-b border-stone-200/70 hover:text-[#14241D] flex items-center justify-between cursor-pointer"
+              >
+                <span>{item.label}</span>
+                {item.sub && (
+                  <span className="tabular-nums text-xs text-stone-500">{item.sub}</span>
+                )}
+              </button>
+            ))}
+            <div className="pt-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onNavigate('collection', 'all', 'all');
+                }}
+                className="w-full py-3.5 bg-[#14241D] text-white text-center font-semibold text-xs uppercase tracking-[0.08em] rounded-xs cursor-pointer"
+              >
+                Shop Full Collection
+              </button>
+            </div>
           </m.div>
         )}
       </AnimatePresence>

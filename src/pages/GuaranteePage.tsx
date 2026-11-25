@@ -78,7 +78,7 @@ export const GuaranteePage: React.FC<GuaranteePageProps> = ({
         <div className="text-center pt-8 border-t border-slate-200">
           <button
             onClick={onGoToShop}
-            className="px-8 py-4 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2"
+            className="px-8 py-4 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-lg inline-flex items-center gap-2"
           >
             <span>SHOP RISK-FREE WITH 30-DAY TRIAL &bull; $48</span>
             <ArrowRight size={16} />

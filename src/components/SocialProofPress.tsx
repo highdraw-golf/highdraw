@@ -28,7 +28,7 @@ export const SocialProofPress: React.FC = () => {
       
       {/* Editorial Press Ticker */}
       <div className="text-center space-y-3 mb-16">
-        <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block">
+        <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#14241D] font-semibold block">
           CRITICAL ACCLAIM & FIELD REVIEWS
         </span>
         <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -52,7 +52,7 @@ export const SocialProofPress: React.FC = () => {
             key={idx}
             className="p-8 bg-[#FBFBFA] hairline-all flex flex-col justify-between space-y-6 relative group hover:border-[#090C10] transition-colors"
           >
-            <Quote size={28} className="text-[#C03221]/20 absolute top-6 right-6" />
+            <Quote size={28} className="text-[#14241D]/20 absolute top-6 right-6" />
 
             <div className="space-y-4 relative z-10">
               <div className="flex text-amber-500 gap-1">

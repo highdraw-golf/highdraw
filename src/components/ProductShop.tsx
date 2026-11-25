@@ -69,7 +69,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
       
       {/* Section Header */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <span className="tabular-nums text-xs uppercase tracking-wider text-[#C03221] font-bold block">
+        <span className="tabular-nums text-xs uppercase tracking-wider text-[#14241D] font-bold block">
           AUTUMN FAIRWAYS CAPSULE 001
         </span>
         <h2 className="font-serif text-3xl sm:text-5xl text-[#090C10] font-normal">
@@ -90,7 +90,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             alt={heroPolo.name} 
             className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
           />
-          <div className="absolute top-4 left-4 bg-[#C03221] text-white tabular-nums text-xs font-bold uppercase tracking-wider px-3 py-1">
+          <div className="absolute top-4 left-4 bg-[#14241D] text-white tabular-nums text-xs font-bold uppercase tracking-wider px-3 py-1">
             HERO PIECE &bull; $48 USD
           </div>
         </div>
@@ -172,7 +172,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             className={`w-full py-4 tabular-nums text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
               addedId === heroPolo.id
                 ? 'bg-emerald-800 text-white'
-                : 'bg-[#C03221] hover:bg-[#a62519] text-white shadow-lg'
+                : 'bg-[#14241D] hover:bg-[#0c1712] text-white shadow-lg'
             }`}
           >
             {addedId === heroPolo.id ? (

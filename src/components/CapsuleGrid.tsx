@@ -64,7 +64,7 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 hairline-b gap-6">
         <div>
-          <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold mb-2">
+          <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#14241D] font-semibold mb-2">
             CURATED CAPSULE // NO SKU CLUTTER
           </div>
           <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -102,7 +102,7 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
                   onClick={onOpenConcierge}
                   className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm hover:bg-[#090C10] hover:text-white text-[#090C10] tabular-nums text-[10px] uppercase tracking-[0.08em] px-3 py-2 border border-slate-200 transition-all flex items-center gap-1.5 shadow-md"
                 >
-                  <Compass size={12} className="text-[#C03221]" />
+                  <Compass size={12} className="text-[#14241D]" />
                   <span>GROUP FIT</span>
                 </button>
               </div>

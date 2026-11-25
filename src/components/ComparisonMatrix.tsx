@@ -39,7 +39,7 @@ export const ComparisonMatrix: React.FC = () => {
     <section id="dossier" className="py-20 px-6 max-w-7xl mx-auto hairline-b bg-[#FBFBFA]">
       
       <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-        <span className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block">
+        <span className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#14241D] font-semibold block">
           THE ECONOMIC ARBITRAGE
         </span>
         <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -57,7 +57,7 @@ export const ComparisonMatrix: React.FC = () => {
         <div className="grid grid-cols-12 bg-[#0D1B2A] text-white p-5 tabular-nums text-[11px] uppercase tracking-[0.08em]">
           <div className="col-span-5 md:col-span-4 text-slate-400">GARMENT METRIC</div>
           <div className="col-span-3 md:col-span-4 text-slate-400 hidden md:block">TYPICAL BRAND ($115)</div>
-          <div className="col-span-7 md:col-span-4 text-[#C03221] font-semibold flex items-center gap-1.5">
+          <div className="col-span-7 md:col-span-4 text-[#14241D] font-semibold flex items-center gap-1.5">
             <Award size={14} />
             <span>HIGH DRAW ($48)</span>
           </div>

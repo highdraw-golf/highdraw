@@ -793,27 +793,48 @@ export function createMarketingGatewayHandler(deps: MarketingGatewayDeps = {}) {
           });
         }
 
-        const promoForm = new URLSearchParams();
-        promoForm.append('coupon', String(couponData.id));
-        promoForm.append('code', rawCode);
-        if (minOrderDollars > 0) {
-          promoForm.append('restrictions[minimum_amount]', String(minOrderDollars * 100));
-          promoForm.append('restrictions[minimum_amount_currency]', 'usd');
-        }
-        promoForm.append('metadata[channel]', channel);
-        promoForm.append('metadata[campaign]', campaign);
-        promoForm.append('metadata[created_by]', 'command_center');
-        if (notes) promoForm.append('metadata[notes]', notes);
+        const buildPromoForm = (useModernParam: boolean) => {
+          const pf = new URLSearchParams();
+          if (useModernParam) {
+            pf.append('promotion[type]', 'coupon');
+            pf.append('promotion[coupon]', String(couponData.id));
+          } else {
+            pf.append('coupon', String(couponData.id));
+          }
+          pf.append('code', rawCode);
+          if (minOrderDollars > 0) {
+            pf.append('restrictions[minimum_amount]', String(minOrderDollars * 100));
+            pf.append('restrictions[minimum_amount_currency]', 'usd');
+          }
+          pf.append('metadata[channel]', channel);
+          pf.append('metadata[campaign]', campaign);
+          pf.append('metadata[created_by]', 'command_center');
+          if (notes) pf.append('metadata[notes]', notes);
+          return pf;
+        };
 
-        const promoRes = await fetchFn('https://api.stripe.com/v1/promotion_codes', {
+        let promoRes = await fetchFn('https://api.stripe.com/v1/promotion_codes', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${STRIPE_SECRET_KEY}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: promoForm.toString(),
+          body: buildPromoForm(false).toString(),
         });
-        const promoData = (await promoRes.json()) as Record<string, any>;
+        let promoData = (await promoRes.json()) as Record<string, any>;
+
+        if (!promoRes.ok && promoData?.error?.param === 'coupon') {
+          promoRes = await fetchFn('https://api.stripe.com/v1/promotion_codes', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${STRIPE_SECRET_KEY}`,
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: buildPromoForm(true).toString(),
+          });
+          promoData = (await promoRes.json()) as Record<string, any>;
+        }
+
         if (!promoRes.ok || !promoData.id) {
           return res.status(promoRes.status || 502).json({
             ok: false,
@@ -840,6 +861,64 @@ export function createMarketingGatewayHandler(deps: MarketingGatewayDeps = {}) {
             notes,
             createdAt: new Date().toISOString(),
           } satisfies PromoCodeSummary,
+        });
+      }
+
+      if (req.method === 'POST' && action === 'audit-site') {
+        const body = (req.body && typeof req.body === 'object' ? req.body : {}) as Record<string, any>;
+        const rawUrl = String(body.url || '').trim();
+        let parsedUrl: URL;
+        try {
+          parsedUrl = new URL(rawUrl);
+        } catch {
+          return res.status(400).json({ ok: false, error: 'Invalid website URL.' });
+        }
+
+        if (parsedUrl.protocol !== 'https:' && parsedUrl.protocol !== 'http:') {
+          return res.status(400).json({ ok: false, error: 'Only http/https URLs are permitted.' });
+        }
+
+        const host = parsedUrl.hostname.toLowerCase();
+        const isPrivateOrLocal =
+          host === 'localhost' ||
+          host.endsWith('.local') ||
+          host.endsWith('.internal') ||
+          /^(127\.|10\.|192\.168\.|169\.254\.|0\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host) ||
+          host.includes(':');
+
+        if (isPrivateOrLocal) {
+          return res.status(400).json({ ok: false, error: 'Private or local hostnames are blocked.' });
+        }
+
+        const siteRes = await fetchFn(parsedUrl.toString(), {
+          headers: { 'User-Agent': 'HighDrawGolf-OutreachAuditor/1.0' },
+          redirect: 'follow',
+        });
+
+        if (!siteRes.ok) {
+          return res.status(200).json({ ok: true, title: '', description: '', email: '' });
+        }
+
+        const html = (await siteRes.text()).slice(0, 120_000);
+        const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+        const descMatch =
+          html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i) ||
+          html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i);
+        const emails = Array.from(
+          html.matchAll(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g)
+        )
+          .map(m => m[0].toLowerCase())
+          .filter(
+            em =>
+              !/\.(png|jpg|jpeg|webp|svg|gif|css|js)$/i.test(em) &&
+              !/^(noreply|no-reply|privacy|legal|abuse|dmca|example|sentry)/i.test(em)
+          );
+
+        return res.status(200).json({
+          ok: true,
+          title: sanitizeText(titleMatch ? titleMatch[1].replace(/\s+/g, ' ') : '', 90),
+          description: sanitizeText(descMatch ? descMatch[1].replace(/\s+/g, ' ') : '', 180),
+          email: emails[0] || '',
         });
       }
 

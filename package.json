@@ -16,6 +16,9 @@
     "harness:verify": "node scripts/image_harness.js --verify",
     "printify:sync": "node scripts/provision_printify_catalog.mjs",
     "printify:provision": "node scripts/provision_printify_catalog.mjs --apply",
+    "mockups:regenerate": "node scripts/regenerate_studio_mockups.mjs",
+    "cf:dev": "npm run build && npx wrangler dev",
+    "cf:deploy": "npm run build && npx wrangler deploy",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

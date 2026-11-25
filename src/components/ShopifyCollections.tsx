@@ -165,91 +165,67 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
   const showcaseMockupPath = `/assets/products/printify_mockups/high-draw-weekender-men-s-polo-${showcaseMockupLogo}--${showcaseMockupSlug}.jpg`;
 
   return (
-    <section id="collections" className="w-full py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-white border-b border-slate-200">
+    <section id="collections" className="w-full py-24 lg:py-32 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-[#FAF9F6] border-b border-stone-200">
       {/* Anchor Targets for Direct Anchor Linking */}
       <div id="polos" className="-mt-24 pt-24"></div>
       <div id="outerwear" className="-mt-24 pt-24"></div>
       <div id="headwear" className="-mt-24 pt-24"></div>
       <div id="bundles" className="-mt-24 pt-24"></div>
 
-      {/* Collections Tier Navigation Banner with Shared-Element Spring Pill */}
-      <div className="mb-10 p-2 sm:p-2.5 bg-[#0D1520] border border-slate-800 rounded-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3 px-3">
-          <span className="tabular-nums text-[11px] tracking-wider text-[#38BDF8] uppercase font-bold">
-            FILTER BY TIER:
-          </span>
-          <span className="hidden lg:inline text-xs text-slate-400 font-sans">
-            Three distinct fabric systems crafted for fairway, dinner, and competition.
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-          {[
-            { id: 'all', label: 'All Tiers', tag: 'Complete' },
-            { id: 'weekender', label: 'Weekender', tag: '$48' },
-            { id: 'clubhouse', label: 'The Clubhouse', tag: '$66' },
-            { id: 'tournament', label: 'Tournament', tag: "Summer '26" },
-          ].map(tier => {
-            const isActive = currentTier === tier.id;
-            return (
-              <button
-                key={tier.id}
-                type="button"
-                onClick={() => setTier(tier.id as any)}
-                className={`relative px-3.5 py-1.5 rounded-xs tabular-nums text-xs uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer t-press ${
-                  isActive
-                    ? 'text-white font-bold'
-                    : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700/50'
-                }`}
-              >
-                {isActive && (
-                  <m.span
-                    layoutId={isReduced ? undefined : 'home-tier-active-pill'}
-                    transition={SPRING_LAYOUT}
-                    className="absolute inset-0 bg-[#B12535] rounded-xs shadow-md"
-                  />
-                )}
-                <span className="relative z-10">{tier.label}</span>
-                <span
-                  className={`relative z-10 text-[10px] px-1.5 py-0.5 rounded-2xs ${
-                    isActive ? 'bg-black/30 text-white' : 'bg-slate-800 text-slate-400'
+      {/* Unified Editorial Collection Header & Tier/Category Controls */}
+      <div className="max-w-7xl mx-auto mb-14 space-y-8 pb-8 border-b border-stone-200">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div className="space-y-2.5 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#14241D] block">
+              The Wardrobe
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#151B23] font-normal tracking-tight">
+              Crafted for the Course &amp; the Clubhouse
+            </h2>
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+              Every piece is stitched to order in the USA across Men&rsquo;s and Women&rsquo;s cuts, with your choice of three embroidered chest marks included.
+            </p>
+          </div>
+
+          {/* Clean Tier Segmented Filter */}
+          <div className="inline-flex flex-wrap gap-1.5 bg-stone-200/75 p-1.5 rounded-xs self-start lg:self-auto">
+            {[
+              { id: 'all', label: 'All Tiers' },
+              { id: 'weekender', label: 'Weekender · $48' },
+              { id: 'clubhouse', label: 'The Clubhouse · $66' },
+              { id: 'tournament', label: 'Tournament' },
+            ].map(tier => {
+              const isActive = currentTier === tier.id;
+              return (
+                <button
+                  key={tier.id}
+                  type="button"
+                  onClick={() => setTier(tier.id as any)}
+                  className={`relative px-3.5 py-2 rounded-2xs tabular-nums text-xs font-semibold transition-colors cursor-pointer t-press ${
+                    isActive ? 'text-white' : 'text-stone-700 hover:text-[#151B23]'
                   }`}
                 >
-                  {tier.tag}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Category Navigation Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-slate-200 gap-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <img
-              src="/assets/brand/logos/mark_monogram_cyan.png"
-              alt="High Draw Mark"
-              className="h-5 w-auto object-contain"
-            />
-            <span className="text-xs font-bold uppercase tracking-wider text-[#B12535]">
-              HONEST DIRECT APPAREL &bull; WEEKENDER ($48) &amp; THE CLUBHOUSE ($66)
-            </span>
+                  {isActive && (
+                    <m.span
+                      layoutId={isReduced ? undefined : 'home-tier-active-pill'}
+                      transition={SPRING_LAYOUT}
+                      className="absolute inset-0 bg-[#14241D] rounded-2xs shadow-xs"
+                    />
+                  )}
+                  <span className="relative z-10">{tier.label}</span>
+                </button>
+              );
+            })}
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#1A1F26] font-bold tracking-tight">
-            Crafted for Life on &amp; off the Fairway
-          </h2>
-          <p className="text-sm text-slate-500 mt-2 max-w-xl">
-            Zero $125 boutique retail markups. Every garment is stitched to order in the USA: select Men&rsquo;s or Women&rsquo;s cuts across our Weekender and Clubhouse fabric tiers with your choice of 3 official High Draw chest marks.
-          </p>
         </div>
 
-        {/* Category Filter Tabs with Shared-Element Spring Underline */}
-        <div className="flex flex-wrap gap-2 sm:gap-4 tabular-nums text-xs uppercase tracking-wider">
+        {/* Quiet Hairline Category Tabs */}
+        <div className="flex flex-wrap gap-5 sm:gap-8 text-xs font-semibold uppercase tracking-[0.08em]">
           {[
-            { id: 'all', label: 'All Gear' },
+            { id: 'all', label: 'All Pieces' },
             { id: 'polos', label: 'Polos' },
-            { id: 'outerwear', label: 'Outerwear' },
-            { id: 'headwear', label: 'Headwear' },
+            { id: 'outerwear', label: 'Quarter-Zips' },
+            { id: 'headwear', label: 'Caps' },
             { id: 'bundles', label: 'Foursome Kits' },
           ].map(cat => {
             const isActive = activeCategory === cat.id;
@@ -258,8 +234,8 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 key={cat.id}
                 type="button"
                 onClick={() => onSelectCategory(cat.id as any)}
-                className={`relative pb-2.5 px-2 transition-colors font-bold cursor-pointer ${
-                  isActive ? 'text-[#1A1F26]' : 'text-slate-400 hover:text-slate-700'
+                className={`relative pb-2.5 transition-colors cursor-pointer ${
+                  isActive ? 'text-[#14241D]' : 'text-stone-500 hover:text-[#151B23]'
                 }`}
               >
                 <span>{cat.label}</span>
@@ -267,7 +243,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                   <m.span
                     layoutId={isReduced ? undefined : 'home-category-active-underline'}
                     transition={SPRING_LAYOUT}
-                    className="absolute left-0 right-0 bottom-0 h-0.5 bg-[#B12535]"
+                    className="absolute left-0 right-0 bottom-0 h-0.5 bg-[#14241D]"
                   />
                 )}
               </button>
@@ -311,7 +287,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 />
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
+                  className="px-6 py-3 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer t-press whitespace-nowrap"
                 >
                   JOIN WAITLIST
                 </button>
@@ -374,7 +350,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       <button
                         type="button"
                         onClick={() => onSelectCategory('bundles')}
-                        className="px-6 py-3 bg-[#B12535] hover:bg-[#8E1D29] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-md inline-flex items-center gap-2 t-press"
+                        className="px-6 py-3 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow-md inline-flex items-center gap-2 t-press"
                       >
                         <span>EXPLORE FOURSOME KITS &bull; $160</span>
                         <ArrowUpRight size={14} />
@@ -401,48 +377,35 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               >
                 <div>
                   {/* Clean Frameless Imagery with Smooth Cross-Fade */}
-                  <div className="aspect-[3/4] bg-[#F7F7F6] overflow-hidden relative mb-5 rounded-xs transition-all duration-500">
+                  <div className="aspect-[3/4] bg-white border border-stone-200/80 overflow-hidden relative mb-5 rounded-xs transition-all duration-500">
                     <img
                       src={currentImage}
                       alt={p.name}
                       loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-104"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-103"
                     />
 
-                    {/* Secondary Detail Image Cross-Fade (only when user hasn't explicitly clicked a colorway swatch) */}
+                    {/* Secondary Detail Image Cross-Fade (deprioritized while initially hidden) */}
                     {!activeCardImages[p.id] && (
                       <img
                         src={p.secondaryImage}
                         alt={`${p.name} Detail`}
+                        fetchPriority="low"
                         loading="lazy"
                         className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                       />
                     )}
 
-                    {/* Discreet Craftsmanship Tag / Tier Badge */}
-                    <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] tabular-nums tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
-                      {p.badge ? (
-                        <span className="text-[#38BDF8] font-bold">{p.badge}</span>
-                      ) : (
-                        <>
-                          <RefreshCw size={11} className="text-[#38BDF8]" />
-                          <span>100+ Washes</span>
-                        </>
-                      )}
-                    </div>
-
-                    {/* Custom Logo Options Pill or Coming Soon */}
-                    <div
-                      className={`absolute top-3.5 right-3.5 backdrop-blur-md text-white text-[9px] tabular-nums tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm ${
-                        p.isComingSoon ? 'bg-[#B12535]' : 'bg-black/75'
-                      }`}
-                    >
-                      {topPillText}
-                    </div>
+                    {/* Single Quiet Tier / Allocation Tag */}
+                    {(p.isComingSoon || p.tier === 'clubhouse') && (
+                      <div className="absolute top-3.5 left-3.5 bg-[#14241D]/92 backdrop-blur-md text-stone-100 text-[10px] font-medium tracking-[0.08em] px-2.5 py-1 rounded-2xs uppercase">
+                        {p.isComingSoon ? 'Summer 2026 Allocation' : 'The Clubhouse'}
+                      </div>
+                    )}
 
                     {/* Subtle Hover Action Button */}
-                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#1A1F26] text-[11px] font-bold tracking-wider px-4 py-2.5 rounded-xs shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                      <span>{p.isComingSoon ? 'JOIN ALLOCATION' : 'CUSTOMIZE & VIEW'}</span>
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-[#151B23] text-[11px] font-semibold tracking-[0.05em] uppercase px-4 py-2.5 rounded-xs shadow-md opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 transform translate-y-1.5 group-hover:translate-y-0">
+                      <span>{p.isComingSoon ? 'Join Waitlist' : 'Select Mark & Fit'}</span>
                       <ArrowUpRight size={13} />
                     </div>
                   </div>
@@ -460,35 +423,33 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                           style={{ backgroundColor: c.hex }}
                           className={`w-4 h-4 rounded-full border transition-transform cursor-pointer ${
                             isSelectedSwatch
-                              ? 'ring-2 ring-offset-1 ring-[#1C2C24] border-white scale-115'
-                              : 'border-slate-300 hover:scale-120'
+                              ? 'ring-2 ring-offset-1 ring-[#14241D] border-white scale-115'
+                              : 'border-stone-300 hover:scale-115'
                           }`}
                           aria-label={`${p.name} in ${c.name}`}
                         />
                       );
                     })}
-                    <span className="text-[11px] text-slate-400 font-medium ml-1">
-                      {activeColorLabel || `${p.colors.length} Colorway${p.colors.length > 1 ? 's' : ''}`}
+                    <span className="text-[11px] text-stone-500 ml-1">
+                      {activeColorLabel || `${p.colors.length} color${p.colors.length > 1 ? 's' : ''}`}
                     </span>
                   </div>
 
                   {/* Clean Editorial Typography */}
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535] block">
+                    <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-stone-500 block">
                       {p.collectionLabel}
                     </span>
-                    <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
+                    <h3 className="font-serif text-xl sm:text-2xl text-[#151B23] font-normal group-hover:text-[#14241D] transition-colors leading-snug">
                       {p.name}
                     </h3>
                   </div>
                 </div>
 
                 {/* Price & Value Line */}
-                <div className="pt-3 border-t border-slate-100 mt-4 flex items-baseline justify-between font-sans">
-                  <div className="flex items-baseline gap-2">
-                    <span className="tabular-nums text-xl font-bold text-[#1A1F26]">${p.price}</span>
-                  </div>
-                  <span className="text-[11px] tabular-nums tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                <div className="pt-3 border-t border-stone-200/80 mt-4 flex items-baseline justify-between font-sans">
+                  <span className="tabular-nums text-lg font-semibold text-[#151B23]">${p.price}</span>
+                  <span className="text-xs text-stone-500">
                     {cardSpecBadge}
                   </span>
                 </div>
@@ -531,7 +492,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       onClick={() => setShowcaseStyle(st.id)}
                       className={`relative px-4 py-2 rounded-xs text-xs font-bold transition-colors cursor-pointer border t-press ${
                         active
-                          ? 'text-white border-[#B12535]'
+                          ? 'text-white border-[#14241D]'
                           : 'bg-white/5 text-slate-300 border-white/15 hover:bg-white/10'
                       }`}
                     >
@@ -539,7 +500,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                         <m.span
                           layoutId={isReduced ? undefined : 'showcase-style-pill'}
                           transition={SPRING_LAYOUT}
-                          className="absolute inset-0 bg-[#B12535] rounded-xs"
+                          className="absolute inset-0 bg-[#14241D] rounded-xs"
                         />
                       )}
                       <span className="relative z-10">{st.shortLabel}</span>
@@ -740,7 +701,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     className={`w-full py-4 rounded-xs font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer t-press ${
                       addedId === quickViewProduct.id
                         ? 'bg-emerald-800 text-white'
-                        : 'bg-[#B12535] hover:bg-[#8e1d29] text-white shadow-lg'
+                        : 'bg-[#14241D] hover:bg-[#0c1712] text-white shadow-lg'
                     }`}
                   >
                     {addedId === quickViewProduct.id ? (

@@ -134,7 +134,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
         {/* Modal Header */}
         <div className="bg-[#2A4236] text-white p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#B12535] flex items-center justify-center text-white">
+            <div className="w-10 h-10 rounded-full bg-[#14241D] flex items-center justify-center text-white">
               <Sliders size={20} />
             </div>
             <div>
@@ -363,7 +363,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                           )}
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[10px] tabular-nums uppercase tracking-wider text-[#B12535] font-bold block">
+                          <span className="text-[10px] tabular-nums uppercase tracking-wider text-[#14241D] font-bold block">
                             DETERMINISTIC SKU
                           </span>
                           <code className="tabular-nums text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-2xs block mt-0.5">
@@ -429,7 +429,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
               {/* 1. Quick Live Deploy Button */}
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Zap className="text-[#B12535]" size={24} />
+                  <Zap className="text-[#14241D]" size={24} />
                   <div>
                     <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">Publish Live Website</h3>
                     <p className="text-xs text-slate-600">Triggers automatic CI/CD deployment to Vercel and GitHub.</p>
@@ -462,7 +462,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
               {/* 2. Top Announcement Ticker Editor */}
               <div className="space-y-3">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                  <Tag size={14} className="text-[#B12535]" />
+                  <Tag size={14} className="text-[#14241D]" />
                   <span>Top Store Banner Announcement</span>
                 </label>
                 <form onSubmit={handleSaveTicker} className="flex gap-2">
@@ -475,7 +475,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                   />
                   <button
                     type="submit"
-                    className="px-5 py-2.5 bg-[#B12535] hover:bg-[#8e1d29] text-white text-xs font-bold uppercase tracking-wider rounded-sm"
+                    className="px-5 py-2.5 bg-[#14241D] hover:bg-[#0c1712] text-white text-xs font-bold uppercase tracking-wider rounded-sm"
                   >
                     Save
                   </button>
@@ -508,7 +508,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
               {/* 4. Visual Theme / Hero Photo Board Switcher */}
               <div className="space-y-3">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                  <Sparkles size={14} className="text-[#B12535]" />
+                  <Sparkles size={14} className="text-[#14241D]" />
                   <span>Select Active Lifestyle Theme</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -518,7 +518,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                       onClick={() => onSelectBoard(b.name, b.image)}
                       className={`cursor-pointer border rounded-md p-3 transition-all flex items-center gap-3 ${
                         activeBoard === b.name
-                          ? 'border-[#B12535] bg-red-50/50 shadow-sm'
+                          ? 'border-[#14241D] bg-red-50/50 shadow-sm'
                           : 'border-slate-200 hover:border-slate-400 bg-white'
                       }`}
                     >
@@ -527,7 +527,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                         <h4 className="text-xs font-bold uppercase text-slate-900">{b.name}</h4>
                         <p className="text-[11px] text-slate-500">{b.subtitle}</p>
                         {activeBoard === b.name && (
-                          <span className="inline-block mt-1 text-[10px] font-bold text-[#B12535] uppercase tracking-wider">Active</span>
+                          <span className="inline-block mt-1 text-[10px] font-bold text-[#14241D] uppercase tracking-wider">Active</span>
                         )}
                       </div>
                     </div>
@@ -556,7 +556,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                       className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-sm text-xs text-slate-800 cursor-pointer transition-colors flex items-center justify-between group"
                     >
                       <span>"{prompt}"</span>
-                      <span className="text-[10px] font-bold uppercase text-slate-400 group-hover:text-[#B12535]">Copy</span>
+                      <span className="text-[10px] font-bold uppercase text-slate-400 group-hover:text-[#14241D]">Copy</span>
                     </div>
                   ))}
                 </div>

@@ -42,15 +42,15 @@ export const Accordion: React.FC<AccordionProps> = ({
               className="w-full flex items-center justify-between text-left group cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
-                {item.icon && <span className="text-slate-500 group-hover:text-[#B12535] transition-colors">{item.icon}</span>}
-                <span className="font-serif text-base font-bold text-[#1A1F26] group-hover:text-[#B12535] transition-colors">
+                {item.icon && <span className="text-slate-500 group-hover:text-[#14241D] transition-colors">{item.icon}</span>}
+                <span className="font-serif text-base font-bold text-[#1A1F26] group-hover:text-[#14241D] transition-colors">
                   {item.title}
                 </span>
               </div>
               <ChevronDown
                 size={18}
                 className={`text-slate-400 group-hover:text-slate-700 transition-transform duration-300 ${
-                  isOpen ? 'rotate-180 text-[#B12535]' : ''
+                  isOpen ? 'rotate-180 text-[#14241D]' : ''
                 }`}
               />
             </button>

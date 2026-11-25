@@ -512,7 +512,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <Check size={32} />
                 </div>
                 <div className="space-y-2">
-                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#B12535]">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#14241D]">
                     ORDER CONFIRMED // EDITION 2026
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
@@ -1002,7 +1002,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <Check size={32} />
                 </div>
                 <div className="space-y-2">
-                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#B12535]">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#14241D]">
                     ORDER CONFIRMED // EDITION 2026
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
@@ -1070,7 +1070,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     type="button"
                     onClick={handleExpressStripeFromBag}
                     disabled={isCheckingOut}
-                    className="w-full py-3.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-md t-press"
+                    className="w-full py-3.5 bg-[#14241D] hover:bg-[#0c1712] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-md t-press"
                   >
                     <CreditCard size={15} />
                     <span>

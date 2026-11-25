@@ -16,7 +16,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose 
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div>
-            <span className="text-[10px] tabular-nums tracking-wider text-[#B12535] uppercase font-bold">
+            <span className="text-[10px] tabular-nums tracking-wider text-[#14241D] uppercase font-bold">
               PERFECT FAIRWAY FIT GUARANTEE
             </span>
             <h3 className="font-serif text-2xl font-bold text-[#1A1F26]">
