@@ -55,14 +55,14 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
           {/* Campaign Style Toggle Badge */}
           <div className="absolute top-8 left-8 flex items-center gap-2">
-            <div className="bg-[#090C10]/90 backdrop-blur-md px-4 py-2 border border-white/10 font-mono text-[10px] uppercase tracking-[0.25em] text-white flex items-center gap-2">
+            <div className="bg-[#090C10]/90 backdrop-blur-md px-4 py-2 border border-white/10 tabular-nums text-[10px] uppercase tracking-[0.08em] text-white flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C03221]"></span>
               <span>LOOKBOOK: {campaignStyle === 'veranda' ? 'VERANDA EDITION' : 'ARCHITECTURAL TWILIGHT'}</span>
             </div>
 
             <button
               onClick={() => setCampaignStyle(campaignStyle === 'veranda' ? 'balenciaga' : 'veranda')}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-2 border border-white/20 font-mono text-[10px] uppercase tracking-widest text-white transition-all flex items-center gap-1"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-2 border border-white/20 tabular-nums text-[10px] uppercase tracking-wider text-white transition-all flex items-center gap-1"
               title="Toggle Editorial Mood"
             >
               <RefreshCw size={11} />
@@ -72,7 +72,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
           {/* Overlay Statement */}
           <div className="relative z-10 space-y-4 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C03221] text-white font-mono text-[10px] uppercase tracking-[0.2em]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C03221] text-white tabular-nums text-[10px] uppercase tracking-[0.08em]">
               <Zap size={11} />
               <span>THE SMART VALUE PLAY</span>
             </div>
@@ -92,16 +92,16 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
             
             {/* Dossier Header */}
             <div>
-              <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C03221] font-semibold mb-2">
+              <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold mb-2">
                 DOSSIER // EDITION 001
               </div>
               <h2 className="font-serif text-3xl md:text-4xl text-[#090C10] font-medium leading-tight">
                 The Classic Performance Polo
               </h2>
               <div className="mt-3 flex items-baseline gap-4">
-                <span className="font-mono text-2xl font-semibold text-[#090C10]">$48 USD</span>
-                <span className="font-mono text-xs text-slate-400 line-through">$115 RETAIL TAX</span>
-                <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] uppercase tracking-widest font-semibold">
+                <span className="tabular-nums text-2xl font-semibold text-[#090C10]">$48 USD</span>
+                <span className="tabular-nums text-xs text-slate-400 line-through">$115 RETAIL TAX</span>
+                <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-800 border border-emerald-200 tabular-nums text-[10px] uppercase tracking-wider font-semibold">
                   DIRECT-TO-PLAYER
                 </span>
               </div>
@@ -113,7 +113,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
             </p>
 
             {/* Specification Grid */}
-            <div className="hairline-all bg-[#FBFBFA] p-5 space-y-3 font-mono text-[11px]">
+            <div className="hairline-all bg-[#FBFBFA] p-5 space-y-3 tabular-nums text-[11px]">
               <div className="flex justify-between text-slate-600 pb-2 hairline-b">
                 <span className="text-slate-400">MATERIAL</span>
                 <span className="text-[#090C10] font-medium">180 GSM Matte Micro-Poly / Elastane</span>
@@ -134,7 +134,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
             {/* Colorway Selection */}
             <div className="space-y-3">
-              <label className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 block">
+              <label className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-slate-500 block">
                 COLORWAY: <span className="text-[#090C10] font-semibold">{selectedColor}</span>
               </label>
               <div className="flex gap-3">
@@ -158,13 +158,13 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
             {/* Size Selector */}
             <div className="space-y-3">
-              <div className="flex justify-between items-center font-mono text-[11px]">
-                <label className="uppercase tracking-[0.2em] text-slate-500">
+              <div className="flex justify-between items-center tabular-nums text-[11px]">
+                <label className="uppercase tracking-[0.08em] text-slate-500">
                   SELECT SIZE: <span className="text-[#090C10] font-semibold">{selectedSize}</span>
                 </label>
                 <span className="text-slate-400 underline cursor-pointer hover:text-[#090C10]">FIT GUIDE</span>
               </div>
-              <div className="grid grid-cols-5 gap-2 font-mono text-xs">
+              <div className="grid grid-cols-5 gap-2 tabular-nums text-xs">
                 {sizes.map((size) => (
                   <button
                     key={size}
@@ -187,7 +187,7 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
           <div className="space-y-3 pt-8 hairline-t mt-8">
             <button
               onClick={handleAddHeroItem}
-              className="w-full btn-obsidian py-4 text-xs tracking-[0.25em] flex items-center justify-center gap-3"
+              className="w-full btn-obsidian py-4 text-xs tracking-[0.08em] flex items-center justify-center gap-3"
             >
               {isAdded ? (
                 <>
@@ -204,13 +204,13 @@ export const EditorialHero: React.FC<EditorialHeroProps> = ({ onAddToCart, onOpe
 
             <button
               onClick={onOpenConcierge}
-              className="w-full btn-outline py-3.5 text-[11px] tracking-[0.2em] flex items-center justify-center gap-2"
+              className="w-full btn-outline py-3.5 text-[11px] tracking-[0.08em] flex items-center justify-center gap-2"
             >
               <Compass size={14} className="text-[#C03221]" />
               <span>FOURSOME CONCIERGE & SCRAMBLE KITS</span>
             </button>
 
-            <div className="flex items-center justify-center gap-6 font-mono text-[10px] text-slate-500 pt-2">
+            <div className="flex items-center justify-center gap-6 tabular-nums text-[10px] text-slate-500 pt-2">
               <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-emerald-600" /> Free Shipping Over $75</span>
               <span>&bull;</span>
               <span>30-Day Fairway Guarantee</span>

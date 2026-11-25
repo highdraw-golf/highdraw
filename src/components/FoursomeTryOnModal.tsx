@@ -56,7 +56,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
               <Sparkles size={18} />
             </div>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-slate-300">
+              <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-300">
                 PROPRIETARY AI STUDIO ENGINE
               </div>
               <h2 className="font-serif text-xl md:text-2xl font-normal text-white">
@@ -76,7 +76,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
         <div className="p-6 md:p-8 space-y-8">
 
           {/* Tab Controls */}
-          <div className="flex border-b border-slate-200 font-mono text-[11px] uppercase tracking-[0.2em]">
+          <div className="flex border-b border-slate-200 tabular-nums text-[11px] uppercase tracking-[0.08em]">
             <button
               onClick={() => setActiveTab('result')}
               className={`pb-3 px-6 border-b-2 font-semibold transition-all ${
@@ -106,7 +106,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                 <p className="font-sans text-xs text-slate-500 font-light mb-6 max-w-md mx-auto">
                   Supports HEIC, PNG, JPG. Our vision segmentation model automatically fits your group in High Draw polos.
                 </p>
-                <label className="btn-obsidian px-6 py-3 text-xs tracking-widest cursor-pointer inline-flex items-center gap-2">
+                <label className="btn-obsidian px-6 py-3 text-xs tracking-wider cursor-pointer inline-flex items-center gap-2">
                   <span>SELECT GROUP PHOTO</span>
                   <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                 </label>
@@ -126,20 +126,20 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                   />
 
                   {isProcessing && (
-                    <div className="absolute inset-0 bg-[#090C10]/80 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-3 font-mono text-xs">
+                    <div className="absolute inset-0 bg-[#090C10]/80 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-3 tabular-nums text-xs">
                       <Sparkles size={24} className="text-[#C03221] animate-spin" />
                       <span>SEGMENTING FOURSOME & APPLYING HIGH DRAW POLOS...</span>
                     </div>
                   )}
 
                   {/* AI Badge */}
-                  <div className="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/30 text-emerald-400 font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1 flex items-center gap-1.5">
+                  <div className="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/30 text-emerald-400 tabular-nums text-[9px] uppercase tracking-[0.08em] px-3 py-1 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     <span>AI TRY-ON READY &bull; HIGH RESOLUTION</span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between font-mono text-[10px] text-slate-500">
+                <div className="flex items-center justify-between tabular-nums text-[10px] text-slate-500">
                   <span>GROUP: 4 PLAYERS DETECTED</span>
                   <span>EST. FIT: TOUR REGULAR</span>
                 </div>
@@ -148,7 +148,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
               {/* Right Options & Viral Sharing (5 Cols) */}
               <div className="md:col-span-5 space-y-6">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#C03221] font-semibold block mb-1">
+                  <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block mb-1">
                     GARMENT SELECTION
                   </span>
                   <h3 className="font-serif text-xl text-[#090C10] font-medium">
@@ -161,7 +161,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
 
                 {/* Color Selector */}
                 <div className="space-y-2">
-                  <label className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 block">
+                  <label className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-500 block">
                     COLORWAY: <span className="text-[#090C10]">{selectedColor}</span>
                   </label>
                   <div className="flex gap-2">
@@ -169,7 +169,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                       <button
                         key={c}
                         onClick={() => setSelectedColor(c)}
-                        className={`px-3 py-1.5 font-mono text-[10px] uppercase border transition-all ${
+                        className={`px-3 py-1.5 tabular-nums text-[10px] uppercase border transition-all ${
                           selectedColor === c ? 'bg-[#090C10] text-white border-[#090C10]' : 'bg-white text-slate-700 border-slate-200'
                         }`}
                       >
@@ -181,7 +181,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
 
                 {/* Viral Share Actions */}
                 <div className="hairline-all bg-[#FBFBFA] p-4 space-y-3">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#090C10] font-semibold flex items-center gap-1.5">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#090C10] font-semibold flex items-center gap-1.5">
                     <Share2 size={12} className="text-[#C03221]" />
                     <span>SHARE WITH FOURSOME CHAT</span>
                   </div>
@@ -189,7 +189,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                   <div className="flex gap-2">
                     <button
                       onClick={handleShareWhatsApp}
-                      className="flex-1 py-2.5 bg-[#25D366] text-white font-mono text-[10px] uppercase tracking-[0.15em] hover:bg-[#1ebd59] transition-colors flex items-center justify-center gap-1.5"
+                      className="flex-1 py-2.5 bg-[#25D366] text-white tabular-nums text-[10px] uppercase tracking-[0.08em] hover:bg-[#1ebd59] transition-colors flex items-center justify-center gap-1.5"
                     >
                       <Share2 size={12} />
                       <span>WHATSAPP CHAT</span>
@@ -197,7 +197,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
 
                     <button
                       onClick={handleCopyLink}
-                      className="py-2.5 px-4 bg-white border border-slate-300 text-[#090C10] font-mono text-[10px] uppercase tracking-[0.15em] hover:bg-slate-100 transition-colors flex items-center gap-1.5"
+                      className="py-2.5 px-4 bg-white border border-slate-300 text-[#090C10] tabular-nums text-[10px] uppercase tracking-[0.08em] hover:bg-slate-100 transition-colors flex items-center gap-1.5"
                     >
                       {copiedLink ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                       <span>{copiedLink ? 'COPIED!' : 'LINK'}</span>
@@ -208,8 +208,8 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                 {/* Group Order Special */}
                 <div className="pt-2">
                   <div className="flex items-baseline justify-between mb-2">
-                    <span className="font-mono text-xs text-slate-500 uppercase tracking-wider">4-PACK SPECIAL PRICE</span>
-                    <div className="font-mono text-right">
+                    <span className="tabular-nums text-xs text-slate-500 uppercase tracking-wider">4-PACK SPECIAL PRICE</span>
+                    <div className="tabular-nums text-right">
                       <span className="text-lg font-bold text-[#090C10]">$160 USD</span>
                       <span className="text-xs text-slate-400 line-through ml-2">$192</span>
                     </div>
@@ -220,7 +220,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
                       onAddFoursomePack();
                       onClose();
                     }}
-                    className="w-full btn-obsidian py-4 text-xs tracking-[0.2em] flex items-center justify-center gap-2"
+                    className="w-full btn-obsidian py-4 text-xs tracking-[0.08em] flex items-center justify-center gap-2"
                   >
                     <span>ORDER 4-PACK FOR GROUP &bull; $160</span>
                     <ArrowRight size={14} />
@@ -235,7 +235,7 @@ export const FoursomeTryOnModal: React.FC<FoursomeTryOnModalProps> = ({ isOpen, 
         </div>
 
         {/* Modal Footer */}
-        <div className="bg-[#FBFBFA] px-8 py-4 hairline-t flex items-center justify-between font-mono text-[10px] text-slate-500">
+        <div className="bg-[#FBFBFA] px-8 py-4 hairline-t flex items-center justify-between tabular-nums text-[10px] text-slate-500">
           <span className="flex items-center gap-1.5">
             <ShieldCheck size={13} className="text-emerald-600" />
             Zero Risk &bull; Free Group Shipping Included

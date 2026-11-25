@@ -55,7 +55,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
           </div>
           <div className="flex items-center justify-center gap-2">
             <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
-            <span className="text-[10px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+            <span className="text-[10px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
               RESTRICTED BRAND ACCESS
             </span>
           </div>
@@ -70,7 +70,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
         {/* Passcode Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[11px] font-mono uppercase tracking-wider text-slate-300 block">
+            <label className="text-[11px] tabular-nums uppercase tracking-wider text-slate-300 block">
               Enter Owner Passcode / PIN
             </label>
             <div className="relative">
@@ -84,7 +84,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
                   if (error) setError(false);
                 }}
                 placeholder="Enter encrypted Owner PIN"
-                className="w-full bg-black/40 border border-slate-600 rounded px-3.5 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#38BDF8] transition-colors font-mono tracking-widest"
+                className="w-full bg-black/40 border border-slate-600 rounded px-3.5 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#38BDF8] transition-colors tabular-nums tracking-wider"
               />
               <button
                 type="button"
@@ -125,7 +125,7 @@ export const OwnerAuthModal: React.FC<OwnerAuthModalProps> = ({
 
         {/* Discrete Hint */}
         <div className="pt-2 border-t border-slate-700/60 text-center">
-          <span className="text-[10px] text-slate-400 font-mono">
+          <span className="text-[10px] text-slate-400 tabular-nums">
             High Draw Golf Co. &bull; Ken Cyree Administration
           </span>
         </div>

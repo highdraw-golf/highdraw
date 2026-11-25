@@ -29,7 +29,7 @@ export const CHEST_LOGO_STYLE_OPTIONS: LogoStyleOption[] = [
   },
   {
     id: 'mark_only',
-    name: 'Mark-Only (Ball Flight Tracer)',
+    name: 'The Tracer',
     shortLabel: 'Mark-Only',
     description: 'Minimalist tour ball flight apex tracer and pin without initials.',
   },
@@ -51,7 +51,7 @@ export const LOGO_STYLE_OPTIONS: LogoStyleOption[] = [
   },
   {
     id: 'mark_only',
-    name: 'Mark-Only (Ball Flight Tracer)',
+    name: 'The Tracer',
     shortLabel: 'Mark-Only',
     description: 'Minimalist tour ball flight apex tracer and pin without initials.',
   },
@@ -166,10 +166,10 @@ export const HighDrawLogo: React.FC<HighDrawLogoProps> = ({
         className={`${sizeClass} object-contain shrink-0`}
       />
       <div className="flex flex-col">
-        <span className={`font-serif text-2xl font-black tracking-[0.2em] uppercase leading-none ${wordmarkClassName}`}>
+        <span className={`font-serif text-2xl font-black tracking-[0.08em] uppercase leading-none ${wordmarkClassName}`}>
           HIGH DRAW
         </span>
-        <span className={`text-[9px] font-mono tracking-[0.3em] uppercase mt-0.5 ${subtextClassName}`}>
+        <span className={`text-[9px] tabular-nums tracking-[0.08em] uppercase mt-0.5 ${subtextClassName}`}>
           GOLF APPAREL CO.
         </span>
       </div>

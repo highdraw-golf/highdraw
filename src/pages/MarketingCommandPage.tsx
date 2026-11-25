@@ -719,11 +719,11 @@ export function MarketingCommandPage({
                 <h1 className="text-base sm:text-lg font-serif font-bold tracking-wide">
                   High Draw Marketing Command Center
                 </h1>
-                <span className="hidden md:inline-block px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+                <span className="hidden md:inline-block px-2 py-0.5 text-[10px] tabular-nums uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
                   Start-Small OS
                 </span>
               </div>
-              <p className="text-[11px] text-slate-300 font-mono">
+              <p className="text-[11px] text-slate-300 tabular-nums">
                 Zero-Cost Stripe Cloud Ledger &bull; Month 1 Target: {fmtMoney(ledger.monthlyBudgetDollars)}/mo
               </p>
             </div>
@@ -735,7 +735,7 @@ export function MarketingCommandPage({
               type="button"
               onClick={() => void pushLedgerToCloud(ledger)}
               title={syncMessage}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[11px] font-mono font-bold border transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[11px] tabular-nums font-bold border transition-colors ${
                 syncStatus === 'synced'
                   ? 'bg-emerald-950/60 border-emerald-400/40 text-emerald-200'
                   : syncStatus === 'syncing'
@@ -762,7 +762,7 @@ export function MarketingCommandPage({
             </button>
 
             {/* Timeframe Selector */}
-            <div className="inline-flex rounded-sm border border-white/20 overflow-hidden text-[11px] font-mono">
+            <div className="inline-flex rounded-sm border border-white/20 overflow-hidden text-[11px] tabular-nums">
               {[30, 90, 365].map((d) => (
                 <button
                   key={d}
@@ -828,7 +828,7 @@ export function MarketingCommandPage({
               <button
                 type="button"
                 onClick={() => void fetchOverview()}
-                className="text-[11px] font-mono text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
+                className="text-[11px] tabular-nums text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
               >
                 <RefreshCw size={12} className={isLoadingOverview ? 'animate-spin' : ''} />
                 <span>Refresh Telemetry</span>
@@ -836,7 +836,7 @@ export function MarketingCommandPage({
               <button
                 type="button"
                 onClick={handleExportBackup}
-                className="text-[11px] font-mono text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
+                className="text-[11px] tabular-nums text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
               >
                 <Download size={12} />
                 <span>Export JSON</span>
@@ -844,7 +844,7 @@ export function MarketingCommandPage({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="text-[11px] font-mono text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
+                className="text-[11px] tabular-nums text-slate-600 hover:text-slate-900 inline-flex items-center gap-1 px-2 py-1 rounded border border-slate-200"
               >
                 <Upload size={12} />
                 <span>Import</span>
@@ -863,7 +863,7 @@ export function MarketingCommandPage({
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {syncMessage && (
-          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md bg-white border border-slate-200 text-xs text-slate-600 font-mono">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 rounded-md bg-white border border-slate-200 text-xs text-slate-600 tabular-nums">
             <span>
               <strong className="text-slate-800">Sync Ledger:</strong> {syncMessage}
             </span>
@@ -892,7 +892,7 @@ export function MarketingCommandPage({
                     Sunday 15-Minute CFO Digest (What Needs Action Now)
                   </h2>
                 </div>
-                <span className="text-[11px] font-mono text-slate-500">
+                <span className="text-[11px] tabular-nums text-slate-500">
                   Deterministic Rules Engine
                 </span>
               </div>
@@ -910,7 +910,7 @@ export function MarketingCommandPage({
 
             <div className="bg-[#1C2C24] text-white rounded-xl p-5 shadow-xs flex flex-col justify-between space-y-4">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-300">
+                <span className="text-[10px] tabular-nums uppercase tracking-wider text-emerald-300">
                   Scale Unlock Milestone
                 </span>
                 <h2 className="text-lg font-serif font-bold mt-1">
@@ -922,7 +922,7 @@ export function MarketingCommandPage({
                 </p>
               </div>
               <div>
-                <div className="flex items-baseline justify-between text-xs font-mono mb-1.5">
+                <div className="flex items-baseline justify-between text-xs tabular-nums mb-1.5">
                   <span className="text-lg font-bold text-[#FDE022]">
                     {kpis.totalUnitsAllTime} / {kpis.milestoneTargetUnits} shirts
                   </span>
@@ -941,7 +941,7 @@ export function MarketingCommandPage({
           {/* 6 KPI Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Gross Revenue ({daysWindow}d)
               </div>
               <div className="text-2xl font-serif font-bold text-slate-900 mt-1">
@@ -953,7 +953,7 @@ export function MarketingCommandPage({
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Margin Before Ads (CM1)
               </div>
               <div className="text-2xl font-serif font-bold text-[#0b4628] mt-1">
@@ -965,7 +965,7 @@ export function MarketingCommandPage({
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Marketing Outlay
               </div>
               <div className="text-2xl font-serif font-bold text-slate-900 mt-1">
@@ -977,7 +977,7 @@ export function MarketingCommandPage({
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Net Cash After Mktg
               </div>
               <div
@@ -993,7 +993,7 @@ export function MarketingCommandPage({
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Blended CAC vs Max
               </div>
               <div className="text-2xl font-serif font-bold text-slate-900 mt-1">
@@ -1005,7 +1005,7 @@ export function MarketingCommandPage({
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 Avg Order (AOV) & MER
               </div>
               <div className="text-2xl font-serif font-bold text-slate-900 mt-1">
@@ -1129,7 +1129,7 @@ export function MarketingCommandPage({
                         <span className="font-semibold text-slate-800">
                           {i + 1}. {step.label}
                         </span>
-                        <span className="font-mono text-slate-600">
+                        <span className="tabular-nums text-slate-600">
                           <strong>{step.count}</strong> &bull; {step.note}
                         </span>
                       </div>
@@ -1202,7 +1202,7 @@ export function MarketingCommandPage({
                         <div className="font-bold text-slate-900">
                           {String((node.data as { title?: string }).title || node.serieId)}
                         </div>
-                        <div className="font-mono text-slate-600 mt-0.5">
+                        <div className="tabular-nums text-slate-600 mt-0.5">
                           Outlay: ${node.data.x} &bull; Net Profit: ${node.data.y}
                         </div>
                       </div>
@@ -1286,7 +1286,7 @@ export function MarketingCommandPage({
                   <input
                     value={newExpCampaign}
                     onChange={(e) => setNewExpCampaign(e.target.value)}
-                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm font-mono"
+                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm tabular-nums"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -1295,7 +1295,7 @@ export function MarketingCommandPage({
                     value={newExpPromo}
                     onChange={(e) => setNewExpPromo(e.target.value.toUpperCase())}
                     placeholder="KEN15"
-                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm font-mono uppercase"
+                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm tabular-nums uppercase"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -1381,7 +1381,7 @@ export function MarketingCommandPage({
                       <th scope="row">
                         <div className="text-slate-900">{exp.title}</div>
                         <div className="text-[11px] font-normal text-slate-500 mt-0.5">
-                          {exp.channel} &bull; <code className="font-mono">{exp.utmCampaign}</code>
+                          {exp.channel} &bull; <code className="tabular-nums">{exp.utmCampaign}</code>
                           {exp.promoCode ? ` / ${exp.promoCode}` : ''}
                         </div>
                       </th>
@@ -1409,18 +1409,18 @@ export function MarketingCommandPage({
                       </td>
                       <td data-label="Verdict">
                         <span
-                          className={`inline-block px-2 py-0.5 text-[11px] font-mono font-bold rounded border ${VERDICT_BADGE_MAP[exp.verdict]}`}
+                          className={`inline-block px-2 py-0.5 text-[11px] tabular-nums font-bold rounded border ${VERDICT_BADGE_MAP[exp.verdict]}`}
                         >
                           {exp.verdict}
                         </span>
                       </td>
-                      <td data-label="Outlay" className="font-mono text-xs">
+                      <td data-label="Outlay" className="tabular-nums text-xs">
                         <div>{fmtMoney(exp.totalOutlayDollars)}</div>
                         <div className="text-[11px] text-slate-500">
                           Cash ${exp.cashSpentDollars} + {exp.seededShirts} shirts
                         </div>
                       </td>
-                      <td data-label="Orders / Sales" className="font-mono text-xs">
+                      <td data-label="Orders / Sales" className="tabular-nums text-xs">
                         <div>
                           {exp.attributedOrders} ord / {fmtMoney(exp.attributedRevenueDollars)}
                         </div>
@@ -1428,7 +1428,7 @@ export function MarketingCommandPage({
                           {exp.manualClicks} clicks &bull; {exp.roas}x ROAS
                         </div>
                       </td>
-                      <td data-label="CAC / Max" className="font-mono text-xs">
+                      <td data-label="CAC / Max" className="tabular-nums text-xs">
                         <div>
                           {exp.actualCacDollars !== null ? fmtMoney(exp.actualCacDollars) : '—'}
                         </div>
@@ -1441,7 +1441,7 @@ export function MarketingCommandPage({
                         {editingExpId === exp.id ? (
                           <div className="mt-2 p-2.5 bg-slate-50 border border-slate-200 rounded space-y-2">
                             <div className="grid grid-cols-3 gap-2">
-                              <label className="text-[11px] font-mono">
+                              <label className="text-[11px] tabular-nums">
                                 Cash ($)
                                 <input
                                   type="number"
@@ -1458,7 +1458,7 @@ export function MarketingCommandPage({
                                   className="w-full px-2 py-1 border rounded bg-white"
                                 />
                               </label>
-                              <label className="text-[11px] font-mono">
+                              <label className="text-[11px] tabular-nums">
                                 Clicks
                                 <input
                                   type="number"
@@ -1475,7 +1475,7 @@ export function MarketingCommandPage({
                                   className="w-full px-2 py-1 border rounded bg-white"
                                 />
                               </label>
-                              <label className="text-[11px] font-mono">
+                              <label className="text-[11px] tabular-nums">
                                 Samples (#)
                                 <input
                                   type="number"
@@ -1554,7 +1554,7 @@ export function MarketingCommandPage({
                     Combines Stripe verified shipping states + local founder seeding pins.
                   </p>
                 </div>
-                <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-900">
+                <span className="text-[11px] tabular-nums px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-900">
                   {hoveredStateInfo}
                 </span>
               </div>
@@ -1636,13 +1636,13 @@ export function MarketingCommandPage({
                     <div className="text-xl font-serif font-bold text-[#1C2C24]">
                       {ledger.outreachLeads.length}
                     </div>
-                    <div className="text-[11px] font-mono text-slate-500">Active Leads</div>
+                    <div className="text-[11px] tabular-nums text-slate-500">Active Leads</div>
                   </div>
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                     <div className="text-xl font-serif font-bold text-[#0b4628]">
                       {ledger.outreachLeads.reduce((s, l) => s + (l.estimatedUnits || 0), 0)}
                     </div>
-                    <div className="text-[11px] font-mono text-slate-500">Est. Shirt Pipeline</div>
+                    <div className="text-[11px] tabular-nums text-slate-500">Est. Shirt Pipeline</div>
                   </div>
                 </div>
               </div>
@@ -1716,7 +1716,7 @@ export function MarketingCommandPage({
                     maxLength={2}
                     value={newLeadState}
                     onChange={(e) => setNewLeadState(e.target.value.toUpperCase())}
-                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm font-mono uppercase"
+                    className="mt-1 w-full px-3 py-2 border border-slate-300 rounded-md text-sm tabular-nums uppercase"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -1790,7 +1790,7 @@ export function MarketingCommandPage({
                             {lead.organization} &bull; {lead.category}
                           </div>
                         </th>
-                        <td data-label="Location" className="font-mono text-xs">
+                        <td data-label="Location" className="tabular-nums text-xs">
                           {lead.city}, {lead.stateCode}
                         </td>
                         <td data-label="Stage">
@@ -1823,12 +1823,12 @@ export function MarketingCommandPage({
                             </div>
                           )}
                         </td>
-                        <td data-label="Est. Units" className="font-mono text-xs">
+                        <td data-label="Est. Units" className="tabular-nums text-xs">
                           {lead.estimatedUnits} shirts
                         </td>
                         <td data-label="Sample Action">
                           {lead.sampleShippedAt ? (
-                            <span className="text-[11px] font-mono text-slate-600">
+                            <span className="text-[11px] tabular-nums text-slate-600">
                               Sent {lead.sampleShippedAt.slice(0, 10)} (${lead.seededCostDollars})
                             </span>
                           ) : (
@@ -1883,7 +1883,7 @@ export function MarketingCommandPage({
                   </p>
                 </div>
                 <span
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-mono font-bold ${
+                  className={`px-2.5 py-1 rounded-full text-[11px] tabular-nums font-bold ${
                     isValidMetaPixelId(ledger.metaPixelId)
                       ? 'bg-emerald-100 text-emerald-900'
                       : 'bg-amber-100 text-amber-900'
@@ -1898,7 +1898,7 @@ export function MarketingCommandPage({
                   value={pixelDraft}
                   onChange={(e) => setPixelDraft(e.target.value)}
                   placeholder="Enter 15-16 digit Meta Pixel / Dataset ID"
-                  className="flex-1 px-3 py-2 border border-slate-300 rounded-md font-mono text-sm"
+                  className="flex-1 px-3 py-2 border border-slate-300 rounded-md tabular-nums text-sm"
                 />
                 <button
                   type="submit"
@@ -1936,7 +1936,7 @@ export function MarketingCommandPage({
                     <input
                       value={promoCodeInput}
                       onChange={(e) => setPromoCodeInput(e.target.value.toUpperCase())}
-                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded font-mono text-xs uppercase"
+                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded tabular-nums text-xs uppercase"
                     />
                   </label>
                   <label className="text-[11px] font-semibold text-slate-700">
@@ -1957,7 +1957,7 @@ export function MarketingCommandPage({
                       min="1"
                       value={promoValue}
                       onChange={(e) => setPromoValue(e.target.value)}
-                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono"
+                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs tabular-nums"
                     />
                   </label>
                   <label className="text-[11px] font-semibold text-slate-700">
@@ -1967,7 +1967,7 @@ export function MarketingCommandPage({
                       min="0"
                       value={promoMinOrder}
                       onChange={(e) => setPromoMinOrder(e.target.value)}
-                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-mono"
+                      className="mt-1 w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs tabular-nums"
                     />
                   </label>
                 </div>
@@ -1992,7 +1992,7 @@ export function MarketingCommandPage({
                   </button>
                 </div>
                 {promoStatusMsg && (
-                  <p className="text-xs font-mono text-[#0b4628] bg-emerald-50 border border-emerald-200 px-3 py-2 rounded">
+                  <p className="text-xs tabular-nums text-[#0b4628] bg-emerald-50 border border-emerald-200 px-3 py-2 rounded">
                     {promoStatusMsg}
                   </p>
                 )}
@@ -2022,7 +2022,7 @@ export function MarketingCommandPage({
                         setUtmCampaign('fb_m1_pair86');
                         setUtmContent(ad.utmContent);
                       }}
-                      className="text-[11px] font-mono font-bold text-[#0b4628] underline"
+                      className="text-[11px] tabular-nums font-bold text-[#0b4628] underline"
                     >
                       Load UTM Link Below
                     </button>
@@ -2055,7 +2055,7 @@ export function MarketingCommandPage({
                   <input
                     value={utmSource}
                     onChange={(e) => setUtmSource(e.target.value)}
-                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded font-mono text-xs"
+                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded tabular-nums text-xs"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -2063,7 +2063,7 @@ export function MarketingCommandPage({
                   <input
                     value={utmMedium}
                     onChange={(e) => setUtmMedium(e.target.value)}
-                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded font-mono text-xs"
+                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded tabular-nums text-xs"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -2071,7 +2071,7 @@ export function MarketingCommandPage({
                   <input
                     value={utmCampaign}
                     onChange={(e) => setUtmCampaign(e.target.value)}
-                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded font-mono text-xs"
+                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded tabular-nums text-xs"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -2079,7 +2079,7 @@ export function MarketingCommandPage({
                   <input
                     value={utmContent}
                     onChange={(e) => setUtmContent(e.target.value)}
-                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded font-mono text-xs"
+                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded tabular-nums text-xs"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -2087,7 +2087,7 @@ export function MarketingCommandPage({
                   <input
                     value={utmRef}
                     onChange={(e) => setUtmRef(e.target.value.toUpperCase())}
-                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded font-mono text-xs uppercase"
+                    className="mt-1 w-full px-3 py-1.5 border border-slate-300 rounded tabular-nums text-xs uppercase"
                   />
                 </label>
                 <label className="text-xs font-semibold text-slate-700">
@@ -2104,7 +2104,7 @@ export function MarketingCommandPage({
                   </select>
                 </label>
               </div>
-              <div className="p-3 bg-slate-900 text-emerald-300 rounded-md font-mono text-xs break-all flex items-center justify-between gap-3">
+              <div className="p-3 bg-slate-900 text-emerald-300 rounded-md tabular-nums text-xs break-all flex items-center justify-between gap-3">
                 <span>{trackedUrl}</span>
                 <button
                   type="button"
@@ -2165,10 +2165,10 @@ export function MarketingCommandPage({
                   {overview?.promos && overview.promos.length > 0 ? (
                     overview.promos.map((p) => (
                       <tr key={p.id}>
-                        <th scope="row" className="font-mono">{p.code}</th>
+                        <th scope="row" className="tabular-nums">{p.code}</th>
                         <td data-label="Discount">{p.discountLabel}</td>
                         <td data-label="Channel">{p.channel || 'General'}</td>
-                        <td data-label="Redeemed" className="font-mono font-bold">{p.timesRedeemed}</td>
+                        <td data-label="Redeemed" className="tabular-nums font-bold">{p.timesRedeemed}</td>
                         <td data-label="Status">
                           <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[11px] font-bold">
                             {p.active ? 'Active' : 'Paused'}
@@ -2178,10 +2178,10 @@ export function MarketingCommandPage({
                     ))
                   ) : (
                     <tr>
-                      <th scope="row" className="font-mono text-slate-500">2-POLO-PAIR (Auto)</th>
+                      <th scope="row" className="tabular-nums text-slate-500">2-POLO-PAIR (Auto)</th>
                       <td data-label="Discount">-$5 / Polo + Free US Shipping</td>
                       <td data-label="Channel">Storefront &amp; Stripe Native</td>
-                      <td data-label="Redeemed" className="font-mono">Automatic</td>
+                      <td data-label="Redeemed" className="tabular-nums">Automatic</td>
                       <td data-label="Status">
                         <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[11px] font-bold">
                           Always Live
@@ -2212,7 +2212,7 @@ export function MarketingCommandPage({
                     key={amt}
                     type="button"
                     onClick={() => updateLedger((prev) => ({ ...prev, monthlyBudgetDollars: amt }))}
-                    className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold border ${
+                    className={`px-3 py-1.5 rounded-md text-xs tabular-nums font-bold border ${
                       ledger.monthlyBudgetDollars === amt
                         ? 'bg-[#1C2C24] text-white border-[#1C2C24]'
                         : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
@@ -2224,7 +2224,7 @@ export function MarketingCommandPage({
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-mono mb-1">
+                <div className="flex justify-between text-xs tabular-nums mb-1">
                   <span>Monthly Marketing Budget:</span>
                   <strong className="text-sm text-[#1C2C24]">
                     {fmtMoney(ledger.monthlyBudgetDollars)}
@@ -2252,7 +2252,7 @@ export function MarketingCommandPage({
                     ${budgetPlan.facebookAdsDollars}
                   </div>
                   <div className="text-[11px] font-semibold text-slate-700">Facebook Ads</div>
-                  <div className="text-[10px] font-mono text-slate-500">
+                  <div className="text-[10px] tabular-nums text-slate-500">
                     {budgetPlan.facebookDaysAtTenPerDay} days @ $10/day
                   </div>
                 </div>
@@ -2261,7 +2261,7 @@ export function MarketingCommandPage({
                     ${budgetPlan.seedingShirtsDollars}
                   </div>
                   <div className="text-[11px] font-semibold text-slate-700">Sample Polos</div>
-                  <div className="text-[10px] font-mono text-slate-500">
+                  <div className="text-[10px] tabular-nums text-slate-500">
                     {budgetPlan.estimatedSampleShirtsCount} wholesale L shirts
                   </div>
                 </div>
@@ -2270,7 +2270,7 @@ export function MarketingCommandPage({
                     ${budgetPlan.qrCardsAndPostageDollars}
                   </div>
                   <div className="text-[11px] font-semibold text-slate-700">QR Bag Cards</div>
-                  <div className="text-[10px] font-mono text-slate-500">
+                  <div className="text-[10px] tabular-nums text-slate-500">
                     Break-even: {budgetPlan.breakEvenPairOrders} Pair ord
                   </div>
                 </div>
@@ -2318,7 +2318,7 @@ export function MarketingCommandPage({
                       <div className={item.completed ? 'line-through font-semibold' : 'font-semibold'}>
                         {item.label}
                       </div>
-                      <div className="text-[11px] text-slate-500 font-mono mt-0.5">
+                      <div className="text-[11px] text-slate-500 tabular-nums mt-0.5">
                         {item.category} &bull; {item.targetHours} hrs/week
                       </div>
                     </div>

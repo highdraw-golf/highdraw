@@ -50,10 +50,10 @@ export const Header: React.FC<HeaderProps> = ({
             className="h-11 w-auto object-contain hover:scale-105 transition-transform"
           />
           <div className="flex flex-col">
-            <span className="font-serif text-2xl font-black tracking-[0.2em] text-[#1A1F26] uppercase leading-none">
+            <span className="font-serif text-2xl font-black tracking-[0.08em] text-[#1A1F26] uppercase leading-none">
               HIGH DRAW
             </span>
-            <span className="text-[9px] font-mono tracking-[0.3em] text-slate-500 uppercase mt-0.5">
+            <span className="text-[9px] tabular-nums tracking-[0.08em] text-slate-500 uppercase mt-0.5">
               GOLF APPAREL CO.
             </span>
           </div>
@@ -66,14 +66,14 @@ export const Header: React.FC<HeaderProps> = ({
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
           >
             <span>WEEKENDER</span>
-            <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-2xs bg-slate-100 text-slate-600">$48</span>
+            <span className="tabular-nums text-[10px] px-1.5 py-0.5 rounded-2xs bg-slate-100 text-slate-600">$48</span>
           </button>
           <button 
             onClick={() => onNavigate('collection', 'all', 'clubhouse')} 
             className="hover:text-[#B12535] transition-colors py-2 cursor-pointer flex items-center gap-1.5"
           >
             <span>THE CLUBHOUSE</span>
-            <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">$66</span>
+            <span className="tabular-nums text-[10px] px-1.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">$66</span>
           </button>
           <button 
             onClick={() => onNavigate('collection', 'outerwear', 'all')} 
@@ -151,21 +151,21 @@ export const Header: React.FC<HeaderProps> = ({
               className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
             >
               <span>01 / WEEKENDER POLOS (MEN&rsquo;S &amp; WOMEN&rsquo;S)</span>
-              <span className="font-mono text-[10px] px-2 py-0.5 bg-slate-100 text-[#1C2C24] rounded-2xs">$48</span>
+              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-slate-100 text-[#1C2C24] rounded-2xs">$48</span>
             </button>
             <button 
               onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'all', 'clubhouse'); }} 
               className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
             >
               <span>02 / THE CLUBHOUSE COLLECTION</span>
-              <span className="font-mono text-[10px] px-2 py-0.5 bg-[#B12535]/10 text-[#B12535] rounded-2xs">$66–$68</span>
+              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-[#B12535]/10 text-[#B12535] rounded-2xs">$66–$68</span>
             </button>
             <button 
               onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'all', 'tournament'); }} 
               className="w-full text-left py-2 border-b border-slate-100 hover:text-[#B12535] flex items-center justify-between cursor-pointer"
             >
               <span>03 / TOURNAMENT EDITION WAITLIST</span>
-              <span className="font-mono text-[10px] px-2 py-0.5 bg-[#0D1520] text-[#38BDF8] rounded-2xs">SUMMER &rsquo;26</span>
+              <span className="tabular-nums text-[10px] px-2 py-0.5 bg-[#0D1520] text-[#38BDF8] rounded-2xs">SUMMER &rsquo;26</span>
             </button>
             <button 
               onClick={() => { setMobileMenuOpen(false); onNavigate('collection', 'outerwear', 'all'); }} 
@@ -190,7 +190,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="w-full text-left py-2 border-b border-slate-100 text-[#1C2C24] font-black hover:text-[#B12535] flex items-center justify-between cursor-pointer"
             >
               <span>OUR STORY &bull; DR. KEN CYREE</span>
-              <span className="text-[10px] font-mono text-[#38BDF8] bg-[#1C2C24] px-2 py-0.5 rounded-2xs">47 STATES</span>
+              <span className="text-[10px] tabular-nums text-[#38BDF8] bg-[#1C2C24] px-2 py-0.5 rounded-2xs">47 STATES</span>
             </button>
             <button 
               onClick={() => { setMobileMenuOpen(false); onNavigate('craftsmanship'); }} 

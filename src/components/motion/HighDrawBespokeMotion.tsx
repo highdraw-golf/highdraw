@@ -45,7 +45,7 @@ export function StripeSecurityBeacon({
             <span className="w-2.5 h-2.5 rounded-full bg-[#635BFF] relative z-10" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest text-[#38BDF8] uppercase font-bold">
+            <div className="flex items-center gap-1.5 tabular-nums text-[10px] tracking-wider text-[#38BDF8] uppercase font-bold">
               <Lock size={11} className="text-[#38BDF8]" />
               <span>STRIPE 256-BIT VAULT ACTIVE</span>
             </div>
@@ -56,16 +56,16 @@ export function StripeSecurityBeacon({
         </div>
 
         <div className="text-right">
-          <span className="font-mono text-xs font-bold text-white block">
+          <span className="tabular-nums text-xs font-bold text-white block">
             ${amount} USD
           </span>
-          <span className="text-[9px] font-mono text-emerald-400 uppercase tracking-wider block">
+          <span className="text-[9px] tabular-nums text-emerald-400 uppercase tracking-wider block">
             VERIFIED SECURE
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-3 pt-1 border-t border-white/10 text-[9px] font-mono text-slate-400">
+      <div className="flex items-center gap-3 pt-1 border-t border-white/10 text-[9px] tabular-nums text-slate-400">
         <span className="flex items-center gap-1 text-slate-300">
           <CheckCircle2 size={10} className="text-emerald-400" />
           PCI-DSS Level 1
@@ -128,7 +128,7 @@ export function StayFlatCollarBadge({
       whileHover={isReduced ? {} : { scale: 1.03, y: -1 }}
       whileTap={isReduced ? {} : { scale: 0.97 }}
       transition={SPRING_STAY_FLAT}
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xs bg-[#1C2C24] text-white text-[10px] font-mono tracking-wider uppercase font-bold border border-white/10 shadow-sm cursor-default select-none ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xs bg-[#1C2C24] text-white text-[10px] tabular-nums tracking-wider uppercase font-bold border border-white/10 shadow-sm cursor-default select-none ${className}`}
     >
       <ShieldCheck size={12} className="text-[#38BDF8]" />
       <span>{text}</span>

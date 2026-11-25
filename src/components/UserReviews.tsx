@@ -123,7 +123,7 @@ export const UserReviews: React.FC = () => {
               alt="High Draw Mark" 
               className="h-4 w-auto object-contain"
             />
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#B12535]">
+            <span className="text-xs tabular-nums font-bold uppercase tracking-wider text-[#B12535]">
               FIELD NOTES &bull; VERIFIED 100+ ROUND EXPERIENCES
             </span>
           </div>
@@ -138,7 +138,7 @@ export const UserReviews: React.FC = () => {
                   <Star key={i} size={14} fill="currentColor" />
                 ))}
               </div>
-              <span className="font-mono font-bold">5.0 / 5.0</span>
+              <span className="tabular-nums font-bold">5.0 / 5.0</span>
               <span className="text-slate-400">&bull;</span>
               <span className="text-slate-600">Zero Bacon Collars Reported</span>
             </div>
@@ -147,7 +147,7 @@ export const UserReviews: React.FC = () => {
 
         {/* Filter Pill Navigation & Submit CTA */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="inline-flex rounded-xs border border-slate-200 p-1 bg-slate-50 text-xs font-mono uppercase tracking-wider">
+          <div className="inline-flex rounded-xs border border-slate-200 p-1 bg-slate-50 text-xs tabular-nums uppercase tracking-wider">
             {[
               { id: 'all', label: 'All Notes' },
               { id: 'collar', label: 'Collar Tests' },
@@ -307,7 +307,7 @@ export const UserReviews: React.FC = () => {
             alt="Dr. Ken Cyree on the fairway" 
             className="w-full h-full object-cover object-[center_35%]"
           />
-          <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
+          <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] tabular-nums px-2.5 py-1 rounded-xs flex items-center gap-1.5">
             <ShieldCheck size={12} className="text-[#38BDF8]" />
             <span>Dr. Ken Cyree &bull; 2.9 Index</span>
           </div>
@@ -326,7 +326,7 @@ export const UserReviews: React.FC = () => {
             <span>&bull;</span>
             <span>Co-Founder &bull; 2.9 Handicap Index</span>
             <span>&bull;</span>
-            <span className="font-mono text-[#1C2C24] font-semibold">The Tour Performance Polo (L)</span>
+            <span className="tabular-nums text-[#1C2C24] font-semibold">The Tour Performance Polo (L)</span>
           </div>
         </div>
       </div>
@@ -343,7 +343,7 @@ export const UserReviews: React.FC = () => {
                   alt={`${r.author} wearing High Draw`} 
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103"
                 />
-                <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs flex items-center gap-1.5">
+                <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] tabular-nums px-2.5 py-1 rounded-xs flex items-center gap-1.5">
                   <ShieldCheck size={12} className="text-[#38BDF8]" />
                   <span>Verified Buyer &bull; {r.productWorn}</span>
                 </div>
@@ -357,7 +357,7 @@ export const UserReviews: React.FC = () => {
                       <Star key={i} size={13} fill="currentColor" />
                     ))}
                   </div>
-                  <span className="text-[11px] font-mono text-slate-400">{r.date}</span>
+                  <span className="text-[11px] tabular-nums text-slate-400">{r.date}</span>
                 </div>
 
                 <h4 className="font-serif text-xl font-bold text-[#1A1F26] leading-snug">
@@ -376,7 +376,7 @@ export const UserReviews: React.FC = () => {
                 <span className="font-bold text-[#1A1F26] block">{r.author}</span>
                 <span className="text-slate-500 text-[11px]">{r.club}</span>
               </div>
-              <span className="text-[11px] font-mono text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+              <span className="text-[11px] tabular-nums text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
                 {r.handicap}
               </span>
             </div>

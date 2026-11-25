@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Figtree:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: 'Domine', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --color-canvas: #FFFFFF;
   --color-surface: #F8F9FA;
@@ -13,8 +13,8 @@
 }
 
 :root {
-  --font-serif: 'Domine', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
   font-family: var(--font-sans);
   color: #090C10;
   background-color: #FFFFFF;
@@ -271,3 +271,10 @@ body {
     contain: layout style paint;
   }
 }
+
+/* Elevated type system: 60% elegance (Newsreader display), 40% warmth (Figtree text) */
+h1, h2, h3, .font-serif { font-family: var(--font-serif); font-optical-sizing: auto; letter-spacing: -0.012em; font-weight: 450; }
+h1 { line-height: 1.05; }
+h2, h3 { line-height: 1.15; }
+body { font-size: 16.5px; line-height: 1.65; }
+.tabular-nums { font-family: var(--font-sans); font-variant-numeric: tabular-nums; }

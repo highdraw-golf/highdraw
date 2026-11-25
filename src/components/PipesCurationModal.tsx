@@ -58,7 +58,7 @@ export const PipesCurationModal: React.FC<PipesCurationModalProps> = ({
               <Sparkles size={18} />
             </div>
             <div>
-              <div className="text-[10px] uppercase font-bold tracking-widest text-emerald-200 flex items-center gap-1.5">
+              <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-200 flex items-center gap-1.5">
                 <User size={12} />
                 <span>PIPE OWNER: KEN CYREE (HIGHDRAWGEAR@GMAIL.COM)</span>
               </div>

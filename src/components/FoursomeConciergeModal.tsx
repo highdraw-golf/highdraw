@@ -49,7 +49,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
               <Compass size={18} />
             </div>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-slate-400">
+              <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-400">
                 BESPOKE GROUP FITTING SUITE
               </div>
               <h2 className="font-serif text-xl md:text-2xl font-normal text-white">
@@ -80,13 +80,13 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
                 />
 
                 {/* Badge */}
-                <div className="absolute top-4 left-4 bg-[#090C10]/90 border border-white/10 text-white font-mono text-[9px] uppercase tracking-[0.25em] px-3 py-1 flex items-center gap-1.5">
+                <div className="absolute top-4 left-4 bg-[#090C10]/90 border border-white/10 text-white tabular-nums text-[9px] uppercase tracking-[0.08em] px-3 py-1 flex items-center gap-1.5">
                   <Users size={12} className="text-[#C03221]" />
                   <span>FOURSOME MATCH KIT &bull; 4 POLOS + 4 ROPE CAPS</span>
                 </div>
               </div>
 
-              <div className="p-4 bg-[#FBFBFA] hairline-all font-mono text-[11px] text-slate-600 space-y-1">
+              <div className="p-4 bg-[#FBFBFA] hairline-all tabular-nums text-[11px] text-slate-600 space-y-1">
                 <div className="flex justify-between font-semibold text-[#090C10]">
                   <span>THE SATURDAY SCRAMBLE BUNDLE</span>
                   <span>SAVE $32 AUTOMATICALLY</span>
@@ -101,7 +101,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
             <div className="md:col-span-5 space-y-6">
               
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#C03221] font-semibold block mb-1">
+                <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block mb-1">
                   PLAYER SIZING SETUP
                 </span>
                 <h3 className="font-serif text-xl text-[#090C10] font-medium">
@@ -110,7 +110,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
               </div>
 
               {/* Player Sizing List */}
-              <div className="space-y-3 font-mono text-xs">
+              <div className="space-y-3 tabular-nums text-xs">
                 {Object.keys(playerSizes).map((player) => (
                   <div key={player} className="flex items-center justify-between p-3 bg-[#FBFBFA] hairline-all">
                     <span className="text-[#090C10] font-medium text-[11px] uppercase tracking-wider">{player}</span>
@@ -119,7 +119,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
                         <button
                           key={sz}
                           onClick={() => updatePlayerSize(player, sz)}
-                          className={`w-7 h-7 font-mono text-[10px] font-bold border transition-all ${
+                          className={`w-7 h-7 tabular-nums text-[10px] font-bold border transition-all ${
                             playerSizes[player] === sz
                               ? 'bg-[#090C10] text-white border-[#090C10]'
                               : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
@@ -135,7 +135,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
 
               {/* Colorway Selection */}
               <div className="space-y-2">
-                <label className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 block">
+                <label className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-500 block">
                   COLORWAY: <span className="text-[#090C10] font-semibold">{selectedColor}</span>
                 </label>
                 <div className="flex gap-2">
@@ -143,7 +143,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
                     <button
                       key={c}
                       onClick={() => setSelectedColor(c)}
-                      className={`px-3 py-1.5 font-mono text-[10px] uppercase border transition-all ${
+                      className={`px-3 py-1.5 tabular-nums text-[10px] uppercase border transition-all ${
                         selectedColor === c ? 'bg-[#090C10] text-white border-[#090C10]' : 'bg-white text-slate-700 border-slate-200'
                       }`}
                     >
@@ -155,7 +155,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
 
               {/* Share Actions */}
               <div className="hairline-all bg-[#FBFBFA] p-4 space-y-3">
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#090C10] font-semibold flex items-center gap-1.5">
+                <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#090C10] font-semibold flex items-center gap-1.5">
                   <Share2 size={12} className="text-[#C03221]" />
                   <span>SHARE WITH YOUR FOURSOME</span>
                 </div>
@@ -163,7 +163,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
                 <div className="flex gap-2">
                   <button
                     onClick={handleShareGroup}
-                    className="flex-1 py-2.5 bg-[#25D366] text-white font-mono text-[10px] uppercase tracking-[0.15em] hover:bg-[#1ebd59] transition-colors flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2.5 bg-[#25D366] text-white tabular-nums text-[10px] uppercase tracking-[0.08em] hover:bg-[#1ebd59] transition-colors flex items-center justify-center gap-1.5"
                   >
                     <Share2 size={12} />
                     <span>WHATSAPP CHAT</span>
@@ -171,7 +171,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
 
                   <button
                     onClick={handleCopyLink}
-                    className="py-2.5 px-4 bg-white border border-slate-300 text-[#090C10] font-mono text-[10px] uppercase tracking-[0.15em] hover:bg-slate-100 transition-colors flex items-center gap-1.5"
+                    className="py-2.5 px-4 bg-white border border-slate-300 text-[#090C10] tabular-nums text-[10px] uppercase tracking-[0.08em] hover:bg-slate-100 transition-colors flex items-center gap-1.5"
                   >
                     {copiedLink ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                     <span>{copiedLink ? 'COPIED!' : 'LINK'}</span>
@@ -182,8 +182,8 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
               {/* Checkout Action */}
               <div>
                 <div className="flex items-baseline justify-between mb-2">
-                  <span className="font-mono text-xs text-slate-500 uppercase tracking-wider">4-PACK GROUP SPECIAL</span>
-                  <div className="font-mono text-right">
+                  <span className="tabular-nums text-xs text-slate-500 uppercase tracking-wider">4-PACK GROUP SPECIAL</span>
+                  <div className="tabular-nums text-right">
                     <span className="text-lg font-bold text-[#090C10]">$160 USD</span>
                     <span className="text-xs text-slate-400 line-through ml-2">$192</span>
                   </div>
@@ -194,7 +194,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
                     onAddFoursomePack();
                     onClose();
                   }}
-                  className="w-full btn-obsidian py-4 text-xs tracking-[0.2em] flex items-center justify-center gap-2"
+                  className="w-full btn-obsidian py-4 text-xs tracking-[0.08em] flex items-center justify-center gap-2"
                 >
                   <span>ACQUIRE FOURSOME BUNDLE &bull; $160</span>
                   <ArrowRight size={14} />
@@ -208,7 +208,7 @@ export const FoursomeConciergeModal: React.FC<FoursomeConciergeModalProps> = ({ 
         </div>
 
         {/* Modal Footer */}
-        <div className="bg-[#FBFBFA] px-8 py-4 hairline-t flex items-center justify-between font-mono text-[10px] text-slate-500">
+        <div className="bg-[#FBFBFA] px-8 py-4 hairline-t flex items-center justify-between tabular-nums text-[10px] text-slate-500">
           <span className="flex items-center gap-1.5">
             <ShieldCheck size={13} className="text-emerald-600" />
             30-Day Fairway Guarantee &bull; Free Group Shipping Included

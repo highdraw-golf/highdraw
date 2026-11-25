@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import confetti from 'canvas-confetti';
 import { Header } from './components/Header';
 import { FullscreenHero } from './components/FullscreenHero';
-import { TierComparisonStrip } from './components/TierComparisonStrip';
 import { ShopifyCollections } from './components/ShopifyCollections';
 import { WhyHighDraw } from './components/WhyHighDraw';
 import { FounderSpotlight } from './components/FounderSpotlight';
@@ -430,7 +429,7 @@ export function App() {
       return (
         <Suspense
           fallback={
-            <div className="min-h-screen flex items-center justify-center bg-[#f4f5f3] font-mono text-xs text-slate-600">
+            <div className="min-h-screen flex items-center justify-center bg-[#f4f5f3] tabular-nums text-xs text-slate-600">
               Loading High Draw Marketing Command Center...
             </div>
           }
@@ -494,19 +493,6 @@ export function App() {
                 else navigateTo('collection', { category: 'all', tier: 'clubhouse' });
               }}
               onScrollToWhy={() => navigateTo('craftsmanship')}
-            />
-
-            {/* 3-Tier Architecture Showcase Strip */}
-            <TierComparisonStrip
-              onExploreTier={tier => scrollToHomeTier(tier)}
-              onSelectWeekenderPolo={() => {
-                const p = PRODUCTS.find(item => item.id === 'men-polo-st740');
-                if (p) navigateTo('product', { product: p });
-              }}
-              onSelectClubhousePolo={() => {
-                const p = PRODUCTS.find(item => item.id === 'men-polo-k830');
-                if (p) navigateTo('product', { product: p });
-              }}
             />
 
             {/* Picture-Heavy Collections with Working Tier + Category Filters & Swatches */}

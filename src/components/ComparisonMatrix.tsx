@@ -39,7 +39,7 @@ export const ComparisonMatrix: React.FC = () => {
     <section id="dossier" className="py-20 px-6 max-w-7xl mx-auto hairline-b bg-[#FBFBFA]">
       
       <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C03221] font-semibold block">
+        <span className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block">
           THE ECONOMIC ARBITRAGE
         </span>
         <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -54,7 +54,7 @@ export const ComparisonMatrix: React.FC = () => {
       <div className="max-w-4xl mx-auto bg-white hairline-all shadow-sm overflow-hidden">
         
         {/* Table Header */}
-        <div className="grid grid-cols-12 bg-[#0D1B2A] text-white p-5 font-mono text-[11px] uppercase tracking-[0.2em]">
+        <div className="grid grid-cols-12 bg-[#0D1B2A] text-white p-5 tabular-nums text-[11px] uppercase tracking-[0.08em]">
           <div className="col-span-5 md:col-span-4 text-slate-400">GARMENT METRIC</div>
           <div className="col-span-3 md:col-span-4 text-slate-400 hidden md:block">TYPICAL BRAND ($115)</div>
           <div className="col-span-7 md:col-span-4 text-[#C03221] font-semibold flex items-center gap-1.5">
@@ -67,7 +67,7 @@ export const ComparisonMatrix: React.FC = () => {
         <div className="divide-y divide-slate-200">
           {metrics.map((m, idx) => (
             <div key={idx} className="grid grid-cols-12 p-5 items-center font-sans text-xs hover:bg-[#FBFBFA] transition-colors">
-              <div className="col-span-5 md:col-span-4 font-mono font-medium text-[#090C10] text-[11px] uppercase tracking-wider">
+              <div className="col-span-5 md:col-span-4 tabular-nums font-medium text-[#090C10] text-[11px] uppercase tracking-wider">
                 {m.label}
               </div>
               <div className="col-span-3 md:col-span-4 text-slate-500 font-light hidden md:flex items-center gap-2">
@@ -83,7 +83,7 @@ export const ComparisonMatrix: React.FC = () => {
         </div>
 
         {/* Footer Note */}
-        <div className="bg-[#FBFBFA] p-5 hairline-t text-center font-mono text-[11px] text-slate-500">
+        <div className="bg-[#FBFBFA] p-5 hairline-t text-center tabular-nums text-[11px] text-slate-500">
           FULFILLED ON DEMAND VIA PRINTIFY &bull; ZERO WASTEFUL OVERHEAD &bull; 100% QUALITY GUARANTEE
         </div>
 

@@ -28,7 +28,7 @@ export const SocialProofPress: React.FC = () => {
       
       {/* Editorial Press Ticker */}
       <div className="text-center space-y-3 mb-16">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#C03221] font-semibold block">
+        <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block">
           CRITICAL ACCLAIM & FIELD REVIEWS
         </span>
         <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -40,8 +40,8 @@ export const SocialProofPress: React.FC = () => {
               <Star key={i} size={16} fill="currentColor" />
             ))}
           </div>
-          <span className="font-mono text-xs font-semibold text-[#090C10]">4.96 / 5.0 RATING</span>
-          <span className="text-slate-400 font-mono text-xs">&bull; 1,420 VERIFIED PLAYERS</span>
+          <span className="tabular-nums text-xs font-semibold text-[#090C10]">4.96 / 5.0 RATING</span>
+          <span className="text-slate-400 tabular-nums text-xs">&bull; 1,420 VERIFIED PLAYERS</span>
         </div>
       </div>
 
@@ -66,10 +66,10 @@ export const SocialProofPress: React.FC = () => {
             </div>
 
             <div className="pt-4 hairline-t space-y-1">
-              <div className="font-mono text-xs font-bold text-[#090C10] uppercase tracking-wider">
+              <div className="tabular-nums text-xs font-bold text-[#090C10] uppercase tracking-wider">
                 {r.author}
               </div>
-              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+              <div className="tabular-nums text-[10px] text-slate-500 uppercase tracking-wider">
                 {r.title}
               </div>
             </div>
@@ -78,7 +78,7 @@ export const SocialProofPress: React.FC = () => {
       </div>
 
       {/* Press Publications Bar */}
-      <div className="mt-16 pt-12 hairline-t grid grid-cols-2 md:grid-cols-4 gap-8 text-center font-serif text-sm tracking-widest text-slate-400 uppercase font-semibold">
+      <div className="mt-16 pt-12 hairline-t grid grid-cols-2 md:grid-cols-4 gap-8 text-center font-serif text-sm tracking-wider text-slate-400 uppercase font-semibold">
         <span className="hover:text-[#090C10] transition-colors">ROBB REPORT</span>
         <span className="hover:text-[#090C10] transition-colors">VOGUE HOMMES</span>
         <span className="hover:text-[#090C10] transition-colors">GOLF DIGEST</span>

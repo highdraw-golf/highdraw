@@ -506,9 +506,9 @@ export const PRODUCTS: Product[] = [
       },
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
-    description: 'Feel the fabric. The exact same 180 GSM micro-pique stretch blend as $125 legacy boutique brands, engineered for pure fairway comfort, athletic drape, and moisture-wicking capillary airflow with UPF 50+ UV solar protection. Stitched to order in the USA with your choice of 3 official High Draw chest marks.',
+    description: 'Feel the fabric. The polo you would pay $120 for at the pro shop, made to order for $48. 180 GSM micro-pique stretch, engineered for pure fairway comfort, athletic drape, and moisture-wicking capillary airflow with UPF 50+ UV solar protection. Stitched to order in the USA with your choice of 3 official High Draw chest marks.',
     features: [
-      'Customizable 2.25" left-chest embroidery: choose Mark + Monogram (H | D), Mark-Only (Ball Flight Tracer), or Mark + Wordmark (HIGH DRAW)',
+      'Customizable 2.25" left-chest embroidery: choose Mark + Monogram (H | D), The Tracer, or Mark + Wordmark (HIGH DRAW)',
       'Tailor-matched contrast thread: Light Blue tracer thread on Crisp White garments and Crisp White thread on dark & rich colorways',
       'UPF 50+ UV solar shield woven directly into technical micropique yarns',
       'Tailored flat-knit collar engineered for breathability and comfort under the sun',
@@ -622,7 +622,7 @@ export const PRODUCTS: Product[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
     description: 'Feel the fabric. Tour-grade micro-pique stretch blend with a contoured feminine silhouette and open self-fabric Y-neck collar. Engineered for 100+ fairway washes without losing its drape. Crafted to order with your choice of 3 official High Draw chest marks calibrated to 1.75" tall and lower-aligned for a flattering fit.',
     features: [
-      'Customizable 1.75" lower-aligned chest mark: choose Mark + Monogram (H | D), Mark-Only (Ball Flight Tracer), or Mark + Wordmark (HIGH DRAW)',
+      'Customizable 1.75" lower-aligned chest mark: choose Mark + Monogram (H | D), The Tracer, or Mark + Wordmark (HIGH DRAW)',
       'Open self-fabric collar with elegant elongated Y-neck placket',
       'Contoured feminine silhouette with curved drop-tail hem',
       'UPF 50+ UV solar shield woven directly into the fabric',

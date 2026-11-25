@@ -131,8 +131,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
     if (product.category === 'polos') {
       if (product.tier === 'clubhouse') {
         return [
-          { id: 'mens', label: "Men's Clubhouse Cut (K830)", sublabel: '57/43 Fine Pique • XS–4XL' },
-          { id: 'womens', label: "Women's Clubhouse Cut (LK830)", sublabel: 'Contoured Y-Neck • XS–4XL' },
+          { id: 'mens', label: "Men's Clubhouse Cut", sublabel: '57/43 Fine Pique • XS–4XL' },
+          { id: 'womens', label: "Women's Clubhouse Cut", sublabel: 'Contoured Y-Neck • XS–4XL' },
         ];
       }
       return [
@@ -189,8 +189,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const decorationSpecLabel = isCap
     ? 'Structured Front Crown Mark'
     : product.userType === 'womens'
-    ? '2.25" Lower-Aligned Chest Mark'
-    : '2.5" Centered Left-Chest Embroidery';
+    ? '1.75" Lower-Aligned Chest Mark'
+    : '2.25" Centered Left-Chest Embroidery';
 
   const stageImageSrc = activeAngle?.src || resolvedFulfillment.officialMockupUrl || activeColorObj?.image || product.image;
   const isViewingColorwayPrimary = Boolean(activeAngle?.supportsOverlay);
@@ -312,7 +312,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <li key={i}>{f}</li>
             ))}
           </ul>
-          <div className="grid grid-cols-2 gap-2 pt-2 font-mono text-[11px] bg-slate-50 p-2.5 rounded">
+          <div className="grid grid-cols-2 gap-2 pt-2 tabular-nums text-[11px] bg-slate-50 p-2.5 rounded">
             <div><span className="text-slate-400">Fabric:</span> {product.specs.fabric}</div>
             <div><span className="text-slate-400">Collar:</span> {product.specs.collar}</div>
             <div><span className="text-slate-400">Weight:</span> {product.specs.weight}</div>
@@ -359,7 +359,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           </button>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-slate-400 font-mono text-[11px]">
+            <div className="hidden sm:flex items-center gap-2 text-slate-400 tabular-nums text-[11px]">
               <span>HOME</span>
               <span>/</span>
               <span className="uppercase">{product.tier || product.category}</span>
@@ -370,7 +370,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               type="button"
               onClick={handleShareProduct}
               aria-label="Share product link"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 bg-white hover:border-[#1C2C24] text-slate-700 hover:text-[#1C2C24] font-mono text-[11px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 bg-white hover:border-[#1C2C24] text-slate-700 hover:text-[#1C2C24] tabular-nums text-[11px] font-bold uppercase tracking-wider rounded-sm transition-colors cursor-pointer"
             >
               {linkCopied ? <Check size={13} className="text-emerald-700" /> : <Share2 size={13} />}
               <span>{linkCopied ? 'LINK COPIED' : 'SHARE LINK'}</span>
@@ -432,7 +432,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   <RefreshCw size={13} className="text-[#38BDF8]" />
                   <span>{product.badge || '100+ Washes Tested'}</span>
                 </span>
-                <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-xs flex items-center gap-1 shadow-sm">
+                <span className="bg-black/75 backdrop-blur-md text-white text-[10px] tabular-nums uppercase tracking-wider px-2.5 py-1 rounded-xs flex items-center gap-1 shadow-sm">
                   <ZoomIn size={11} className="text-[#38BDF8]" />
                   <span>{activeAngle?.label || 'Hover to Magnify Weave'}</span>
                 </span>
@@ -454,13 +454,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     )}
                   </div>
                   <div className="min-w-0 pr-1">
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#38BDF8] block font-bold">
+                    <span className="text-[9px] tabular-nums uppercase tracking-wider text-[#38BDF8] block font-bold">
                       {decorationSpecLabel}
                     </span>
                     <span className="text-xs font-serif font-bold text-white block truncate">
                       {CHEST_LOGO_STYLE_OPTIONS.find(s => s.id === selectedLogoStyle)?.shortLabel}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-300 block truncate">
+                    <span className="text-[10px] tabular-nums text-slate-300 block truncate">
                       {LOGO_COLOR_OPTIONS.find(c => c.id === resolvedFulfillment.logoColor)?.name} Thread
                     </span>
                   </div>
@@ -470,7 +470,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* Dynamic Multi-Angle Thumbnail Strip */}
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-500">
+              <div className="flex items-center justify-between text-[10px] tabular-nums uppercase tracking-wider text-slate-500">
                 <span>STUDIO ANGLES FOR {selectedColor.toUpperCase()} ({colorwayAngles.length} VIEWS)</span>
                 <span className="text-[#1C2C24] font-bold hidden sm:inline">Hover Main Photo to Magnify 1.6&times;</span>
               </div>
@@ -495,7 +495,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <span className="px-1.5 py-1 text-[9px] font-mono font-bold text-slate-700 truncate block w-full text-center">
+                      <span className="px-1.5 py-1 text-[9px] tabular-nums font-bold text-slate-700 truncate block w-full text-center">
                         {shot.label}
                       </span>
                     </button>
@@ -511,11 +511,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <img src="/assets/brand/logos/mark_monogram_cyan.png" alt="High Draw Mark" className="h-4 w-auto object-contain" />
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535]">
                   {product.collectionLabel}
                 </span>
                 {product.tier && product.tier !== 'core' && (
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-2xs bg-[#1C2C24] text-[#38BDF8] font-bold">
+                  <span className="text-[10px] tabular-nums uppercase tracking-wider px-2 py-0.5 rounded-2xs bg-[#1C2C24] text-[#38BDF8] font-bold">
                     {product.tier.toUpperCase()} TIER
                   </span>
                 )}
@@ -544,13 +544,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Price & Direct Value Comparison */}
             <div className="p-4 bg-slate-50 border border-slate-200 rounded-xs flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-3">
-                <span className="font-mono text-3xl font-black text-[#1A1F26]">${product.price} USD</span>
-                <span className="font-mono text-sm text-slate-400 line-through">${product.originalPrice}</span>
+                <span className="tabular-nums text-3xl font-black text-[#1A1F26]">${product.price} USD</span>
               </div>
               <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[11px] font-bold uppercase tracking-wider rounded-xs whitespace-nowrap">
                 {product.isComingSoon
                   ? 'SUMMER 2026 DROP'
-                  : `SAVE $${product.originalPrice - product.price} DIRECT`}
+                  : "MADE TO ORDER"}
               </span>
             </div>
 
@@ -593,7 +592,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Coming Soon Allocation Waitlist vs Active Add to Bag */}
             {product.isComingSoon ? (
               <div className="p-5 bg-[#0D1520] text-white rounded-xs border border-slate-800 space-y-3.5 shadow-lg">
-                <div className="flex items-center gap-2 text-[#38BDF8] font-mono text-[11px] uppercase tracking-widest font-bold">
+                <div className="flex items-center gap-2 text-[#38BDF8] tabular-nums text-[11px] uppercase tracking-wider font-bold">
                   <Bell size={14} />
                   <span>PRIVATE TOUR ALLOCATION WAITLIST</span>
                 </div>
@@ -635,7 +634,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       {isCap ? 'Structured Performance Crown Mark' : customizationLabel} &bull; Crafted to order in the USA
                     </span>
                   </div>
-                  <div className="flex items-center justify-between pt-1.5 border-t border-[#1C2C24]/10 font-mono text-[10px] text-slate-500">
+                  <div className="flex items-center justify-between pt-1.5 border-t border-[#1C2C24]/10 tabular-nums text-[10px] text-slate-500">
                     <span className="inline-flex items-center gap-1 font-semibold text-[#1C2C24]">
                       <Tag size={11} className="text-[#B12535]" />
                       Tailor Spec: {resolvedFulfillment.sovereignSku}
@@ -659,12 +658,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   {isPairEligible && (
                     <div className="px-3.5 py-2.5 bg-emerald-50 border border-emerald-200 rounded-xs flex items-center justify-between gap-2 text-[11px] text-emerald-950">
                       <span className="font-semibold">
-                        <strong className="uppercase tracking-wider font-mono text-[10px] text-emerald-800 mr-1.5">
+                        <strong className="uppercase tracking-wider tabular-nums text-[10px] text-emerald-800 mr-1.5">
                           2-Polo Pair Offer:
                         </strong>
                         Mix &amp; Match Any 2+ Polos &mdash; Save $10 + Free US Shipping
                       </span>
-                      <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
+                      <span className="tabular-nums text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
                         -$10 AUTO
                       </span>
                     </div>
@@ -694,7 +693,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                         Pair &amp; Unlock Free Shipping ($75+)
                       </span>
                     </div>
-                    <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-2xs">
+                    <span className="text-[10px] tabular-nums font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-2xs">
                       FREE SHIPPING
                     </span>
                   </div>
@@ -702,7 +701,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     <img src={bundleItem.image} alt={bundleItem.name} className="w-14 h-14 object-cover rounded-xs border border-slate-200" />
                     <div className="flex-1 text-xs min-w-0">
                       <span className="font-bold text-[#1A1F26] block truncate">{bundleItem.name}</span>
-                      <div className="flex items-center gap-2 font-mono">
+                      <div className="flex items-center gap-2 tabular-nums">
                         <span className="text-emerald-700 font-bold">+${bundleItem.price} Bundle Rate</span>
                         <span className="text-slate-400 line-through text-[11px]">${bundleItem.regularPrice}</span>
                       </div>
@@ -748,21 +747,20 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 <div className="aspect-[4/3] bg-slate-100 rounded-xs overflow-hidden border border-slate-200 relative">
                   <img src={rel.image} alt={rel.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   {rel.badge && (
-                    <span className="absolute top-3 left-3 bg-[#1C2C24]/90 text-white text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-2xs">
+                    <span className="absolute top-3 left-3 bg-[#1C2C24]/90 text-white text-[9px] tabular-nums uppercase tracking-wider px-2 py-0.5 rounded-2xs">
                       {rel.badge}
                     </span>
                   )}
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#B12535] block">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#B12535] block">
                     {rel.collectionLabel}
                   </span>
                   <h4 className="font-serif text-lg font-bold text-[#1A1F26] group-hover:text-[#B12535] transition-colors">
                     {rel.name}
                   </h4>
-                  <div className="flex items-baseline gap-2 font-mono text-sm">
+                  <div className="flex items-baseline gap-2 tabular-nums text-sm">
                     <span className="font-bold text-[#1A1F26]">${rel.price}</span>
-                    <span className="text-slate-400 line-through text-xs">${rel.originalPrice}</span>
                   </div>
                 </div>
               </div>
@@ -778,7 +776,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <span className="text-[11px] font-bold text-[#1A1F26] block truncate">
               {selectedColor} &bull; Size {selectedSize}
             </span>
-            <span className="text-[10px] font-mono text-slate-500 block truncate">
+            <span className="text-[10px] tabular-nums text-slate-500 block truncate">
               {isCap ? 'Tour Cap' : CHEST_LOGO_STYLE_OPTIONS.find(s => s.id === selectedLogoStyle)?.shortLabel}
             </span>
           </div>

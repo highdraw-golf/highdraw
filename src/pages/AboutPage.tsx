@@ -26,7 +26,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
-              <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+              <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                 THE FOUNDER'S STORY &bull; DR. KEN CYREE
               </span>
             </div>
@@ -54,7 +54,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             />
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto bg-[#1C2C24]/90 backdrop-blur-md text-white p-3.5 sm:px-5 sm:py-3 rounded-xs border border-white/10 shadow-lg">
               <div className="font-serif font-bold text-sm sm:text-base text-white">Dr. Ken Cyree &bull; 2.9 Handicap Index</div>
-              <div className="text-[11px] font-mono text-[#38BDF8]">CO-FOUNDER, HIGH DRAW GOLF CO. &bull; 40+ YEARS PLAYING GOLF</div>
+              <div className="text-[11px] tabular-nums text-[#38BDF8]">CO-FOUNDER, HIGH DRAW GOLF CO. &bull; 40+ YEARS PLAYING GOLF</div>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="bg-[#1C2C24] text-white p-8 sm:p-10 rounded-xs shadow-xl border border-slate-800 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-[#38BDF8] text-xs font-mono font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-[#38BDF8] text-xs tabular-nums font-bold uppercase tracking-wider">
                 <Compass size={16} />
                 <span>The National Bucket List</span>
               </div>
@@ -81,8 +81,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </h2>
             </div>
             <div className="flex items-baseline gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xs self-start sm:self-auto">
-              <span className="font-mono text-3xl font-bold text-[#38BDF8]">47</span>
-              <span className="text-xs text-slate-300 font-mono uppercase tracking-wider">/ 50 Complete</span>
+              <span className="tabular-nums text-3xl font-bold text-[#38BDF8]">47</span>
+              <span className="text-xs text-slate-300 tabular-nums uppercase tracking-wider">/ 50 Complete</span>
             </div>
           </div>
 
@@ -96,11 +96,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </p>
             </div>
             <div className="md:col-span-5 bg-white/5 border border-white/10 p-5 rounded-xs space-y-3">
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold flex items-center gap-2">
+              <div className="text-xs tabular-nums uppercase tracking-wider text-slate-300 font-bold flex items-center gap-2">
                 <MapPin size={14} className="text-[#B12535]" />
                 <span>Remaining 3 States</span>
               </div>
-              <ul className="space-y-2 text-xs font-mono text-slate-300">
+              <ul className="space-y-2 text-xs tabular-nums text-slate-300">
                 <li className="flex items-center justify-between py-1 border-b border-white/5">
                   <span>Alaska</span>
                   <span className="text-[#38BDF8] text-[10px]">On The Horizon</span>
@@ -149,7 +149,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 className="w-full h-full object-cover" 
               />
             </div>
-            <div className="text-xs text-slate-500 font-mono text-center">
+            <div className="text-xs text-slate-500 tabular-nums text-center">
               Ken on the fairway: breathable performance designed for real Southern humidity.
             </div>
           </div>
@@ -158,7 +158,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* The Video & The Physics of the High Draw */}
         <div className="space-y-6 pt-6 border-t border-slate-200">
           <div className="space-y-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#38BDF8] bg-[#1C2C24] px-2.5 py-1 rounded-xs inline-block">
+            <span className="text-xs tabular-nums font-bold uppercase tracking-wider text-[#38BDF8] bg-[#1C2C24] px-2.5 py-1 rounded-xs inline-block">
               SHOT SHAPING &amp; TEMPO
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#1A1F26]">
@@ -177,7 +177,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 <Play size={16} className="text-[#38BDF8]" fill="#38BDF8" />
                 <span className="font-serif font-bold text-sm sm:text-base">Ken Grooving the Signature High Draw</span>
               </div>
-              <span className="text-[11px] font-mono text-slate-400">Practice Range &bull; 42s</span>
+              <span className="text-[11px] tabular-nums text-slate-400">Practice Range &bull; 42s</span>
             </div>
             <div className="relative aspect-[9/16] sm:aspect-[16/9] bg-black flex items-center justify-center max-h-[540px] mx-auto overflow-hidden">
               <video 
@@ -190,7 +190,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Your browser does not support HTML5 video.
               </video>
             </div>
-            <div className="p-3 bg-slate-950 text-center text-xs text-slate-400 font-mono">
+            <div className="p-3 bg-slate-950 text-center text-xs text-slate-400 tabular-nums">
               Watch Ken's balanced tempo through impact producing his signature right-to-left apex.
             </div>
           </div>
@@ -218,7 +218,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 className="w-full h-full object-cover" 
               />
             </div>
-            <div className="text-[11px] font-mono text-slate-500 text-center">
+            <div className="text-[11px] tabular-nums text-slate-500 text-center">
               Ken &amp; Lori Cyree &bull; Oxford, Mississippi
             </div>
           </div>
@@ -278,7 +278,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 className="w-full h-full object-cover" 
               />
             </div>
-            <div className="text-[11px] font-mono text-slate-500 text-center">
+            <div className="text-[11px] tabular-nums text-slate-500 text-center">
               Executive leadership meets fairway passion.
             </div>
           </div>
@@ -292,7 +292,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <p className="text-sm sm:text-base text-slate-200 leading-relaxed italic">
             &ldquo;I hope all my friends and fellow golfers enjoy the brand and enhance their life in wearing our gear. We created this for the joy of the game, the walk with good friends, and the thrill of seeing that high draw turn into the flag.&rdquo;
           </p>
-          <div className="pt-2 text-xs font-mono text-[#38BDF8] uppercase tracking-wider">
+          <div className="pt-2 text-xs tabular-nums text-[#38BDF8] uppercase tracking-wider">
             &mdash; Dr. Ken Cyree &bull; Co-Founder, High Draw Golf Co.
           </div>
         </div>

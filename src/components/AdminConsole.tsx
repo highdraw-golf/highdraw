@@ -146,7 +146,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
             {onLock && (
               <button
                 onClick={onLock}
-                className="px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider text-slate-300 hover:text-white border border-slate-500 hover:border-white rounded-xs transition-colors cursor-pointer"
+                className="px-2.5 py-1 text-[11px] tabular-nums uppercase tracking-wider text-slate-300 hover:text-white border border-slate-500 hover:border-white rounded-xs transition-colors cursor-pointer"
                 title="Lock console session"
               >
                 Lock Session
@@ -205,7 +205,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                     <h3 className="text-sm font-bold uppercase tracking-wider">
                       Marketing &amp; Growth Command Center (Cloud Sync)
                     </h3>
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 text-[10px] tabular-nums uppercase">
                       Start-Small $150–$250 OS
                     </span>
                   </div>
@@ -245,10 +245,10 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                   {/* Top Architecture Banner */}
                   <div className="p-4 bg-[#1C2C24] text-white rounded-md space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#38BDF8] font-bold">
+                      <span className="text-[10px] tabular-nums uppercase tracking-wider text-[#38BDF8] font-bold">
                         ZERO-TOIL PRINTIFY BYPASS ENGINE &bull; STAGING PREVIEW
                       </span>
-                      <span className="px-2 py-0.5 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-[10px] rounded-xs">
+                      <span className="px-2 py-0.5 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 tabular-nums text-[10px] rounded-xs">
                         {matrixStats.totalPermutations.toLocaleString()} Permutations Active
                       </span>
                     </div>
@@ -264,7 +264,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-md border border-slate-200">
                     <div className="space-y-3 text-xs">
                       <label className="block space-y-1">
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">1. Garment Silhouette</span>
+                        <span className="tabular-nums text-[10px] uppercase tracking-wider text-slate-500 font-bold">1. Garment Silhouette</span>
                         <select
                           value={selectedSilhouette}
                           onChange={(e) => {
@@ -285,7 +285,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                       </label>
 
                       <label className="block space-y-1">
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">2. Factory Colorway</span>
+                        <span className="tabular-nums text-[10px] uppercase tracking-wider text-slate-500 font-bold">2. Factory Colorway</span>
                         <select
                           value={safeColor}
                           onChange={(e) => setSelectedColor(e.target.value)}
@@ -301,7 +301,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
 
                       <div className="grid grid-cols-2 gap-2">
                         <label className="block space-y-1">
-                          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">3. Embroidery Mark</span>
+                          <span className="tabular-nums text-[10px] uppercase tracking-wider text-slate-500 font-bold">3. Embroidery Mark</span>
                           <select
                             value={selectedLogo}
                             onChange={(e) => setSelectedLogo(e.target.value as LogoStyle)}
@@ -314,7 +314,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                         </label>
 
                         <label className="block space-y-1">
-                          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">4. Thread Color</span>
+                          <span className="tabular-nums text-[10px] uppercase tracking-wider text-slate-500 font-bold">4. Thread Color</span>
                           <select
                             value={selectedThread}
                             onChange={(e) => setSelectedThread(e.target.value as LogoVariant)}
@@ -329,14 +329,14 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                       </div>
 
                       <label className="block space-y-1">
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">5. Size</span>
+                        <span className="tabular-nums text-[10px] uppercase tracking-wider text-slate-500 font-bold">5. Size</span>
                         <div className="flex flex-wrap gap-1.5">
                           {activeSpec.sizes.map(sz => (
                             <button
                               key={sz}
                               type="button"
                               onClick={() => setSelectedSize(sz)}
-                              className={`px-2.5 py-1 rounded-xs font-mono text-xs font-bold border cursor-pointer ${
+                              className={`px-2.5 py-1 rounded-xs tabular-nums text-xs font-bold border cursor-pointer ${
                                 selectedSize === sz
                                   ? 'bg-[#2A4236] text-white border-[#2A4236]'
                                   : 'bg-white text-slate-700 border-slate-300'
@@ -359,14 +359,14 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                           {previewLogoSrc ? (
                             <img src={previewLogoSrc} alt="Logo preview" className="w-12 h-12 object-contain" />
                           ) : (
-                            <span className="text-[9px] font-mono uppercase text-white/80 font-bold">CLEAN</span>
+                            <span className="text-[9px] tabular-nums uppercase text-white/80 font-bold">CLEAN</span>
                           )}
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#B12535] font-bold block">
+                          <span className="text-[10px] tabular-nums uppercase tracking-wider text-[#B12535] font-bold block">
                             DETERMINISTIC SKU
                           </span>
-                          <code className="font-mono text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-2xs block mt-0.5">
+                          <code className="tabular-nums text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-2xs block mt-0.5">
                             {resolved.sovereignSku}
                           </code>
                           <span className="text-[11px] text-slate-500 block mt-1">
@@ -375,7 +375,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                         </div>
                       </div>
 
-                      <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs font-mono text-[11px] space-y-1.5">
+                      <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs tabular-nums text-[11px] space-y-1.5">
                         <div className="flex justify-between">
                           <span className="text-slate-500">Printify Product ID:</span>
                           <span className="font-bold text-slate-800">{resolved.printifyProductId}</span>
@@ -400,7 +400,7 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                   <div className="border border-slate-200 rounded-md overflow-hidden">
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
-                        <tr className="bg-slate-100 border-b border-slate-200 font-mono text-[10px] uppercase text-slate-600">
+                        <tr className="bg-slate-100 border-b border-slate-200 tabular-nums text-[10px] uppercase text-slate-600">
                           <th className="py-2.5 px-3">Garment Blank</th>
                           <th className="py-2.5 px-3">Colors</th>
                           <th className="py-2.5 px-3">Sizes</th>
@@ -412,10 +412,10 @@ export const AdminConsole: React.FC<AdminConsoleProps> = ({
                         {matrixStats.breakdown.map(row => (
                           <tr key={row.id} className="hover:bg-slate-50">
                             <td className="py-2.5 px-3 font-semibold text-slate-900">{row.name}</td>
-                            <td className="py-2.5 px-3 font-mono">{row.colors}</td>
-                            <td className="py-2.5 px-3 font-mono">{row.sizes}</td>
-                            <td className="py-2.5 px-3 font-mono">{row.logoCombinations} (4&times;4 + Clean)</td>
-                            <td className="py-2.5 px-3 font-mono font-bold text-right text-[#2A4236]">{row.total.toLocaleString()}</td>
+                            <td className="py-2.5 px-3 tabular-nums">{row.colors}</td>
+                            <td className="py-2.5 px-3 tabular-nums">{row.sizes}</td>
+                            <td className="py-2.5 px-3 tabular-nums">{row.logoCombinations} (4&times;4 + Clean)</td>
+                            <td className="py-2.5 px-3 tabular-nums font-bold text-right text-[#2A4236]">{row.total.toLocaleString()}</td>
                           </tr>
                         ))}
                       </tbody>

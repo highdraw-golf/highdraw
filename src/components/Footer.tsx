@@ -50,10 +50,10 @@ export const Footer: React.FC<FooterProps> = ({
                 className="h-10 w-auto object-contain"
               />
               <div className="flex flex-col">
-                <span className="font-serif text-2xl font-black tracking-[0.2em] text-white uppercase leading-none">
+                <span className="font-serif text-2xl font-black tracking-[0.08em] text-white uppercase leading-none">
                   HIGH DRAW
                 </span>
-                <span className="text-[9px] font-mono tracking-[0.3em] text-slate-400 uppercase mt-0.5">
+                <span className="text-[9px] tabular-nums tracking-[0.08em] text-slate-400 uppercase mt-0.5">
                   GOLF APPAREL CO.
                 </span>
               </div>
@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="pt-2 text-xs text-slate-400">
               <span className="block font-bold text-slate-200 uppercase tracking-wider text-[11px] mb-1">Direct Brand Contact</span>
-              <a href="mailto:highdrawgear@gmail.com" className="text-[#38BDF8] hover:underline font-mono">
+              <a href="mailto:highdrawgear@gmail.com" className="text-[#38BDF8] hover:underline tabular-nums">
                 highdrawgear@gmail.com
               </a>
             </div>
@@ -190,7 +190,7 @@ export const Footer: React.FC<FooterProps> = ({
             </a>
             .
           </p>
-          <p className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">
+          <p className="text-[10px] tabular-nums tracking-wider text-slate-500 uppercase">
             Powered by{' '}
             <a
               href="https://design.pipes.pink/foundations/motion"

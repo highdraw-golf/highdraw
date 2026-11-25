@@ -444,7 +444,7 @@ ${cupMarkup}
               {onLock && (
                 <button
                   onClick={onLock}
-                  className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-slate-400 hover:text-white border border-slate-600 hover:border-slate-300 rounded cursor-pointer transition-colors"
+                  className="px-2 py-0.5 text-[10px] tabular-nums uppercase tracking-wider text-slate-400 hover:text-white border border-slate-600 hover:border-slate-300 rounded cursor-pointer transition-colors"
                 >
                   Lock Studio
                 </button>
@@ -452,7 +452,7 @@ ${cupMarkup}
             </div>
             <div className="flex items-center gap-2">
               <Sparkles size={14} className="text-[#38BDF8]" />
-              <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+              <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                 BRAND IDENTITY SYSTEM &bull; FIGMA / SKETCH VECTOR STUDIO
               </span>
             </div>
@@ -539,7 +539,7 @@ ${cupMarkup}
               </g>
             </svg>
 
-            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-2 bg-black/75 backdrop-blur-xs text-white px-4 py-2.5 rounded-xs text-[11px] font-mono">
+            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-2 bg-black/75 backdrop-blur-xs text-white px-4 py-2.5 rounded-xs text-[11px] tabular-nums">
               <span>1024&times;1024 VECTOR GRID &bull; TRUE BOOLEAN CUTOUTS</span>
               <span className="text-[#38BDF8]">3 INDEPENDENT LAYER GROUPS</span>
             </div>
@@ -547,7 +547,7 @@ ${cupMarkup}
 
           {/* Quick Brand Colorway Presets */}
           <div className="bg-white border border-slate-200 p-5 rounded-xs space-y-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold block">
+            <span className="text-[11px] tabular-nums uppercase tracking-wider text-slate-500 font-bold block">
               One-Click Brand Colorway Combos
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -621,7 +621,7 @@ ${cupMarkup}
                   <span className="text-xs font-bold block">The Tour Crossbar &ldquo;HD&rdquo; (Recommended)</span>
                   <span className="text-[11px] text-slate-600">Complete serif H with crossbar, D, tracer &amp; cup</span>
                 </div>
-                <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 bg-[#1C2C24] text-white rounded-xs">
+                <span className="text-[10px] tabular-nums font-bold uppercase px-2 py-0.5 bg-[#1C2C24] text-white rounded-xs">
                   PRIMARY
                 </span>
               </button>
@@ -636,7 +636,7 @@ ${cupMarkup}
                   <span className="text-xs font-bold block">The Minimalist Sketch &ldquo;HD&rdquo;</span>
                   <span className="text-[11px] text-slate-600">Direct elevation of your sketch — tracer bridges the H</span>
                 </div>
-                <span className="text-[10px] font-mono text-slate-500 uppercase">SKETCH</span>
+                <span className="text-[10px] tabular-nums text-slate-500 uppercase">SKETCH</span>
               </button>
 
               <button
@@ -649,7 +649,7 @@ ${cupMarkup}
                   <span className="text-xs font-bold block">The Heritage Flagstick &ldquo;HD&rdquo;</span>
                   <span className="text-[11px] text-slate-600">Adds the signature High Draw pin &amp; flag in the cup</span>
                 </div>
-                <span className="text-[10px] font-mono text-slate-500 uppercase">CREST</span>
+                <span className="text-[10px] tabular-nums text-slate-500 uppercase">CREST</span>
               </button>
             </div>
 
@@ -674,7 +674,7 @@ ${cupMarkup}
             {/* Layer 1: HD Monogram */}
             <div className="space-y-2 pb-4 border-b border-slate-100">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold">Layer 1: &ldquo;HD&rdquo; Serif Monogram (<code className="text-[11px] font-mono text-slate-500">#Monogram-HD</code>)</span>
+                <span className="text-xs font-bold">Layer 1: &ldquo;HD&rdquo; Serif Monogram (<code className="text-[11px] tabular-nums text-slate-500">#Monogram-HD</code>)</span>
                 <input
                   type="color"
                   value={monogramColor}
@@ -700,7 +700,7 @@ ${cupMarkup}
             {/* Layer 2: Ball-Flight Tracer */}
             <div className="space-y-2 pb-4 border-b border-slate-100">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold">Layer 2: Ball-Flight Tracer (<code className="text-[11px] font-mono text-slate-500">#Ball-Flight-Tracer</code>)</span>
+                <span className="text-xs font-bold">Layer 2: Ball-Flight Tracer (<code className="text-[11px] tabular-nums text-slate-500">#Ball-Flight-Tracer</code>)</span>
                 <input
                   type="color"
                   value={tracerColor}
@@ -726,7 +726,7 @@ ${cupMarkup}
             {/* Layer 3: Golf Cup Target */}
             <div className="space-y-2 pb-4 border-b border-slate-100">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold">Layer 3: Golf Cup Target (<code className="text-[11px] font-mono text-slate-500">#Golf-Cup</code>)</span>
+                <span className="text-xs font-bold">Layer 3: Golf Cup Target (<code className="text-[11px] tabular-nums text-slate-500">#Golf-Cup</code>)</span>
                 <input
                   type="color"
                   value={cupColor}
@@ -764,7 +764,7 @@ ${cupMarkup}
                   <button
                     key={b.val}
                     onClick={() => setCanvasBg(b.val)}
-                    className={`px-2.5 py-1 text-[11px] font-mono rounded-xs border cursor-pointer ${
+                    className={`px-2.5 py-1 text-[11px] tabular-nums rounded-xs border cursor-pointer ${
                       canvasBg === b.val ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-300'
                     }`}
                   >
@@ -779,9 +779,9 @@ ${cupMarkup}
           <div className="bg-white border border-slate-200 p-6 rounded-xs space-y-3">
             <h3 className="font-serif text-base font-bold">Separated 2048px PNG Layers (For Raster Tint in Figma/Sketch)</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              In Figma or Sketch, <strong>.SVG</strong> is best because every vector path is directly clickable. If you prefer working with <strong>.PNG</strong> files, stack these 3 registered <code className="font-mono">2048&times;2048</code> transparent PNG layers at <code className="font-mono">(0, 0)</code> and apply a Fill/Tint to each layer independently:
+              In Figma or Sketch, <strong>.SVG</strong> is best because every vector path is directly clickable. If you prefer working with <strong>.PNG</strong> files, stack these 3 registered <code className="tabular-nums">2048&times;2048</code> transparent PNG layers at <code className="tabular-nums">(0, 0)</code> and apply a Fill/Tint to each layer independently:
             </p>
-            <div className="grid grid-cols-1 gap-2 pt-1 text-xs font-mono">
+            <div className="grid grid-cols-1 gap-2 pt-1 text-xs tabular-nums">
               <a
                 href="/assets/brand/hd-monogram/layer_1_monogram_hd_crossbar.png"
                 download

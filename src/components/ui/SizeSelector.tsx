@@ -19,7 +19,7 @@ export const SizeSelector: React.FC<SizeSelectorProps> = ({
     <div className="space-y-2.5">
       <div className="flex items-center justify-between text-xs">
         <span className="font-bold text-slate-800 uppercase tracking-wider">
-          Size: <span className="text-[#1A1F26] font-mono text-sm ml-1">{selectedSize}</span>
+          Size: <span className="text-[#1A1F26] tabular-nums text-sm ml-1">{selectedSize}</span>
         </span>
         {onOpenSizeGuide && (
           <button

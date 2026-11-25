@@ -62,7 +62,7 @@ export const InteractiveTracerStage: React.FC = () => {
 
       <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10">
         <div>
-          <div className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#38BDF8] font-bold">
+          <div className="inline-flex items-center gap-2 text-[10px] tabular-nums uppercase tracking-wider text-[#38BDF8] font-bold">
             <Layers size={13} />
             <span>3-LAYER DECONSTRUCTED EMBROIDERY ARCHITECTURE &bull; LIVE TELEMETRY</span>
           </div>
@@ -75,7 +75,7 @@ export const InteractiveTracerStage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsExploded((v) => !v)}
-            className="px-3.5 py-2 rounded-xs bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-mono uppercase tracking-wider cursor-pointer t-press flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xs bg-white/10 hover:bg-white/15 border border-white/20 text-xs tabular-nums uppercase tracking-wider cursor-pointer t-press flex items-center gap-1.5"
           >
             <Layers size={13} className="text-[#38BDF8]" />
             <span>{isExploded ? 'Assemble Lockup' : 'Explode 3 Layers'}</span>
@@ -83,7 +83,7 @@ export const InteractiveTracerStage: React.FC = () => {
           <button
             type="button"
             onClick={() => setReplayKey((k) => k + 1)}
-            className="px-3.5 py-2 rounded-xs bg-[#B12535] hover:bg-[#8E1D29] text-white text-xs font-mono uppercase tracking-wider font-bold cursor-pointer t-press flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xs bg-[#B12535] hover:bg-[#8E1D29] text-white text-xs tabular-nums uppercase tracking-wider font-bold cursor-pointer t-press flex items-center gap-1.5"
           >
             <RotateCcw size={13} />
             <span>Replay Draw Flight</span>
@@ -180,7 +180,7 @@ export const InteractiveTracerStage: React.FC = () => {
           </div>
 
           {/* Live Launch Monitor Telemetry Overlay */}
-          <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 bg-black/75 backdrop-blur-md px-3.5 py-2 rounded-2xs border border-white/10 font-mono text-[10px]">
+          <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 bg-black/75 backdrop-blur-md px-3.5 py-2 rounded-2xs border border-white/10 tabular-nums text-[10px]">
             <span className="text-[#38BDF8] font-bold">LAUNCH: 14.2&deg; HIGH DRAW</span>
             <span className="text-slate-300">SPIN: 2,420 RPM</span>
             <span className="text-amber-400 font-bold">STITCH DENSITY: 12,400 PTS</span>
@@ -208,10 +208,10 @@ export const InteractiveTracerStage: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] font-bold text-[#38BDF8]">
+                  <span className="tabular-nums text-[11px] font-bold text-[#38BDF8]">
                     {layer.title}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[10px] tabular-nums text-slate-400">
                     {isSelected ? 'ISOLATED' : 'HOVER TO ISOLATE'}
                   </span>
                 </div>
@@ -220,7 +220,7 @@ export const InteractiveTracerStage: React.FC = () => {
             );
           })}
 
-          <div className="pt-2 flex items-center gap-2 text-[11px] font-mono text-emerald-400">
+          <div className="pt-2 flex items-center gap-2 text-[11px] tabular-nums text-emerald-400">
             <ShieldCheck size={14} />
             <span>Zero Puckering Backing • Tested 100+ Machine Wash Cycles</span>
           </div>

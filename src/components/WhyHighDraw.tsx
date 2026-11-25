@@ -11,7 +11,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
       
       {/* Editorial Section Header */}
       <div className="max-w-4xl mx-auto text-center space-y-5 mb-24 lg:mb-32">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C2C24]/10 text-[#1C2C24] text-[11px] font-mono tracking-widest uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C2C24]/10 text-[#1C2C24] text-[11px] tabular-nums tracking-wider uppercase">
           <img 
             src="/assets/brand/logo_tracer_cyan.png" 
             alt="Tracer" 
@@ -37,7 +37,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <div className="lg:col-span-6 space-y-7">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
               <Shirt size={16} />
               <span>CRAFTSMANSHIP PILLAR 01</span>
             </div>
@@ -91,9 +91,9 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               alt="High Draw Stay-Flat Collar Craftsmanship" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
             />
-            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] font-mono px-3.5 py-1.5 rounded-xs flex items-center gap-2">
+            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] tabular-nums px-3.5 py-1.5 rounded-xs flex items-center gap-2">
               <ShieldCheck size={14} className="text-[#38BDF8]" />
-              <span>SENIOR ATHLETIC FAIRWAY CUT</span>
+              <span>Relaxed athletic cut</span>
             </div>
           </div>
 
@@ -108,21 +108,21 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               alt="High Draw Fairway Drape in Action" 
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103"
             />
-            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] font-mono px-3.5 py-1.5 rounded-xs flex items-center gap-2">
+            <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md text-white text-[11px] tabular-nums px-3.5 py-1.5 rounded-xs flex items-center gap-2">
               <ShieldCheck size={14} className="text-[#38BDF8]" />
               <span>180 GSM MATTE MICRO-PIQUE</span>
             </div>
           </div>
 
           <div className="lg:col-span-6 space-y-7 order-1 lg:order-2">
-            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
               <Sparkles size={16} />
               <span>CRAFTSMANSHIP PILLAR 02</span>
             </div>
 
             <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1A1F26] font-bold leading-tight">
               Matte Micro-Pique. <br />
-              <span className="font-normal italic text-slate-500">Zero Synthetic Gym Sheen.</span>
+              <span className="font-normal italic text-slate-500">A matte finish that looks right at dinner.</span>
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
@@ -132,7 +132,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
             {/* Three Typographic Hallmarks */}
             <div className="space-y-4 pt-2">
               <div className="flex items-start gap-3.5 pb-3 border-b border-slate-200/70">
-                <span className="font-mono text-xs font-bold text-[#B12535] mt-0.5">01</span>
+                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">01</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">4-Way Mechanical Stretch</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Complete rotational freedom through full driver swings without pulling out of your waistband.</p>
@@ -140,7 +140,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               </div>
 
               <div className="flex items-start gap-3.5 pb-3 border-b border-slate-200/70">
-                <span className="font-mono text-xs font-bold text-[#B12535] mt-0.5">02</span>
+                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">02</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">UPF 50+ Solar Shield</h4>
                   <p className="text-xs text-slate-500 mt-0.5">All-day UV protection woven directly into the technical yarns, not chemical dip-coatings that wash out.</p>
@@ -148,7 +148,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <span className="font-mono text-xs font-bold text-[#B12535] mt-0.5">03</span>
+                <span className="tabular-nums text-xs font-bold text-[#B12535] mt-0.5">03</span>
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#1A1F26]">Tailored Fit for Dedicated Weekenders</h4>
                   <p className="text-xs text-slate-500 mt-0.5">Structured across the shoulders and chest with a flattering, unrestrictive drape through the midsection.</p>
@@ -162,7 +162,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
         {/* Feature 3: The Mid-Market Value Ledger (Architectural Ledger Table, Not Boxed Cards) */}
         <div className="bg-[#1C2C24] text-white py-14 px-6 sm:px-12 lg:px-16 rounded-xs shadow-2xl space-y-10">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+            <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
               THE HONEST MID-MARKET MATH
             </span>
             <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold">
@@ -175,7 +175,7 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
 
           {/* Architectural Comparison Ledger */}
           <div className="max-w-4xl mx-auto overflow-hidden border border-white/15 rounded-xs">
-            <div className="grid grid-cols-12 bg-white/5 border-b border-white/15 text-xs font-mono uppercase tracking-wider py-3.5 px-4 sm:px-6 font-bold">
+            <div className="grid grid-cols-12 bg-white/5 border-b border-white/15 text-xs tabular-nums uppercase tracking-wider py-3.5 px-4 sm:px-6 font-bold">
               <div className="col-span-6 sm:col-span-7 text-slate-300">Cost &amp; Quality Breakdown</div>
               <div className="col-span-3 sm:col-span-3 text-right text-slate-400">Legacy Boutique</div>
               <div className="col-span-3 sm:col-span-2 text-right text-[#38BDF8]">High Draw</div>
@@ -187,8 +187,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                   <span className="font-semibold block">180 GSM Micro-Pique Fabric &amp; Stay-Flat Collar</span>
                   <span className="text-[11px] text-slate-400">Yarn-dyed 4-way stretch knit &amp; fused placket</span>
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-slate-300">$22.00</div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-white font-bold">$22.00</div>
+                <div className="col-span-3 sm:col-span-3 text-right tabular-nums text-slate-300">$22.00</div>
+                <div className="col-span-3 sm:col-span-2 text-right tabular-nums text-white font-bold">$22.00</div>
               </div>
 
               <div className="grid grid-cols-12 py-3 px-4 sm:px-6 items-center">
@@ -196,8 +196,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                   <span className="font-semibold block">Tour Endorsement Contracts</span>
                   <span className="text-[11px] text-slate-400">Paying pro tour players to wear logos on TV</span>
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-red-400">$32.00</div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-[#38BDF8] font-bold">$0.00</div>
+                <div className="col-span-3 sm:col-span-3 text-right tabular-nums text-red-400">$32.00</div>
+                <div className="col-span-3 sm:col-span-2 text-right tabular-nums text-[#38BDF8] font-bold">$0.00</div>
               </div>
 
               <div className="grid grid-cols-12 py-3 px-4 sm:px-6 items-center">
@@ -205,8 +205,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                   <span className="font-semibold block">Wholesale Middlemen &amp; Distributor Markups</span>
                   <span className="text-[11px] text-slate-400">Multiple corporate middleman profit cuts</span>
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-red-400">$45.00</div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-[#38BDF8] font-bold">$0.00</div>
+                <div className="col-span-3 sm:col-span-3 text-right tabular-nums text-red-400">$45.00</div>
+                <div className="col-span-3 sm:col-span-2 text-right tabular-nums text-[#38BDF8] font-bold">$0.00</div>
               </div>
 
               <div className="grid grid-cols-12 py-3 px-4 sm:px-6 items-center">
@@ -214,8 +214,8 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                   <span className="font-semibold block">Fairway Direct Craft Pricing</span>
                   <span className="text-[11px] text-slate-400">No bloated boutique markups delivered direct to golfers</span>
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-slate-300">Standard</div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-[#38BDF8] font-bold">Included</div>
+                <div className="col-span-3 sm:col-span-3 text-right tabular-nums text-slate-300">Standard</div>
+                <div className="col-span-3 sm:col-span-2 text-right tabular-nums text-[#38BDF8] font-bold">Included</div>
               </div>
 
               {/* Total Row */}
@@ -223,10 +223,10 @@ export const WhyHighDraw: React.FC<WhyHighDrawProps> = ({ onScrollToShop }) => {
                 <div className="col-span-6 sm:col-span-7 text-white font-serif text-base sm:text-lg">
                   Final Golfer Retail Price
                 </div>
-                <div className="col-span-3 sm:col-span-3 text-right font-mono text-lg sm:text-xl text-red-400 line-through">
+                <div className="col-span-3 sm:col-span-3 text-right tabular-nums text-lg sm:text-xl text-red-400 line-through">
                   $125.00
                 </div>
-                <div className="col-span-3 sm:col-span-2 text-right font-mono text-xl sm:text-2xl text-[#38BDF8]">
+                <div className="col-span-3 sm:col-span-2 text-right tabular-nums text-xl sm:text-2xl text-[#38BDF8]">
                   $48.00
                 </div>
               </div>

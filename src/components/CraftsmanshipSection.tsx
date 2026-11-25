@@ -34,7 +34,7 @@ export const CraftsmanshipSection: React.FC = () => {
       
       {/* Section Header */}
       <div className="max-w-3xl mb-16 space-y-3">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#C03221] font-semibold block">
+        <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] font-semibold block">
           TEXTILE ARCHITECTURE & ANATOMY
         </span>
         <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -59,7 +59,7 @@ export const CraftsmanshipSection: React.FC = () => {
                 : 'bg-[#FBFBFA] text-[#090C10] border-slate-200 hover:border-slate-400'
             }`}
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#C03221] mb-1">
+            <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] mb-1">
               PILLAR 01
             </div>
             <h3 className="font-serif text-xl font-medium">1. Matte Micro-Pique Knit</h3>
@@ -76,7 +76,7 @@ export const CraftsmanshipSection: React.FC = () => {
                 : 'bg-[#FBFBFA] text-[#090C10] border-slate-200 hover:border-slate-400'
             }`}
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#C03221] mb-1">
+            <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] mb-1">
               PILLAR 02
             </div>
             <h3 className="font-serif text-xl font-medium">2. Stay-Flat Fused Collar Stand</h3>
@@ -93,7 +93,7 @@ export const CraftsmanshipSection: React.FC = () => {
                 : 'bg-[#FBFBFA] text-[#090C10] border-slate-200 hover:border-slate-400'
             }`}
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#C03221] mb-1">
+            <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#C03221] mb-1">
               PILLAR 03
             </div>
             <h3 className="font-serif text-xl font-medium">3. Zero-Distraction Swing Fit</h3>
@@ -112,13 +112,13 @@ export const CraftsmanshipSection: React.FC = () => {
               alt={current.title} 
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
-            <div className="absolute top-4 left-4 bg-[#090C10] text-white font-mono text-[9px] uppercase tracking-[0.25em] px-3 py-1">
+            <div className="absolute top-4 left-4 bg-[#090C10] text-white tabular-nums text-[9px] uppercase tracking-[0.08em] px-3 py-1">
               MACRO ANATOMY // {activeTab.toUpperCase()}
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">
+            <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-400">
               {current.subtitle}
             </div>
             <h3 className="font-serif text-2xl md:text-3xl text-[#090C10] font-normal">
@@ -130,7 +130,7 @@ export const CraftsmanshipSection: React.FC = () => {
           </div>
 
           {/* Details List */}
-          <div className="grid grid-cols-2 gap-3 pt-4 hairline-t font-mono text-xs text-[#090C10]">
+          <div className="grid grid-cols-2 gap-3 pt-4 hairline-t tabular-nums text-xs text-[#090C10]">
             {current.details.map((detail, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#C03221]"></span>

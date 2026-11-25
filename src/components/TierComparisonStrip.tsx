@@ -35,7 +35,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2.5 max-w-2xl">
-            <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[#B12535] font-bold">
+            <span className="inline-flex items-center gap-2 tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#B12535] font-bold">
               <span>THE HIGH DRAW 3-TIER APPAREL ARCHITECTURE</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A1F26] tracking-tight leading-[1.08]">
@@ -47,7 +47,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
             </p>
           </div>
 
-          <div className="text-left md:text-right font-mono text-[11px] text-slate-500 space-y-1">
+          <div className="text-left md:text-right tabular-nums text-[11px] text-slate-500 space-y-1">
             <span className="block text-[#1C2C24] font-bold uppercase tracking-wider">
               3 Signature Chest Lockups Included
             </span>
@@ -66,11 +66,11 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
           <StaggerItem className="p-6 sm:p-8 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#1C2C24] flex items-center gap-1.5">
+                <span className="tabular-nums text-[11px] font-bold uppercase tracking-[0.08em] text-[#1C2C24] flex items-center gap-1.5">
                   <Sun size={14} className="text-[#38BDF8]" />
                   <span>01 / WEEKENDER</span>
                 </span>
-                <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#1C2C24]/8 text-[#1C2C24]">
+                <span className="tabular-nums text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#1C2C24]/8 text-[#1C2C24]">
                   $48 DIRECT
                 </span>
               </div>
@@ -82,7 +82,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                 />
-                <span className="absolute bottom-2.5 left-2.5 bg-black/75 backdrop-blur-md text-white font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
+                <span className="absolute bottom-2.5 left-2.5 bg-black/75 backdrop-blur-md text-white tabular-nums text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
                   UPF 50+ Technical Micropique
                 </span>
               </div>
@@ -92,7 +92,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                   On-Course Fairway Drape
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Built on 180 GSM technical polyester micropique (<span className="font-mono text-[11px] font-semibold text-[#1C2C24]">ST740</span> Men&rsquo;s &amp; <span className="font-mono text-[11px] font-semibold text-[#1C2C24]">LST740</span> Women&rsquo;s). Featherlight capillary airflow, UPF 50+ solar block, and zero cling through summer humidity.
+                  Built on 180 GSM technical polyester micropique (<span className="tabular-nums text-[11px] font-semibold text-[#1C2C24]">ST740</span> Men&rsquo;s &amp; <span className="tabular-nums text-[11px] font-semibold text-[#1C2C24]">LST740</span> Women&rsquo;s). Featherlight capillary airflow, UPF 50+ solar block, and zero cling through summer humidity.
                 </p>
               </div>
 
@@ -128,11 +128,11 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
           <StaggerItem className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#FBFBFA]/60">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#B12535] flex items-center gap-1.5">
+                <span className="tabular-nums text-[11px] font-bold uppercase tracking-[0.08em] text-[#B12535] flex items-center gap-1.5">
                   <Wine size={14} className="text-[#B12535]" />
                   <span>02 / THE CLUBHOUSE</span>
                 </span>
-                <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">
+                <span className="tabular-nums text-xs font-bold px-2.5 py-0.5 rounded-2xs bg-[#B12535]/10 text-[#B12535]">
                   $66 – $68
                 </span>
               </div>
@@ -144,7 +144,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                 />
-                <span className="absolute bottom-2.5 left-2.5 bg-[#1C2C24]/90 backdrop-blur-md text-white font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
+                <span className="absolute bottom-2.5 left-2.5 bg-[#1C2C24]/90 backdrop-blur-md text-white tabular-nums text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
                   57/43 Combed Cotton-Poly Fine Pique
                 </span>
               </div>
@@ -154,7 +154,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                   19th Hole &amp; Evening Dining
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Rich heathered 57% combed cotton / 43% poly fine pique (<span className="font-mono text-[11px] font-semibold text-[#1C2C24]">K830</span> Men&rsquo;s &amp; <span className="font-mono text-[11px] font-semibold text-[#1C2C24]">LK830</span> Women&rsquo;s, $66) plus our 8.3-oz Fleece 1/4-Zip ($68). Natural matte hand with zero gym sheen.
+                  Rich heathered 57% combed cotton / 43% poly fine pique (<span className="tabular-nums text-[11px] font-semibold text-[#1C2C24]">K830</span> Men&rsquo;s &amp; <span className="tabular-nums text-[11px] font-semibold text-[#1C2C24]">LK830</span> Women&rsquo;s, $66) plus our 8.3-oz Fleece 1/4-Zip ($68). Natural matte hand with zero gym sheen.
                 </p>
               </div>
 
@@ -165,7 +165,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                 </li>
                 <li className="flex items-center gap-2">
                   <Check size={13} className="text-emerald-700 shrink-0" />
-                  <span>Crisp White Embroidery (2.5&Prime; Men&rsquo;s / 2.25&Prime; Women&rsquo;s)</span>
+                  <span>Crisp White Embroidery (2.25&Prime; Men&rsquo;s / 1.75&Prime; Women&rsquo;s)</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check size={13} className="text-emerald-700 shrink-0" />
@@ -190,11 +190,11 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
           <StaggerItem className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#0D1520] text-white">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#38BDF8] flex items-center gap-1.5">
+                <span className="tabular-nums text-[11px] font-bold uppercase tracking-[0.08em] text-[#38BDF8] flex items-center gap-1.5">
                   <Trophy size={14} className="text-amber-400" />
                   <span>03 / TOURNAMENT</span>
                 </span>
-                <span className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-2xs bg-white/10 text-amber-300 uppercase">
+                <span className="tabular-nums text-[10px] font-bold px-2.5 py-0.5 rounded-2xs bg-white/10 text-amber-300 uppercase">
                   SUMMER 2026 &bull; $110
                 </span>
               </div>
@@ -206,7 +206,7 @@ export const TierComparisonStrip: React.FC<TierComparisonStripProps> = ({
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 brightness-90"
                 />
-                <span className="absolute bottom-2.5 left-2.5 bg-black/80 backdrop-blur-md text-[#38BDF8] font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
+                <span className="absolute bottom-2.5 left-2.5 bg-black/80 backdrop-blur-md text-[#38BDF8] tabular-nums text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-2xs">
                   3.4 oz Bonded Tour Prototype
                 </span>
               </div>

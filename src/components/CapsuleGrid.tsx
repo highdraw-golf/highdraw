@@ -64,7 +64,7 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 hairline-b gap-6">
         <div>
-          <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C03221] font-semibold mb-2">
+          <div className="tabular-nums text-[11px] uppercase tracking-[0.08em] text-[#C03221] font-semibold mb-2">
             CURATED CAPSULE // NO SKU CLUTTER
           </div>
           <h2 className="font-serif text-3xl md:text-5xl text-[#090C10] font-normal tracking-tight-editorial">
@@ -93,14 +93,14 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
                 />
                 
                 {/* Badge */}
-                <div className="absolute top-4 left-4 bg-[#090C10] text-white font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1">
+                <div className="absolute top-4 left-4 bg-[#090C10] text-white tabular-nums text-[9px] uppercase tracking-[0.08em] px-3 py-1">
                   {p.badge}
                 </div>
 
                 {/* Concierge overlay button */}
                 <button
                   onClick={onOpenConcierge}
-                  className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm hover:bg-[#090C10] hover:text-white text-[#090C10] font-mono text-[10px] uppercase tracking-[0.15em] px-3 py-2 border border-slate-200 transition-all flex items-center gap-1.5 shadow-md"
+                  className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm hover:bg-[#090C10] hover:text-white text-[#090C10] tabular-nums text-[10px] uppercase tracking-[0.08em] px-3 py-2 border border-slate-200 transition-all flex items-center gap-1.5 shadow-md"
                 >
                   <Compass size={12} className="text-[#C03221]" />
                   <span>GROUP FIT</span>
@@ -109,7 +109,7 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
 
               {/* Product Info */}
               <div className="space-y-2">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400 block">
+                <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-slate-400 block">
                   {p.category}
                 </span>
                 <h3 className="font-serif text-xl text-[#090C10] font-medium leading-snug">
@@ -124,18 +124,17 @@ export const CapsuleGrid: React.FC<CapsuleGridProps> = ({ onAddToCart, onOpenCon
             {/* Price & Action */}
             <div className="pt-6 mt-6 hairline-t">
               <div className="flex items-baseline justify-between mb-4">
-                <div className="flex items-baseline gap-2 font-mono">
+                <div className="flex items-baseline gap-2 tabular-nums">
                   <span className="text-xl font-bold text-[#090C10]">${p.price}</span>
-                  <span className="text-xs text-slate-400 line-through">${p.originalPrice}</span>
                 </div>
-                <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+                <span className="tabular-nums text-[10px] text-slate-500 uppercase tracking-wider">
                   LIMITED DROP 001
                 </span>
               </div>
 
               <button
                 onClick={() => handleQuickAdd(p)}
-                className={`w-full py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${
+                className={`w-full py-3.5 tabular-nums text-[11px] uppercase tracking-[0.08em] transition-all flex items-center justify-center gap-2 ${
                   addedId === p.id 
                     ? 'bg-emerald-800 text-white' 
                     : 'bg-[#090C10] text-white hover:bg-[#162a40]'

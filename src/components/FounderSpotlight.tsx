@@ -74,7 +74,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
         {/* Section Pill & Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#38BDF8] text-[11px] font-mono tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#38BDF8] text-[11px] tabular-nums tracking-wider uppercase">
               <Compass size={14} />
               <span>THE CO-FOUNDER&apos;S PERSPECTIVE &bull; LIVE COURSE REEL</span>
             </div>
@@ -90,7 +90,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
             {onLearnMore && (
               <button
                 onClick={onLearnMore}
-                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider rounded-xs cursor-pointer border border-white/15 transition-all inline-flex items-center gap-2"
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white tabular-nums text-xs uppercase tracking-wider rounded-xs cursor-pointer border border-white/15 transition-all inline-flex items-center gap-2"
               >
                 <span>Read Full Story</span>
                 <ArrowRight size={14} />
@@ -127,7 +127,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
                 )}
 
                 {/* Top-Left Live Video / Photo Pill */}
-                <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-xs border border-white/15 flex items-center gap-1.5 pointer-events-none">
+                <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] tabular-nums uppercase tracking-wider px-2.5 py-1 rounded-xs border border-white/15 flex items-center gap-1.5 pointer-events-none">
                   {currentMedia.type === 'video' ? (
                     <>
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -141,7 +141,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
                   )}
                 </div>
 
-                <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md p-3 rounded-xs border border-white/10 text-xs font-mono pointer-events-none">
+                <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md p-3 rounded-xs border border-white/10 text-xs tabular-nums pointer-events-none">
                   <span className="text-white font-bold block">{currentMedia.caption}</span>
                   <span className="text-[#38BDF8] text-[10px]">{currentMedia.subcaption}</span>
                 </div>
@@ -156,17 +156,17 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
                   />
                 </div>
                 <div className="p-4 bg-white/5 border border-white/10 rounded-xs space-y-1">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                  <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-400">
                     Handicap Index
                   </div>
-                  <div className="font-mono text-2xl font-bold text-[#38BDF8]">2.9</div>
+                  <div className="tabular-nums text-2xl font-bold text-[#38BDF8]">2.9</div>
                   <div className="text-[11px] text-slate-300">Senior Athletic Drape</div>
                 </div>
                 <div className="p-4 bg-white/5 border border-white/10 rounded-xs space-y-1">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                  <div className="text-[10px] tabular-nums uppercase tracking-wider text-slate-400">
                     National Quest
                   </div>
-                  <div className="font-mono text-2xl font-bold text-white">47 / 50</div>
+                  <div className="tabular-nums text-2xl font-bold text-white">47 / 50</div>
                   <div className="text-[11px] text-slate-400">States Played</div>
                 </div>
               </div>
@@ -199,7 +199,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
                         </span>
                       )}
                     </div>
-                    <span className="text-[9px] font-mono font-bold text-slate-200 truncate block text-center">
+                    <span className="text-[9px] tabular-nums font-bold text-slate-200 truncate block text-center">
                       {item.label}
                     </span>
                   </button>
@@ -253,7 +253,7 @@ export const FounderSpotlight: React.FC<FounderSpotlightProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveMedia('swing_video')}
-                className="text-xs font-mono text-[#38BDF8] hover:text-white underline underline-offset-4 cursor-pointer"
+                className="text-xs tabular-nums text-[#38BDF8] hover:text-white underline underline-offset-4 cursor-pointer"
               >
                 Play Range Swing Video &uarr;
               </button>

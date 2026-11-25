@@ -175,7 +175,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       {/* Collections Tier Navigation Banner with Shared-Element Spring Pill */}
       <div className="mb-10 p-2 sm:p-2.5 bg-[#0D1520] border border-slate-800 rounded-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3 px-3">
-          <span className="font-mono text-[11px] tracking-widest text-[#38BDF8] uppercase font-bold">
+          <span className="tabular-nums text-[11px] tracking-wider text-[#38BDF8] uppercase font-bold">
             FILTER BY TIER:
           </span>
           <span className="hidden lg:inline text-xs text-slate-400 font-sans">
@@ -195,7 +195,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 key={tier.id}
                 type="button"
                 onClick={() => setTier(tier.id as any)}
-                className={`relative px-3.5 py-1.5 rounded-xs font-mono text-xs uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer t-press ${
+                className={`relative px-3.5 py-1.5 rounded-xs tabular-nums text-xs uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer t-press ${
                   isActive
                     ? 'text-white font-bold'
                     : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700/50'
@@ -231,7 +231,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               alt="High Draw Mark"
               className="h-5 w-auto object-contain"
             />
-            <span className="text-xs font-bold uppercase tracking-widest text-[#B12535]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#B12535]">
               HONEST DIRECT APPAREL &bull; WEEKENDER ($48) &amp; THE CLUBHOUSE ($66)
             </span>
           </div>
@@ -244,7 +244,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
         </div>
 
         {/* Category Filter Tabs with Shared-Element Spring Underline */}
-        <div className="flex flex-wrap gap-2 sm:gap-4 font-mono text-xs uppercase tracking-wider">
+        <div className="flex flex-wrap gap-2 sm:gap-4 tabular-nums text-xs uppercase tracking-wider">
           {[
             { id: 'all', label: 'All Gear' },
             { id: 'polos', label: 'Polos' },
@@ -280,7 +280,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       {currentTier === 'tournament' && (
         <div className="mb-14 p-6 sm:p-10 bg-[#0D1520] text-white rounded-xs border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-xl">
           <div className="lg:col-span-7 space-y-3">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#38BDF8] font-bold">
+            <div className="inline-flex items-center gap-2 tabular-nums text-[11px] uppercase tracking-wider text-[#38BDF8] font-bold">
               <Bell size={14} />
               <span>TOURNAMENT EDITION &bull; PRIVATE SUMMER 2026 ALLOCATION</span>
             </div>
@@ -356,12 +356,12 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                       loading="lazy"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs">
+                    <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] tabular-nums px-2.5 py-1 rounded-xs">
                       18TH HOLE AT PEBBLE &bull; VERIFIED FOURSOME
                     </div>
                   </div>
                   <div className="lg:col-span-7 space-y-4">
-                    <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+                    <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                       THE SATURDAY SCRAMBLE FOURSOME INITIATIVE
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
@@ -420,7 +420,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     )}
 
                     {/* Discreet Craftsmanship Tag / Tier Badge */}
-                    <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-mono tracking-widest px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
+                    <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] tabular-nums tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
                       {p.badge ? (
                         <span className="text-[#38BDF8] font-bold">{p.badge}</span>
                       ) : (
@@ -433,7 +433,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
                     {/* Custom Logo Options Pill or Coming Soon */}
                     <div
-                      className={`absolute top-3.5 right-3.5 backdrop-blur-md text-white text-[9px] font-mono tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm ${
+                      className={`absolute top-3.5 right-3.5 backdrop-blur-md text-white text-[9px] tabular-nums tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm ${
                         p.isComingSoon ? 'bg-[#B12535]' : 'bg-black/75'
                       }`}
                     >
@@ -474,7 +474,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
                   {/* Clean Editorial Typography */}
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535] block">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535] block">
                       {p.collectionLabel}
                     </span>
                     <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
@@ -486,10 +486,9 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 {/* Price & Value Line */}
                 <div className="pt-3 border-t border-slate-100 mt-4 flex items-baseline justify-between font-sans">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-mono text-xl font-bold text-[#1A1F26]">${p.price}</span>
-                    <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
+                    <span className="tabular-nums text-xl font-bold text-[#1A1F26]">${p.price}</span>
                   </div>
-                  <span className="text-[11px] font-mono tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                  <span className="text-[11px] tabular-nums tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
                     {cardSpecBadge}
                   </span>
                 </div>
@@ -503,7 +502,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
       <div className="mt-24 p-6 sm:p-10 bg-[#15191E] text-white rounded-xs border border-slate-800 shadow-2xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono uppercase tracking-widest text-[#38BDF8]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] tabular-nums uppercase tracking-wider text-[#38BDF8]">
               <Sparkles size={12} />
               <span>BESPOKE EMBROIDERY ARCHITECTURE &bull; INCLUDED ON EVERY ORDER</span>
             </div>
@@ -514,12 +513,12 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               </span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-              Every High Draw Weekender and Clubhouse garment is stitched to order in the USA. Preview our three signature marks—<strong>Mark + Monogram (H | D)</strong>, <strong>Mark-Only (Ball Flight Tracer)</strong>, and <strong>Mark + Wordmark (HIGH DRAW)</strong>—with factory-calibrated contrast thread.
+              Every High Draw Weekender and Clubhouse garment is stitched to order in the USA. Preview our three signature marks—<strong>Mark + Monogram (H | D)</strong>, <strong>The Tracer</strong>, and <strong>Mark + Wordmark (HIGH DRAW)</strong>—with factory-calibrated contrast thread.
             </p>
 
             {/* Interactive 3-Mark Style Switcher Pills */}
             <div className="space-y-2 pt-1">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block">
+              <span className="text-[10px] tabular-nums uppercase tracking-wider text-slate-400 block">
                 1. SELECT SIGNATURE CHEST MARK:
               </span>
               <div className="flex flex-wrap gap-2">
@@ -552,7 +551,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
 
             {/* Interactive Garment Swatch Switcher */}
             <div className="space-y-2 pt-1">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block">
+              <span className="text-[10px] tabular-nums uppercase tracking-wider text-slate-400 block">
                 2. PREVIEW ON LIVE STITCHED GARMENT COLORWAYS:
               </span>
               <div className="flex flex-wrap items-center gap-2.5">
@@ -582,7 +581,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                     aria-label={sh.name}
                   />
                 ))}
-                <span className="text-xs font-mono text-slate-300 ml-1">
+                <span className="text-xs tabular-nums text-slate-300 ml-1">
                   {showcaseShirtName} &bull; {showcaseShirtHex === '#FFFFFF' ? 'Light Blue Thread' : 'Crisp White Thread'}
                 </span>
               </div>
@@ -619,7 +618,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
                 </div>
               )}
 
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/80 backdrop-blur-md text-white px-3.5 py-2 rounded-2xs text-[10px] font-mono">
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/80 backdrop-blur-md text-white px-3.5 py-2 rounded-2xs text-[10px] tabular-nums">
                 <span>{showcaseShirtName.toUpperCase()}</span>
                 <span className="text-[#38BDF8] font-bold">
                   {formatCustomizationSummary(showcaseStyle, showcaseThreadVariant).toUpperCase()}
@@ -639,7 +638,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
           <div className="relative w-full max-w-4xl bg-white rounded-xs shadow-2xl overflow-hidden my-8">
             <div className="bg-[#1C2C24] text-white p-6 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#38BDF8] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#38BDF8] block">
                   {quickViewProduct.collectionLabel} &bull; BESPOKE CUSTOMIZATION
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-white">{quickViewProduct.name}</h3>
@@ -665,11 +664,7 @@ export const ShopifyCollections: React.FC<ShopifyCollectionsProps> = ({
               <div className="md:col-span-7 space-y-5 flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex items-baseline gap-3">
-                    <span className="text-3xl font-bold font-mono text-[#1A1F26]">${quickViewProduct.price} USD</span>
-                    <span className="text-sm text-slate-400 line-through">${quickViewProduct.originalPrice}</span>
-                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase">
-                      SAVE ${quickViewProduct.originalPrice - quickViewProduct.price}
-                    </span>
+                    <span className="text-3xl font-bold tabular-nums text-[#1A1F26]">${quickViewProduct.price} USD</span>
                   </div>
 
                   {/* Color Selector */}

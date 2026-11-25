@@ -69,7 +69,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
       
       {/* Section Header */}
       <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <span className="font-mono text-xs uppercase tracking-widest text-[#C03221] font-bold block">
+        <span className="tabular-nums text-xs uppercase tracking-wider text-[#C03221] font-bold block">
           AUTUMN FAIRWAYS CAPSULE 001
         </span>
         <h2 className="font-serif text-3xl sm:text-5xl text-[#090C10] font-normal">
@@ -90,7 +90,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             alt={heroPolo.name} 
             className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
           />
-          <div className="absolute top-4 left-4 bg-[#C03221] text-white font-mono text-xs font-bold uppercase tracking-widest px-3 py-1">
+          <div className="absolute top-4 left-4 bg-[#C03221] text-white tabular-nums text-xs font-bold uppercase tracking-wider px-3 py-1">
             HERO PIECE &bull; $48 USD
           </div>
         </div>
@@ -103,15 +103,13 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={16} fill="currentColor" />
               ))}
-              <span className="font-mono text-xs text-slate-600 ml-2 font-semibold">4.96/5 (1,420 Reviews)</span>
+              <span className="tabular-nums text-xs text-slate-600 ml-2 font-semibold">4.96/5 (1,420 Reviews)</span>
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl text-[#090C10] font-medium leading-tight">
               {heroPolo.name}
             </h3>
-            <div className="flex items-baseline gap-3 mt-2 font-mono">
+            <div className="flex items-baseline gap-3 mt-2 tabular-nums">
               <span className="text-3xl font-bold text-[#090C10]">${heroPolo.price} USD</span>
-              <span className="text-sm text-slate-400 line-through">${heroPolo.originalPrice}</span>
-              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase">SAVE $62</span>
             </div>
           </div>
 
@@ -121,7 +119,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
 
           {/* Color Selector */}
           <div className="space-y-2">
-            <label className="font-mono text-xs uppercase tracking-wider text-slate-600 block">
+            <label className="tabular-nums text-xs uppercase tracking-wider text-slate-600 block">
               COLOR: <span className="text-[#090C10] font-bold">{selectedColor}</span>
             </label>
             <div className="flex gap-3">
@@ -148,10 +146,10 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
 
           {/* Size Selector */}
           <div className="space-y-2">
-            <label className="font-mono text-xs uppercase tracking-wider text-slate-600 block">
+            <label className="tabular-nums text-xs uppercase tracking-wider text-slate-600 block">
               SIZE: <span className="text-[#090C10] font-bold">{selectedSize}</span>
             </label>
-            <div className="grid grid-cols-5 gap-2 font-mono text-xs">
+            <div className="grid grid-cols-5 gap-2 tabular-nums text-xs">
               {['S', 'M', 'L', 'XL', 'XXL'].map((sz) => (
                 <button
                   key={sz}
@@ -171,7 +169,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
           {/* Unmissable Buy Button */}
           <button
             onClick={handleBuyPolo}
-            className={`w-full py-4 font-mono text-sm font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
+            className={`w-full py-4 tabular-nums text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
               addedId === heroPolo.id
                 ? 'bg-emerald-800 text-white'
                 : 'bg-[#C03221] hover:bg-[#a62519] text-white shadow-lg'
@@ -190,7 +188,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             )}
           </button>
 
-          <div className="flex items-center justify-center gap-2 font-mono text-[11px] text-slate-500 pt-1">
+          <div className="flex items-center justify-center gap-2 tabular-nums text-[11px] text-slate-500 pt-1">
             <ShieldCheck size={14} className="text-emerald-600" />
             <span>Free Shipping Over $75 &bull; 30-Day Fairway Guarantee</span>
           </div>
@@ -206,7 +204,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             <div className="space-y-4">
               <div className="aspect-[4/3] bg-slate-900 overflow-hidden relative border border-slate-200">
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                <div className="absolute top-3 left-3 bg-[#090C10] text-white font-mono text-[10px] uppercase font-bold px-3 py-1">
+                <div className="absolute top-3 left-3 bg-[#090C10] text-white tabular-nums text-[10px] uppercase font-bold px-3 py-1">
                   ${p.price} USD
                 </div>
               </div>
@@ -217,7 +215,7 @@ export const ProductShop: React.FC<ProductShopProps> = ({ onAddToCart }) => {
             <div className="pt-6 mt-6 border-t border-slate-200">
               <button
                 onClick={() => handleQuickAdd(p)}
-                className={`w-full py-3.5 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
+                className={`w-full py-3.5 tabular-nums text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
                   addedId === p.id ? 'bg-emerald-800 text-white' : 'bg-[#090C10] hover:bg-[#162a40] text-white'
                 }`}
               >

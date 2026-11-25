@@ -26,7 +26,7 @@ export const GuaranteePage: React.FC<GuaranteePageProps> = ({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <ShieldCheck size={18} className="text-[#38BDF8]" />
-              <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+              <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                 100% RISK-FREE FAIRWAY TRIAL
               </span>
             </div>

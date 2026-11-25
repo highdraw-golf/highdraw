@@ -25,7 +25,7 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
           </button>
 
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#38BDF8] text-[11px] font-mono tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#38BDF8] text-[11px] tabular-nums tracking-wider uppercase">
               <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-3.5 w-auto object-contain" />
               <span>THE HIGH DRAW ENGINEERING LAB</span>
             </div>
@@ -44,7 +44,7 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
         
         {/* Collar Deep Dive */}
         <div className="space-y-6">
-          <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
             <Shirt size={16} />
             <span>INSPECTION POINT 01</span>
           </div>
@@ -61,17 +61,17 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-4 border-t border-slate-200/80">
             <div className="space-y-1.5">
-              <span className="font-mono text-xs font-bold text-[#B12535] block">01</span>
+              <span className="tabular-nums text-xs font-bold text-[#B12535] block">01</span>
               <span className="font-serif font-bold text-[#1C2C24] text-base block">Fused Interlining Stand</span>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">A heat-bonded micro-canvas spine embedded inside the collar prevents rolling and curled tips.</p>
             </div>
             <div className="space-y-1.5">
-              <span className="font-mono text-xs font-bold text-[#B12535] block">02</span>
+              <span className="tabular-nums text-xs font-bold text-[#B12535] block">02</span>
               <span className="font-serif font-bold text-[#1C2C24] text-base block">Stay-Flat Placket</span>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">Structured 3-button placket holds crisp vertical lines under sweaters and wind jackets.</p>
             </div>
             <div className="space-y-1.5">
-              <span className="font-mono text-xs font-bold text-[#B12535] block">03</span>
+              <span className="tabular-nums text-xs font-bold text-[#B12535] block">03</span>
               <span className="font-serif font-bold text-[#1C2C24] text-base block">100+ Washes Memory</span>
               <p className="text-xs text-slate-500 leading-relaxed font-sans">Wash-tested across 100 laundry cycles with zero collar baconing or seam deformation.</p>
             </div>
@@ -80,7 +80,7 @@ export const CraftsmanshipPage: React.FC<CraftsmanshipPageProps> = ({
 
         {/* Fabric Drape & The $48 Honest Pricing */}
         <div className="space-y-6 pt-8 border-t border-slate-200">
-          <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[#B12535] text-xs font-bold uppercase tracking-wider">
             <ShieldCheck size={16} />
             <span>INSPECTION POINT 02</span>
           </div>

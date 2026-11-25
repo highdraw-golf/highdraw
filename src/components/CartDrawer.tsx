@@ -427,7 +427,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       )}
                   </span>
                   {!externalConfirmation && step === 'bag' && (
-                    <span className="font-mono text-xs px-2 py-0.5 bg-white/10 rounded-full text-slate-300">
+                    <span className="tabular-nums text-xs px-2 py-0.5 bg-white/10 rounded-full text-slate-300">
                       {totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'}
                     </span>
                   )}
@@ -445,7 +445,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               {/* GPU-Safe $75 Free US Shipping Progress Bar (`scaleX` transform, zero width reflow) */}
               {!externalConfirmation && step !== 'confirmed' && cartItems.length > 0 && (
                 <div className="px-5 py-3 bg-[#1C2C24] text-white border-b border-slate-800 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
+                  <div className="flex items-center justify-between text-[11px] tabular-nums">
                     <span className="flex items-center gap-1.5 font-semibold">
                       <Truck size={13} className="text-[#38BDF8] shrink-0" />
                       {remainingForFreeShipping === 0 ? (
@@ -485,7 +485,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <RefreshCw size={28} className="animate-spin" />
                 </div>
                 <div className="space-y-2">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#1C2C24] font-bold">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#1C2C24] font-bold">
                     STRIPE PAYMENT RECEIVED // DISPATCHING PRINTIFY
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">
@@ -512,7 +512,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <Check size={32} />
                 </div>
                 <div className="space-y-2">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#B12535]">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#B12535]">
                     ORDER CONFIRMED // EDITION 2026
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
@@ -521,7 +521,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     is queued for precision embroidery and direct fulfillment.
                   </p>
                 </div>
-                <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
+                <div className="bg-[#FBFBFA] p-4 tabular-nums text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
                   <div>ORDER ID: #{externalConfirmation.orderId}</div>
                   {externalConfirmation.printifyOrderId && (
                     <div>PRINTIFY ID: {externalConfirmation.printifyOrderId}</div>
@@ -537,7 +537,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={handleResetAndClose}
-                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-xs cursor-pointer t-press"
+                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs cursor-pointer t-press"
                 >
                   CONTINUE SHOPPING
                 </button>
@@ -550,7 +550,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <AlertTriangle size={30} />
                 </div>
                 <div className="space-y-2">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-rose-700 font-bold">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-rose-700 font-bold">
                     FULFILLMENT HANDOFF ATTENTION
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">
@@ -560,7 +560,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     {externalConfirmation.errorMessage ||
                       'We could not confirm the Printify dispatch yet.'}{' '}
                     Reference order <strong>#{externalConfirmation.orderId}</strong> or reach{' '}
-                    <span className="font-mono text-[#1C2C24]">highdrawgear@gmail.com</span>.
+                    <span className="tabular-nums text-[#1C2C24]">highdrawgear@gmail.com</span>.
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -568,7 +568,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <button
                       type="button"
                       onClick={onRetryExternalFulfillment}
-                      className="w-full py-3.5 bg-[#1C2C24] hover:bg-[#132019] text-white font-bold text-xs uppercase tracking-[0.18em] rounded-xs cursor-pointer t-press flex items-center justify-center gap-2"
+                      className="w-full py-3.5 bg-[#1C2C24] hover:bg-[#132019] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs cursor-pointer t-press flex items-center justify-center gap-2"
                     >
                       <RefreshCw size={14} />
                       <span>RETRY FULFILLMENT SYNC</span>
@@ -577,7 +577,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <button
                     type="button"
                     onClick={handleResetAndClose}
-                    className="w-full py-2.5 bg-white border border-slate-300 text-slate-700 font-mono text-[11px] uppercase tracking-wider rounded-xs cursor-pointer"
+                    className="w-full py-2.5 bg-white border border-slate-300 text-slate-700 tabular-nums text-[11px] uppercase tracking-wider rounded-xs cursor-pointer"
                   >
                     CLOSE DRAWER
                   </button>
@@ -595,7 +595,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
                 {cartItems.length === 0 ? (
                   <div className="text-center py-16 space-y-4">
-                    <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
+                    <p className="tabular-nums text-xs text-slate-400 uppercase tracking-wider">
                       YOUR BAG IS CURRENTLY EMPTY
                     </p>
                     <button
@@ -620,7 +620,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             Add <strong>1 more polo</strong> to save <strong>$10</strong> automatically + unlock <strong>Free US Shipping</strong>
                           </span>
                         </div>
-                        <span className="font-mono text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
+                        <span className="tabular-nums text-[10px] font-bold text-emerald-800 bg-white border border-emerald-300 px-2 py-0.5 rounded-2xs shrink-0">
                           -$10 PAIR
                         </span>
                       </div>
@@ -636,7 +636,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             <strong>2+ Polo Pair Applied:</strong> -${pairDiscountDollars} Pair Savings &amp; Free US Shipping
                           </span>
                         </div>
-                        <span className="font-mono text-[10px] font-bold text-emerald-200 bg-white/10 px-2 py-0.5 rounded-2xs shrink-0">
+                        <span className="tabular-nums text-[10px] font-bold text-emerald-200 bg-white/10 px-2 py-0.5 rounded-2xs shrink-0">
                           -${pairDiscountDollars}
                         </span>
                       </div>
@@ -671,7 +671,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                                     <Trash2 size={14} />
                                   </button>
                                 </div>
-                                <p className="font-mono text-[10px] text-slate-500 mt-1 uppercase leading-relaxed">
+                                <p className="tabular-nums text-[10px] text-slate-500 mt-1 uppercase leading-relaxed">
                                   {item.color} &bull; SIZE: {item.size}
                                 </p>
                               </div>
@@ -691,7 +691,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                                   >
                                     <Minus size={11} />
                                   </button>
-                                  <span className="px-2.5 font-mono text-xs font-bold text-[#090C10]">
+                                  <span className="px-2.5 tabular-nums text-xs font-bold text-[#090C10]">
                                     {qty}
                                   </span>
                                   <button
@@ -704,7 +704,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                                   </button>
                                 </div>
 
-                                <div className="font-mono text-xs font-bold text-[#090C10] text-right">
+                                <div className="tabular-nums text-xs font-bold text-[#090C10] text-right">
                                   {itemGetsPair ? (
                                     <>
                                       <span className="line-through text-slate-400 mr-1.5 text-[11px]">
@@ -728,7 +728,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     {/* 1-Click Hat Upsell Banner (Unlocks $75 Free Shipping when paired with $48 Polo!) */}
                     {!hasCapInBag && (
                       <div className="p-4 bg-[#090C10] text-white rounded-xs border border-slate-800 space-y-2.5">
-                        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.15em]">
+                        <div className="flex items-center justify-between tabular-nums text-[10px] uppercase tracking-[0.08em]">
                           <span className="text-[#38BDF8] font-bold flex items-center gap-1">
                             <Sparkles size={12} />
                             {subtotal >= 47 && subtotal < 75
@@ -748,7 +748,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                               <div className="font-serif text-sm font-medium truncate">
                                 Tour Poly-Mesh Cap (Pure White)
                               </div>
-                              <div className="font-mono text-xs text-slate-300">
+                              <div className="tabular-nums text-xs text-slate-300">
                                 $28 USD <span className="line-through text-slate-500 text-[10px]">$35</span>
                               </div>
                             </div>
@@ -756,7 +756,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                           <button
                             type="button"
                             onClick={onAddUpsellHat}
-                            className="px-3 py-2 bg-white text-[#090C10] font-mono text-[10px] uppercase font-bold hover:bg-slate-200 transition-colors flex items-center gap-1 rounded-2xs cursor-pointer t-press shrink-0"
+                            className="px-3 py-2 bg-white text-[#090C10] tabular-nums text-[10px] uppercase font-bold hover:bg-slate-200 transition-colors flex items-center gap-1 rounded-2xs cursor-pointer t-press shrink-0"
                           >
                             <Plus size={12} />
                             <span>ADD</span>
@@ -775,7 +775,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 onSubmit={handleSubmitOrder}
                 className="p-5 sm:p-6 flex-1 overflow-y-auto overscroll-contain space-y-4"
               >
-                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs flex items-center justify-between text-xs font-mono">
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xs flex items-center justify-between text-xs tabular-nums">
                   <span className="text-slate-600">
                     {totalUnits} {totalUnits === 1 ? 'Item' : 'Items'} &bull;{' '}
                     {shipping === 0 ? 'Free US Shipping' : '$8 Shipping'}
@@ -790,7 +790,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
 
                 <div className="space-y-3">
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
+                  <span className="text-[11px] tabular-nums font-bold uppercase tracking-wider text-slate-500 block">
                     Contact &amp; Delivery Destination
                   </span>
 
@@ -987,7 +987,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <ArrowRight size={14} />
                   </button>
 
-                  <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-slate-500 pt-1">
+                  <div className="flex items-center justify-center gap-2 text-[10px] tabular-nums text-slate-500 pt-1">
                     <Lock size={11} className="text-emerald-700" />
                     <span>256-Bit SSL &bull; 30-Day Fairway Trial Guarantee</span>
                   </div>
@@ -1002,7 +1002,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <Check size={32} />
                 </div>
                 <div className="space-y-2">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#B12535]">
+                  <div className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#B12535]">
                     ORDER CONFIRMED // EDITION 2026
                   </div>
                   <h3 className="font-serif text-2xl text-[#090C10]">Welcome to High Draw</h3>
@@ -1010,7 +1010,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     Your custom order <strong>#{lastOrderId}</strong> has been queued for precision embroidery and direct fulfillment.
                   </p>
                 </div>
-                <div className="bg-[#FBFBFA] p-4 font-mono text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
+                <div className="bg-[#FBFBFA] p-4 tabular-nums text-[11px] text-slate-600 border border-slate-200 rounded-xs text-left space-y-1.5">
                   <div>ORDER ID: #{lastOrderId}</div>
                   {lastPrintifyOrderId && <div>PRINTIFY ID: {lastPrintifyOrderId}</div>}
                   <div>RECIPIENT: {shippingForm.fullName}</div>
@@ -1023,7 +1023,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={handleResetAndClose}
-                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-xs cursor-pointer t-press"
+                  className="w-full py-3.5 bg-[#090C10] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs cursor-pointer t-press"
                 >
                   CONTINUE SHOPPING
                 </button>
@@ -1033,7 +1033,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             {/* Cart Bottom Summary (When in Bag mode) */}
             {!externalConfirmation && step === 'bag' && cartItems.length > 0 && (
               <div className="p-5 sm:p-6 bg-[#FBFBFA] border-t border-slate-200 space-y-3.5">
-                <div className="space-y-1.5 font-mono text-xs text-slate-600">
+                <div className="space-y-1.5 tabular-nums text-xs text-slate-600">
                   <div className="flex justify-between">
                     <span>ITEMS ({totalUnits} {totalUnits === 1 ? 'ITEM' : 'ITEMS'})</span>
                     <span className="font-semibold text-[#090C10]">${rawSubtotal} USD</span>
@@ -1070,7 +1070,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     type="button"
                     onClick={handleExpressStripeFromBag}
                     disabled={isCheckingOut}
-                    className="w-full py-3.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.16em] rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-md t-press"
+                    className="w-full py-3.5 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.08em] rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-md t-press"
                   >
                     <CreditCard size={15} />
                     <span>
@@ -1081,14 +1081,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <button
                     type="button"
                     onClick={handleProceedToShipping}
-                    className="w-full py-2.5 bg-white hover:bg-slate-100 text-[#090C10] border border-slate-300 font-mono text-[11px] font-bold uppercase tracking-wider rounded-xs flex items-center justify-center gap-1.5 cursor-pointer t-press"
+                    className="w-full py-2.5 bg-white hover:bg-slate-100 text-[#090C10] border border-slate-300 tabular-nums text-[11px] font-bold uppercase tracking-wider rounded-xs flex items-center justify-center gap-1.5 cursor-pointer t-press"
                   >
                     <span>ENTER SHIPPING DETAILS</span>
                     <ArrowRight size={13} />
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 font-mono text-[10px] text-slate-500">
+                <div className="flex items-center justify-center gap-2 tabular-nums text-[10px] text-slate-500">
                   <ShieldCheck size={13} className="text-emerald-600" />
                   <span>Apple Pay &bull; Stripe 256-Bit Vault &bull; 30-Day Guarantee</span>
                 </div>

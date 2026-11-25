@@ -150,7 +150,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                   alt="High Draw Mark + Monogram"
                   className="h-5 w-auto object-contain"
                 />
-                <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+                <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                   HIGH DRAW GOLF CO. &bull; 3-TIER BESPOKE ARCHITECTURE
                 </span>
               </div>
@@ -177,7 +177,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                         onSelectCategory('all', 'clubhouse');
                       }
                     }}
-                    className={`relative px-3 py-1.5 rounded-2xs font-mono text-[11px] uppercase tracking-wider cursor-pointer transition-colors t-press ${
+                    className={`relative px-3 py-1.5 rounded-2xs tabular-nums text-[11px] uppercase tracking-wider cursor-pointer transition-colors t-press ${
                       active ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
                     }`}
                   >
@@ -254,7 +254,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                 </button>
               ))}
             </div>
-            <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
+            <span className="text-slate-400 tabular-nums text-[11px] hidden sm:inline">
               Showing {sorted.length} Item{sorted.length === 1 ? '' : 's'}
             </span>
             <div className="flex items-center gap-2">
@@ -296,7 +296,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
         {selectedTier === 'tournament' && (
           <div className="p-6 sm:p-8 bg-[#0D1520] text-white rounded-xs border border-slate-800 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-1.5 max-w-xl">
-              <span className="font-mono text-[11px] text-[#38BDF8] uppercase tracking-widest font-bold flex items-center gap-1.5">
+              <span className="tabular-nums text-[11px] text-[#38BDF8] uppercase tracking-wider font-bold flex items-center gap-1.5">
                 <Bell size={13} />
                 <span>SUMMER 2026 TOURNAMENT ALLOCATION</span>
               </span>
@@ -390,7 +390,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                           className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                         />
                       )}
-                      <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] font-mono tracking-widest px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
+                      <div className="absolute top-3.5 left-3.5 bg-[#1C2C24]/90 backdrop-blur-md text-white text-[10px] tabular-nums tracking-wider px-2.5 py-1 rounded-xs uppercase shadow-sm flex items-center gap-1.5">
                         {p.badge ? (
                           <span className="text-[#38BDF8] font-bold">{p.badge}</span>
                         ) : (
@@ -432,7 +432,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#B12535] block">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#B12535] block">
                         {p.collectionLabel}
                       </span>
                       <h3 className="font-serif text-xl sm:text-2xl text-[#1A1F26] font-bold group-hover:text-[#B12535] transition-colors leading-snug">
@@ -443,10 +443,9 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({
 
                   <div className="pt-3 border-t border-slate-100 mt-4 flex items-baseline justify-between font-sans">
                     <div className="flex items-baseline gap-2">
-                      <span className="font-mono text-xl font-bold text-[#1A1F26]">${p.price}</span>
-                      <span className="font-mono text-xs text-slate-400 line-through">${p.originalPrice}</span>
+                      <span className="tabular-nums text-xl font-bold text-[#1A1F26]">${p.price}</span>
                     </div>
-                    <span className="text-[11px] font-mono tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                    <span className="text-[11px] tabular-nums tracking-wider uppercase text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
                       {cardSpecBadge}
                     </span>
                   </div>

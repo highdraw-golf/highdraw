@@ -16,7 +16,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose 
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div>
-            <span className="text-[10px] font-mono tracking-widest text-[#B12535] uppercase font-bold">
+            <span className="text-[10px] tabular-nums tracking-wider text-[#B12535] uppercase font-bold">
               PERFECT FAIRWAY FIT GUARANTEE
             </span>
             <h3 className="font-serif text-2xl font-bold text-[#1A1F26]">
@@ -55,7 +55,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose 
                 <th className="py-2.5 px-3 font-bold">Typical Weight</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 font-mono">
+            <tbody className="divide-y divide-slate-200 tabular-nums">
               <tr className="hover:bg-slate-50">
                 <td className="py-2.5 px-3 font-bold font-sans">S</td>
                 <td className="py-2.5 px-3">37 - 39</td>

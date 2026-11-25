@@ -48,7 +48,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                 alt="High Draw Mark + Monogram" 
                 className="h-5 w-auto object-contain" 
               />
-              <span className="font-mono text-[11px] tracking-widest text-[#38BDF8] uppercase font-bold">
+              <span className="tabular-nums text-[11px] tracking-wider text-[#38BDF8] uppercase font-bold">
                 WEEKENDER ($48) &amp; THE CLUBHOUSE ($66) &bull; BESPOKE EMBROIDERY
               </span>
             </div>
@@ -68,7 +68,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               </h1>
               <FadeUp immediate delay={0.25}>
                 <p className="text-base sm:text-lg text-slate-200 max-w-xl font-normal leading-relaxed pt-1">
-                  Tour-grade apparel without the $125 boutique retail tax. Choose our featherweight UPF 50+ <strong>Weekender ($48)</strong> for hot summer rounds or heathered 57/43 cotton-poly <strong>Clubhouse Fine Pique ($66)</strong> for evening dining—stitched to order with your choice of 3 signature High Draw chest marks.
+                  Pro-shop quality, made to order. Choose the featherweight UPF 50+ <strong>Weekender ($48)</strong> for hot summer rounds or heathered 57/43 cotton-poly <strong>Clubhouse Fine Pique ($66)</strong> for evening dining—stitched to order with your choice of 3 signature High Draw chest marks.
                 </p>
               </FadeUp>
             </div>
@@ -78,7 +78,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <button
                   onClick={onShopMens || onScrollToShop}
-                  className="px-7 py-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.15em] transition-all rounded-xs shadow-2xl flex items-center justify-center gap-2.5 group t-press active:scale-95 cursor-pointer"
+                  className="px-7 py-4 bg-[#B12535] hover:bg-[#8e1d29] text-white font-bold text-xs uppercase tracking-[0.08em] transition-all rounded-xs shadow-2xl flex items-center justify-center gap-2.5 group t-press active:scale-95 cursor-pointer"
                 >
                   <span>MEN&rsquo;S POLOS &bull; $48</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -107,12 +107,12 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
               <div className="flex flex-wrap items-center gap-4 pt-1">
                 <button
                   onClick={onScrollToWhy}
-                  className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#38BDF8] hover:text-white link-swipe cursor-pointer transition-colors"
+                  className="text-[11px] tabular-nums uppercase tracking-[0.08em] text-[#38BDF8] hover:text-white link-swipe cursor-pointer transition-colors"
                 >
                   Explore The Craftsmanship Lab &rarr;
                 </button>
                 <span className="text-white/30 hidden sm:inline">&bull;</span>
-                <span className="text-[11px] font-mono text-slate-300">
+                <span className="text-[11px] tabular-nums text-slate-300">
                   Available in Men&rsquo;s XS–4XL &amp; Women&rsquo;s XS–4XL
                 </span>
               </div>
@@ -122,7 +122,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
             <div className="flex flex-wrap items-center gap-6 pt-2 text-[12px] text-slate-300 font-medium">
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
-                <span>3-Tier Fabric System ($48 &amp; $66)</span>
+                <span>Two fabrics. One standard.</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={15} className="text-[#38BDF8] shrink-0" />
@@ -143,11 +143,11 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                 <div className="flex items-center justify-between border-b border-white/15 pb-3">
                   <div className="flex items-center gap-2">
                     <Sparkles size={14} className="text-[#38BDF8]" />
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#38BDF8] font-bold">
+                    <span className="tabular-nums text-[10px] uppercase tracking-[0.08em] text-[#38BDF8] font-bold">
                       BESPOKE 3-MARK CHEST SUITE
                     </span>
                   </div>
-                  <span className="font-mono text-[10px] text-emerald-400 uppercase font-semibold">
+                  <span className="tabular-nums text-[10px] text-emerald-400 uppercase font-semibold">
                     Included ($0)
                   </span>
                 </div>
@@ -157,7 +157,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                     Stitched to Order on Every Silhouette
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Select any of our 3 official High Draw chest marks—calibrated to 2.5&Prime; on Men&rsquo;s cuts and 2.25&Prime; lower-aligned on Women&rsquo;s cuts.
+                    Select any of our 3 official High Draw chest marks—calibrated to 2.25&Prime; on Men&rsquo;s cuts and 1.75&Prime; lower-aligned on Women&rsquo;s cuts.
                   </p>
                 </div>
 
@@ -177,10 +177,10 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                       </div>
                       <div className="min-w-0">
                         <span className="text-xs font-bold text-white block truncate">Mark + Monogram (H | D)</span>
-                        <span className="text-[10px] font-mono text-[#38BDF8] uppercase block">Signature Crest &bull; H &middot; Tracer &middot; D</span>
+                        <span className="text-[10px] tabular-nums text-[#38BDF8] uppercase block">Signature Crest &bull; H &middot; Tracer &middot; D</span>
                       </div>
                     </div>
-                    <span className="text-[9px] font-mono uppercase px-2 py-0.5 bg-[#38BDF8]/15 text-[#38BDF8] rounded-2xs shrink-0 font-bold">
+                    <span className="text-[9px] tabular-nums uppercase px-2 py-0.5 bg-[#38BDF8]/15 text-[#38BDF8] rounded-2xs shrink-0 font-bold">
                       POPULAR
                     </span>
                   </div>
@@ -198,8 +198,8 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                         />
                       </div>
                       <div className="min-w-0">
-                        <span className="text-xs font-bold text-white block truncate">Mark-Only (Apex Tracer)</span>
-                        <span className="text-[10px] font-mono text-slate-300 uppercase block">Minimalist Tour Ball Flight + Pin</span>
+                        <span className="text-xs font-bold text-white block truncate">The Tracer</span>
+                        <span className="text-[10px] tabular-nums text-slate-300 uppercase block">Minimalist Tour Ball Flight + Pin</span>
                       </div>
                     </div>
                     <ArrowRight size={13} className="text-slate-400 shrink-0" />
@@ -219,7 +219,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                       </div>
                       <div className="min-w-0">
                         <span className="text-xs font-bold text-white block truncate">Mark + Wordmark</span>
-                        <span className="text-[10px] font-mono text-slate-300 uppercase block">Full HIGH DRAW Championship Lockup</span>
+                        <span className="text-[10px] tabular-nums text-slate-300 uppercase block">The full High Draw wordmark</span>
                       </div>
                     </div>
                     <ArrowRight size={13} className="text-slate-400 shrink-0" />
@@ -229,11 +229,11 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                 {/* Contrast Calibration Footer */}
                 <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] uppercase text-slate-400">Contrast Thread:</span>
+                    <span className="tabular-nums text-[10px] uppercase text-slate-400">Contrast Thread:</span>
                     <span className="w-3.5 h-3.5 rounded-full bg-white border border-white/40" title="Crisp White Thread on Dark & Heathered Garments" />
                     <span className="w-3.5 h-3.5 rounded-full bg-[#00A3FF] border border-white/40" title="Light Blue Tracer Thread on Crisp White Garments" />
                   </div>
-                  <span className="font-mono text-[10px] text-emerald-400 font-semibold">Free US Shipping $75+</span>
+                  <span className="tabular-nums text-[10px] text-emerald-400 font-semibold">Free US Shipping $75+</span>
                 </div>
               </div>
             </BallFlightReveal>
@@ -248,7 +248,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-xs">
           
           <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] font-mono font-bold text-xs">01</span>
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">01</span>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block text-[11px]">Weekender &bull; $48</span>
               <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">180 GSM UPF 50+ micropique engineered for hot summer rounds.</span>
@@ -256,7 +256,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] font-mono font-bold text-xs">02</span>
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">02</span>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block text-[11px]">The Clubhouse &bull; $66</span>
               <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">57/43 combed cotton-poly fine pique heathers &amp; $68 fleece 1/4-zip.</span>
@@ -264,7 +264,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] font-mono font-bold text-xs">03</span>
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">03</span>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block text-[11px]">3 Signature Marks</span>
               <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">Choose Mark + Monogram, Mark-Only, or Mark + Wordmark at $0 extra.</span>
@@ -272,10 +272,10 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] font-mono font-bold text-xs">04</span>
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#38BDF8] tabular-nums font-bold text-xs">04</span>
             <div>
               <span className="font-bold text-white uppercase tracking-wider block text-[11px]">100+ Washes Guarantee</span>
-              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">30-Day Fairway Trial. Won&rsquo;t shrink, fade, or curl into bacon.</span>
+              <span className="text-slate-300 text-[11px] leading-tight block mt-0.5">30-Day Fairway Trial. Holds its shape for 100+ washes. Guaranteed.</span>
             </div>
           </div>
 

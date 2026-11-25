@@ -34,7 +34,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
   userTypeSelection,
   onSelectUserType,
   userTypeOptions,
-  decorationSpecLabel = '2.5" Centered Left-Chest Embroidery',
+  decorationSpecLabel = '2.25" Centered Left-Chest Embroidery',
 }) => {
   const { isReduced } = useMotionPreference();
 
@@ -62,7 +62,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
         <div>
           <div className="flex items-center gap-1.5">
             <Sparkles size={13} className="text-[#B12535]" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B12535]">
+            <span className="text-[10px] tabular-nums font-bold uppercase tracking-wider text-[#B12535]">
               BESPOKE EMBROIDERY SUITE
             </span>
           </div>
@@ -95,13 +95,13 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
             )}
           </div>
           <div className="text-left hidden sm:block">
-            <span className="text-[9px] font-mono uppercase tracking-wider text-slate-400 block">
+            <span className="text-[9px] tabular-nums uppercase tracking-wider text-slate-400 block">
               THREAD PAIRING
             </span>
             <span className="text-[11px] font-bold text-[#1A1F26] block leading-tight">
               {CHEST_LOGO_STYLE_OPTIONS.find(s => s.id === normalizedStyle)?.shortLabel}
             </span>
-            <span className="text-[10px] font-mono text-emerald-700 font-semibold block">
+            <span className="text-[10px] tabular-nums text-emerald-700 font-semibold block">
               {activeColorMeta?.name || 'Crisp White'}
             </span>
           </div>
@@ -116,7 +116,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
               <Users size={12} className="text-[#1C2C24]" />
               <span>1. Select Cut / Golfer Profile:</span>
             </span>
-            <span className="font-mono text-[10px] text-slate-500">
+            <span className="tabular-nums text-[10px] text-slate-500">
               Tailored per Golfer
             </span>
           </div>
@@ -138,7 +138,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
                     <span className="text-xs font-bold block leading-tight">{opt.label}</span>
                     {opt.sublabel && (
                       <span
-                        className={`text-[10px] font-mono block mt-0.5 ${
+                        className={`text-[10px] tabular-nums block mt-0.5 ${
                           active ? 'text-slate-300' : 'text-slate-400'
                         }`}
                       >
@@ -163,7 +163,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
               {CHEST_LOGO_STYLE_OPTIONS.find(s => s.id === normalizedStyle)?.name}
             </span>
           </span>
-          <span className="text-[10px] font-mono text-emerald-700 font-semibold">
+          <span className="text-[10px] tabular-nums text-emerald-700 font-semibold">
             Included ($0)
           </span>
         </div>
@@ -193,7 +193,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
                 )}
 
                 {styleOpt.badge && (
-                  <span className="text-[8px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-2xs font-bold bg-[#1C2C24] text-[#38BDF8]">
+                  <span className="text-[8px] tabular-nums uppercase tracking-wider px-1.5 py-0.5 rounded-2xs font-bold bg-[#1C2C24] text-[#38BDF8]">
                     {styleOpt.badge}
                   </span>
                 )}
@@ -231,7 +231,7 @@ export const LogoCustomizer: React.FC<LogoCustomizerProps> = ({
               : `Crisp White thread on ${garmentColorName}`}
           </span>
         </div>
-        <span className="hidden sm:inline font-mono text-[10px] text-slate-400 shrink-0">
+        <span className="hidden sm:inline tabular-nums text-[10px] text-slate-400 shrink-0">
           {decorationSpecLabel}
         </span>
       </div>

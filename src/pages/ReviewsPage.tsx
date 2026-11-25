@@ -104,7 +104,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <img src="/assets/brand/logo_tracer_cyan.png" alt="Tracer" className="h-4 w-auto object-contain" />
-              <span className="text-[11px] font-mono tracking-widest text-[#38BDF8] uppercase font-bold">
+              <span className="text-[11px] tabular-nums tracking-wider text-[#38BDF8] uppercase font-bold">
                 COMMUNITY &bull; VERIFIED COURSE REVIEWS
               </span>
             </div>
@@ -217,7 +217,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     alt={r.author} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" 
                   />
-                  <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-xs">
+                  <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md text-white text-[10px] tabular-nums px-2.5 py-1 rounded-xs">
                     {r.productWorn}
                   </div>
                 </div>
@@ -236,7 +236,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({
                   <span className="font-bold text-[#1A1F26] block">{r.author}</span>
                   <span className="text-[11px] text-slate-500">{r.club}</span>
                 </div>
-                <span className="text-[11px] font-mono text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
+                <span className="text-[11px] tabular-nums text-[#1C2C24] bg-[#1C2C24]/5 border border-[#1C2C24]/10 px-2 py-0.5 rounded-xs font-semibold">
                   {r.handicap}
                 </span>
               </div>
