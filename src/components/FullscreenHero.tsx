@@ -245,12 +245,76 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: isReduced ? 0 : 1.15, duration: 0.3 }}
                   />
+
+                  {/* Selected Lockup Reveal: H | D Crest or HIGH DRAW Wordmark */}
+                  {selectedMark === 'mark-monogram' && (
+                    <m.g
+                      initial={isReduced ? { opacity: 1 } : { opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: isReduced ? 0 : 0.95, duration: 0.35 }}
+                    >
+                      <text
+                        x="94"
+                        y="108"
+                        textAnchor="middle"
+                        fill="#FAF9F6"
+                        fontSize="20"
+                        fontFamily="Newsreader, Georgia, serif"
+                        letterSpacing="0.06em"
+                      >
+                        H
+                      </text>
+                      <text
+                        x="139"
+                        y="108"
+                        textAnchor="middle"
+                        fill="#FAF9F6"
+                        fontSize="20"
+                        fontFamily="Newsreader, Georgia, serif"
+                        letterSpacing="0.06em"
+                      >
+                        D
+                      </text>
+                    </m.g>
+                  )}
+
+                  {selectedMark === 'mark-wordmark' && (
+                    <m.g
+                      initial={isReduced ? { opacity: 1 } : { opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: isReduced ? 0 : 0.95, duration: 0.35 }}
+                    >
+                      <text
+                        x="86"
+                        y="112"
+                        textAnchor="middle"
+                        fill="#FAF9F6"
+                        fontSize="11.5"
+                        fontFamily="Newsreader, Georgia, serif"
+                        letterSpacing="0.12em"
+                      >
+                        HIGH
+                      </text>
+                      <text
+                        x="146"
+                        y="112"
+                        textAnchor="middle"
+                        fill="#FAF9F6"
+                        fontSize="11.5"
+                        fontFamily="Newsreader, Georgia, serif"
+                        letterSpacing="0.12em"
+                      >
+                        DRAW
+                      </text>
+                    </m.g>
+                  )}
+
                   {/* Tee Marker */}
                   <circle cx="86" cy="158" r="2.5" fill="rgba(255,255,255,0.65)" />
                 </svg>
 
                 <span className="text-[10px] text-[#7DD3FC] z-10 font-medium">
-                  {activeMark.label}
+                  {activeMark.label} &middot; {activeMark.caption}
                 </span>
               </div>
 
@@ -260,6 +324,7 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                 className="col-span-7 h-48 rounded-xs bg-white border border-stone-200/90 relative overflow-hidden cursor-pointer group flex items-center justify-center p-2"
               >
                 <img
+                  key={previewSrc}
                   src={previewSrc}
                   alt={`${activeSwatch.label} polo with ${activeMark.label} embroidery`}
                   fetchPriority="low"
@@ -268,6 +333,9 @@ export const FullscreenHero: React.FC<FullscreenHeroProps> = ({
                   height={320}
                   className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
+                <span className="absolute top-2 left-2 px-2 py-0.5 bg-stone-100/95 border border-stone-200 text-[#151B23] text-[10px] font-medium rounded-2xs">
+                  {activeMark.label}
+                </span>
                 <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-[#14241D]/90 text-white text-[10px] tabular-nums font-medium rounded-2xs">
                   ${activeSwatch.price}
                 </span>
